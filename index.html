@@ -30,12 +30,39 @@
             s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
             if (d.head) d.head.appendChild(s);
         })(document, window, 'BrevoConversations');
+
+        document.addEventListener("swup:contentReplaced", function () {
+            document.addEventListener("DOMContentLoaded", function () {
+                const aboutSection = document.getElementById("about");
+                const aboutLink = document.getElementById("about-link");
+
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                aboutLink.classList.add("mil-active");
+                            } else {
+                                aboutLink.classList.remove("mil-active");
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.5, // when 50% of section is visible
+                    }
+                );
+
+                if (aboutSection) {
+                    observer.observe(aboutSection);
+                }
+            });
+        });
+
     </script>
     <!-- /Brevo Conversations {/literal} -->
     <!-- favicon -->
     <link rel="icon" type="image/x-icon" href="/img/icons/favicon.jpg">
     <!-- page name -->
-    <title>Kaprera</title>
+    <title>Kaprera Home</title>
 
 </head>
 
@@ -98,8 +125,8 @@
                             <nav class="mil-main-menu" id="swupMenu">
                                 <ul>
                                     <li class="mil mil-active"><a href="index.html">Homepage</a></li>
+                                    <li class="mil"><a href="index.html#about">About</a></li>
                                     <li class="mil"><a href="services.html">Services</a></li>
-                                    <li class="mil"><a href="blogs.html">Blogs</a></li>
                                     <li class="mil"><a href="contact.html" target="_blank">Contact Us</a></li>
                                 </ul>
                             </nav>
@@ -161,10 +188,12 @@
                                             help businesses thrive.</p>
                                     </div>
                                 </div>
-                                <a href="services.html" class="mil-button mil-arrow-place mil-btn-space">
-                                    <span>What we do</span>
+                                <a href="#" onclick='window.open("https://wa.me/9613816405");return false;'
+                                    class="mil-button mil-arrow-place mil-btn-space">
+                                    <span>Whatsapp Us</span>
                                 </a>
-                                <a href="#about" class="mil-link mil-muted mil-arrow-place"><span>Who we are</span></a>
+                                <a href="services.html" class="mil-link mil-muted mil-arrow-place"><span>What We
+                                        Do</span></a>
                                 <div class="mil-circle-text">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 300 300"
@@ -217,7 +246,7 @@
                                 <div class="mil-about-photo mil-mb-90">
                                     <div class="mil-lines-place"></div>
                                     <div class="mil-up mil-img-frame" style="padding-bottom: 160%;">
-                                        <img src="img/photo/1.png" alt="img" class="mil-scale" data-value-1="1"
+                                        <img src="img/photo/1.JPG" alt="img" class="mil-scale" data-value-1="1"
                                             data-value-2="1.2">
                                     </div>
                                 </div>
@@ -262,40 +291,38 @@
                             </div>
                             <div class="row mil-services-grid m-0">
                                 <div class="col-md-6 col-lg-3 mil-services-grid-item p-0">
-                                    <a href="src/services/design.html" class="mil-service-card-sm mil-up">
+                                    <a href="design.html" class="mil-service-card-sm mil-up">
                                         <h5 class="mil-muted mil-mb-30">Branding and <br>Identity Design</h5>
-                                        <p class="mil-light-soft mil-mb-30">Your brand is the heart of your business,
-                                            and we help shape its identity with compelling visuals and strategic design.
-                                            From logos to packaging and animations, we ensure your brand stands out and
-                                            tells its story effectively.</p>
+                                        <p class="mil-light-soft mil-mb-30" style="text-align: justify;">We bring your
+                                            brand to life with bold,
+                                            standout design.</p>
                                         <div class="mil-button mil-icon-button-sm mil-arrow-place"></div>
                                     </a>
                                 </div>
                                 <div class="col-md-6 col-lg-3 mil-services-grid-item p-0">
-                                    <a href="src/services/development.html" class="mil-service-card-sm mil-up">
+                                    <a href="development.html" class="mil-service-card-sm mil-up">
                                         <h5 class="mil-muted mil-mb-30">Software<br> Development</h5>
-                                        <p class="mil-light-soft mil-mb-30">A well-designed website is the backbone of
-                                            your digital presence. At Kaprera, we combine creativity and technology to
-                                            deliver user-friendly websites that are both functional and aesthetically
-                                            appealing. Whether you need a mobile app or reliable hosting, we ensure a
-                                            seamless digital experience.</p>
+                                        <p class="mil-light-soft mil-mb-30" style="text-align: justify;">We build sleek,
+                                            user-friendly
+                                            websites and apps for a seamless digital experience.</p>
                                         <div class="mil-button mil-icon-button-sm mil-arrow-place"></div>
                                     </a>
                                 </div>
                                 <div class="col-md-6 col-lg-3 mil-services-grid-item p-0">
-                                    <a href="src/services/marketing.html" class="mil-service-card-sm mil-up">
+                                    <a href="marketing.html" class="mil-service-card-sm mil-up">
                                         <h5 class="mil-muted mil-mb-30">Digital <br> Marketing</h5>
-                                        <p class="mil-light-soft mil-mb-30">We help businesses grow through data-driven
-                                            marketing strategies that enhance visibility and engagement.</p>
+                                        <p class="mil-light-soft mil-mb-30" style="text-align: justify;">We grow
+                                            businesses with data-driven
+                                            marketing that boosts visibility and engagement.</p>
                                         <div class="mil-button mil-icon-button-sm mil-arrow-place"></div>
                                     </a>
                                 </div>
                                 <div class="col-md-6 col-lg-3 mil-services-grid-item p-0">
-                                    <a href="src/services/consultant.html" class="mil-service-card-sm mil-up">
+                                    <a href="consultant.html" class="mil-service-card-sm mil-up">
                                         <h5 class="mil-muted mil-mb-30">Startup<br> and Business Consultancy</h5>
-                                        <p class="mil-light-soft mil-mb-30">Launching a business is challenging, and we
-                                            provide expert guidance to help entrepreneurs succeed. From planning to
-                                            execution, we equip you with the tools and strategies needed for growth.</p>
+                                        <p class="mil-light-soft mil-mb-30" style="text-align: justify;">We guide
+                                            entrepreneurs from planning to
+                                            execution with tools and strategies for success.</p>
                                         <div class="mil-button mil-icon-button-sm mil-arrow-place"></div>
                                     </a>
                                 </div>
@@ -304,79 +331,6 @@
                     </div>
                 </section>
                 <!-- services end -->
-
-                <!-- team -->
-                <section>
-                    <div class="container mil-p-120-30">
-                        <div class="row justify-content-between align-items-center">
-                            <div class="col-lg-5 col-xl-4">
-                                <div class="mil-mb-90">
-                                    <h2 class="mil-up mil-mb-60">Meet Our<br>Team</h2>
-                                    <p class="mil-up mil-mb-30" style="text-align: justify;">At Kaprera, our team of
-                                        creative minds, tech experts, and strategists work together to bring your vision
-                                        to life. Guided by our core values, we take ownership of every project, ensuring
-                                        impactful results.</p>
-                                    <p class="mil-up mil-mb-60" style="text-align: justify;">Whether designing,
-                                        developing, or strategizing, we are committed to empowering your business and
-                                        exceeding expectations.</p>
-                                    <h4 class="mil-up"><span class="mil-thin">We</span> deliver <br><span
-                                            class="mil-thin">exceptional</span> results.</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mil-team-list">
-                                    <div class="mil-lines-place"></div>
-                                    <div class="row mil-mb-60">
-                                        <div class="col-sm-6">
-                                            <div class="mil-team-card mil-up mil-mb-30">
-                                                <img src="img/faces/ibrahim.jpeg" alt="Team member">
-                                                <div class="mil-description">
-                                                    <div class="mil-secrc-text">
-                                                        <h5 class="mil-muted mil-mb-5">Ibrahim Hussein</h5>
-                                                        <p class="mil-link mil-light-soft mil-mb-10">Founder & CEO</p>
-                                                        <ul class="mil-social-icons mil-center">
-                                                            <li><a href="#"
-                                                                    onclick='window.open("https://wa.me/9613816405");return false;'
-                                                                    class="social-icon"> <i
-                                                                        class="fab fa-whatsapp"></i></a></li>
-                                                            <li><a href="#"
-                                                                    onclick='window.open("http://linkedin.com/in/devibrahimhussein");return false;'
-                                                                    class="social-icon"> <i
-                                                                        class="fab fa-linkedin"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-sm-6">
-                                            <div class="mil-team-card mil-up mil-mb-30">
-                                                <img src="img/faces/rana.jpeg" alt="Team member">
-                                                <div class="mil-description">
-                                                    <div class="mil-secrc-text">
-                                                        <h5 class="mil-muted mil-mb-5">Rana Hussein</h5>
-                                                        <p class="mil-link mil-light-soft mil-mb-10">Managing Partner
-                                                        </p>
-                                                        <ul class="mil-social-icons mil-center">
-                                                            <li><a href="#"
-                                                                    onclick='window.open("https://wa.me/96171231714");return false;'
-                                                                    class="social-icon"> <i
-                                                                        class="fab fa-whatsapp"></i></a></li>
-                                                            <li><a href="#"
-                                                                    onclick='window.open("http://www.linkedin.com/in/rana-hussein-a69a3823b");return false;'
-                                                                    class="social-icon"> <i
-                                                                        class="fab fa-linkedin"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- team end -->
 
                 <!-- partners -->
                 <div class="mil-soft-bg">
@@ -393,9 +347,6 @@
                                         style="width: 200px;"><img src="img/partners/di-wrapp-logo.svg"
                                             alt="di-wrapp.com"></a>
                                 </div>
-                                <!-- <div class="swiper-slide">
-                                    <a href="https://www.event-base.co" class="mil-partner-frame" style="width: 200px;"><img src="img/partners/event-base" alt="event-base.co"></a>
-                                </div> -->
                                 <div class="swiper-slide">
                                     <a href="https://www.pillars-sa.com" class="mil-partner-frame"
                                         style="width: 200px;"><img src="img/partners/pillars-logo.svg"
@@ -412,69 +363,6 @@
                 </div>
                 <!-- partners end -->
 
-                <!-- blog -->
-                <section>
-                    <div class="container mil-p-120-60">
-                        <div class="row align-items-center mil-mb-30">
-                            <div class="col-lg-6 mil-mb-30">
-                                <h3 class="mil-up">Blogs</h3>
-                            </div>
-                            <div class="col-lg-6 mil-mb-30">
-                                <div class="mil-adaptive-right mil-up">
-                                    <a href="blogs.html" class="mil-link mil-dark mil-arrow-place">
-                                        <span>View all</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="publication.html" class="mil-blog-card mil-mb-60">
-                                    <div class="mil-post-descr">
-                                        <div class="mil-labels mil-up mil-mb-30">
-                                            <div class="mil-label mil-upper mil-accent">MARKETING</div>
-                                            <div class="mil-label mil-upper">soon</div>
-                                        </div>
-                                        <h4 class="mil-up mil-mb-30">5 Reasons to Outsource Your Marketing and Free Up
-                                            Your Time</h4>
-                                        <p class="mil-post-text mil-up mil-mb-30">Lorem ipsum dolor sit amet,
-                                            consectetur adipisicing elit. Eius sequi commodi dignissimos optio, beatae,
-                                            eos necessitatibus nisi. Nam cupiditate consectetur nostrum qui! Repellat
-                                            natus nulla, nisi aliquid, asperiores impedit tempora sequi est
-                                            reprehenderit cumque explicabo, dicta. Rem nihil ullam totam ea voluptas
-                                            quibusdam repudiandae id ut at iure! Totam, a!</p>
-                                        <div class="mil-link mil-dark mil-arrow-place mil-up">
-                                            <span>Read more</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-lg-6">
-                                <a href="publication.html" class="mil-blog-card mil-mb-60">
-                                    <div class="mil-post-descr">
-                                        <div class="mil-labels mil-up mil-mb-30">
-                                            <div class="mil-label mil-upper mil-accent">BRANDING</div>
-                                            <div class="mil-label mil-upper">soon</div>
-                                        </div>
-                                        <h4 class="mil-up mil-mb-30">Is It Time to Rebrand? Signs Your Business Needs a
-                                            Fresh Identity</h4>
-                                        <p class="mil-post-text mil-up mil-mb-30">Lorem ipsum dolor sit amet,
-                                            consectetur adipisicing elit. Eius sequi commodi dignissimos optio, beatae,
-                                            eos necessitatibus nisi. Nam cupiditate consectetur nostrum qui! Repellat
-                                            natus nulla, nisi aliquid, asperiores impedit tempora sequi est
-                                            reprehenderit cumque explicabo, dicta. Rem nihil ullam totam ea voluptas
-                                            quibusdam repudiandae id ut at iure! Totam, a!</p>
-                                        <div class="mil-link mil-dark mil-arrow-place mil-up">
-                                            <span>Read more</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- blog end -->
-
                 <!-- footer -->
                 <footer class="mil-dark-bg">
                     <div class="mi-invert-fix">
@@ -482,12 +370,9 @@
                             <div class="row justify-content-between">
                                 <div class="col-md-4 col-lg-4 mil-mb-60">
                                     <div class="mil-muted mil-logo mil-up mil-mb-30">Kaprera</div>
-                                    <p class="mil-light-soft mil-up mil-mb-30">Subscribe our newsletter:</p>
-                                    <form class="mil-subscribe-form mil-up">
-                                        <input type="text" placeholder="Enter your email">
-                                        <button type="submit"
-                                            class="mil-button mil-icon-button-sm mil-arrow-place"></button>
-                                    </form>
+                                    <a href="#" onclick='window.open("mailto:info@kaprera.com");return false;'>
+                                        <p class="mil-light-soft mil-up mil-mb-30">info@kaprera.com</p>
+                                    </a>
                                 </div>
                                 <div class="col-md-7 col-lg-6">
                                     <div class="row justify-content-end">
@@ -498,13 +383,12 @@
                                                     <li class="mil-up mil-active">
                                                         <a href="index.html">Home</a>
                                                     </li>
+                                                    <li class="mil-up mil">
+                                                        <a href="#about">About</a>
+                                                    </li>
                                                     <li class="mil-up">
                                                         <a href="services.html">Services</a>
                                                     </li>
-                                                    <li class="mil-up">
-                                                        <a href="blogs.html">Blogs</a>
-                                                    </li>
-
                                                     <li class="mil-up">
                                                         <a href="contact.html">Contact</a>
                                                     </li>
@@ -513,15 +397,10 @@
 
                                         </div>
                                         <div class="col-md-6 col-lg-5">
-
                                             <ul class="mil-menu-list mil-up mil-mb-60">
                                                 <li><a href="privacy.html" class="mil-light-soft">Privacy Policy</a>
                                                 </li>
-                                                <!-- <li><a href="#." class="mil-light-soft">Terms and conditions</a></li>
-                                                <li><a href="#." class="mil-light-soft">Cookie Policy</a></li>
-                                                <li><a href="#." class="mil-light-soft">Careers</a></li> -->
                                             </ul>
-
                                         </div>
                                     </div>
                                 </div>
@@ -532,14 +411,14 @@
                                     <div class="row justify-content-between">
                                         <div class="col-md-6 col-lg-5 mil-mb-60">
                                             <h6 class="mil-muted mil-up mil-mb-30">Lebanon</h6>
-                                            <p class="mil-light-soft mil-up">Beirut Hamra Abdullah Younis 502<br><span
+                                            <p class="mil-light-soft mil-up">Beirut Hamra Abdullah Younis<br><span
                                                     class="mil-no-wrap"><a href="#"
                                                         onclick='window.open("https://wa.me/9613816405");return false;'>+961
                                                         3816405</a></span></p>
                                         </div>
                                         <div class="col-md-6 col-lg-5 mil-mb-60">
                                             <h6 class="mil-muted mil-up mil-mb-30">Saudi Arabia</h6>
-                                            <p class="mil-light-soft mil-up">Olayya Nemer Building 412<br><span
+                                            <p class="mil-light-soft mil-up">Olayya Nemer Building<br><span
                                                     class="mil-no-wrap"><a href="#"
                                                         onclick='window.open("https://wa.me/9613816405");return false;'>+961
                                                         3816405</a></span></p>

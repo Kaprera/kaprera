@@ -76,7 +76,7 @@ body {
   color: rgba(0, 0, 0, 0.5);
   line-height: 150%;
   -ms-scroll-chaining: none;
-  overscroll-behavior: none;
+  overscroll-behavior: smooth;
 }
 
 @media screen and (max-width: 768px) {
