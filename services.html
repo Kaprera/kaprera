@@ -18,22 +18,6 @@
     <!-- Kaprera scss -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Brevo Conversations {literal} -->
-    <script>
-        (function (d, w, c) {
-            w.BrevoConversationsID = '67988e87ed6ea7c082078217';
-            w[c] = w[c] || function () {
-                (w[c].q = w[c].q || []).push(arguments);
-            };
-            var s = d.createElement('script');
-            s.async = true;
-            s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
-            if (d.head) d.head.appendChild(s);
-        })(document, window, 'BrevoConversations');
-
-    </script>
-    <!-- /Brevo Conversations {/literal} -->
-
     <!-- favicon -->
     <link rel="icon" type="image/x-icon" href="/img/icons/favicon.jpg">
     <!-- page name -->
@@ -101,9 +85,11 @@
                             <nav class="mil-main-menu" id="swupMenu">
                                 <ul>
                                     <li class="mil"><a href="index.html">Homepage</a></li>
-                                    <li class="mil"><a href="index.html#about">About</a></li>
+                                    <li data-no-swup class="mil"><a href="#"
+                                            onclick='window.open("https://www.kaprera.com/index.html#about");return false;'>About</a>
+                                    </li>
                                     <li class="mil mil-active"><a href="services.html">Services</a></li>
-                                    <li class="mil"><a href="contact.html" target="_blank">Contact Us</a></li>
+                                    <li class="mil"><a href="contact.html">Contact Us</a></li>
                                 </ul>
                             </nav>
                         </div>
