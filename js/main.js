@@ -1,4 +1,3 @@
-
 $(function () {
   "use strict";
 
@@ -710,6 +709,7 @@ $(function () {
       $(".mil-main-menu ul li.mil-active > a")
         .clone()
         .appendTo(".mil-current-page");
+      $(".mil-arrow").css("color", "white");
     });
     /***************************
 
@@ -1144,7 +1144,7 @@ $(function () {
   });
   window.addEventListener("load", () => {
     if (ScrollTrigger) {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     }
   });
 });
