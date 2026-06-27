@@ -396,6 +396,7 @@
   /* flip directional arrows for rtl */
   html[lang="ar"] .slider .nav.prev { left: auto; right: 12px; }
   html[lang="ar"] .slider .nav.next { right: auto; left: 12px; }
+  html[lang="ar"] .slider .nav svg { transform: scaleX(-1); }  /* mirror chevrons to match flipped positions */
   html[lang="ar"] .case-more svg { transform: scaleX(-1); }
   html[lang="ar"] .case-card:hover .case-more svg { transform: scaleX(-1) translateX(4px); }
 
@@ -790,6 +791,7 @@
   }
   .work-arrow:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
   .work-arrow:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  html[lang="ar"] .work-arrow svg { transform: scaleX(-1); }   /* mirror prev/next chevrons for rtl */
   .work-dots { display: flex; gap: 8px; }
   .work-dots i {
     width: 8px; height: 8px; border-radius: 50%;
@@ -1094,6 +1096,10 @@
   .svc-arrow.prev svg, .svc-arrow.next svg { transition: transform .3s var(--ease); }
   .svc-arrow.prev:hover svg { transform: translateX(-3px); }
   .svc-arrow.next:hover svg { transform: translateX(3px); }
+  /* mirror prev/next chevrons for rtl (positions already flip via inset-inline) */
+  html[lang="ar"] .svc-arrow svg { transform: scaleX(-1); }
+  html[lang="ar"] .svc-arrow.prev:hover svg { transform: scaleX(-1) translateX(-3px); }
+  html[lang="ar"] .svc-arrow.next:hover svg { transform: scaleX(-1) translateX(3px); }
 
   /* control row below the stage */
   .svc-ctrls {
