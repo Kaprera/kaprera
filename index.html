@@ -391,6 +391,8 @@
     align-items: center;
     gap: 34px;
   }
+  /* on desktop the panel is invisible to layout — links sit straight in the bar */
+  .nav-panel { display: contents; }
   .nav-links a.link {
     font-size: 15px;
     text-transform: lowercase;
@@ -1419,25 +1421,50 @@
   @media (max-width: 860px) {
     .section { padding: 80px 0; }
     .hero { padding: 138px 0 50px; }
-    .menu-btn { display: flex; }
+    .menu-btn { display: flex; position: relative; z-index: 101; }
+    .menu-btn.open span { background: #fff; }  /* X stays visible over the dark scrim */
+    /* nav becomes a dimmed backdrop holding a centered card (like the case modal) */
     .nav-links {
       position: fixed;
-      inset: 0 0 0 auto;
-      width: min(80vw, 320px);
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      gap: 8px;
-      background: var(--white);
-      padding: 100px 32px 32px;
-      transform: translateX(100%);
-      transition: transform .4s var(--ease);
-      box-shadow: -20px 0 60px rgba(0,0,0,0.10);
-      border-left: 1px solid var(--hair);
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 24px;
+      background: rgba(10,10,10,0.55);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s var(--ease);
     }
-    .nav-links.open { transform: translateX(0); }
-    .nav-links a.link { font-size: 20px; padding: 10px 0; }
-    .nav-links .btn { width: 100%; margin-top: 10px; }
+    .nav-links.open { opacity: 1; pointer-events: auto; }
+    .nav-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      width: 100%;
+      max-width: 360px;
+      max-height: 86vh;
+      overflow-y: auto;
+      background: var(--white);
+      border-radius: 18px;
+      padding: 26px 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      transform: translateY(24px) scale(0.98);
+      transition: transform .35s var(--ease);
+    }
+    .nav-links.open .nav-panel { transform: translateY(0) scale(1); }
+    .nav-panel a.link {
+      font-size: 19px; padding: 13px 4px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .nav-panel .lang-toggle,
+    .nav-panel .theme-toggle { align-self: flex-start; margin-top: 12px; }
+    .nav-panel .btn { width: 100%; margin-top: 14px; }
     .cases { grid-template-columns: 1fr; }
     .work-case { grid-template-columns: 1fr; gap: 24px; }
     .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
@@ -1569,6 +1596,7 @@
     </a>
 
     <nav class="nav-links" id="navLinks" aria-label="primary">
+      <div class="nav-panel" role="document">
       <a href="#work" class="link" data-en="work" data-ar="أعمالنا">work</a>
       <a href="#services" class="link" data-en="services" data-ar="خدماتنا">services</a>
       <a href="#testimonials" class="link" data-en="testimonials" data-ar="آراء العملاء">testimonials</a>
@@ -1582,6 +1610,7 @@
         <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
       <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
     </nav>
 
     <button class="menu-btn" id="menuBtn" aria-label="toggle menu" aria-expanded="false" aria-controls="navLinks">
@@ -2404,9 +2433,15 @@
     navLinks.classList.toggle('open', open);
     menuBtn.classList.toggle('open', open);
     menuBtn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('no-scroll', open);   // lock page scroll behind the card
   };
   menuBtn.addEventListener('click', () => toggleMenu());
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  // tap the dimmed backdrop (outside the card) to close
+  navLinks.addEventListener('click', (e) => { if (e.target === navLinks) toggleMenu(false); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) toggleMenu(false);
+  });
 
   // ── scroll reveal ──
   const io = new IntersectionObserver((entries) => {
