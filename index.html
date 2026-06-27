@@ -185,30 +185,19 @@
       radial-gradient(760px 520px at 100% 112%, rgba(70,196,236,0.032), transparent 56%),
       var(--bg-soft);
   }
-  /* testimonials — kaprera blue gradient (matches hero intro slide) */
+  /* testimonials — soft base; the slider stage carries the kaprera blue */
   #testimonials {
-    background-image:
-      radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
-      linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
+    background:
+      radial-gradient(900px 520px at 90% -10%, rgba(0,140,193,0.04), transparent 60%),
+      radial-gradient(760px 520px at 0% 112%, rgba(70,196,236,0.035), transparent 56%),
+      var(--bg-soft);
   }
-  /* light text for everything sitting directly on the blue */
-  #testimonials .title { color: #fff; }
-  #testimonials .label { color: rgba(255,255,255,0.78); }
-  #testimonials .label .num { color: #fff; }
-  #testimonials .label::before { background: #fff; }
-  #testimonials .industries .lbl { color: rgba(255,255,255,0.72); }
-  #testimonials .industries .pill { color: #fff; }
-  #testimonials .industries .sep { color: rgba(255,255,255,0.35); }
-  html[data-theme="dark"] #services {
+  html[data-theme="dark"] #services,
+  html[data-theme="dark"] #testimonials {
     background:
       radial-gradient(900px 520px at 10% -10%, rgba(0,140,193,0.10), transparent 60%),
       radial-gradient(760px 520px at 100% 112%, rgba(70,196,236,0.06), transparent 56%),
       var(--bg-soft);
-  }
-  html[data-theme="dark"] #testimonials {
-    background-image:
-      radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
-      linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
   }
 
   /* slow drifting colour blobs for life */
@@ -1053,119 +1042,98 @@
   .svc-count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
   .svc-count b { color: var(--ink); font-weight: 700; }
 
-  /* ── testimonials grid ── */
-  .tst-grid {
+  /* ── testimonials: featured quote + client picker ── */
+  .tst-feature-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1.55fr 1fr;
     gap: 24px;
-    margin-top: 26px;
+    margin-top: 30px;
+    align-items: stretch;
   }
-  .tst-card {
+  /* featured quote — the one kaprera-blue card on the page (no slider) */
+  .tst-feature {
     position: relative;
-    isolation: isolate;
     overflow: hidden;
+    isolation: isolate;
+    border-radius: 24px;
+    padding: clamp(34px, 4vw, 56px);
+    color: #fff;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    border: 1px solid var(--hair);
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    padding: 30px 28px;
+    justify-content: center;
+    gap: clamp(20px, 2.6vw, 30px);
+    min-height: 340px;
+    background-image:
+      radial-gradient(120% 120% at 82% -12%, rgba(255,255,255,0.22), transparent 52%),
+      linear-gradient(125deg, #0c5a86 0%, #008cc1 52%, #00c2d8 100%);
+    box-shadow: 0 40px 90px -45px rgba(0,0,0,0.5);
   }
-  html[lang="ar"] .tst-card { text-align: right; }
-  .tst-stars { color: var(--blue); font-size: 15px; letter-spacing: 2px; }
-  .tst-quote { font-size: 16px; line-height: 1.62; color: var(--ink); flex: 1; }
-  .tst-author {
-    display: flex; align-items: center; gap: 12px;
-    margin-top: 4px; padding-top: 18px;
-    border-top: 1px solid var(--hair);
+  html[lang="ar"] .tst-feature { text-align: right; }
+  .tst-feature > * { position: relative; z-index: 1; }
+  .tst-mark {
+    position: absolute; z-index: 0;
+    top: clamp(-8px, 1vw, 16px); inset-inline-end: clamp(26px, 4vw, 56px);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 700; font-size: clamp(150px, 20vw, 280px); line-height: 1;
+    color: rgba(255,255,255,0.12);
+    pointer-events: none; user-select: none;
   }
+  .tst-stars { color: #fff; font-size: 18px; letter-spacing: 5px; }
+  .tst-big {
+    font-size: clamp(20px, 2.3vw, 31px);
+    font-weight: 600;
+    line-height: 1.42;
+    letter-spacing: -0.01em;
+  }
+  .tst-by { display: flex; align-items: center; gap: 14px; }
   .tst-avatar {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: rgba(0,140,193,0.10);
-    color: var(--blue);
+    width: 50px; height: 50px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.26);
+    color: #fff; font-weight: 800;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 800;
     flex-shrink: 0;
   }
   .tst-meta { display: flex; flex-direction: column; gap: 2px; }
-  .tst-name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
-  .tst-role { font-size: 13px; color: var(--muted); }
+  .tst-name { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+  .tst-role { font-size: 13px; color: rgba(255,255,255,0.80); }
+  /* swap transition for the featured content */
+  .tst-big, .tst-by { transition: opacity .35s var(--ease), transform .35s var(--ease); }
+  .tst-feature.swapping .tst-big, .tst-feature.swapping .tst-by { opacity: 0; transform: translateY(12px); }
 
-  /* ── testimonials: alive ── */
-  /* staggered reveal of the cards (grid carries .reveal -> .in) */
-  .tst-grid .tst-card {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity .6s var(--ease) var(--d, 0s),
-                transform .6s var(--ease) var(--d, 0s),
-                box-shadow .35s var(--ease), border-color .35s,
-                background-color .35s var(--ease), color .35s var(--ease);
+  /* client picker — clickable list, active one highlighted */
+  .tst-picker {
+    display: flex; flex-direction: column;
+    justify-content: center; gap: 10px;
   }
-  .tst-grid.in .tst-card { opacity: 1; transform: none; }
-  .tst-grid .tst-card:nth-child(1) { --d: .05s; }
-  .tst-grid .tst-card:nth-child(2) { --d: .16s; }
-  .tst-grid .tst-card:nth-child(3) { --d: .27s; }
-  .tst-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 44px rgba(0,0,0,0.10);
-    border-color: rgba(0,140,193,0.35);
+  .tst-pick {
+    position: relative;
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; text-align: inherit;
+    padding: 16px 18px;
+    border: 1px solid var(--hair);
+    border-radius: 16px;
+    background: var(--white);
+    cursor: pointer;
+    transition: border-color .3s, box-shadow .3s var(--ease), transform .3s var(--ease), background-color .3s;
   }
-
-  /* pointer-follow spotlight */
-  .tst-glow {
-    position: absolute; inset: 0; z-index: -1;
-    opacity: 0; transition: opacity .4s var(--ease);
-    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(0,140,193,0.12), transparent 60%);
+  html[lang="ar"] .tst-pick { text-align: right; }
+  .tst-pick:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.07); }
+  .tst-pick .pk-avatar {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(0,140,193,0.10); color: var(--blue);
+    display: grid; place-items: center; font-weight: 800; flex-shrink: 0;
+    transition: background-color .3s, color .3s;
   }
-  .tst-card:hover .tst-glow { opacity: 1; }
-
-  /* floating decorative quote glyph */
-  .tst-card::before {
-    content: '\201C';
-    position: absolute;
-    top: -18px; inset-inline-end: 24px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 116px; line-height: 1;
-    color: var(--blue);
-    opacity: 0.07;
-    pointer-events: none; z-index: -1;
-    animation: tstQuoteFloat 6s ease-in-out infinite;
+  .tst-pick .pk-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .tst-pick .pk-name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+  .tst-pick .pk-role { font-size: 13px; color: var(--muted); }
+  .tst-pick.is-active {
+    border-color: transparent;
+    background: rgba(0,140,193,0.06);
+    box-shadow: inset 0 0 0 1.6px var(--blue);
   }
-  @keyframes tstQuoteFloat { 50% { transform: translateY(-9px); } }
-
-  /* twinkling stars */
-  .tst-stars span { display: inline-block; animation: tstTwinkle 3s ease-in-out infinite; }
-  .tst-stars span:nth-child(1) { animation-delay: 0s; }
-  .tst-stars span:nth-child(2) { animation-delay: .18s; }
-  .tst-stars span:nth-child(3) { animation-delay: .36s; }
-  .tst-stars span:nth-child(4) { animation-delay: .54s; }
-  .tst-stars span:nth-child(5) { animation-delay: .72s; }
-  @keyframes tstTwinkle {
-    0%, 100% { transform: scale(1); opacity: .82; }
-    50% { transform: scale(1.22); opacity: 1; }
-  }
-
-  /* avatar life: pulse ring + hover flip-in */
-  .tst-avatar { position: relative; transition: transform .45s var(--ease), background-color .4s var(--ease), color .4s var(--ease); }
-  .tst-avatar::after {
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: 50%;
-    border: 1px solid var(--blue);
-    opacity: 0;
-    animation: avatarPulse 3.2s ease-out infinite;
-  }
-  @keyframes avatarPulse {
-    0% { transform: scale(1); opacity: .5; }
-    100% { transform: scale(1.55); opacity: 0; }
-  }
-  .tst-card:hover .tst-avatar {
-    transform: scale(1.08) rotate(-5deg);
-    background: var(--blue);
-    color: #fff;
-  }
+  .tst-pick.is-active .pk-avatar { background: var(--blue); color: #fff; }
 
   .industries {
     margin-top: 24px;
@@ -1464,7 +1432,10 @@
     .svc-statement { max-width: none; }
     .svc-arrow { top: auto; bottom: 22px; transform: none; width: 48px; height: 48px; }
     .svc-arrow.prev:hover svg, .svc-arrow.next:hover svg { transform: none; }
-    .tst-grid { grid-template-columns: 1fr; }
+    /* testimonials → stack featured over the client picker */
+    .tst-feature-grid { grid-template-columns: 1fr; gap: 16px; }
+    .tst-feature { min-height: 0; padding: 34px 26px; }
+    .tst-mark { font-size: clamp(130px, 40vw, 240px); }
     .contact-grid { grid-template-columns: 1fr; gap: 20px; }
     .field-row { grid-template-columns: 1fr; gap: 0; }
     .cases-head { flex-direction: column; align-items: flex-start; }
@@ -1474,8 +1445,8 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
     .reveal { opacity: 1; transform: none; transition: none; }
-    .svc-panel [data-anim], .tst-grid .tst-card { opacity: 1 !important; transform: none !important; }
-    .svc-bg { transition: none; }
+    .svc-panel [data-anim] { opacity: 1 !important; transform: none !important; }
+    .svc-bg, .tst-big, .tst-by { transition: none; }
   }
 
   /* ── preloader: logo fills up ── */
@@ -1836,45 +1807,44 @@
         <span class="pill" data-en="Management & IT Consultancy" data-ar="الإدارة واستشارات تقنية المعلومات">Management &amp; IT Consultancy</span>
       </div>
 
-      <div class="tst-grid reveal">
-        <figure class="tst-card" data-tst>
-          <span class="tst-glow" aria-hidden="true"></span>
-          <div class="tst-stars" aria-label="5 out of 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <blockquote class="tst-quote" data-en="kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed." data-ar="أعادت kaprera بناء موقعنا بتجربة استخدام عصرية وأنيقة. انخفضت أوقات التحميل وارتفع التفاعل — تمامًا الحضور الاحترافي الذي احتجناه.">kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed.</blockquote>
-          <figcaption class="tst-author">
-            <span class="tst-avatar">B</span>
+      <!-- ── featured quote + clickable client picker ── -->
+      <div class="tst-feature-grid reveal" id="tstWrap">
+        <figure class="tst-feature">
+          <span class="tst-mark" aria-hidden="true">&ldquo;</span>
+          <div class="tst-stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote class="tst-big" id="tstQuote" data-en="kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed." data-ar="أعادت kaprera بناء موقعنا بتجربة استخدام عصرية وأنيقة. انخفضت أوقات التحميل وارتفع التفاعل — تمامًا الحضور الاحترافي الذي احتجناه.">kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed.</blockquote>
+          <figcaption class="tst-by">
+            <span class="tst-avatar" id="tstAvatar">B</span>
             <span class="tst-meta">
-              <span class="tst-name">Bayader</span>
-              <span class="tst-role" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span>
+              <span class="tst-name" id="tstName">Bayader</span>
+              <span class="tst-role" id="tstRole" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span>
             </span>
           </figcaption>
         </figure>
 
-        <figure class="tst-card" data-tst>
-          <span class="tst-glow" aria-hidden="true"></span>
-          <div class="tst-stars" aria-label="5 out of 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <blockquote class="tst-quote" data-en="The platform they delivered streamlined how we manage volunteers end to end. Onboarding is faster and our team finally has tools that just work." data-ar="بسّطت المنصة التي قدّموها طريقة إدارتنا للمتطوعين من البداية إلى النهاية. أصبح الانضمام أسرع وبات لدى فريقنا أدوات تعمل بسلاسة.">The platform they delivered streamlined how we manage volunteers end to end. Onboarding is faster and our team finally has tools that just work.</blockquote>
-          <figcaption class="tst-author">
-            <span class="tst-avatar">L</span>
-            <span class="tst-meta">
-              <span class="tst-name">Lebanese Spotlight</span>
-              <span class="tst-role" data-en="NGO" data-ar="منظمة غير حكومية">NGO</span>
+        <div class="tst-picker" role="tablist" aria-label="clients">
+          <button type="button" class="tst-pick is-active" data-i="0" role="tab" aria-selected="true" data-q-en="kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed." data-q-ar="أعادت kaprera بناء موقعنا بتجربة استخدام عصرية وأنيقة. انخفضت أوقات التحميل وارتفع التفاعل — تمامًا الحضور الاحترافي الذي احتجناه.">
+            <span class="pk-avatar">B</span>
+            <span class="pk-meta">
+              <span class="pk-name">Bayader</span>
+              <span class="pk-role" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span>
             </span>
-          </figcaption>
-        </figure>
-
-        <figure class="tst-card" data-tst>
-          <span class="tst-glow" aria-hidden="true"></span>
-          <div class="tst-stars" aria-label="5 out of 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <blockquote class="tst-quote" data-en="Working with kaprera felt like having a real partner. Clear process, fast delivery, and a result that actually converts." data-ar="العمل مع kaprera كان كأنّ لدينا شريكًا حقيقيًا. عملية واضحة، وتسليم سريع، ونتيجة تحقّق التحويل فعلًا.">Working with kaprera felt like having a real partner. Clear process, fast delivery, and a result that actually converts.</blockquote>
-          <figcaption class="tst-author">
-            <span class="tst-avatar">S</span>
-            <span class="tst-meta">
-              <span class="tst-name" data-en="Startup Founder" data-ar="مؤسّس شركة ناشئة">Startup Founder</span>
-              <span class="tst-role" data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</span>
+          </button>
+          <button type="button" class="tst-pick" data-i="1" role="tab" aria-selected="false" data-q-en="The platform they delivered streamlined how we manage volunteers end to end. Onboarding is faster and our team finally has tools that just work." data-q-ar="بسّطت المنصة التي قدّموها طريقة إدارتنا للمتطوعين من البداية إلى النهاية. أصبح الانضمام أسرع وبات لدى فريقنا أدوات تعمل بسلاسة.">
+            <span class="pk-avatar">L</span>
+            <span class="pk-meta">
+              <span class="pk-name">Lebanese Spotlight</span>
+              <span class="pk-role" data-en="NGO" data-ar="منظمة غير حكومية">NGO</span>
             </span>
-          </figcaption>
-        </figure>
+          </button>
+          <button type="button" class="tst-pick" data-i="2" role="tab" aria-selected="false" data-q-en="Working with kaprera felt like having a real partner. Clear process, fast delivery, and a result that actually converts." data-q-ar="العمل مع kaprera كان كأنّ لدينا شريكًا حقيقيًا. عملية واضحة، وتسليم سريع، ونتيجة تحقّق التحويل فعلًا.">
+            <span class="pk-avatar">S</span>
+            <span class="pk-meta">
+              <span class="pk-name" data-en="Startup Founder" data-ar="مؤسّس شركة ناشئة">Startup Founder</span>
+              <span class="pk-role" data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</span>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -2311,6 +2281,84 @@
     track.addEventListener('touchend', () => { if (swiping && Math.abs(sdx) > 50) go(sdx < 0 ? i + 1 : i - 1); swiping = false; start(); });
 
     go(0); start();
+  })();
+
+  // ── testimonials: featured quote + clickable client picker ──
+  (function initTestimonials() {
+    const wrap = document.getElementById('tstWrap');
+    if (!wrap) return;
+    const feature = wrap.querySelector('.tst-feature');
+    const quoteEl = document.getElementById('tstQuote');
+    const roleEl = document.getElementById('tstRole');
+    const nameEl = document.getElementById('tstName');
+    const avatarEl = document.getElementById('tstAvatar');
+    const picks = [...wrap.querySelectorAll('.tst-pick')];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = null;
+    const AUTO = 5000;
+
+    // pull each client's data straight from its picker button (keeps i18n in the DOM)
+    const data = picks.map(p => {
+      const q = p.dataset;
+      const nameNode = p.querySelector('.pk-name');
+      const roleNode = p.querySelector('.pk-role');
+      return {
+        initial: p.querySelector('.pk-avatar').textContent,
+        name_en: nameNode.getAttribute('data-en') || nameNode.textContent,
+        name_ar: nameNode.getAttribute('data-ar') || nameNode.textContent,
+        role_en: roleNode.getAttribute('data-en'),
+        role_ar: roleNode.getAttribute('data-ar'),
+        q_en: p.getAttribute('data-q-en'),
+        q_ar: p.getAttribute('data-q-ar')
+      };
+    });
+
+    const select = (n, animate = true) => {
+      i = (n + picks.length) % picks.length;
+      const d = data[i];
+      const ar = document.documentElement.lang === 'ar';
+      const apply = () => {
+        // set both languages so the global language toggle keeps working
+        quoteEl.setAttribute('data-en', d.q_en);
+        quoteEl.setAttribute('data-ar', d.q_ar);
+        quoteEl.textContent = ar ? d.q_ar : d.q_en;
+        nameEl.setAttribute('data-en', d.name_en);
+        nameEl.setAttribute('data-ar', d.name_ar);
+        nameEl.textContent = ar ? d.name_ar : d.name_en;
+        roleEl.setAttribute('data-en', d.role_en);
+        roleEl.setAttribute('data-ar', d.role_ar);
+        roleEl.textContent = ar ? d.role_ar : d.role_en;
+        avatarEl.textContent = d.initial;
+      };
+      picks.forEach((p, idx) => {
+        const on = idx === i;
+        p.classList.toggle('is-active', on);
+        p.setAttribute('aria-selected', String(on));
+      });
+      if (animate && !reduce) {
+        feature.classList.add('swapping');
+        setTimeout(() => { apply(); feature.classList.remove('swapping'); }, 280);
+      } else {
+        apply();
+      }
+    };
+
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const start = () => { if (reduce) return; stop(); timer = setInterval(() => select(i + 1), AUTO); };
+    const rest = () => { stop(); start(); };
+
+    picks.forEach((p) => {
+      p.addEventListener('click', () => { select(+p.dataset.i); rest(); });
+    });
+
+    // pause autoplay while hovering or keyboard-focused inside, resume after
+    wrap.addEventListener('mouseenter', stop);
+    wrap.addEventListener('mouseleave', start);
+    wrap.addEventListener('focusin', stop);
+    wrap.addEventListener('focusout', (e) => { if (!wrap.contains(e.relatedTarget)) start(); });
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+
+    start();
   })();
 
   // ── nav: scroll condense ──
