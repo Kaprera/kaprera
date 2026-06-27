@@ -1030,13 +1030,13 @@
   .svc-dots i.active { width: 34px; border-radius: 5px; background: var(--hair); }
   .svc-dots i.active::after {
     content: ""; position: absolute; inset: 0; border-radius: inherit;
-    background: var(--blue); transform-origin: left; transform: scaleX(0);
+    background: var(--svc-fill, var(--blue)); transform-origin: left; transform: scaleX(0);
   }
   html[lang="ar"] .svc-dots i.active::after { transform-origin: right; }
   .svc-dots i.active.fill::after { animation: workFill var(--svc-auto, 4000ms) linear forwards; }
   .svc-dots.paused i.active::after { animation-play-state: paused; }
   @media (prefers-reduced-motion: reduce) {
-    .svc-dots i.active { background: var(--blue); }
+    .svc-dots i.active { background: var(--svc-fill, var(--blue)); }
     .svc-dots i.active::after { display: none; }
   }
   .svc-count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
@@ -1114,6 +1114,7 @@
     border: 1px solid var(--hair);
     border-radius: 16px;
     background: var(--white);
+    color: var(--ink);
     cursor: pointer;
     transition: border-color .3s, box-shadow .3s var(--ease), transform .3s var(--ease), background-color .3s;
   }
@@ -1483,7 +1484,7 @@
   .pl-logo .pl-fill {
     opacity: 1;
     clip-path: inset(100% 0 0 0);
-    animation: plFill .6s var(--ease) forwards;
+    animation: plFill .95s var(--ease) forwards;
   }
   @keyframes plFill  { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
   @keyframes plPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.045); } }
@@ -1529,6 +1530,7 @@
       if (done) return;
       done = true;
       pl.classList.add('done');
+      document.dispatchEvent(new CustomEvent('kaprera:loaded')); // let the hero start typing
       pl.addEventListener('transitionend', function () { pl.remove(); }, { once: true });
       setTimeout(function () { if (pl.parentNode) pl.remove(); }, 900);
     }
@@ -2038,6 +2040,8 @@
   // ── hero headline typewriter ──
   const heroTitle = document.getElementById('heroTitle');
   let typeTimer = null;
+  // slide 1 shouldn't type while the preloader still covers it; unlocked on 'kaprera:loaded'
+  let heroTypingUnlocked = !document.getElementById('preloader');
   const typeHeroTitle = (lang) => {
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     const text = heroTitle.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en') || '';
@@ -2051,6 +2055,8 @@
     heroTitle.textContent = text;
     heroTitle.style.minHeight = heroTitle.offsetHeight + 'px';
     heroTitle.innerHTML = '<span class="typed"></span><span class="caret"></span>';
+    // hold the keystrokes until the preloader clears; this fn re-runs on unlock
+    if (!heroTypingUnlocked) return;
     const typed = heroTitle.querySelector('.typed');
     const delayFor = (ch) => {
       if (ch === ',' || ch === '،') return 320;          // pause after comma
@@ -2222,6 +2228,8 @@
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let i = 0, timer = null;
     const AUTO = 4000;
+    // mid-tone of each service's background gradient, so the playing dot matches the panel
+    const FILL = ['#008cc1', '#4a37c9', '#0c9b86'];
 
     panels.forEach((_, idx) => {
       const d = document.createElement('i');
@@ -2247,6 +2255,7 @@
       panels.forEach((p, idx) => p.classList.toggle('is-active', idx === i));
       bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
       dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      dotsWrap.style.setProperty('--svc-fill', FILL[i] || FILL[0]);
       if (nowEl) nowEl.textContent = String(i + 1).padStart(2, '0');
       paintFill();
     };
@@ -2468,6 +2477,14 @@
 
   // apply saved language (swap text/placeholders) on load
   applyLang(currentLang);
+
+  // begin the hero typewriter only once the preloader has finished
+  if (!heroTypingUnlocked) {
+    document.addEventListener('kaprera:loaded', () => {
+      heroTypingUnlocked = true;
+      typeHeroTitle(currentLang);
+    }, { once: true });
+  }
 </script>
 </body>
 </html>
