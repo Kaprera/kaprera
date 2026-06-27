@@ -353,11 +353,20 @@
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 60;
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, box-shadow .3s, padding .3s;
+  }
+  /* background + blur live on a pseudo-element so the header itself doesn't
+     become a containing block for the fixed mobile-nav overlay */
+  header.nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: color-mix(in srgb, var(--white) 72%, transparent);
     backdrop-filter: saturate(180%) blur(14px);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
-    border-bottom: 1px solid transparent;
-    transition: background-color .3s var(--ease), border-color .3s, box-shadow .3s, padding .3s;
+    transition: background-color .3s var(--ease);
   }
   header.nav.scrolled {
     border-bottom-color: var(--hair);
@@ -393,6 +402,7 @@
   }
   /* on desktop the panel is invisible to layout — links sit straight in the bar */
   .nav-panel { display: contents; }
+  .nav-utils { display: contents; }
   .nav-links a.link {
     font-size: 15px;
     text-transform: lowercase;
@@ -1445,25 +1455,29 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      gap: 4px;
+      gap: 0;
       width: 100%;
-      max-width: 360px;
+      max-width: 340px;
       max-height: 86vh;
       overflow-y: auto;
       background: var(--white);
-      border-radius: 18px;
-      padding: 26px 24px;
+      border-radius: 20px;
+      padding: 14px 22px 24px;
       box-shadow: 0 30px 80px rgba(0,0,0,0.35);
       transform: translateY(24px) scale(0.98);
       transition: transform .35s var(--ease);
     }
     .nav-links.open .nav-panel { transform: translateY(0) scale(1); }
     .nav-panel a.link {
-      font-size: 19px; padding: 13px 4px;
+      font-size: 18px; font-weight: 500; padding: 16px 2px;
       border-bottom: 1px solid var(--hair);
     }
-    .nav-panel .lang-toggle,
-    .nav-panel .theme-toggle { align-self: flex-start; margin-top: 12px; }
+    .nav-panel a.link:last-of-type { border-bottom: 0; }
+    .nav-utils {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
     .nav-panel .btn { width: 100%; margin-top: 14px; }
     .cases { grid-template-columns: 1fr; }
     .work-case { grid-template-columns: 1fr; gap: 24px; }
@@ -1601,6 +1615,7 @@
       <a href="#services" class="link" data-en="services" data-ar="خدماتنا">services</a>
       <a href="#testimonials" class="link" data-en="testimonials" data-ar="آراء العملاء">testimonials</a>
       <a href="#contact" class="link" data-en="contact" data-ar="تواصل">contact</a>
+      <div class="nav-utils">
       <button class="lang-toggle" id="langToggle" type="button" aria-label="switch language" aria-pressed="false">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
         <span id="langLabel">ع</span>
@@ -1609,6 +1624,7 @@
         <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
+      </div>
       <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </nav>
