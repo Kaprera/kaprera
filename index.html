@@ -1217,6 +1217,18 @@
   }
   .tst-pick.is-active .pk-avatar { background: var(--blue); color: #fff; }
 
+  /* avatars that show a client logo instead of an initial — keep a clean white
+     disc so the logo stays legible in every state (idle, active, featured) */
+  .pk-avatar.has-logo,
+  .tst-pick.is-active .pk-avatar.has-logo,
+  .tst-avatar.has-logo { background: #fff; padding: 0; overflow: hidden; }
+  .tst-avatar.has-logo { border-color: rgba(255,255,255,0.55); }
+  .pk-avatar.has-logo img,
+  .tst-avatar.has-logo img {
+    width: 100%; height: 100%;
+    object-fit: contain; padding: 5px; border-radius: 50%;
+  }
+
   .industries {
     margin-top: 24px;
     display: flex;
@@ -1948,8 +1960,8 @@
               <span class="pk-role" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span>
             </span>
           </button>
-          <button type="button" class="tst-pick" data-i="1" role="tab" aria-selected="false" data-q-en="kaprera built a website that reflects our organization and makes it easy to explore and engage with our volunteers." data-q-ar="بنت kaprera موقعًا يعكس هويّة منظمتنا ويسهّل استكشاف متطوّعينا والتفاعل معهم.">
-            <span class="pk-avatar">L</span>
+          <button type="button" class="tst-pick" data-i="1" role="tab" aria-selected="false" data-logo="cases/lbspotlight/favicon.png" data-q-en="kaprera built a website that reflects our organization and makes it easy to explore and engage with our volunteers." data-q-ar="بنت kaprera موقعًا يعكس هويّة منظمتنا ويسهّل استكشاف متطوّعينا والتفاعل معهم.">
+            <span class="pk-avatar has-logo"><img src="cases/lbspotlight/favicon.png" alt="Lebanese Spotlight logo" width="46" height="46" loading="lazy" decoding="async" /></span>
             <span class="pk-meta">
               <span class="pk-name">Lebanese Spotlight</span>
               <span class="pk-role" data-en="NGO" data-ar="منظمة غير حكومية">NGO</span>
@@ -2429,6 +2441,7 @@
       const roleNode = p.querySelector('.pk-role');
       return {
         initial: p.querySelector('.pk-avatar').textContent,
+        logo: p.dataset.logo || '',
         name_en: nameNode.getAttribute('data-en') || nameNode.textContent,
         name_ar: nameNode.getAttribute('data-ar') || nameNode.textContent,
         role_en: roleNode.getAttribute('data-en'),
@@ -2453,7 +2466,13 @@
         roleEl.setAttribute('data-en', d.role_en);
         roleEl.setAttribute('data-ar', d.role_ar);
         roleEl.textContent = ar ? d.role_ar : d.role_en;
-        avatarEl.textContent = d.initial;
+        if (d.logo) {
+          avatarEl.classList.add('has-logo');
+          avatarEl.innerHTML = '<img src="' + d.logo + '" alt="' + (ar ? d.name_ar : d.name_en) + ' logo">';
+        } else {
+          avatarEl.classList.remove('has-logo');
+          avatarEl.textContent = d.initial;
+        }
       };
       picks.forEach((p, idx) => {
         const on = idx === i;
