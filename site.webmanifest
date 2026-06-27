@@ -11,16 +11,16 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "/branding/logos/kaprera-icon.jpg",
+      "src": "/branding/logos/favicon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/branding/logos/kaprera-icon-mark.png",
-      "sizes": "913x793",
+      "src": "/branding/logos/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     }
   ]
 }
