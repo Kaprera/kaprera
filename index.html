@@ -1188,10 +1188,23 @@
   /* ── contact ── */
   .contact-grid {
     display: grid;
-    grid-template-columns: 1.3fr 0.9fr;
-    gap: 56px;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 28px;
     margin-top: 8px;
+    align-items: stretch;
   }
+  /* shared card shell for both the form and the info panel */
+  .contact-card {
+    background: var(--white);
+    border: 1px solid var(--hair);
+    border-radius: 18px;
+    padding: clamp(26px, 3vw, 38px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .3s, background-color .35s var(--ease);
+  }
+  .contact-card:hover { box-shadow: 0 18px 40px rgba(0,0,0,0.08); }
+  /* form fields laid out horizontally */
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   form .field { margin-bottom: 18px; }
   form label {
     display: block;
@@ -1223,7 +1236,19 @@
   form textarea { resize: vertical; min-height: 130px; }
   form .btn { margin-top: 6px; }
 
-  .contact-aside { display: flex; flex-direction: column; gap: 26px; }
+  /* info panel — vertical, subtly tinted, rows split by hairlines */
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+    background:
+      radial-gradient(120% 100% at 100% 0%, rgba(0,140,193,0.05), transparent 55%),
+      var(--white);
+  }
+  .contact-item { padding: 16px 0; border-top: 1px solid var(--hair); }
+  .contact-item:first-child { padding-top: 2px; border-top: none; }
+  .contact-item:last-child { padding-bottom: 2px; }
   .contact-item .k {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
@@ -1440,7 +1465,8 @@
     .svc-arrow { top: auto; bottom: 22px; transform: none; width: 48px; height: 48px; }
     .svc-arrow.prev:hover svg, .svc-arrow.next:hover svg { transform: none; }
     .tst-grid { grid-template-columns: 1fr; }
-    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+    .field-row { grid-template-columns: 1fr; gap: 0; }
     .cases-head { flex-direction: column; align-items: flex-start; }
     .cs-results { grid-template-columns: 1fr; }
   }
@@ -1860,14 +1886,16 @@
       <h2 class="title reveal" data-en="tell us about your project." data-ar="أخبرنا عن مشروعك.">tell us about your project.</h2>
 
       <div class="contact-grid">
-        <form id="contactForm" class="reveal" novalidate>
-          <div class="field">
-            <label for="name" data-en="full name" data-ar="الاسم الكامل">full name</label>
-            <input type="text" id="name" name="name" placeholder="your name" data-en-ph="your name" data-ar-ph="اسمك" required />
-          </div>
-          <div class="field">
-            <label for="email" data-en="email" data-ar="البريد الإلكتروني">email</label>
-            <input type="email" id="email" name="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+        <form id="contactForm" class="contact-card reveal" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="name" data-en="full name" data-ar="الاسم الكامل">full name</label>
+              <input type="text" id="name" name="name" placeholder="your name" data-en-ph="your name" data-ar-ph="اسمك" required />
+            </div>
+            <div class="field">
+              <label for="email" data-en="email" data-ar="البريد الإلكتروني">email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+            </div>
           </div>
           <div class="field">
             <label for="message" data-en="message" data-ar="الرسالة">message</label>
@@ -1876,7 +1904,7 @@
           <button type="submit" class="btn btn-primary" data-en="send" data-ar="إرسال">send</button>
         </form>
 
-        <aside class="contact-aside reveal">
+        <aside class="contact-card contact-aside reveal">
           <div class="contact-item">
             <div class="k" data-en="book a call" data-ar="احجز مكالمة">book a call</div>
             <a class="v" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" data-en="schedule a meeting →" data-ar="حدّد موعدًا ←">schedule a meeting →</a>
