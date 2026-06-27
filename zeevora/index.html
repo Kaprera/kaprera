@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zeevora — SaaS e-commerce platform · kaprera partner</title>
+<meta name="description" content="Zeevora is a complete SaaS e-commerce platform — storefront, catalog, checkout, payments, orders, inventory and analytics in one system. Offered through kaprera, a Zeevora partner." />
+<meta name="keywords" content="Zeevora, e-commerce platform, SaaS e-commerce, online store, storefront, checkout, payments, inventory, order management, kaprera" />
+<meta name="author" content="kaprera" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#6366f1" />
+<link rel="canonical" href="https://kaprera.com/zeevora/" />
+<link rel="icon" type="image/jpeg" href="../branding/logos/kaprera-icon.jpg" />
+<link rel="apple-touch-icon" href="../branding/logos/kaprera-icon.jpg" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="kaprera" />
+<meta property="og:title" content="Zeevora — SaaS e-commerce platform · kaprera partner" />
+<meta property="og:description" content="A complete e-commerce system — storefront, checkout, payments, orders, inventory and analytics. In partnership with kaprera." />
+<meta property="og:url" content="https://kaprera.com/zeevora/" />
+<meta property="og:image" content="https://kaprera.com/branding/logos/kaprera-logo.png" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Zeevora — SaaS e-commerce platform" />
+<meta name="twitter:description" content="A complete e-commerce system. In partnership with kaprera." />
+<meta name="twitter:image" content="https://kaprera.com/branding/logos/kaprera-logo.png" />
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Zeevora",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Zeevora is a SaaS e-commerce platform offering storefront, catalog, checkout, payments, order management, inventory and analytics.",
+  "url": "https://kaprera.com/zeevora/",
+  "offers": { "@type": "Offer", "category": "SaaS" },
+  "brand": { "@type": "Brand", "name": "Zeevora" },
+  "provider": { "@type": "Organization", "name": "kaprera", "url": "https://kaprera.com/", "description": "Zeevora partner" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --blue: #6366f1;          /* zeevora indigo — primary accent */
+    --blue-dark: #4f46e5;
+    --kaprera: #008cc1;       /* kaprera blue — co-brand accent */
+    --white: #ffffff;
+    --ink: #0a0a0a;
+    --muted: #5b5b5b;
+    --hair: #e6e6e6;
+    --bg-soft: #fafafa;
+    --card: #ffffff;
+    --maxw: 1180px;
+    --radius: 14px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-theme="dark"] {
+    --white: #0d1117;
+    --ink: #e8eaed;
+    --muted: #9aa4ad;
+    --hair: #232a31;
+    --bg-soft: #161b22;
+    --card: #11161d;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after {
+    transition: background-color .35s var(--ease), border-color .3s var(--ease), color .3s var(--ease), fill .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body.no-scroll { overflow: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--blue); color: #fff; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 3px; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 400; }
+  .accent { color: var(--blue); }
+
+  /* ── section label ── */
+  .label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; letter-spacing: 0.04em; color: var(--muted);
+    margin-bottom: 22px;
+  }
+  .label .num { color: var(--blue); }
+  .label::before { content: ""; width: 26px; height: 1px; background: var(--blue); display: inline-block; }
+
+  .section { padding: 110px 0; border-top: 1px solid var(--hair); }
+  .section-head { max-width: 640px; }
+
+  h2.title {
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1.05;
+    text-transform: lowercase; margin-bottom: 16px;
+  }
+  .lede { color: var(--muted); font-size: 18px; max-width: 560px; }
+
+  /* ── buttons ── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-weight: 600; font-size: 15px; padding: 13px 24px;
+    border-radius: 999px; border: 1px solid transparent; cursor: pointer;
+    transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s, color .2s, border-color .2s;
+    text-transform: lowercase; white-space: nowrap;
+  }
+  .btn svg { transition: transform .3s var(--ease); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:hover svg { transform: translateX(4px); }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-primary:hover { background: var(--blue-dark); box-shadow: 0 12px 24px -8px rgba(99,102,241,0.55); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--hair); }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 10px 22px -10px rgba(0,0,0,0.18); }
+  .btn-shine { position: relative; overflow: hidden; }
+  .btn-shine::after {
+    content: ""; position: absolute; top: 0; left: -75%;
+    width: 50%; height: 100%; pointer-events: none;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg); transition: left .6s var(--ease);
+  }
+  .btn-shine:hover::after { left: 125%; }
+
+  /* ── theme toggle ── */
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--hair); background: transparent; color: var(--ink);
+    cursor: pointer; flex-shrink: 0;
+    transition: border-color .2s, color .2s, transform .25s var(--ease);
+  }
+  .theme-toggle:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+  .theme-toggle .sun { display: none; }
+  .theme-toggle .moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .sun { display: block; }
+  html[data-theme="dark"] .theme-toggle .moon { display: none; }
+
+  /* ── nav ── */
+  header.nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 60;
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, box-shadow .3s, padding .3s;
+  }
+  header.nav::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: color-mix(in srgb, var(--white) 72%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    transition: background-color .3s var(--ease);
+  }
+  header.nav.scrolled { border-bottom-color: var(--hair); box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 78px; transition: height .3s var(--ease); }
+  header.nav.scrolled .nav-inner { height: 64px; }
+
+  .brand { display: inline-flex; align-items: baseline; gap: 7px; font-weight: 800; font-size: 21px; letter-spacing: -0.02em; }
+  .brand .mark { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-weight: 500; }
+  .brand .by { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+  .brand .by b { color: var(--kaprera); font-weight: 700; }
+
+  .nav-links { display: flex; align-items: center; gap: 34px; }
+  .nav-panel { display: contents; }
+  .nav-utils { display: contents; }
+  .nav-links a.link { font-size: 15px; font-weight: 500; position: relative; color: var(--ink); }
+  .nav-links a.link::after {
+    content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--blue);
+    transition: width .25s var(--ease);
+  }
+  .nav-links a.link:hover { color: var(--blue); }
+  .nav-links a.link:hover::after { width: 100%; }
+
+  .menu-btn { display: none; flex-direction: column; gap: 6px; background: none; border: 0; cursor: pointer; padding: 8px; }
+  .menu-btn span { width: 24px; height: 2px; background: var(--ink); transition: transform .3s var(--ease), opacity .2s; }
+  .menu-btn.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .menu-btn.open span:nth-child(2) { opacity: 0; }
+  .menu-btn.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  /* ── hero ── */
+  .hero { padding: 150px 0 70px; position: relative; overflow: hidden; }
+  .hero .wrap { position: relative; z-index: 1; }
+  .hero-bgs { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-size: 170% 170%, 100% 100%; background-position: 0% 0%, 0 0;
+    animation: heroDrift 20s ease-in-out infinite;
+    background-image:
+      radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
+      linear-gradient(125deg, #312e81 0%, #6366f1 46%, #008cc1 100%);
+  }
+  @keyframes heroDrift { 0%,100% { background-position: 0% 0%, 0 0; } 50% { background-position: 100% 60%, 0 0; } }
+
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    margin-bottom: 26px; padding: 7px 14px; border-radius: 999px;
+    color: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.32); background: rgba(255,255,255,0.06);
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px rgba(255,255,255,0.22); }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 76px); line-height: 1.03; font-weight: 900;
+    letter-spacing: -0.03em; text-transform: lowercase; max-width: 14ch; margin-bottom: 24px; color: #fff;
+  }
+  .hero h1 em { font-style: normal; color: #c7d2fe; }
+  .hero .subline { font-size: clamp(17px, 2.4vw, 21px); color: rgba(255,255,255,0.88); max-width: 520px; margin-bottom: 36px; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero .btn-primary { background: #fff; color: #1e1b4b; }
+  .hero .btn-primary:hover { background: #eef2ff; box-shadow: 0 14px 30px -10px rgba(0,0,0,0.4); }
+  .hero .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.5); background: transparent; }
+  .hero .btn-ghost:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.14); }
+
+  /* hero mock dashboard */
+  .hero-mock {
+    background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 18px; padding: 16px; backdrop-filter: blur(6px);
+    box-shadow: 0 30px 70px -24px rgba(10,12,40,0.6);
+  }
+  .mock-bar { display: flex; gap: 6px; padding: 4px 6px 12px; }
+  .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.45); }
+  .mock-card { background: #fff; border-radius: 12px; padding: 18px; color: #0a0a0a; }
+  .mock-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid #eef0f3; }
+  .mock-row:last-child { border-bottom: 0; }
+  .mock-prod { display: flex; align-items: center; gap: 12px; }
+  .mock-thumb { width: 38px; height: 38px; border-radius: 9px; background: linear-gradient(135deg, #6366f1, #008cc1); }
+  .mock-name { font-weight: 600; font-size: 14px; }
+  .mock-sub { font-size: 12px; color: #8a8f98; }
+  .mock-pill { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #eef2ff; color: #4f46e5; }
+  .mock-pill.ok { background: #e7f7ee; color: #1c8a4d; }
+  .mock-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 12px; }
+  .mock-stat { background: #fff; border-radius: 12px; padding: 14px; color: #0a0a0a; }
+  .mock-stat b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+  .mock-stat span { font-size: 11px; color: #8a8f98; }
+
+  /* ── stat strip ── */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--hair); border-radius: var(--radius); overflow: hidden; margin-top: 64px; background: var(--card); }
+  .stat { padding: 26px 24px; border-inline-start: 1px solid var(--hair); }
+  .stat:first-child { border-inline-start: 0; }
+  .stat b { display: block; font-size: clamp(26px, 4vw, 34px); font-weight: 800; letter-spacing: -0.02em; }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  /* ── feature grid ── */
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+  .feature {
+    background: var(--card); border: 1px solid var(--hair); border-radius: var(--radius);
+    padding: 26px; transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .2s;
+  }
+  .feature:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--blue) 45%, var(--hair)); box-shadow: 0 18px 40px -20px rgba(0,0,0,0.2); }
+  .feature .ic {
+    width: 44px; height: 44px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 16px;
+    background: color-mix(in srgb, var(--blue) 12%, transparent); color: var(--blue);
+  }
+  .feature h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .feature p { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ── capability blocks ── */
+  .cap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-top: 80px; }
+  .cap:first-of-type { margin-top: 48px; }
+  .cap.flip .cap-text { order: 2; }
+  .cap-text h3 { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; text-transform: lowercase; }
+  .cap-text p { color: var(--muted); font-size: 16px; margin-bottom: 20px; max-width: 460px; }
+  .cap-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .cap-list li { display: flex; gap: 11px; align-items: flex-start; font-size: 15px; }
+  .cap-list svg { flex-shrink: 0; margin-top: 2px; color: var(--blue); }
+  .cap-visual {
+    border: 1px solid var(--hair); border-radius: 18px; padding: 22px; min-height: 280px;
+    background:
+      radial-gradient(120% 120% at 100% 0%, color-mix(in srgb, var(--blue) 16%, transparent), transparent 55%),
+      var(--bg-soft);
+    display: flex; flex-direction: column; gap: 12px; justify-content: center;
+  }
+  .vcard { background: var(--card); border: 1px solid var(--hair); border-radius: 12px; padding: 16px; }
+  .vrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--hair); font-size: 14px; }
+  .vrow:last-child { border-bottom: 0; }
+  .vbadge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: color-mix(in srgb, var(--blue) 14%, transparent); color: var(--blue); }
+  .vbadge.ok { background: #e7f7ee; color: #1c8a4d; }
+  .vbar { height: 8px; border-radius: 999px; background: var(--hair); overflow: hidden; }
+  .vbar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--kaprera)); }
+  .vlabel { font-size: 12px; color: var(--muted); }
+  html[data-theme="dark"] .vbadge.ok { background: rgba(28,138,77,0.18); color: #4ade80; }
+
+  /* ── cta band ── */
+  .cta-band { position: relative; overflow: hidden; border-radius: 22px; padding: 64px 48px; text-align: center; color: #fff; }
+  .cta-band::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.18), transparent 52%),
+      linear-gradient(125deg, #312e81 0%, #6366f1 48%, #008cc1 100%);
+  }
+  .cta-band > * { position: relative; z-index: 1; }
+  .cta-band h2 { font-size: clamp(28px, 5vw, 44px); font-weight: 800; letter-spacing: -0.02em; text-transform: lowercase; margin-bottom: 14px; }
+  .cta-band p { color: rgba(255,255,255,0.88); font-size: 18px; max-width: 520px; margin: 0 auto 30px; }
+  .cta-band .btn-primary { background: #fff; color: #1e1b4b; }
+  .cta-band .btn-primary:hover { background: #eef2ff; }
+  .cta-band .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.5); }
+  .cta-band .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.14); }
+  .cta-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── footer ── */
+  footer { border-top: 1px solid var(--hair); padding: 56px 0 40px; background: #f1f2f4; }
+  html[data-theme="dark"] footer { background: #0a0d12; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; margin-bottom: 44px; }
+  .foot-tag { color: var(--muted); margin-top: 12px; max-width: 320px; }
+  .foot-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .foot-col h4 { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); font-weight: 400; margin-bottom: 14px; text-transform: lowercase; }
+  .foot-col a, .foot-col span.li { display: block; font-size: 15px; margin-bottom: 10px; text-transform: lowercase; color: var(--ink); transition: color .2s; }
+  .foot-col a:hover { color: var(--blue); }
+  .foot-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding-top: 26px; border-top: 1px solid var(--hair); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
+
+  /* ── scroll reveal ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ── responsive ── */
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-mock { max-width: 460px; }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    .cap, .cap.flip { grid-template-columns: 1fr; gap: 28px; }
+    .cap.flip .cap-text { order: 0; }
+  }
+  @media (max-width: 760px) {
+    .section { padding: 80px 0; }
+    .hero { padding: 132px 0 56px; }
+    .menu-btn { display: flex; position: relative; z-index: 101; }
+    .menu-btn.open span { background: #fff; }
+    .nav-links {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center; gap: 0; padding: 24px;
+      background: rgba(10,10,10,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none; transition: opacity .3s var(--ease);
+    }
+    .nav-links.open { opacity: 1; pointer-events: auto; }
+    .nav-panel {
+      display: flex; flex-direction: column; align-items: stretch; width: 100%; max-width: 340px;
+      max-height: 86vh; overflow-y: auto; background: var(--card); border-radius: 20px;
+      padding: 14px 22px 24px; box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      transform: translateY(24px) scale(0.98); transition: transform .35s var(--ease);
+    }
+    .nav-links.open .nav-panel { transform: translateY(0) scale(1); }
+    .nav-panel a.link { font-size: 18px; font-weight: 500; padding: 16px 2px; border-bottom: 1px solid var(--hair); }
+    .nav-panel a.link::after { display: none; }
+    .nav-panel a.link:last-of-type { border-bottom: 0; }
+    .nav-utils { display: flex; gap: 10px; margin-top: 20px; align-items: center; }
+    .nav-panel .btn { width: 100%; margin-top: 14px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(-n+2) { border-bottom: 0; }
+    .stat:nth-child(odd) { border-inline-start: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid var(--hair); }
+    .cta-band { padding: 48px 26px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+<script>
+  // apply saved/system theme before paint to avoid flash
+  (function () {
+    const saved = localStorage.getItem('theme');
+    const dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>
+</head>
+<body>
+
+<!-- ───────────── NAV ───────────── -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="Zeevora home">
+      <span>zeevora</span>
+      <span class="by">&times; <b>kaprera</b></span>
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="primary">
+      <div class="nav-panel" role="document">
+        <a href="#features" class="link">features</a>
+        <a href="#capabilities" class="link">capabilities</a>
+        <a href="#why" class="link">why zeevora</a>
+        <div class="nav-utils">
+          <a href="https://kaprera.com/" class="link" aria-label="back to kaprera">kaprera ↗</a>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="toggle dark mode" aria-pressed="false">
+            <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+        </div>
+        <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine">book a call<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ───────────── HERO ───────────── -->
+  <section class="hero">
+    <div class="hero-bgs" aria-hidden="true"><span class="hero-bg"></span></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow reveal"><span class="dot"></span> e-commerce platform · kaprera partner</span>
+          <h1 class="reveal">everything you need to <em>sell online.</em></h1>
+          <p class="subline reveal">Zeevora is a complete SaaS e-commerce system — storefront, checkout, payments, orders, inventory and analytics in one place. kaprera is a Zeevora partner, helping you launch fast and scale without limits.</p>
+          <div class="hero-ctas reveal">
+            <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine">book a call<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a href="#features" class="btn btn-ghost">explore features</a>
+          </div>
+        </div>
+        <div class="hero-mock reveal" aria-hidden="true">
+          <div class="mock-bar"><i></i><i></i><i></i></div>
+          <div class="mock-card">
+            <div class="mock-row">
+              <div class="mock-prod"><span class="mock-thumb"></span><span><span class="mock-name">Linen Overshirt</span><br><span class="mock-sub">SKU · LO-2291</span></span></div>
+              <span class="mock-pill ok">in stock</span>
+            </div>
+            <div class="mock-row">
+              <div class="mock-prod"><span class="mock-thumb" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)"></span><span><span class="mock-name">Canvas Tote</span><br><span class="mock-sub">SKU · CT-0148</span></span></div>
+              <span class="mock-pill">low stock</span>
+            </div>
+            <div class="mock-row">
+              <div class="mock-prod"><span class="mock-thumb" style="background:linear-gradient(135deg,#06b6d4,#008cc1)"></span><span><span class="mock-name">Ceramic Mug</span><br><span class="mock-sub">SKU · CM-7730</span></span></div>
+              <span class="mock-pill ok">in stock</span>
+            </div>
+          </div>
+          <div class="mock-stats">
+            <div class="mock-stat"><b>$12.4k</b><span>today's sales</span></div>
+            <div class="mock-stat"><b>168</b><span>orders</span></div>
+            <div class="mock-stat"><b>3.8%</b><span>conversion</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat"><b>99.9%</b><span>uptime SLA</span></div>
+        <div class="stat"><b>&lt;1s</b><span>storefront load</span></div>
+        <div class="stat"><b>PCI-DSS</b><span>compliant checkout</span></div>
+        <div class="stat"><b>24/7</b><span>support &amp; monitoring</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── FEATURES ───────────── -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label reveal"><span class="num">01</span> / what's inside</span>
+        <h2 class="title reveal">one system to run your whole store.</h2>
+        <p class="lede reveal">Every function a modern online business needs — designed to work together, out of the box.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+          <h3>Storefront builder</h3>
+          <p>Launch a fast, responsive, on-brand storefront with flexible themes and pages — no code required.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg></span>
+          <h3>Catalog &amp; variants</h3>
+          <p>Unlimited products with options, variants, collections, bundles and rich media — organized your way.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+          <h3>Cart &amp; checkout</h3>
+          <p>A frictionless, conversion-optimized checkout with guest purchase, saved carts and one-page flow.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+          <h3>Payments &amp; currencies</h3>
+          <p>Accept cards, wallets and local methods with secure, PCI-compliant processing and multi-currency support.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+          <h3>Order management</h3>
+          <p>Track, fulfil, refund and update orders from one dashboard, with automated status notifications.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg></span>
+          <h3>Inventory &amp; stock</h3>
+          <p>Real-time stock tracking across locations with low-stock alerts and automatic out-of-stock handling.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <h3>Customer accounts</h3>
+          <p>Profiles, order history, wishlists and addresses — plus segments for targeted marketing.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2.59 12.6A2 2 0 0 1 2 11.18V4a2 2 0 0 1 2-2h7.18a2 2 0 0 1 1.41.59l7.99 7.99a2 2 0 0 1 0 2.83z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span>
+          <h3>Discounts &amp; promos</h3>
+          <p>Coupons, automatic discounts, bundles and flash sales with rules, limits and scheduling.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+          <h3>Analytics dashboard</h3>
+          <p>Live sales, traffic, conversion and product insights — know exactly what's driving growth.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+          <h3>Shipping &amp; fulfilment</h3>
+          <p>Configurable rates, zones and carriers with labels, tracking and pickup options built in.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg></span>
+          <h3>SEO &amp; marketing</h3>
+          <p>Clean URLs, metadata, sitemaps and integrations for email, ads and social to bring buyers in.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span>
+          <h3>Roles &amp; permissions</h3>
+          <p>Invite your team with granular access — staff, managers and admins, each with the right controls.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── CAPABILITIES ───────────── -->
+  <section class="section" id="capabilities">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label reveal"><span class="num">02</span> / how it works for you</span>
+        <h2 class="title reveal">built to sell, run and grow.</h2>
+        <p class="lede reveal">Three things every store has to get right — Zeevora handles all of them.</p>
+      </div>
+
+      <div class="cap">
+        <div class="cap-text reveal">
+          <h3>a storefront that converts</h3>
+          <p>Fast pages, a checkout designed to reduce drop-off, and a shopping experience that looks great on every device.</p>
+          <ul class="cap-list">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Mobile-first, sub-second load times</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> One-page, guest-friendly checkout</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Abandoned-cart recovery</li>
+          </ul>
+        </div>
+        <div class="cap-visual reveal" aria-hidden="true">
+          <div class="vcard">
+            <div class="vrow"><span>Subtotal</span><span>$148.00</span></div>
+            <div class="vrow"><span>Shipping</span><span>Free</span></div>
+            <div class="vrow"><span><b>Total</b></span><span><b>$148.00</b></span></div>
+          </div>
+          <div class="vcard"><div class="vrow" style="border:0;padding:2px 0"><span>Checkout completed</span><span class="vbadge ok">paid</span></div></div>
+        </div>
+      </div>
+
+      <div class="cap flip">
+        <div class="cap-text reveal">
+          <h3>operations on autopilot</h3>
+          <p>Orders, inventory and fulfilment stay in sync automatically, so your team spends less time on admin and more on growth.</p>
+          <ul class="cap-list">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Real-time stock across locations</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Automated order &amp; shipping updates</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Low-stock alerts &amp; reorder hints</li>
+          </ul>
+        </div>
+        <div class="cap-visual reveal" aria-hidden="true">
+          <div class="vcard">
+            <div class="vrow"><span>#10293 · Linen Overshirt</span><span class="vbadge ok">shipped</span></div>
+            <div class="vrow"><span>#10294 · Canvas Tote</span><span class="vbadge">packing</span></div>
+            <div class="vrow"><span>#10295 · Ceramic Mug</span><span class="vbadge ok">delivered</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cap">
+        <div class="cap-text reveal">
+          <h3>insights that drive growth</h3>
+          <p>A live dashboard turns your store data into decisions — see what sells, where buyers come from, and what to do next.</p>
+          <ul class="cap-list">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Real-time sales &amp; conversion</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Best-sellers &amp; traffic sources</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Exportable reports</li>
+          </ul>
+        </div>
+        <div class="cap-visual reveal" aria-hidden="true">
+          <div class="vcard">
+            <span class="vlabel">Monthly revenue goal</span>
+            <div class="vbar" style="margin:10px 0 14px"><i style="width:74%"></i></div>
+            <div class="vrow" style="border:0;padding:2px 0"><span>$74,200 of $100k</span><span class="vbadge">74%</span></div>
+          </div>
+          <div class="vcard"><div class="vrow" style="border:0;padding:2px 0"><span>Conversion rate</span><span class="vbadge ok">▲ 3.8%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── WHY ───────────── -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label reveal"><span class="num">03</span> / why zeevora</span>
+        <h2 class="title reveal">a platform, plus a partner.</h2>
+        <p class="lede reveal">Zeevora is more than software — it's the platform, with kaprera as your partner to set it up, tailor it and keep it running.</p>
+      </div>
+      <div class="feature-grid" style="margin-top:36px">
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+          <h3>Launch in days, not months</h3>
+          <p>A ready-made system means your store goes live fast — we handle setup, theming and migration.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <h3>Secure &amp; reliable</h3>
+          <p>PCI-compliant checkout, encrypted data, daily backups and 99.9% uptime — monitored around the clock.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+          <h3>Scales with you</h3>
+          <p>From your first order to your busiest sale, the platform grows with your catalog, traffic and team.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <h3>Real human support</h3>
+          <p>A dedicated kaprera team that knows your store — for setup, changes and whatever comes next.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+          <h3>Custom when you need it</h3>
+          <p>Need something specific? We extend Zeevora with custom features, integrations and design.</p>
+        </div>
+        <div class="feature reveal">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+          <h3>One predictable price</h3>
+          <p>Hosting, updates, security and support included — no surprise fees as you grow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── CTA ───────────── -->
+  <section class="section" style="border-top:0">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <h2>ready to launch your store?</h2>
+        <p>Book a call with kaprera and we'll get Zeevora set up for your business — storefront, products and payments included.</p>
+        <div class="cta-ctas">
+          <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine">book a call<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="https://wa.me/9613816405" target="_blank" rel="noopener" class="btn btn-ghost">whatsapp us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ───────────── FOOTER ───────────── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="#top" class="brand"><span>zeevora</span> <span class="by">&times; <b>kaprera</b></span></a>
+        <p class="foot-tag">a complete e-commerce platform · in partnership with kaprera.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>platform</h4>
+          <a href="#features">features</a>
+          <a href="#capabilities">capabilities</a>
+          <a href="#why">why zeevora</a>
+        </div>
+        <div class="foot-col">
+          <h4>kaprera</h4>
+          <a href="https://kaprera.com/">kaprera.com</a>
+          <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener">book a call</a>
+          <a href="https://wa.me/9613816405" target="_blank" rel="noopener">whatsapp</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 zeevora · in partnership with kaprera. all rights reserved.</span>
+      <span>made in lebanon · <span class="accent">&gt;_</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── dark mode toggle ──
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  const syncToggle = () => themeToggle.setAttribute('aria-pressed', String(root.getAttribute('data-theme') === 'dark'));
+  syncToggle();
+  themeToggle.addEventListener('click', () => {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    localStorage.setItem('theme', dark ? 'light' : 'dark');
+    syncToggle();
+  });
+
+  // ── nav shadow on scroll ──
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── mobile menu ──
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  const toggleMenu = (force) => {
+    const open = force !== undefined ? force : !navLinks.classList.contains('open');
+    navLinks.classList.toggle('open', open);
+    menuBtn.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('no-scroll', open);
+  };
+  menuBtn.addEventListener('click', () => toggleMenu());
+  navLinks.addEventListener('click', (e) => { if (e.target.closest('a')) toggleMenu(false); });
+  navLinks.addEventListener('click', (e) => { if (e.target === navLinks) toggleMenu(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggleMenu(false); });
+
+  // ── scroll reveal ──
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
