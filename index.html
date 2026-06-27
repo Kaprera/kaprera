@@ -145,6 +145,68 @@
 
   .section { padding: 110px 0; border-top: 1px solid var(--hair); }
 
+  /* ── tinted, alive section backgrounds ── */
+  #services, #testimonials { position: relative; overflow: hidden; }
+  #services .wrap, #testimonials .wrap { position: relative; z-index: 1; }
+
+  /* services — soft grey base with a cool blue wash */
+  #services {
+    background:
+      radial-gradient(900px 520px at 10% -10%, rgba(0,140,193,0.07), transparent 60%),
+      radial-gradient(760px 520px at 100% 112%, rgba(70,196,236,0.06), transparent 56%),
+      var(--bg-soft);
+  }
+  /* testimonials — white base lifted with a blue/cyan glow */
+  #testimonials {
+    background:
+      linear-gradient(180deg, rgba(0,140,193,0.045), transparent 26%),
+      radial-gradient(820px 520px at 88% -8%, rgba(0,140,193,0.08), transparent 58%),
+      radial-gradient(700px 500px at 4% 112%, rgba(31,182,176,0.06), transparent 56%),
+      var(--white);
+  }
+  html[data-theme="dark"] #services {
+    background:
+      radial-gradient(900px 520px at 10% -10%, rgba(0,140,193,0.16), transparent 60%),
+      radial-gradient(760px 520px at 100% 112%, rgba(70,196,236,0.10), transparent 56%),
+      var(--bg-soft);
+  }
+  html[data-theme="dark"] #testimonials {
+    background:
+      linear-gradient(180deg, rgba(0,140,193,0.10), transparent 26%),
+      radial-gradient(820px 520px at 88% -8%, rgba(0,140,193,0.16), transparent 58%),
+      radial-gradient(700px 500px at 4% 112%, rgba(31,182,176,0.10), transparent 56%),
+      var(--white);
+  }
+
+  /* slow drifting colour blobs for life */
+  #services::before, #testimonials::before {
+    content: "";
+    position: absolute; z-index: 0;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: .55;
+    pointer-events: none;
+  }
+  #services::before {
+    top: -130px; inset-inline-start: -110px;
+    background: radial-gradient(circle, rgba(0,140,193,0.20), transparent 70%);
+    animation: blobDriftA 18s ease-in-out infinite;
+  }
+  #testimonials::before {
+    top: -150px; inset-inline-end: -130px;
+    background: radial-gradient(circle, rgba(70,196,236,0.18), transparent 70%);
+    animation: blobDriftB 21s ease-in-out infinite;
+  }
+  @keyframes blobDriftA {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(46px, 32px) scale(1.08); }
+  }
+  @keyframes blobDriftB {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(-44px, 36px) scale(1.07); }
+  }
+
   h2.title {
     font-size: clamp(30px, 5vw, 48px);
     font-weight: 800;
