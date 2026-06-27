@@ -1353,6 +1353,48 @@
     .reveal { opacity: 1; transform: none; transition: none; }
     .svc-tags li, .tst-grid .tst-card { opacity: 1 !important; transform: none !important; }
   }
+
+  /* ── preloader: logo fills up ── */
+  #preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 22px;
+    background: var(--blue);
+    transition: opacity .6s var(--ease), visibility .6s var(--ease);
+  }
+  #preloader.done { opacity: 0; visibility: hidden; }
+  .pl-logo {
+    position: relative;
+    width: min(300px, 64vw);
+    aspect-ratio: 913 / 793;
+    animation: plPulse 1.3s var(--ease) infinite;
+  }
+  .pl-logo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  /* faint "empty" K */
+  .pl-logo .pl-base { opacity: .22; }
+  /* bright K revealed from the bottom up */
+  .pl-logo .pl-fill {
+    opacity: 1;
+    clip-path: inset(100% 0 0 0);
+    animation: plFill .6s var(--ease) forwards;
+  }
+  @keyframes plFill  { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes plPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pl-logo { animation: none; }
+    .pl-logo .pl-fill { clip-path: inset(0 0 0 0); animation: none; }
+  }
 </style>
 <script>
   // apply saved/system theme before paint to avoid flash
@@ -1370,6 +1412,37 @@
 </script>
 </head>
 <body>
+
+<!-- ───────────── PRELOADER ───────────── -->
+<div id="preloader" role="status" aria-label="loading">
+  <span class="pl-logo" aria-hidden="true">
+    <img class="pl-base" src="branding/logos/kaprera-icon-mark.png" alt="" width="913" height="793">
+    <img class="pl-fill" src="branding/logos/kaprera-icon-mark.png" alt="" width="913" height="793">
+  </span>
+</div>
+<script>
+  (function () {
+    var pl = document.getElementById('preloader');
+    if (!pl) return;
+    var fill = pl.querySelector('.pl-fill');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var done = false, animDone = reduce || !fill, loadDone = document.readyState === 'complete';
+
+    function finish() {
+      if (done) return;
+      done = true;
+      pl.classList.add('done');
+      pl.addEventListener('transitionend', function () { pl.remove(); }, { once: true });
+      setTimeout(function () { if (pl.parentNode) pl.remove(); }, 900);
+    }
+    function maybe() { if (animDone && loadDone) finish(); }
+
+    if (fill && !reduce) fill.addEventListener('animationend', function () { animDone = true; maybe(); });
+    window.addEventListener('load', function () { loadDone = true; maybe(); });
+    maybe();
+    setTimeout(finish, 3500); // hard fallback
+  })();
+</script>
 
 <!-- ───────────── NAV ───────────── -->
 <header class="nav" id="nav">
