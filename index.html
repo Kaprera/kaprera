@@ -185,30 +185,19 @@
       radial-gradient(760px 520px at 100% 112%, rgba(70,196,236,0.032), transparent 56%),
       var(--bg-soft);
   }
-  /* testimonials — kaprera blue gradient (matches hero intro slide) */
+  /* testimonials — soft base; the slider stage carries the kaprera blue */
   #testimonials {
-    background-image:
-      radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
-      linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
+    background:
+      radial-gradient(900px 520px at 90% -10%, rgba(0,140,193,0.04), transparent 60%),
+      radial-gradient(760px 520px at 0% 112%, rgba(70,196,236,0.035), transparent 56%),
+      var(--bg-soft);
   }
-  /* light text for everything sitting directly on the blue */
-  #testimonials .title { color: #fff; }
-  #testimonials .label { color: rgba(255,255,255,0.78); }
-  #testimonials .label .num { color: #fff; }
-  #testimonials .label::before { background: #fff; }
-  #testimonials .industries .lbl { color: rgba(255,255,255,0.72); }
-  #testimonials .industries .pill { color: #fff; }
-  #testimonials .industries .sep { color: rgba(255,255,255,0.35); }
-  html[data-theme="dark"] #services {
+  html[data-theme="dark"] #services,
+  html[data-theme="dark"] #testimonials {
     background:
       radial-gradient(900px 520px at 10% -10%, rgba(0,140,193,0.10), transparent 60%),
       radial-gradient(760px 520px at 100% 112%, rgba(70,196,236,0.06), transparent 56%),
       var(--bg-soft);
-  }
-  html[data-theme="dark"] #testimonials {
-    background-image:
-      radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
-      linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
   }
 
   /* slow drifting colour blobs for life */
@@ -263,15 +252,33 @@
     border-radius: 999px;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: transform .25s var(--ease), background .2s, color .2s, border-color .2s;
+    transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s, color .2s, border-color .2s;
     text-transform: lowercase;
     white-space: nowrap;
   }
+  .btn svg { transition: transform .3s var(--ease); }
   .btn:hover { transform: translateY(-2px); }
+  .btn:hover svg { transform: translateX(4px); }            /* icon nudges forward */
+  html[lang="ar"] .btn svg { transform: scaleX(-1); }       /* arrow points the rtl way */
+  html[lang="ar"] .btn:hover svg { transform: scaleX(-1) translateX(4px); }
   .btn-primary { background: var(--blue); color: #fff; }
-  .btn-primary:hover { background: var(--blue-dark); }
+  .btn-primary:hover { background: var(--blue-dark); box-shadow: 0 12px 24px -8px rgba(0,140,193,0.55); }
   .btn-ghost { background: transparent; color: var(--ink); border-color: var(--hair); }
-  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 10px 22px -10px rgba(0,0,0,0.18); }
+
+  /* sheen sweep — reserved for the main conversion CTAs (.btn-shine) */
+  .btn-shine { position: relative; overflow: hidden; }
+  .btn-shine::after {
+    content: ""; position: absolute; top: 0; left: -75%;
+    width: 50%; height: 100%; pointer-events: none;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg); transition: left .6s var(--ease);
+  }
+  .btn-shine:hover::after { left: 125%; }
+  @media (prefers-reduced-motion: reduce) {
+    .btn:hover, .btn:hover svg { transform: none; }
+    .btn-shine::after { display: none; }
+  }
 
   /* ── theme toggle ── */
   .theme-toggle {
@@ -319,7 +326,6 @@
   html[lang="ar"] .label,
   html[lang="ar"] .eyebrow,
   html[lang="ar"] .industries .lbl,
-  html[lang="ar"] .svc-num,
   html[lang="ar"] .chip,
   html[lang="ar"] .foot-col h4,
   html[lang="ar"] .foot-bottom,
@@ -332,6 +338,10 @@
   /* keep latin brand mark / numerals monospaced */
   html[lang="ar"] .brand .mark,
   html[lang="ar"] .label .num { font-family: 'JetBrains Mono', monospace; }
+  /* arabic service labels/chips use Cairo (mono can't render arabic) */
+  html[lang="ar"] .svc-eyebrow,
+  html[lang="ar"] .svc-chips span { font-family: 'Cairo', system-ui, sans-serif; letter-spacing: 0; }
+  html[lang="ar"] .svc-headline { letter-spacing: -0.01em; }
   /* flip directional arrows for rtl */
   html[lang="ar"] .slider .nav.prev { left: auto; right: 12px; }
   html[lang="ar"] .slider .nav.next { right: auto; left: 12px; }
@@ -843,242 +853,306 @@
   .hero.is-colored .work-count { color: rgba(255,255,255,0.8); }
   .hero.is-colored .work-count b { color: #fff; }
 
-  /* ── services ── */
-  .svc-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    margin-top: 12px;
-  }
-  .svc-card {
-    border: 1px solid var(--hair);
-    border-radius: var(--radius);
-    padding: 38px 34px;
-    transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .3s, background-color .35s var(--ease), color .35s var(--ease);
-    background: var(--white);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  }
-  .svc-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 44px rgba(0,0,0,0.10);
-    border-color: rgba(0,140,193,0.35);
-  }
-  .svc-icon {
-    width: 52px; height: 52px;
-    border-radius: 13px;
-    background: rgba(0,140,193,0.10);
-    color: var(--blue);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 24px;
-  }
-  .svc-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--blue);
-    margin-bottom: 14px;
-  }
-  .svc-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.01em; }
-  .svc-card p { color: var(--muted); font-size: 16px; }
+  /* ── services: full-panel colored slider ── */
+  .svc-slider { position: relative; margin-top: 30px; }
 
-  /* ── testimonials grid ── */
-  .tst-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 26px;
-  }
-  .tst-card {
+  .svc-stage {
     position: relative;
-    isolation: isolate;
+    border-radius: 28px;
     overflow: hidden;
+    isolation: isolate;
+    box-shadow: 0 50px 100px -45px rgba(0,0,0,0.55);
+  }
+
+  /* cross-fading colour layers — one per service, morph on slide */
+  .svc-bgs { position: absolute; inset: 0; z-index: 0; }
+  .svc-bg {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity 1.05s var(--ease);
+  }
+  .svc-bg.active { opacity: 1; }
+  .svc-bg::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(135% 120% at 84% -12%, rgba(255,255,255,0.24), transparent 50%),
+      radial-gradient(95% 95% at -5% 112%, rgba(0,0,0,0.22), transparent 60%);
+  }
+  .svc-bg.s1 { background: linear-gradient(135deg, #073f63 0%, #008cc1 52%, #21bbdd 100%); }
+  .svc-bg.s2 { background: linear-gradient(135deg, #211a63 0%, #4a37c9 52%, #8064ff 100%); }
+  .svc-bg.s3 { background: linear-gradient(135deg, #064a44 0%, #0c9b86 52%, #2fd6ae 100%); }
+
+  /* slow drifting orb inside the stage for life */
+  .svc-orb {
+    position: absolute; z-index: 0;
+    width: 420px; height: 420px; border-radius: 50%;
+    top: -120px; inset-inline-start: 40%;
+    background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+    animation: svcOrb 16s ease-in-out infinite;
+  }
+  @keyframes svcOrb {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50%      { transform: translate(-60px, 50px) scale(1.12); }
+  }
+
+  .svc-viewport { position: relative; z-index: 1; overflow: hidden; }
+  .svc-track {
+    display: flex;
+    direction: ltr;                 /* track stays LTR; panels handle rtl */
+    transition: transform .85s var(--ease);
+    will-change: transform;
+  }
+
+  .svc-panel {
+    flex: 0 0 100%;
+    min-width: 100%;
+    position: relative;
+    color: #fff;
+    padding: clamp(34px, 4vw, 56px) clamp(66px, 7vw, 104px);
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+    min-height: 440px;
+  }
+  html[lang="ar"] .svc-panel { direction: rtl; text-align: right; }
+  .svc-col { position: relative; z-index: 2; }
+
+  /* giant ghost numeral */
+  .svc-figure {
+    position: absolute; z-index: 0;
+    inset-inline-end: clamp(18px, 5vw, 60px);
+    bottom: -8%;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500; font-size: clamp(170px, 30vw, 400px);
+    line-height: 1;
+    color: rgba(255,255,255,0.10);
+    pointer-events: none; user-select: none;
+  }
+
+  .svc-eyebrow {
+    display: inline-flex; align-items: center; gap: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+    margin-bottom: 18px;
+  }
+  .svc-eyebrow .ic {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: grid; place-items: center;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: #fff;
+  }
+  /* big, clear service name — the primary title */
+  .svc-headline {
+    font-size: clamp(40px, 5.8vw, 74px);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    text-transform: lowercase;
+    margin-bottom: 16px;
+    text-shadow: 0 14px 40px rgba(0,0,0,0.18);
+  }
+  .svc-statement {
+    font-size: clamp(15px, 1.5vw, 18px);
+    line-height: 1.55;
+    color: rgba(255,255,255,0.88);
+    max-width: 38ch;
+    margin-bottom: 28px;
+  }
+  .svc-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #fff; color: #0a0a0a;
+    font-weight: 700; font-size: 15px;
+    padding: 15px 26px; border-radius: 999px;
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .svc-cta svg { transition: transform .35s var(--ease); }
+  .svc-cta:hover { transform: translateY(-3px); box-shadow: 0 18px 38px rgba(0,0,0,0.30); }
+  .svc-cta:hover svg { transform: translateX(4px); }
+  html[lang="ar"] .svc-cta svg { transform: scaleX(-1); }
+  html[lang="ar"] .svc-cta:hover svg { transform: scaleX(-1) translateX(4px); }
+
+  /* right column — glass visual + deliverables */
+  .svc-visual {
+    position: relative;
+    border-radius: 22px;
+    padding: 32px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.20);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    margin-bottom: 22px;
+  }
+  .svc-bigicon {
+    width: 80px; height: 80px; border-radius: 20px;
+    display: grid; place-items: center;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.24);
+    color: #fff; margin-bottom: 22px;
+  }
+  .svc-detail { font-size: 15.5px; line-height: 1.62; color: rgba(255,255,255,0.92); }
+  .svc-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+  .svc-chips span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: #fff;
+    padding: 7px 14px; border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+  }
+
+  /* staggered content reveal — only on the active panel, once stage is in view */
+  .svc-panel [data-anim] {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .75s var(--ease) var(--ad, 0s),
+                transform .75s var(--ease) var(--ad, 0s);
+  }
+  .svc-slider.in .svc-panel.is-active [data-anim] { opacity: 1; transform: none; }
+
+  /* side arrows */
+  .svc-arrow {
+    position: absolute; top: 50%; z-index: 3;
+    transform: translateY(-50%);
+    width: 54px; height: 54px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.32);
+    color: #fff; cursor: pointer;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    transition: background .3s, transform .3s var(--ease);
+  }
+  .svc-arrow:hover { background: rgba(255,255,255,0.32); }
+  .svc-arrow:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .svc-arrow.prev { inset-inline-start: 20px; }
+  .svc-arrow.next { inset-inline-end: 20px; }
+  .svc-arrow.prev svg, .svc-arrow.next svg { transition: transform .3s var(--ease); }
+  .svc-arrow.prev:hover svg { transform: translateX(-3px); }
+  .svc-arrow.next:hover svg { transform: translateX(3px); }
+
+  /* control row below the stage */
+  .svc-ctrls {
+    display: flex; align-items: center; justify-content: center;
+    gap: 18px; margin-top: 28px;
+  }
+  .svc-dots { display: flex; gap: 9px; }
+  .svc-dots i {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--hair); cursor: pointer;
+    transition: width .35s var(--ease), background-color .3s var(--ease), border-radius .35s var(--ease);
+    position: relative; overflow: hidden;
+  }
+  /* active dot becomes a track; a blue fill "loads" over the autoplay interval, then slides */
+  .svc-dots i.active { width: 34px; border-radius: 5px; background: var(--hair); }
+  .svc-dots i.active::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    background: var(--svc-fill, var(--blue)); transform-origin: left; transform: scaleX(0);
+  }
+  html[lang="ar"] .svc-dots i.active::after { transform-origin: right; }
+  .svc-dots i.active.fill::after { animation: workFill var(--svc-auto, 4000ms) linear forwards; }
+  .svc-dots.paused i.active::after { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-dots i.active { background: var(--svc-fill, var(--blue)); }
+    .svc-dots i.active::after { display: none; }
+  }
+  .svc-count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
+  .svc-count b { color: var(--ink); font-weight: 700; }
+
+  /* ── testimonials: featured quote + client picker ── */
+  .tst-feature-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 24px;
+    margin-top: 30px;
+    align-items: stretch;
+  }
+  /* featured quote — the one kaprera-blue card on the page (no slider) */
+  .tst-feature {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 24px;
+    padding: clamp(34px, 4vw, 56px);
+    color: #fff;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    border: 1px solid var(--hair);
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    padding: 30px 28px;
+    justify-content: center;
+    gap: clamp(20px, 2.6vw, 30px);
+    min-height: 340px;
+    background-image:
+      radial-gradient(120% 120% at 82% -12%, rgba(255,255,255,0.22), transparent 52%),
+      linear-gradient(125deg, #0c5a86 0%, #008cc1 52%, #00c2d8 100%);
+    box-shadow: 0 40px 90px -45px rgba(0,0,0,0.5);
   }
-  html[lang="ar"] .tst-card { text-align: right; }
-  .tst-stars { color: var(--blue); font-size: 15px; letter-spacing: 2px; }
-  .tst-quote { font-size: 16px; line-height: 1.62; color: var(--ink); flex: 1; }
-  .tst-author {
-    display: flex; align-items: center; gap: 12px;
-    margin-top: 4px; padding-top: 18px;
-    border-top: 1px solid var(--hair);
+  html[lang="ar"] .tst-feature { text-align: right; }
+  .tst-feature > * { position: relative; z-index: 1; }
+  .tst-mark {
+    position: absolute; z-index: 0;
+    top: clamp(-8px, 1vw, 16px); inset-inline-end: clamp(26px, 4vw, 56px);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 700; font-size: clamp(150px, 20vw, 280px); line-height: 1;
+    color: rgba(255,255,255,0.12);
+    pointer-events: none; user-select: none;
   }
+  .tst-stars { color: #fff; font-size: 18px; letter-spacing: 5px; }
+  .tst-big {
+    font-size: clamp(20px, 2.3vw, 31px);
+    font-weight: 600;
+    line-height: 1.42;
+    letter-spacing: -0.01em;
+  }
+  .tst-by { display: flex; align-items: center; gap: 14px; }
   .tst-avatar {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: rgba(0,140,193,0.10);
-    color: var(--blue);
+    width: 50px; height: 50px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.26);
+    color: #fff; font-weight: 800;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 800;
     flex-shrink: 0;
   }
   .tst-meta { display: flex; flex-direction: column; gap: 2px; }
-  .tst-name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
-  .tst-role { font-size: 13px; color: var(--muted); }
+  .tst-name { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+  .tst-role { font-size: 13px; color: rgba(255,255,255,0.80); }
+  /* swap transition for the featured content */
+  .tst-big, .tst-by { transition: opacity .35s var(--ease), transform .35s var(--ease); }
+  .tst-feature.swapping .tst-big, .tst-feature.swapping .tst-by { opacity: 0; transform: translateY(12px); }
 
-  /* ── services: alive ── */
-  .svc-card { position: relative; overflow: hidden; isolation: isolate; }
-  .svc-grid .svc-card:nth-child(1) { transition-delay: .05s; }
-  .svc-grid .svc-card:nth-child(2) { transition-delay: .16s; }
-  .svc-grid .svc-card:nth-child(3) { transition-delay: .27s; }
-  /* animated accent bar on top edge */
-  .svc-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--blue), #46c4ec, var(--blue));
-    background-size: 200% 100%;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform .45s var(--ease);
+  /* client picker — clickable list, active one highlighted */
+  .tst-picker {
+    display: flex; flex-direction: column;
+    justify-content: center; gap: 10px;
   }
-  .svc-card:hover::before { transform: scaleX(1); animation: svcBar 2.4s linear infinite; }
-  @keyframes svcBar { to { background-position: -200% 0; } }
-  /* diagonal shine sweep */
-  .svc-card::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(120deg, transparent 30%, rgba(0,140,193,0.08) 50%, transparent 70%);
-    transform: translateX(-130%);
-    transition: transform .85s var(--ease);
-    pointer-events: none;
-  }
-  .svc-card:hover::after { transform: translateX(130%); }
-  .svc-icon { transition: transform .45s var(--ease), background-color .4s var(--ease), color .4s var(--ease), box-shadow .4s var(--ease); }
-  .svc-card:hover .svc-icon {
-    transform: translateY(-2px) rotate(-6deg) scale(1.08);
-    background: var(--blue);
-    color: #fff;
-    box-shadow: 0 12px 26px rgba(0,140,193,0.35);
-  }
-  .svc-num { transition: letter-spacing .4s var(--ease); }
-  .svc-card:hover .svc-num { letter-spacing: 4px; }
-
-  /* pointer-follow spotlight */
-  .svc-glow {
-    position: absolute; inset: 0; z-index: -1;
-    opacity: 0;
-    transition: opacity .4s var(--ease);
-    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(0,140,193,0.14), transparent 60%);
-  }
-  .svc-card:hover .svc-glow { opacity: 1; }
-
-  /* giant ghost numeral watermark */
-  .svc-ghost {
-    position: absolute; top: -14px; inset-inline-end: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500; font-size: 116px; line-height: 1;
-    color: var(--blue); opacity: 0.05;
-    pointer-events: none; user-select: none; z-index: -1;
-    transition: transform .5s var(--ease), opacity .4s var(--ease);
-  }
-  .svc-card:hover .svc-ghost { transform: translateY(6px) scale(1.05); opacity: 0.1; }
-
-  /* deliverable tags with staggered reveal */
-  .svc-tags {
-    list-style: none;
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin-top: 22px; padding-top: 20px;
-    border-top: 1px solid var(--hair);
-  }
-  .svc-tags li {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; color: var(--muted);
-    padding: 5px 11px;
+  .tst-pick {
+    position: relative;
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; text-align: inherit;
+    padding: 16px 18px;
     border: 1px solid var(--hair);
-    border-radius: 999px;
-    opacity: 0; transform: translateY(8px);
-    transition: opacity .45s var(--ease) var(--d, 0s),
-                transform .45s var(--ease) var(--d, 0s),
-                color .25s, border-color .25s, background-color .25s;
+    border-radius: 16px;
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color .3s, box-shadow .3s var(--ease), transform .3s var(--ease), background-color .3s;
   }
-  .svc-card.in .svc-tags li { opacity: 1; transform: none; }
-  .svc-card .svc-tags li:nth-child(1) { --d: .26s; }
-  .svc-card .svc-tags li:nth-child(2) { --d: .34s; }
-  .svc-card .svc-tags li:nth-child(3) { --d: .42s; }
-  .svc-card .svc-tags li:nth-child(4) { --d: .50s; }
-  .svc-card:hover .svc-tags li {
-    color: var(--blue);
-    border-color: rgba(0,140,193,0.35);
+  html[lang="ar"] .tst-pick { text-align: right; }
+  .tst-pick:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.07); }
+  .tst-pick .pk-avatar {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(0,140,193,0.10); color: var(--blue);
+    display: grid; place-items: center; font-weight: 800; flex-shrink: 0;
+    transition: background-color .3s, color .3s;
+  }
+  .tst-pick .pk-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .tst-pick .pk-name { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+  .tst-pick .pk-role { font-size: 13px; color: var(--muted); }
+  .tst-pick.is-active {
+    border-color: transparent;
     background: rgba(0,140,193,0.06);
+    box-shadow: inset 0 0 0 1.6px var(--blue);
   }
-
-  /* ── testimonials: alive ── */
-  /* staggered reveal of the cards (grid carries .reveal -> .in) */
-  .tst-grid .tst-card {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity .6s var(--ease) var(--d, 0s),
-                transform .6s var(--ease) var(--d, 0s),
-                box-shadow .35s var(--ease), border-color .35s,
-                background-color .35s var(--ease), color .35s var(--ease);
-  }
-  .tst-grid.in .tst-card { opacity: 1; transform: none; }
-  .tst-grid .tst-card:nth-child(1) { --d: .05s; }
-  .tst-grid .tst-card:nth-child(2) { --d: .16s; }
-  .tst-grid .tst-card:nth-child(3) { --d: .27s; }
-  .tst-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 44px rgba(0,0,0,0.10);
-    border-color: rgba(0,140,193,0.35);
-  }
-
-  /* pointer-follow spotlight */
-  .tst-glow {
-    position: absolute; inset: 0; z-index: -1;
-    opacity: 0; transition: opacity .4s var(--ease);
-    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(0,140,193,0.12), transparent 60%);
-  }
-  .tst-card:hover .tst-glow { opacity: 1; }
-
-  /* floating decorative quote glyph */
-  .tst-card::before {
-    content: '\201C';
-    position: absolute;
-    top: -18px; inset-inline-end: 24px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 116px; line-height: 1;
-    color: var(--blue);
-    opacity: 0.07;
-    pointer-events: none; z-index: -1;
-    animation: tstQuoteFloat 6s ease-in-out infinite;
-  }
-  @keyframes tstQuoteFloat { 50% { transform: translateY(-9px); } }
-
-  /* twinkling stars */
-  .tst-stars span { display: inline-block; animation: tstTwinkle 3s ease-in-out infinite; }
-  .tst-stars span:nth-child(1) { animation-delay: 0s; }
-  .tst-stars span:nth-child(2) { animation-delay: .18s; }
-  .tst-stars span:nth-child(3) { animation-delay: .36s; }
-  .tst-stars span:nth-child(4) { animation-delay: .54s; }
-  .tst-stars span:nth-child(5) { animation-delay: .72s; }
-  @keyframes tstTwinkle {
-    0%, 100% { transform: scale(1); opacity: .82; }
-    50% { transform: scale(1.22); opacity: 1; }
-  }
-
-  /* avatar life: pulse ring + hover flip-in */
-  .tst-avatar { position: relative; transition: transform .45s var(--ease), background-color .4s var(--ease), color .4s var(--ease); }
-  .tst-avatar::after {
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: 50%;
-    border: 1px solid var(--blue);
-    opacity: 0;
-    animation: avatarPulse 3.2s ease-out infinite;
-  }
-  @keyframes avatarPulse {
-    0% { transform: scale(1); opacity: .5; }
-    100% { transform: scale(1.55); opacity: 0; }
-  }
-  .tst-card:hover .tst-avatar {
-    transform: scale(1.08) rotate(-5deg);
-    background: var(--blue);
-    color: #fff;
-  }
+  .tst-pick.is-active .pk-avatar { background: var(--blue); color: #fff; }
 
   .industries {
     margin-top: 24px;
@@ -1101,10 +1175,23 @@
   /* ── contact ── */
   .contact-grid {
     display: grid;
-    grid-template-columns: 1.3fr 0.9fr;
-    gap: 56px;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 28px;
     margin-top: 8px;
+    align-items: stretch;
   }
+  /* shared card shell for both the form and the info panel */
+  .contact-card {
+    background: var(--white);
+    border: 1px solid var(--hair);
+    border-radius: 18px;
+    padding: clamp(26px, 3vw, 38px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .3s, background-color .35s var(--ease);
+  }
+  .contact-card:hover { box-shadow: 0 18px 40px rgba(0,0,0,0.08); }
+  /* form fields laid out horizontally */
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   form .field { margin-bottom: 18px; }
   form label {
     display: block;
@@ -1136,7 +1223,19 @@
   form textarea { resize: vertical; min-height: 130px; }
   form .btn { margin-top: 6px; }
 
-  .contact-aside { display: flex; flex-direction: column; gap: 26px; }
+  /* info panel — vertical, subtly tinted, rows split by hairlines */
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 4px;
+    background:
+      radial-gradient(120% 100% at 100% 0%, rgba(0,140,193,0.05), transparent 55%),
+      var(--white);
+  }
+  .contact-item { padding: 16px 0; border-top: 1px solid var(--hair); }
+  .contact-item:first-child { padding-top: 2px; border-top: none; }
+  .contact-item:last-child { padding-bottom: 2px; }
   .contact-item .k {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
@@ -1151,7 +1250,9 @@
   footer {
     border-top: 1px solid var(--hair);
     padding: 56px 0 40px;
+    background: #f1f2f4;
   }
+  html[data-theme="dark"] footer { background: #0a0d12; }
   .foot-top {
     display: flex;
     flex-wrap: wrap;
@@ -1341,9 +1442,23 @@
     .work-case { grid-template-columns: 1fr; gap: 24px; }
     .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
     .work-ctrls { margin-top: 40px; }
-    .svc-grid { grid-template-columns: 1fr; }
-    .tst-grid { grid-template-columns: 1fr; }
-    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    /* services slider → single column, arrows drop to the bottom corners */
+    .svc-panel {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      min-height: 0;
+      padding: 40px 26px 96px;
+    }
+    .svc-figure { font-size: clamp(150px, 46vw, 280px); bottom: auto; top: -4%; opacity: .9; }
+    .svc-statement { max-width: none; }
+    .svc-arrow { top: auto; bottom: 22px; transform: none; width: 48px; height: 48px; }
+    .svc-arrow.prev:hover svg, .svc-arrow.next:hover svg { transform: none; }
+    /* testimonials → stack featured over the client picker */
+    .tst-feature-grid { grid-template-columns: 1fr; gap: 16px; }
+    .tst-feature { min-height: 0; padding: 34px 26px; }
+    .tst-mark { font-size: clamp(130px, 40vw, 240px); }
+    .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+    .field-row { grid-template-columns: 1fr; gap: 0; }
     .cases-head { flex-direction: column; align-items: flex-start; }
     .cs-results { grid-template-columns: 1fr; }
   }
@@ -1351,7 +1466,8 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
     .reveal { opacity: 1; transform: none; transition: none; }
-    .svc-tags li, .tst-grid .tst-card { opacity: 1 !important; transform: none !important; }
+    .svc-panel [data-anim] { opacity: 1 !important; transform: none !important; }
+    .svc-bg, .tst-big, .tst-by { transition: none; }
   }
 
   /* ── preloader: logo fills up ── */
@@ -1386,7 +1502,7 @@
   .pl-logo .pl-fill {
     opacity: 1;
     clip-path: inset(100% 0 0 0);
-    animation: plFill .6s var(--ease) forwards;
+    animation: plFill .95s var(--ease) forwards;
   }
   @keyframes plFill  { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
   @keyframes plPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.045); } }
@@ -1432,6 +1548,7 @@
       if (done) return;
       done = true;
       pl.classList.add('done');
+      document.dispatchEvent(new CustomEvent('kaprera:loaded')); // let the hero start typing
       pl.addEventListener('transitionend', function () { pl.remove(); }, { once: true });
       setTimeout(function () { if (pl.parentNode) pl.remove(); }, 900);
     }
@@ -1464,7 +1581,7 @@
         <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
-      <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary" data-en="book a call" data-ar="احجز مكالمة">book a call</a>
+      <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </nav>
 
     <button class="menu-btn" id="menuBtn" aria-label="toggle menu" aria-expanded="false" aria-controls="navLinks">
@@ -1496,7 +1613,7 @@
               <h1 class="reveal" id="heroTitle" data-en="stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</h1>
               <p class="subline reveal" data-en="we design websites and brands that turn audiences into customers." data-ar="نصمّم مواقع وعلامات تجارية تحوّل الجمهور إلى عملاء.">we design websites and brands that turn audiences into customers.</p>
               <div class="hero-ctas reveal">
-                <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary" data-en="book a call" data-ar="احجز مكالمة">book a call</a>
+                <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 <button type="button" class="btn btn-ghost" id="seeWork" data-en="see our work" data-ar="شاهد أعمالنا">see our work</button>
               </div>
             </div>
@@ -1577,56 +1694,120 @@
       <h2 class="title reveal" data-en="services built to convert." data-ar="خدمات مصمّمة لتحقيق النتائج.">services built to convert.</h2>
       <p class="lede reveal" data-en="three core disciplines, one outcome — digital products that look sharp, perform, and get found." data-ar="ثلاثة تخصصات أساسية ونتيجة واحدة — منتجات رقمية أنيقة وسريعة وسهلة الظهور.">three core disciplines, one outcome — digital products that look sharp, perform, and get found.</p>
 
-      <div class="svc-grid">
-        <div class="svc-card reveal" data-svc>
-          <span class="svc-glow" aria-hidden="true"></span>
-          <span class="svc-ghost" aria-hidden="true">01</span>
-          <div class="svc-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <!-- ── service slider: 3 disciplines, each its own full panel ── -->
+      <div class="svc-slider reveal" id="svcSlider" data-svc-slider role="region" aria-roledescription="carousel" aria-label="our services">
+        <div class="svc-stage">
+          <div class="svc-bgs" aria-hidden="true">
+            <span class="svc-bg s1 active"></span>
+            <span class="svc-bg s2"></span>
+            <span class="svc-bg s3"></span>
           </div>
-          <div class="svc-num">01</div>
-          <h3 data-en="UI/UX Design" data-ar="تصميم الواجهات وتجربة المستخدم">UI/UX Design</h3>
-          <p data-en="User-centered interfaces that are intuitive, on-brand, and built to convert — from research and wireframes to polished, accessible design systems." data-ar="واجهات تركّز على المستخدم، بديهية ومتوافقة مع هوية علامتك ومصمّمة للتحويل — من البحث والنماذج الأولية إلى أنظمة تصميم متقنة وسهلة الوصول.">User-centered interfaces that are intuitive, on-brand, and built to convert — from research and wireframes to polished, accessible design systems.</p>
-          <ul class="svc-tags" aria-hidden="true">
-            <li data-en="research" data-ar="بحث">research</li>
-            <li data-en="wireframes" data-ar="نماذج أولية">wireframes</li>
-            <li data-en="prototyping" data-ar="نماذج تفاعلية">prototyping</li>
-            <li data-en="design systems" data-ar="أنظمة تصميم">design systems</li>
-          </ul>
+          <span class="svc-orb" aria-hidden="true"></span>
+
+          <div class="svc-viewport">
+            <div class="svc-track" id="svcTrack">
+
+              <!-- PANEL 01 — UI/UX Design -->
+              <article class="svc-panel is-active" role="group" aria-roledescription="slide" aria-label="1 of 3 — UI/UX Design">
+                <span class="svc-figure" aria-hidden="true">01</span>
+                <div class="svc-col">
+                  <span class="svc-eyebrow" data-anim style="--ad:.05s">
+                    <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+                    <span data-en="01 / what we do" data-ar="٠١ / ماذا نقدّم">01 / what we do</span>
+                  </span>
+                  <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="ui / ux design" data-ar="تصميم الواجهات وتجربة المستخدم">ui / ux design</h3>
+                  <p class="svc-statement" data-anim style="--ad:.20s" data-en="intuitive, on-brand interfaces that convert — from research to polished design systems." data-ar="واجهات بديهية ومتوافقة مع هويتك تحقّق التحويل — من البحث إلى أنظمة تصميم متقنة.">intuitive, on-brand interfaces that convert — from research to polished design systems.</p>
+                  <a href="#contact" class="svc-cta" data-anim style="--ad:.26s">
+                    <span data-en="start a project" data-ar="ابدأ مشروعك">start a project</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                </div>
+                <div class="svc-col">
+                  <div class="svc-visual" data-anim style="--ad:.22s">
+                    <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+                    <p class="svc-detail" data-en="User-centered interfaces that are intuitive, on-brand, and built to convert — every flow researched, prototyped, and refined." data-ar="واجهات تركّز على المستخدم، بديهية ومتوافقة مع هويتك ومصمّمة للتحويل — كل مسار مدروس ومُنمذج ومصقول.">User-centered interfaces that are intuitive, on-brand, and built to convert — every flow researched, prototyped, and refined.</p>
+                  </div>
+                  <div class="svc-chips" data-anim style="--ad:.30s">
+                    <span data-en="research" data-ar="بحث">research</span>
+                    <span data-en="wireframes" data-ar="نماذج أولية">wireframes</span>
+                    <span data-en="prototyping" data-ar="نماذج تفاعلية">prototyping</span>
+                    <span data-en="design systems" data-ar="أنظمة تصميم">design systems</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- PANEL 02 — Web Development -->
+              <article class="svc-panel" role="group" aria-roledescription="slide" aria-label="2 of 3 — Web Development">
+                <span class="svc-figure" aria-hidden="true">02</span>
+                <div class="svc-col">
+                  <span class="svc-eyebrow" data-anim style="--ad:.05s">
+                    <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+                    <span data-en="02 / what we do" data-ar="٠٢ / ماذا نقدّم">02 / what we do</span>
+                  </span>
+                  <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="web development" data-ar="تطوير الويب">web development</h3>
+                  <p class="svc-statement" data-anim style="--ad:.20s" data-en="fast, scalable, high-performance websites — clean code and strong core-web-vitals." data-ar="مواقع سريعة وقابلة للتوسّع وعالية الأداء — كود نظيف ومؤشرات أداء قوية.">fast, scalable, high-performance websites — clean code and strong core-web-vitals.</p>
+                  <a href="#contact" class="svc-cta" data-anim style="--ad:.26s">
+                    <span data-en="start a project" data-ar="ابدأ مشروعك">start a project</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                </div>
+                <div class="svc-col">
+                  <div class="svc-visual" data-anim style="--ad:.22s">
+                    <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                    <p class="svc-detail" data-en="Fast, responsive, high-performance websites engineered to scale — clean architecture and rock-solid performance." data-ar="مواقع سريعة ومتجاوبة وعالية الأداء مصمّمة للتوسّع — بنية نظيفة وأداء صلب.">Fast, responsive, high-performance websites engineered to scale — clean architecture and rock-solid performance.</p>
+                  </div>
+                  <div class="svc-chips" data-anim style="--ad:.30s">
+                    <span data-en="clean code" data-ar="كود نظيف">clean code</span>
+                    <span data-en="responsive" data-ar="متجاوب">responsive</span>
+                    <span data-en="core web vitals" data-ar="مؤشرات الأداء">core web vitals</span>
+                    <span data-en="scalable" data-ar="قابل للتوسّع">scalable</span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- PANEL 03 — SEO -->
+              <article class="svc-panel" role="group" aria-roledescription="slide" aria-label="3 of 3 — SEO">
+                <span class="svc-figure" aria-hidden="true">03</span>
+                <div class="svc-col">
+                  <span class="svc-eyebrow" data-anim style="--ad:.05s">
+                    <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 11h6M11 8v6"/></svg></span>
+                    <span data-en="03 / what we do" data-ar="٠٣ / ماذا نقدّم">03 / what we do</span>
+                  </span>
+                  <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="seo" data-ar="تحسين محركات البحث">seo</h3>
+                  <p class="svc-statement" data-anim style="--ad:.20s" data-en="technical & on-page seo that grows organic visibility — content that ranks." data-ar="تحسين تقني وداخلي يزيد الظهور العضوي — محتوى يتصدّر نتائج البحث.">technical &amp; on-page seo that grows organic visibility — content that ranks.</p>
+                  <a href="#contact" class="svc-cta" data-anim style="--ad:.26s">
+                    <span data-en="start a project" data-ar="ابدأ مشروعك">start a project</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                </div>
+                <div class="svc-col">
+                  <div class="svc-visual" data-anim style="--ad:.22s">
+                    <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 11h6M11 8v6"/></svg></div>
+                    <p class="svc-detail" data-en="Technical and on-page SEO that grows organic visibility over time — structured data, fast vitals, and content that ranks." data-ar="تحسين تقني وداخلي لمحركات البحث يزيد الظهور العضوي مع الوقت — بيانات منظّمة وأداء سريع ومحتوى يتصدّر النتائج.">Technical and on-page SEO that grows organic visibility over time — structured data, fast vitals, and content that ranks.</p>
+                  </div>
+                  <div class="svc-chips" data-anim style="--ad:.30s">
+                    <span data-en="keyword strategy" data-ar="استراتيجية الكلمات">keyword strategy</span>
+                    <span data-en="technical seo" data-ar="سيو تقني">technical seo</span>
+                    <span data-en="structured data" data-ar="بيانات منظّمة">structured data</span>
+                    <span data-en="content" data-ar="المحتوى">content</span>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <button type="button" class="svc-arrow prev" id="svcPrev" aria-label="previous service">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" class="svc-arrow next" id="svcNext" aria-label="next service">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
 
-        <div class="svc-card reveal" data-svc>
-          <span class="svc-glow" aria-hidden="true"></span>
-          <span class="svc-ghost" aria-hidden="true">02</span>
-          <div class="svc-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </div>
-          <div class="svc-num">02</div>
-          <h3 data-en="Web Development" data-ar="تطوير الويب">Web Development</h3>
-          <p data-en="Fast, responsive, high-performance builds. Clean code, strong core-web-vitals, and scalable foundations that grow with your business." data-ar="مواقع سريعة ومتجاوبة وعالية الأداء. كود نظيف، ومؤشرات أداء قوية، وأسس قابلة للتوسّع تنمو مع أعمالك.">Fast, responsive, high-performance builds. Clean code, strong core-web-vitals, and scalable foundations that grow with your business.</p>
-          <ul class="svc-tags" aria-hidden="true">
-            <li data-en="clean code" data-ar="كود نظيف">clean code</li>
-            <li data-en="responsive" data-ar="متجاوب">responsive</li>
-            <li data-en="core web vitals" data-ar="مؤشرات الأداء">core web vitals</li>
-            <li data-en="scalable" data-ar="قابل للتوسّع">scalable</li>
-          </ul>
-        </div>
-
-        <div class="svc-card reveal" data-svc>
-          <span class="svc-glow" aria-hidden="true"></span>
-          <span class="svc-ghost" aria-hidden="true">03</span>
-          <div class="svc-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 11h6M11 8v6"/></svg>
-          </div>
-          <div class="svc-num">03</div>
-          <h3 data-en="SEO" data-ar="تحسين محركات البحث">SEO</h3>
-          <p data-en="Technical and on-page SEO that grows organic visibility — keyword strategy, fast core-web-vitals, structured data, and content that ranks and converts." data-ar="تحسين تقني وداخلي لمحركات البحث يزيد الظهور العضوي — استراتيجية كلمات مفتاحية، وأداء سريع، وبيانات منظّمة، ومحتوى يتصدّر النتائج ويحقّق التحويل.">Technical and on-page SEO that grows organic visibility — keyword strategy, fast core-web-vitals, structured data, and content that ranks and converts.</p>
-          <ul class="svc-tags" aria-hidden="true">
-            <li data-en="keyword strategy" data-ar="استراتيجية الكلمات">keyword strategy</li>
-            <li data-en="technical seo" data-ar="سيو تقني">technical seo</li>
-            <li data-en="structured data" data-ar="بيانات منظّمة">structured data</li>
-            <li data-en="content" data-ar="المحتوى">content</li>
-          </ul>
+        <div class="svc-ctrls">
+          <div class="svc-dots" id="svcDots" role="tablist" aria-label="services"></div>
+          <div class="svc-count"><b id="svcNow">01</b> / 03</div>
         </div>
       </div>
 
@@ -1648,45 +1829,44 @@
         <span class="pill" data-en="Management & IT Consultancy" data-ar="الإدارة واستشارات تقنية المعلومات">Management &amp; IT Consultancy</span>
       </div>
 
-      <div class="tst-grid reveal">
-        <figure class="tst-card" data-tst>
-          <span class="tst-glow" aria-hidden="true"></span>
-          <div class="tst-stars" aria-label="5 out of 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <blockquote class="tst-quote" data-en="kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed." data-ar="أعادت kaprera بناء موقعنا بتجربة استخدام عصرية وأنيقة. انخفضت أوقات التحميل وارتفع التفاعل — تمامًا الحضور الاحترافي الذي احتجناه.">kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed.</blockquote>
-          <figcaption class="tst-author">
-            <span class="tst-avatar">B</span>
+      <!-- ── featured quote + clickable client picker ── -->
+      <div class="tst-feature-grid reveal" id="tstWrap">
+        <figure class="tst-feature">
+          <span class="tst-mark" aria-hidden="true">&ldquo;</span>
+          <div class="tst-stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote class="tst-big" id="tstQuote" data-en="kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed." data-ar="أعادت kaprera بناء موقعنا بتجربة استخدام عصرية وأنيقة. انخفضت أوقات التحميل وارتفع التفاعل — تمامًا الحضور الاحترافي الذي احتجناه.">kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed.</blockquote>
+          <figcaption class="tst-by">
+            <span class="tst-avatar" id="tstAvatar">B</span>
             <span class="tst-meta">
-              <span class="tst-name">Bayader</span>
-              <span class="tst-role" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span>
+              <span class="tst-name" id="tstName">Bayader</span>
+              <span class="tst-role" id="tstRole" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span>
             </span>
           </figcaption>
         </figure>
 
-        <figure class="tst-card" data-tst>
-          <span class="tst-glow" aria-hidden="true"></span>
-          <div class="tst-stars" aria-label="5 out of 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <blockquote class="tst-quote" data-en="The platform they delivered streamlined how we manage volunteers end to end. Onboarding is faster and our team finally has tools that just work." data-ar="بسّطت المنصة التي قدّموها طريقة إدارتنا للمتطوعين من البداية إلى النهاية. أصبح الانضمام أسرع وبات لدى فريقنا أدوات تعمل بسلاسة.">The platform they delivered streamlined how we manage volunteers end to end. Onboarding is faster and our team finally has tools that just work.</blockquote>
-          <figcaption class="tst-author">
-            <span class="tst-avatar">L</span>
-            <span class="tst-meta">
-              <span class="tst-name">Lebanese Spotlight</span>
-              <span class="tst-role" data-en="NGO" data-ar="منظمة غير حكومية">NGO</span>
+        <div class="tst-picker" role="tablist" aria-label="clients">
+          <button type="button" class="tst-pick is-active" data-i="0" role="tab" aria-selected="true" data-q-en="kaprera rebuilt our site with a sharp, modern UX. Load times dropped and engagement jumped — exactly the professional presence we needed." data-q-ar="أعادت kaprera بناء موقعنا بتجربة استخدام عصرية وأنيقة. انخفضت أوقات التحميل وارتفع التفاعل — تمامًا الحضور الاحترافي الذي احتجناه.">
+            <span class="pk-avatar">B</span>
+            <span class="pk-meta">
+              <span class="pk-name">Bayader</span>
+              <span class="pk-role" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span>
             </span>
-          </figcaption>
-        </figure>
-
-        <figure class="tst-card" data-tst>
-          <span class="tst-glow" aria-hidden="true"></span>
-          <div class="tst-stars" aria-label="5 out of 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <blockquote class="tst-quote" data-en="Working with kaprera felt like having a real partner. Clear process, fast delivery, and a result that actually converts." data-ar="العمل مع kaprera كان كأنّ لدينا شريكًا حقيقيًا. عملية واضحة، وتسليم سريع، ونتيجة تحقّق التحويل فعلًا.">Working with kaprera felt like having a real partner. Clear process, fast delivery, and a result that actually converts.</blockquote>
-          <figcaption class="tst-author">
-            <span class="tst-avatar">S</span>
-            <span class="tst-meta">
-              <span class="tst-name" data-en="Startup Founder" data-ar="مؤسّس شركة ناشئة">Startup Founder</span>
-              <span class="tst-role" data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</span>
+          </button>
+          <button type="button" class="tst-pick" data-i="1" role="tab" aria-selected="false" data-q-en="The platform they delivered streamlined how we manage volunteers end to end. Onboarding is faster and our team finally has tools that just work." data-q-ar="بسّطت المنصة التي قدّموها طريقة إدارتنا للمتطوعين من البداية إلى النهاية. أصبح الانضمام أسرع وبات لدى فريقنا أدوات تعمل بسلاسة.">
+            <span class="pk-avatar">L</span>
+            <span class="pk-meta">
+              <span class="pk-name">Lebanese Spotlight</span>
+              <span class="pk-role" data-en="NGO" data-ar="منظمة غير حكومية">NGO</span>
             </span>
-          </figcaption>
-        </figure>
+          </button>
+          <button type="button" class="tst-pick" data-i="2" role="tab" aria-selected="false" data-q-en="Working with kaprera felt like having a real partner. Clear process, fast delivery, and a result that actually converts." data-q-ar="العمل مع kaprera كان كأنّ لدينا شريكًا حقيقيًا. عملية واضحة، وتسليم سريع، ونتيجة تحقّق التحويل فعلًا.">
+            <span class="pk-avatar">S</span>
+            <span class="pk-meta">
+              <span class="pk-name" data-en="Startup Founder" data-ar="مؤسّس شركة ناشئة">Startup Founder</span>
+              <span class="pk-role" data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</span>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -1698,23 +1878,25 @@
       <h2 class="title reveal" data-en="tell us about your project." data-ar="أخبرنا عن مشروعك.">tell us about your project.</h2>
 
       <div class="contact-grid">
-        <form id="contactForm" class="reveal" novalidate>
-          <div class="field">
-            <label for="name" data-en="full name" data-ar="الاسم الكامل">full name</label>
-            <input type="text" id="name" name="name" placeholder="your name" data-en-ph="your name" data-ar-ph="اسمك" required />
-          </div>
-          <div class="field">
-            <label for="email" data-en="email" data-ar="البريد الإلكتروني">email</label>
-            <input type="email" id="email" name="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+        <form id="contactForm" class="contact-card reveal" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="name" data-en="full name" data-ar="الاسم الكامل">full name</label>
+              <input type="text" id="name" name="name" placeholder="your name" data-en-ph="your name" data-ar-ph="اسمك" required />
+            </div>
+            <div class="field">
+              <label for="email" data-en="email" data-ar="البريد الإلكتروني">email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+            </div>
           </div>
           <div class="field">
             <label for="message" data-en="message" data-ar="الرسالة">message</label>
             <textarea id="message" name="message" placeholder="what are you building?" data-en-ph="what are you building?" data-ar-ph="ما الذي تبنيه؟" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" data-en="send" data-ar="إرسال">send</button>
+          <button type="submit" class="btn btn-primary btn-shine"><span data-en="send" data-ar="إرسال">send</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
         </form>
 
-        <aside class="contact-aside reveal">
+        <aside class="contact-card contact-aside reveal">
           <div class="contact-item">
             <div class="k" data-en="book a call" data-ar="احجز مكالمة">book a call</div>
             <a class="v" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" data-en="schedule a meeting →" data-ar="حدّد موعدًا ←">schedule a meeting →</a>
@@ -1876,6 +2058,8 @@
   // ── hero headline typewriter ──
   const heroTitle = document.getElementById('heroTitle');
   let typeTimer = null;
+  // slide 1 shouldn't type while the preloader still covers it; unlocked on 'kaprera:loaded'
+  let heroTypingUnlocked = !document.getElementById('preloader');
   const typeHeroTitle = (lang) => {
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     const text = heroTitle.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en') || '';
@@ -1889,6 +2073,8 @@
     heroTitle.textContent = text;
     heroTitle.style.minHeight = heroTitle.offsetHeight + 'px';
     heroTitle.innerHTML = '<span class="typed"></span><span class="caret"></span>';
+    // hold the keystrokes until the preloader clears; this fn re-runs on unlock
+    if (!heroTypingUnlocked) return;
     const typed = heroTitle.querySelector('.typed');
     const delayFor = (ch) => {
       if (ch === ',' || ch === '،') return 320;          // pause after comma
@@ -2048,6 +2234,162 @@
     go(0); start();
   })();
 
+  // ── services slider (full-panel, colour-morphing) ──
+  (function initServicesSlider() {
+    const slider = document.getElementById('svcSlider');
+    if (!slider) return;
+    const track = document.getElementById('svcTrack');
+    const panels = [...track.children];
+    const bgs = [...slider.querySelectorAll('.svc-bg')];
+    const dotsWrap = document.getElementById('svcDots');
+    const nowEl = document.getElementById('svcNow');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = null;
+    const AUTO = 4000;
+    // mid-tone of each service's background gradient, so the playing dot matches the panel
+    const FILL = ['#008cc1', '#4a37c9', '#0c9b86'];
+
+    panels.forEach((_, idx) => {
+      const d = document.createElement('i');
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-label', 'go to service ' + (idx + 1));
+      d.addEventListener('click', () => { go(idx); rest(); });
+      dotsWrap.appendChild(d);
+    });
+    const dots = [...dotsWrap.children];
+
+    // restart the "loading" fill on the active dot so it tracks the autoplay timer
+    const paintFill = () => {
+      dots.forEach(d => d.classList.remove('fill'));
+      const a = dots[i];
+      if (!a || reduce) return;
+      a.style.setProperty('--svc-auto', AUTO + 'ms');
+      void a.offsetWidth;            // reflow so the animation restarts from 0
+      a.classList.add('fill');
+    };
+    const go = (n) => {
+      i = (n + panels.length) % panels.length;
+      track.style.transform = 'translateX(' + (-i * 100) + '%)';
+      panels.forEach((p, idx) => p.classList.toggle('is-active', idx === i));
+      bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      dotsWrap.style.setProperty('--svc-fill', FILL[i] || FILL[0]);
+      if (nowEl) nowEl.textContent = String(i + 1).padStart(2, '0');
+      paintFill();
+    };
+    const stop = () => {
+      if (timer) { clearInterval(timer); timer = null; }
+      dotsWrap.classList.add('paused');     // freeze the fill while paused
+    };
+    const start = () => {
+      if (reduce) return;
+      stop();
+      dotsWrap.classList.remove('paused');
+      paintFill();                          // resync fill with the fresh interval
+      timer = setInterval(() => go(i + 1), AUTO);
+    };
+    const rest = () => { stop(); start(); };
+
+    document.getElementById('svcPrev').addEventListener('click', () => { go(i - 1); rest(); });
+    document.getElementById('svcNext').addEventListener('click', () => { go(i + 1); rest(); });
+
+    // keep auto-sliding; pause only while keyboard focus is inside, resume on blur
+    slider.addEventListener('focusin', stop);
+    slider.addEventListener('focusout', (e) => { if (!slider.contains(e.relatedTarget)) start(); });
+    // resume autoplay shortly after a manual swipe/tap ends
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+    slider.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft')  { go(i - 1); rest(); }
+      if (e.key === 'ArrowRight') { go(i + 1); rest(); }
+    });
+
+    // touch swipe
+    let sx = 0, sdx = 0, swiping = false;
+    track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sdx = 0; swiping = true; stop(); }, { passive: true });
+    track.addEventListener('touchmove', (e) => { if (swiping) sdx = e.touches[0].clientX - sx; }, { passive: true });
+    track.addEventListener('touchend', () => { if (swiping && Math.abs(sdx) > 50) go(sdx < 0 ? i + 1 : i - 1); swiping = false; start(); });
+
+    go(0); start();
+  })();
+
+  // ── testimonials: featured quote + clickable client picker ──
+  (function initTestimonials() {
+    const wrap = document.getElementById('tstWrap');
+    if (!wrap) return;
+    const feature = wrap.querySelector('.tst-feature');
+    const quoteEl = document.getElementById('tstQuote');
+    const roleEl = document.getElementById('tstRole');
+    const nameEl = document.getElementById('tstName');
+    const avatarEl = document.getElementById('tstAvatar');
+    const picks = [...wrap.querySelectorAll('.tst-pick')];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = null;
+    const AUTO = 5000;
+
+    // pull each client's data straight from its picker button (keeps i18n in the DOM)
+    const data = picks.map(p => {
+      const q = p.dataset;
+      const nameNode = p.querySelector('.pk-name');
+      const roleNode = p.querySelector('.pk-role');
+      return {
+        initial: p.querySelector('.pk-avatar').textContent,
+        name_en: nameNode.getAttribute('data-en') || nameNode.textContent,
+        name_ar: nameNode.getAttribute('data-ar') || nameNode.textContent,
+        role_en: roleNode.getAttribute('data-en'),
+        role_ar: roleNode.getAttribute('data-ar'),
+        q_en: p.getAttribute('data-q-en'),
+        q_ar: p.getAttribute('data-q-ar')
+      };
+    });
+
+    const select = (n, animate = true) => {
+      i = (n + picks.length) % picks.length;
+      const d = data[i];
+      const ar = document.documentElement.lang === 'ar';
+      const apply = () => {
+        // set both languages so the global language toggle keeps working
+        quoteEl.setAttribute('data-en', d.q_en);
+        quoteEl.setAttribute('data-ar', d.q_ar);
+        quoteEl.textContent = ar ? d.q_ar : d.q_en;
+        nameEl.setAttribute('data-en', d.name_en);
+        nameEl.setAttribute('data-ar', d.name_ar);
+        nameEl.textContent = ar ? d.name_ar : d.name_en;
+        roleEl.setAttribute('data-en', d.role_en);
+        roleEl.setAttribute('data-ar', d.role_ar);
+        roleEl.textContent = ar ? d.role_ar : d.role_en;
+        avatarEl.textContent = d.initial;
+      };
+      picks.forEach((p, idx) => {
+        const on = idx === i;
+        p.classList.toggle('is-active', on);
+        p.setAttribute('aria-selected', String(on));
+      });
+      if (animate && !reduce) {
+        feature.classList.add('swapping');
+        setTimeout(() => { apply(); feature.classList.remove('swapping'); }, 280);
+      } else {
+        apply();
+      }
+    };
+
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const start = () => { if (reduce) return; stop(); timer = setInterval(() => select(i + 1), AUTO); };
+    const rest = () => { stop(); start(); };
+
+    picks.forEach((p) => {
+      p.addEventListener('click', () => { select(+p.dataset.i); rest(); });
+    });
+
+    // pause autoplay while hovering or keyboard-focused inside, resume after
+    wrap.addEventListener('mouseenter', stop);
+    wrap.addEventListener('mouseleave', start);
+    wrap.addEventListener('focusin', stop);
+    wrap.addEventListener('focusout', (e) => { if (!wrap.contains(e.relatedTarget)) start(); });
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+
+    start();
+  })();
+
   // ── nav: scroll condense ──
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
@@ -2153,6 +2495,14 @@
 
   // apply saved language (swap text/placeholders) on load
   applyLang(currentLang);
+
+  // begin the hero typewriter only once the preloader has finished
+  if (!heroTypingUnlocked) {
+    document.addEventListener('kaprera:loaded', () => {
+      heroTypingUnlocked = true;
+      typeHeroTitle(currentLang);
+    }, { once: true });
+  }
 </script>
 </body>
 </html>
