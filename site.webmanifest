@@ -1,0 +1,26 @@
+{
+  "name": "kaprera — digital agency",
+  "short_name": "kaprera",
+  "description": "Digital agency in Beirut, Lebanon — web design, development & SEO.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#008cc1",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/branding/logos/kaprera-icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/branding/logos/kaprera-icon-mark.png",
+      "sizes": "913x793",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
