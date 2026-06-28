@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>privacy policy — kaprera</title>
+<meta name="description" content="How kaprera, a digital agency in Beirut, Lebanon, collects, uses, safeguards, and discloses information when you use kaprera.com." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#008cc1" />
+<link rel="canonical" href="https://kaprera.com/privacy-policy.html" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/branding/logos/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-32.png" />
+<link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="kaprera" />
+<meta property="og:title" content="privacy policy — kaprera" />
+<meta property="og:description" content="How kaprera collects, uses, safeguards, and discloses information when you use kaprera.com." />
+<meta property="og:url" content="https://kaprera.com/privacy-policy.html" />
+<meta property="og:image" content="https://kaprera.com/branding/logos/kaprera-logo.png" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="ar_AR" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --blue: #008cc1;
+    --blue-dark: #0079a8;
+    --white: #ffffff;
+    --ink: #0a0a0a;
+    --muted: #5b5b5b;
+    --hair: #e6e6e6;
+    --bg-soft: #fafafa;
+    --maxw: 1180px;
+    --readw: 780px;
+    --radius: 14px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-theme="dark"] {
+    --white: #0d1117;
+    --ink: #e8eaed;
+    --muted: #9aa4ad;
+    --hair: #232a31;
+    --bg-soft: #161b22;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after {
+    transition: background-color .35s var(--ease), border-color .3s var(--ease), color .3s var(--ease), fill .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--blue); color: #fff; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 3px; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .accent { color: var(--blue); }
+
+  /* ── buttons / toggles ── */
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--hair); background: transparent; color: var(--ink);
+    cursor: pointer; flex-shrink: 0;
+    transition: border-color .2s, color .2s, transform .25s var(--ease);
+  }
+  .theme-toggle:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+  .theme-toggle .sun { display: none; }
+  .theme-toggle .moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .sun { display: block; }
+  html[data-theme="dark"] .theme-toggle .moon { display: none; }
+
+  .lang-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 14px; border-radius: 999px;
+    border: 1px solid var(--hair); background: transparent; color: var(--ink);
+    cursor: pointer; flex-shrink: 0; font-weight: 600; font-size: 14px;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: border-color .2s, color .2s, transform .25s var(--ease);
+  }
+  .lang-toggle:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+
+  /* ── arabic / rtl ── */
+  html[lang="ar"] body { font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
+  html[lang="ar"] .eyebrow,
+  html[lang="ar"] .foot-col h4,
+  html[lang="ar"] .foot-bottom,
+  html[lang="ar"] .legal-meta,
+  html[lang="ar"] .lang-toggle { font-family: 'Cairo', system-ui, sans-serif; }
+  html[lang="ar"] .brand .mark { font-family: 'JetBrains Mono', monospace; }
+  html[lang="ar"] .back-link svg { transform: scaleX(-1); }
+
+  /* ── nav ── */
+  header.nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 60;
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, box-shadow .3s, padding .3s;
+  }
+  header.nav::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: color-mix(in srgb, var(--white) 72%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    transition: background-color .3s var(--ease);
+  }
+  header.nav.scrolled { border-bottom-color: var(--hair); box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 78px; transition: height .3s var(--ease);
+  }
+  header.nav.scrolled .nav-inner { height: 64px; }
+  .brand {
+    display: inline-flex; align-items: baseline; gap: 6px;
+    font-weight: 800; font-size: 21px; letter-spacing: -0.02em;
+  }
+  .brand .mark { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-weight: 500; }
+  .nav-utils { display: flex; align-items: center; gap: 14px; }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 15px; text-transform: lowercase; color: var(--ink);
+    transition: color .2s;
+  }
+  .back-link svg { transition: transform .3s var(--ease); }
+  .back-link:hover { color: var(--blue); }
+  .back-link:hover svg { transform: translateX(-3px); }
+  @media (max-width: 600px) { .back-link span { display: none; } }
+
+  /* ── legal content ── */
+  main { padding-top: 78px; }
+  .legal-hero {
+    padding: 70px 0 40px;
+    background:
+      radial-gradient(900px 520px at 12% -20%, rgba(0,140,193,0.05), transparent 60%),
+      radial-gradient(700px 480px at 100% 0%, rgba(70,196,236,0.045), transparent 56%),
+      var(--bg-soft);
+    border-bottom: 1px solid var(--hair);
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: 0.04em; color: var(--muted); margin-bottom: 18px;
+    text-transform: lowercase;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); display: inline-block; }
+  .legal-hero h1 {
+    font-size: clamp(34px, 6vw, 56px); font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 18px;
+  }
+  .legal-lead { color: var(--muted); font-size: 18px; max-width: var(--readw); }
+  .legal-meta {
+    margin-top: 22px; font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--muted);
+  }
+  .legal-meta b { color: var(--ink); font-weight: 500; }
+
+  .legal { padding: 56px 0 90px; }
+  .legal .inner { max-width: var(--readw); margin: 0 auto; }
+  .legal section { padding: 26px 0; border-top: 1px solid var(--hair); }
+  .legal section:first-child { border-top: 0; }
+  .legal h2 {
+    font-size: clamp(21px, 3vw, 26px); font-weight: 700;
+    letter-spacing: -0.01em; margin-bottom: 16px;
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .legal h2 .num { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--blue); font-weight: 500; }
+  .legal h3 { font-size: 17px; font-weight: 700; margin: 22px 0 8px; }
+  .legal p { color: var(--muted); margin-bottom: 14px; line-height: 1.7; }
+  .legal ul { list-style: none; margin: 0 0 16px; padding: 0; }
+  .legal li {
+    color: var(--muted); line-height: 1.7; position: relative;
+    padding-inline-start: 22px; margin-bottom: 10px;
+  }
+  .legal li::before {
+    content: ""; position: absolute; inset-inline-start: 2px; top: 11px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+  }
+  .legal a.inline { color: var(--blue); font-weight: 600; }
+  .legal a.inline:hover { text-decoration: underline; }
+  .legal strong { color: var(--ink); font-weight: 600; }
+  .legal .contact-card {
+    margin-top: 18px; padding: 22px 24px; border: 1px solid var(--hair);
+    border-radius: var(--radius); background: var(--bg-soft);
+  }
+  .legal .contact-card p { margin-bottom: 6px; }
+
+  /* ── footer ── */
+  footer { border-top: 1px solid var(--hair); padding: 56px 0 40px; background: #f1f2f4; }
+  html[data-theme="dark"] footer { background: #0a0d12; }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; margin-bottom: 44px; }
+  .foot-tag { color: var(--muted); margin-top: 12px; max-width: 320px; }
+  .foot-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .foot-col h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);
+    font-weight: 400; margin-bottom: 14px; text-transform: lowercase;
+  }
+  .foot-col a { display: block; font-size: 15px; margin-bottom: 10px; text-transform: lowercase; transition: color .2s; }
+  .foot-col a:hover { color: var(--blue); }
+  .foot-bottom {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    padding-top: 26px; border-top: 1px solid var(--hair);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+<script>
+  // apply saved/system theme + language before paint to avoid flash
+  (function () {
+    const saved = localStorage.getItem('theme');
+    const dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+    const lang = localStorage.getItem('lang') || 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  })();
+</script>
+</head>
+<body>
+
+<!-- ───────────── HEADER ───────────── -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="brand" aria-label="kaprera home">
+      <span class="mark">&gt;_</span><span>kaprera</span>
+    </a>
+    <div class="nav-utils">
+      <a href="/" class="back-link" aria-label="back to site">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        <span data-en="back to site" data-ar="العودة إلى الموقع">back to site</span>
+      </a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="switch language" aria-pressed="false">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+        <span id="langLabel">ع</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="toggle dark mode" aria-pressed="false">
+        <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ───────────── HERO ───────────── -->
+  <section class="legal-hero">
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span> <span data-en="legal" data-ar="قانوني">legal</span></span>
+      <h1 data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</h1>
+      <p class="legal-lead" data-en="This Privacy Policy explains how kaprera collects, uses, safeguards, and discloses information when you visit kaprera.com or engage our services." data-ar="توضّح سياسة الخصوصية هذه كيف تقوم كابريرا بجمع المعلومات واستخدامها وحمايتها والإفصاح عنها عند زيارتك لموقع kaprera.com أو الاستعانة بخدماتنا.">This Privacy Policy explains how kaprera collects, uses, safeguards, and discloses information when you visit kaprera.com or engage our services.</p>
+      <p class="legal-meta"><span data-en="Effective date:" data-ar="تاريخ السريان:">Effective date:</span> <b data-en="28 June 2026" data-ar="28 حزيران 2026">28 June 2026</b></p>
+    </div>
+  </section>
+
+  <!-- ───────────── BODY ───────────── -->
+  <div class="legal">
+    <div class="wrap">
+      <div class="inner">
+
+        <section>
+          <h2><span class="num">01</span> <span data-en="Introduction" data-ar="مقدمة">Introduction</span></h2>
+          <p data-en="kaprera (&ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;) is a digital agency based in Beirut, Lebanon, operating the website kaprera.com (the &ldquo;Service&rdquo;). We are committed to protecting your privacy and handling your information responsibly." data-ar="كابريرا (&laquo;نحن&raquo; أو &laquo;لنا&raquo;) هي وكالة رقمية مقرّها بيروت، لبنان، وتُشغّل موقع kaprera.com (&laquo;الخدمة&raquo;). نلتزم بحماية خصوصيتك والتعامل مع معلوماتك بمسؤولية.">kaprera (&ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;) is a digital agency based in Beirut, Lebanon, operating the website kaprera.com (the &ldquo;Service&rdquo;). We are committed to protecting your privacy and handling your information responsibly.</p>
+          <p data-en="By using the Service, you agree to the collection and use of information in accordance with this policy. If you do not agree, please discontinue use of the Service." data-ar="باستخدامك للخدمة، فإنك توافق على جمع المعلومات واستخدامها وفقًا لهذه السياسة. إذا كنت لا توافق، يُرجى التوقف عن استخدام الخدمة.">By using the Service, you agree to the collection and use of information in accordance with this policy. If you do not agree, please discontinue use of the Service.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">02</span> <span data-en="Information We Collect" data-ar="المعلومات التي نجمعها">Information We Collect</span></h2>
+          <h3 data-en="Personal data" data-ar="البيانات الشخصية">Personal data</h3>
+          <p data-en="When you contact us or request a service, we may ask you to provide personally identifiable information, such as:" data-ar="عند تواصلك معنا أو طلبك لخدمة، قد نطلب منك تقديم معلومات تعرّف عنك شخصيًا، مثل:">When you contact us or request a service, we may ask you to provide personally identifiable information, such as:</p>
+          <ul>
+            <li data-en="Name" data-ar="الاسم">Name</li>
+            <li data-en="Email address" data-ar="عنوان البريد الإلكتروني">Email address</li>
+            <li data-en="Phone number" data-ar="رقم الهاتف">Phone number</li>
+            <li data-en="Company name and any details you include in a message" data-ar="اسم الشركة وأي تفاصيل تُضمّنها في رسالتك">Company name and any details you include in a message</li>
+          </ul>
+          <h3 data-en="Usage data" data-ar="بيانات الاستخدام">Usage data</h3>
+          <p data-en="We may also collect information that your browser sends whenever you visit the Service, such as your IP address, browser type and version, the pages you visit, the time and date of your visit, and other diagnostic data." data-ar="قد نجمع أيضًا معلومات يرسلها متصفّحك عند زيارتك للخدمة، مثل عنوان IP الخاص بك، ونوع المتصفّح وإصداره، والصفحات التي تزورها، ووقت وتاريخ الزيارة، وبيانات تشخيصية أخرى.">We may also collect information that your browser sends whenever you visit the Service, such as your IP address, browser type and version, the pages you visit, the time and date of your visit, and other diagnostic data.</p>
+          <h3 data-en="Cookies and tracking" data-ar="ملفات تعريف الارتباط والتتبّع">Cookies and tracking</h3>
+          <p data-en="We use cookies and similar technologies to operate and improve the Service. Cookies are small files stored on your device. You can instruct your browser to refuse cookies, but some parts of the Service may not function properly as a result." data-ar="نستخدم ملفات تعريف الارتباط (الكوكيز) وتقنيات مشابهة لتشغيل الخدمة وتحسينها. الكوكيز ملفات صغيرة تُخزَّن على جهازك. يمكنك ضبط متصفّحك لرفض الكوكيز، لكن قد لا تعمل بعض أجزاء الخدمة بشكل صحيح نتيجة لذلك.">We use cookies and similar technologies to operate and improve the Service. Cookies are small files stored on your device. You can instruct your browser to refuse cookies, but some parts of the Service may not function properly as a result.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">03</span> <span data-en="How We Use Your Information" data-ar="كيف نستخدم معلوماتك">How We Use Your Information</span></h2>
+          <p data-en="We use the information we collect to:" data-ar="نستخدم المعلومات التي نجمعها من أجل:">We use the information we collect to:</p>
+          <ul>
+            <li data-en="Provide, operate, and maintain the Service" data-ar="تقديم الخدمة وتشغيلها وصيانتها">Provide, operate, and maintain the Service</li>
+            <li data-en="Respond to your enquiries and deliver the services you request" data-ar="الرد على استفساراتك وتقديم الخدمات التي تطلبها">Respond to your enquiries and deliver the services you request</li>
+            <li data-en="Improve, personalise, and analyse how the Service is used" data-ar="تحسين الخدمة وتخصيصها وتحليل طريقة استخدامها">Improve, personalise, and analyse how the Service is used</li>
+            <li data-en="Send you administrative or, where permitted, marketing communications" data-ar="إرسال رسائل إدارية أو تسويقية إليك حيثما يُسمح بذلك">Send you administrative or, where permitted, marketing communications</li>
+            <li data-en="Detect, prevent, and address technical issues or misuse" data-ar="اكتشاف المشكلات التقنية أو إساءة الاستخدام ومنعها ومعالجتها">Detect, prevent, and address technical issues or misuse</li>
+            <li data-en="Comply with legal obligations" data-ar="الامتثال للالتزامات القانونية">Comply with legal obligations</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2><span class="num">04</span> <span data-en="Sharing &amp; Third Parties" data-ar="المشاركة والأطراف الثالثة">Sharing &amp; Third Parties</span></h2>
+          <p data-en="We do not sell your personal data. We may share information with trusted third-party service providers (for example, hosting, analytics, and email tools) who process it solely on our behalf and only to the extent necessary to perform their tasks. They are obligated not to disclose or use it for any other purpose." data-ar="نحن لا نبيع بياناتك الشخصية. قد نشارك المعلومات مع مزوّدي خدمات خارجيين موثوقين (مثل الاستضافة والتحليلات وأدوات البريد الإلكتروني) يعالجونها نيابةً عنا فقط وبالقدر اللازم لأداء مهامهم. وهم ملزمون بعدم الإفصاح عنها أو استخدامها لأي غرض آخر.">We do not sell your personal data. We may share information with trusted third-party service providers (for example, hosting, analytics, and email tools) who process it solely on our behalf and only to the extent necessary to perform their tasks. They are obligated not to disclose or use it for any other purpose.</p>
+          <p data-en="We may also disclose information where required by law, to enforce our rights, or to protect the safety of our users and the public." data-ar="قد نفصح أيضًا عن المعلومات عندما يقتضي القانون ذلك، أو لإنفاذ حقوقنا، أو لحماية سلامة مستخدمينا والعامة.">We may also disclose information where required by law, to enforce our rights, or to protect the safety of our users and the public.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">05</span> <span data-en="Data Retention" data-ar="الاحتفاظ بالبيانات">Data Retention</span></h2>
+          <p data-en="We retain personal data only for as long as is necessary for the purposes set out in this policy, and to comply with our legal obligations, resolve disputes, and enforce our agreements. Usage data is generally retained for a shorter period, except where it is used to strengthen security or improve the Service, or where we are legally required to retain it longer." data-ar="نحتفظ بالبيانات الشخصية فقط للمدة اللازمة للأغراض المبيّنة في هذه السياسة، وللامتثال لالتزاماتنا القانونية وحلّ النزاعات وإنفاذ اتفاقياتنا. يُحتفظ ببيانات الاستخدام عادةً لمدة أقصر، إلا عند استخدامها لتعزيز الأمان أو تحسين الخدمة، أو عندما نكون ملزمين قانونيًا بالاحتفاظ بها لمدة أطول.">We retain personal data only for as long as is necessary for the purposes set out in this policy, and to comply with our legal obligations, resolve disputes, and enforce our agreements. Usage data is generally retained for a shorter period, except where it is used to strengthen security or improve the Service, or where we are legally required to retain it longer.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">06</span> <span data-en="Data Security" data-ar="أمن البيانات">Data Security</span></h2>
+          <p data-en="The security of your data is important to us. We use commercially acceptable measures to protect your personal data. However, no method of transmission over the internet or method of electronic storage is 100% secure, and we cannot guarantee its absolute security." data-ar="أمن بياناتك يهمّنا. نستخدم وسائل مقبولة تجاريًا لحماية بياناتك الشخصية. ومع ذلك، لا توجد وسيلة نقل عبر الإنترنت أو وسيلة تخزين إلكتروني آمنة بنسبة 100%، ولا يمكننا ضمان أمنها المطلق.">The security of your data is important to us. We use commercially acceptable measures to protect your personal data. However, no method of transmission over the internet or method of electronic storage is 100% secure, and we cannot guarantee its absolute security.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">07</span> <span data-en="Your Rights" data-ar="حقوقك">Your Rights</span></h2>
+          <p data-en="Depending on your location, you may have the right to access, correct, update, or request deletion of your personal data, to object to or restrict its processing, and to data portability. Residents of the EU/EEA (under GDPR) and California (under CCPA) may have additional rights." data-ar="بحسب موقعك، قد يكون لديك الحق في الوصول إلى بياناتك الشخصية أو تصحيحها أو تحديثها أو طلب حذفها، والاعتراض على معالجتها أو تقييدها، والحق في نقل البيانات. وقد يتمتّع المقيمون في الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية (بموجب اللائحة العامة لحماية البيانات GDPR) وفي كاليفورنيا (بموجب قانون CCPA) بحقوق إضافية.">Depending on your location, you may have the right to access, correct, update, or request deletion of your personal data, to object to or restrict its processing, and to data portability. Residents of the EU/EEA (under GDPR) and California (under CCPA) may have additional rights.</p>
+          <p data-en="To exercise any of these rights, please contact us using the details below." data-ar="لممارسة أيٍّ من هذه الحقوق، يُرجى التواصل معنا عبر التفاصيل أدناه.">To exercise any of these rights, please contact us using the details below.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">08</span> <span data-en="International Transfers" data-ar="عمليات النقل الدولية">International Transfers</span></h2>
+          <p data-en="Your information, including personal data, may be processed and stored on servers located outside your country, where data protection laws may differ. By using the Service, you consent to this transfer where applicable." data-ar="قد تُعالَج معلوماتك، بما في ذلك البيانات الشخصية، وتُخزَّن على خوادم موجودة خارج بلدك، حيث قد تختلف قوانين حماية البيانات. باستخدامك للخدمة، فإنك توافق على هذا النقل حيثما ينطبق.">Your information, including personal data, may be processed and stored on servers located outside your country, where data protection laws may differ. By using the Service, you consent to this transfer where applicable.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">09</span> <span data-en="Children&rsquo;s Privacy" data-ar="خصوصية الأطفال">Children&rsquo;s Privacy</span></h2>
+          <p data-en="The Service is not directed to anyone under the age of 16. We do not knowingly collect personal data from children. If you believe a child has provided us with personal data, please contact us and we will take steps to remove it." data-ar="الخدمة ليست موجَّهة لأي شخص دون سنّ 16 عامًا. ولا نجمع عمدًا بيانات شخصية من الأطفال. إذا كنت تعتقد أن طفلًا قد زوّدنا ببيانات شخصية، فيُرجى التواصل معنا وسنتّخذ خطوات لإزالتها.">The Service is not directed to anyone under the age of 16. We do not knowingly collect personal data from children. If you believe a child has provided us with personal data, please contact us and we will take steps to remove it.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">10</span> <span data-en="Links to Other Sites" data-ar="روابط إلى مواقع أخرى">Links to Other Sites</span></h2>
+          <p data-en="The Service may contain links to websites we do not operate. We are not responsible for the privacy practices or content of those third-party sites and encourage you to review their policies." data-ar="قد تحتوي الخدمة على روابط لمواقع لا نُشغّلها. نحن لسنا مسؤولين عن ممارسات الخصوصية أو محتوى تلك المواقع الخارجية، وننصحك بمراجعة سياساتها.">The Service may contain links to websites we do not operate. We are not responsible for the privacy practices or content of those third-party sites and encourage you to review their policies.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">11</span> <span data-en="Changes to This Policy" data-ar="التغييرات على هذه السياسة">Changes to This Policy</span></h2>
+          <p data-en="We may update this Privacy Policy from time to time. We will post any changes on this page and update the effective date above. We encourage you to review this policy periodically." data-ar="قد نحدّث سياسة الخصوصية هذه من حينٍ لآخر. سننشر أي تغييرات على هذه الصفحة ونحدّث تاريخ السريان أعلاه. ونشجّعك على مراجعة هذه السياسة بشكل دوري.">We may update this Privacy Policy from time to time. We will post any changes on this page and update the effective date above. We encourage you to review this policy periodically.</p>
+        </section>
+
+        <section>
+          <h2><span class="num">12</span> <span data-en="Contact Us" data-ar="تواصل معنا">Contact Us</span></h2>
+          <p data-en="If you have any questions about this Privacy Policy or your data, you can reach us at:" data-ar="إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه أو بياناتك، يمكنك التواصل معنا عبر:">If you have any questions about this Privacy Policy or your data, you can reach us at:</p>
+          <div class="contact-card">
+            <p><strong>kaprera</strong></p>
+            <p><span data-en="Email:" data-ar="البريد الإلكتروني:">Email:</span> <a class="inline" href="mailto:info@kaprera.com">info@kaprera.com</a></p>
+            <p><span data-en="Location:" data-ar="الموقع:">Location:</span> <span data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</span></p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ───────────── FOOTER ───────────── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="/" class="brand"><span class="mark">&gt;_</span><span>kaprera</span></a>
+        <p class="foot-tag" data-en="stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4 data-en="explore" data-ar="استكشف">explore</h4>
+          <a href="/#work" data-en="work" data-ar="أعمالنا">work</a>
+          <a href="/#services" data-en="services" data-ar="خدماتنا">services</a>
+          <a href="/#testimonials" data-en="testimonials" data-ar="آراء العملاء">testimonials</a>
+          <a href="/#contact" data-en="contact" data-ar="تواصل">contact</a>
+        </div>
+        <div class="foot-col">
+          <h4 data-en="legal" data-ar="قانوني">legal</h4>
+          <a href="/privacy-policy.html" data-en="privacy policy" data-ar="سياسة الخصوصية">privacy policy</a>
+        </div>
+        <div class="foot-col">
+          <h4 data-en="social" data-ar="تواصل اجتماعي">social</h4>
+          <a href="#" target="_blank" rel="noopener" data-en="linkedin" data-ar="لينكدإن">linkedin</a>
+          <a href="https://www.instagram.com/kaprera_agency/" target="_blank" rel="noopener" data-en="instagram" data-ar="إنستغرام">instagram</a>
+          <a href="https://wa.me/9613816405" target="_blank" rel="noopener" data-en="whatsapp" data-ar="واتساب">whatsapp</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-en="© 2026 kaprera. all rights reserved." data-ar="© 2026 كابريرا. جميع الحقوق محفوظة.">© 2026 kaprera. all rights reserved.</span>
+      <span data-en="made in lebanon ·" data-ar="صُنع في لبنان ·">made in lebanon ·</span> <span class="accent">&gt;_</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+
+  // ── dark mode toggle ──
+  const themeToggle = document.getElementById('themeToggle');
+  const syncTheme = () => themeToggle.setAttribute('aria-pressed', String(root.getAttribute('data-theme') === 'dark'));
+  syncTheme();
+  themeToggle.addEventListener('click', () => {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    localStorage.setItem('theme', dark ? 'light' : 'dark');
+    syncTheme();
+  });
+
+  // ── language toggle (en / ar rtl) ──
+  const langToggle = document.getElementById('langToggle');
+  const langLabel = document.getElementById('langLabel');
+  let currentLang = localStorage.getItem('lang') || 'en';
+  const applyLang = (lang) => {
+    const ar = lang === 'ar';
+    currentLang = lang;
+    root.lang = lang;
+    root.dir = ar ? 'rtl' : 'ltr';
+    document.title = ar ? 'سياسة الخصوصية — كابريرا' : 'privacy policy — kaprera';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const t = el.getAttribute(ar ? 'data-ar' : 'data-en');
+      if (t != null) el.textContent = t;
+    });
+    langLabel.textContent = ar ? 'EN' : 'ع';
+    langToggle.setAttribute('aria-pressed', String(ar));
+    localStorage.setItem('lang', lang);
+  };
+  langToggle.addEventListener('click', () => applyLang(currentLang === 'ar' ? 'en' : 'ar'));
+  applyLang(currentLang);
+
+  // ── header shadow on scroll ──
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+</body>
+</html>
