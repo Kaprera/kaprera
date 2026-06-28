@@ -8,15 +8,15 @@
       msg: 'We use cookies to enhance your experience and analyse site traffic. See our',
       policy: 'privacy policy',
       tail: '.',
-      accept: 'accept',
-      decline: 'decline'
+      accept: 'accept all',
+      decline: 'necessary only'
     },
     ar: {
       msg: 'نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل حركة الموقع. اطّلع على',
       policy: 'سياسة الخصوصية',
       tail: '.',
-      accept: 'موافق',
-      decline: 'رفض'
+      accept: 'قبول الكل',
+      decline: 'الضرورية فقط'
     }
   };
 
@@ -86,12 +86,15 @@
 
     function dismiss(value) {
       try { localStorage.setItem(KEY, value); } catch (e) {}
+      // let analytics/SEO scripts react without a page reload
+      document.dispatchEvent(new CustomEvent('cookieconsent', { detail: value }));
       bar.classList.remove('ck-show');
       bar.classList.add('ck-hide');
       setTimeout(function () { bar.remove(); style.remove(); }, 500);
     }
-    acceptEl.addEventListener('click', function () { dismiss('accepted'); });
-    declineEl.addEventListener('click', function () { dismiss('declined'); });
+    // 'all' = analytics/marketing allowed · 'necessary' = strictly necessary only
+    acceptEl.addEventListener('click', function () { dismiss('all'); });
+    declineEl.addEventListener('click', function () { dismiss('necessary'); });
 
     requestAnimationFrame(function () {
       requestAnimationFrame(function () { bar.classList.add('ck-show'); });
