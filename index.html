@@ -1647,33 +1647,49 @@
     transition: opacity .6s var(--ease), visibility .6s var(--ease);
   }
   #preloader.done { opacity: 0; visibility: hidden; }
-  .pl-logo {
-    position: relative;
-    width: min(300px, 64vw);
-    aspect-ratio: 913 / 793;
-    animation: plPulse 1.3s var(--ease) infinite;
+  .pl-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(16px, 3.2vh, 30px);
   }
-  .pl-logo img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  .pl-logobox { overflow: hidden; height: clamp(56px, 15vh, 160px); }
+  .pl-row { display: flex; align-items: stretch; height: 100%; }
+  .pl-row img { height: 100%; width: auto; display: block; }
+  /* mark slides in from the left */
+  .pl-mark {
+    opacity: 0;
+    animation: plMarkIn 700ms var(--ease) forwards;
   }
-  /* faint "empty" K */
-  .pl-logo .pl-base { opacity: .22; }
-  /* bright K revealed from the bottom up */
-  .pl-logo .pl-fill {
-    opacity: 1;
-    clip-path: inset(100% 0 0 0);
-    animation: plFill .95s var(--ease) forwards;
+  /* wordmark wipes in left-to-right */
+  .pl-word {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    animation: plWordIn 850ms var(--ease) 360ms forwards;
   }
-  @keyframes plFill  { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
-  @keyframes plPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.045); } }
-
+  /* tagline fades up last */
+  .pl-tag {
+    opacity: 0;
+    font: 500 clamp(12px, 1.9vh, 16px)/1 'Inter', system-ui, sans-serif;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.9);
+    animation: plTagIn 600ms var(--ease) 1120ms forwards;
+  }
+  @keyframes plMarkIn {
+    from { opacity: 0; transform: translateX(-48px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes plWordIn {
+    from { opacity: 0; clip-path: inset(0 100% 0 0); }
+    20%  { opacity: 1; }
+    to   { opacity: 1; clip-path: inset(0 0 0 0); }
+  }
+  @keyframes plTagIn {
+    from { opacity: 0; transform: translateY(7px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .pl-logo { animation: none; }
-    .pl-logo .pl-fill { clip-path: inset(0 0 0 0); animation: none; }
+    .pl-mark, .pl-word, .pl-tag { opacity: 1; transform: none; clip-path: none; animation: none; }
   }
 </style>
 <script>
@@ -1695,18 +1711,23 @@
 
 <!-- ───────────── PRELOADER ───────────── -->
 <div id="preloader" role="status" aria-label="loading">
-  <span class="pl-logo" aria-hidden="true">
-    <img class="pl-base" src="branding/logos/kaprera-icon-mark.png" alt="" width="913" height="793">
-    <img class="pl-fill" src="branding/logos/kaprera-icon-mark.png" alt="" width="913" height="793">
-  </span>
+  <div class="pl-stack" aria-hidden="true">
+    <div class="pl-logobox">
+      <div class="pl-row">
+        <img class="pl-mark" src="branding/logos/anim-mark-white.png" alt="" width="290" height="325" fetchpriority="high">
+        <img class="pl-word" src="branding/logos/anim-word-white.png" alt="kaprera" width="891" height="325" fetchpriority="high">
+      </div>
+    </div>
+    <div class="pl-tag">design, build, grow.</div>
+  </div>
 </div>
 <script>
   (function () {
     var pl = document.getElementById('preloader');
     if (!pl) return;
-    var fill = pl.querySelector('.pl-fill');
+    var last = pl.querySelector('.pl-tag'); // last element of the reveal sequence
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var done = false, animDone = reduce || !fill, loadDone = document.readyState === 'complete';
+    var done = false, animDone = reduce || !last, loadDone = document.readyState === 'complete';
 
     function finish() {
       if (done) return;
@@ -1718,10 +1739,10 @@
     }
     function maybe() { if (animDone && loadDone) finish(); }
 
-    if (fill && !reduce) fill.addEventListener('animationend', function () { animDone = true; maybe(); });
+    if (last && !reduce) last.addEventListener('animationend', function () { animDone = true; maybe(); });
     window.addEventListener('load', function () { loadDone = true; maybe(); });
     maybe();
-    setTimeout(finish, 3500); // hard fallback
+    setTimeout(finish, 4000); // hard fallback
   })();
 </script>
 
