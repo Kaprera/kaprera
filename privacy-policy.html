@@ -7,6 +7,10 @@
 <meta name="description" content="How kaprera, a digital agency in Beirut, Lebanon, collects, uses, safeguards, and discloses information when you use kaprera.com." />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#008cc1" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="kaprera" />
 <link rel="canonical" href="https://kaprera.com/privacy-policy.html" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/svg+xml" href="/branding/logos/favicon.svg" />
@@ -441,6 +445,14 @@
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── PWA service worker ──
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/service-worker.js').catch(function () {});
+    });
+  }
 </script>
+<script src="/cookies.js" defer></script>
 </body>
 </html>

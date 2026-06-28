@@ -9,6 +9,10 @@
 <meta name="author" content="kaprera" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#008cc1" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="kaprera" />
 <link rel="canonical" href="https://kaprera.com/" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/svg+xml" href="/branding/logos/favicon.svg" />
@@ -2708,5 +2712,15 @@
     }, { once: true });
   }
 </script>
+
+<!-- ───────────── PWA + COOKIES ───────────── -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/service-worker.js').catch(function () {});
+    });
+  }
+</script>
+<script src="/cookies.js" defer></script>
 </body>
 </html>
