@@ -1653,7 +1653,8 @@
     align-items: center;
     gap: clamp(16px, 3.2vh, 30px);
   }
-  .pl-logobox { overflow: hidden; height: clamp(56px, 15vh, 160px); }
+  /* width-aware: the lockup is ~3.6:1, so cap by vw too to keep it small on phones */
+  .pl-logobox { overflow: hidden; height: min(15vh, 14vw, 150px); }
   .pl-row { display: flex; align-items: stretch; height: 100%; }
   .pl-row img { height: 100%; width: auto; display: block; }
   /* mark slides in from the left */
