@@ -105,7 +105,7 @@
         "@type": "CreativeWork",
         "name": "Bayader Investments",
         "url": "https://www.bayader.sa",
-        "image": "https://kaprera.com/cases/bayader/image.png",
+        "image": "https://kaprera.com/cases/bayader/image.jpg",
         "creator": { "@type": "Organization", "name": "kaprera" },
         "about": "UI/UX design and high-performance web development."
       }
@@ -117,7 +117,7 @@
         "@type": "CreativeWork",
         "name": "Lebanese Spotlight",
         "url": "https://lbspotlight.org",
-        "image": "https://kaprera.com/cases/lbspotlight/image.png",
+        "image": "https://kaprera.com/cases/lbspotlight/image.jpg",
         "creator": { "@type": "Organization", "name": "kaprera" },
         "about": "Volunteer management platform — UI/UX and backend workflow tools."
       }
@@ -128,7 +128,7 @@
       "item": {
         "@type": "CreativeWork",
         "name": "Ana Arabia",
-        "image": "https://kaprera.com/cases/ana-arabia/image.png",
+        "image": "https://kaprera.com/cases/ana-arabia/image.jpg",
         "creator": { "@type": "Organization", "name": "kaprera" },
         "about": "Bilingual event landing page for Riyadh Season."
       }
@@ -758,6 +758,44 @@
     display: block;
   }
   .work-case.contain .case-shot img { object-fit: contain; padding: 12px; }
+
+  /* ── image loading state: shimmer skeleton + fade-in ── */
+  .case-shot { position: relative; }
+  .case-shot picture { display: contents; }
+  .case-shot img { position: relative; z-index: 1; opacity: 0; transition: opacity .5s var(--ease); }
+  .case-shot img.is-loaded { opacity: 1; }
+  .case-shot::before {
+    content: "";
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(100deg,
+      rgba(255,255,255,0) 30%,
+      rgba(255,255,255,0.28) 50%,
+      rgba(255,255,255,0) 70%);
+    background-size: 220% 100%;
+    animation: imgShimmer 1.25s ease-in-out infinite;
+    transition: opacity .4s ease;
+    pointer-events: none;
+  }
+  .case-shot.is-loaded::before { opacity: 0; animation: none; }
+  .modal-hero.is-loading::before {
+    content: "";
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(100deg,
+      rgba(255,255,255,0) 30%,
+      rgba(255,255,255,0.18) 50%,
+      rgba(255,255,255,0) 70%);
+    background-size: 220% 100%;
+    animation: imgShimmer 1.25s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes imgShimmer {
+    0%   { background-position: 220% 0; }
+    100% { background-position: -120% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-shot::before, .modal-hero.is-loading::before { animation: none; }
+    .case-shot img { transition: none; }
+  }
   .case-info .label {
     display: inline-flex; align-items: center; gap: 8px;
     font-family: 'JetBrains Mono', monospace;
@@ -1735,7 +1773,10 @@
             <!-- SLIDE 2 — Lebanese Spotlight -->
             <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="2 of 4 — Lebanese Spotlight">
               <button class="case-shot thumb-b" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
-                <img src="cases/lbspotlight/image.png" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="2940" height="1734" loading="lazy" decoding="async" />
+                <picture>
+                  <source srcset="cases/lbspotlight/image.webp" type="image/webp">
+                  <img src="cases/lbspotlight/image.jpg" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="1600" height="944" loading="lazy" decoding="async" />
+                </picture>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">02</span> <span data-en="/ our work" data-ar="/ أعمالنا">/ our work</span></span>
@@ -1752,7 +1793,10 @@
             <!-- SLIDE 3 — Bayader -->
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 4 — Bayader Investments">
               <button class="case-shot thumb-a" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
-                <img src="cases/bayader/image.png" alt="Bayader Investments website designed and developed by kaprera" width="2938" height="1730" loading="lazy" decoding="async" />
+                <picture>
+                  <source srcset="cases/bayader/image.webp" type="image/webp">
+                  <img src="cases/bayader/image.jpg" alt="Bayader Investments website designed and developed by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
+                </picture>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">03</span> <span data-en="/ our work" data-ar="/ أعمالنا">/ our work</span></span>
@@ -1769,7 +1813,10 @@
             <!-- SLIDE 4 — Ana Arabia -->
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="4 of 4 — Ana Arabia">
               <button class="case-shot thumb-c" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
-                <img src="cases/ana-arabia/image.png" alt="Ana Arabia bilingual event landing page for Riyadh Season by kaprera" width="2940" height="1730" loading="lazy" decoding="async" />
+                <picture>
+                  <source srcset="cases/ana-arabia/image.webp" type="image/webp">
+                  <img src="cases/ana-arabia/image.jpg" alt="Ana Arabia bilingual event landing page for Riyadh Season by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
+                </picture>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">04</span> <span data-en="/ our work" data-ar="/ أعمالنا">/ our work</span></span>
@@ -2094,7 +2141,7 @@
       href: "https://bayader.co",
       ghost: "bayader",
       thumb: "thumb-a",
-      shot: "cases/bayader/image.png",
+      shot: "cases/bayader/image.webp",
       tags: { en: ["ui/ux", "web development"], ar: ["تصميم واجهات", "تطوير ويب"] },
       challenge: {
         en: "Needed a modern, UX-centered website to present their investment services and latest news professionally.",
@@ -2116,7 +2163,7 @@
       href: "https://lbspotlight.org",
       ghost: "lebanese spotlight",
       thumb: "thumb-b",
-      shot: "cases/lbspotlight/image.png",
+      shot: "cases/lbspotlight/image.webp",
       tags: { en: ["ui/ux", "web app"], ar: ["تصميم واجهات", "تطبيق ويب"] },
       challenge: {
         en: "Needed a platform to manage volunteers efficiently.",
@@ -2138,7 +2185,7 @@
       href: "https://ana-arabia.com",
       ghost: "ana arabia",
       thumb: "thumb-c",
-      shot: "cases/ana-arabia/image.png",
+      shot: "cases/ana-arabia/image.webp",
       tags: { en: ["ui/ux", "web development"], ar: ["تصميم واجهات", "تطوير ويب"] },
       challenge: {
         en: "Launch a refined, fully bilingual (AR/EN) landing experience for a Riyadh Season event that reflects its premium identity.",
@@ -2543,6 +2590,18 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+  // ── image loading state (fade in once decoded, clear shimmer) ──
+  const markShotLoaded = (img) => {
+    img.classList.add('is-loaded');
+    const shot = img.closest('.case-shot');
+    if (shot) shot.classList.add('is-loaded');
+  };
+  document.querySelectorAll('.case-shot img').forEach(img => {
+    if (img.complete && img.naturalWidth) { markShotLoaded(img); return; }
+    img.addEventListener('load', () => markShotLoaded(img), { once: true });
+    img.addEventListener('error', () => markShotLoaded(img), { once: true });
+  });
+
   // ── modal ──
   const modal = document.getElementById('modal');
   const modalClose = document.getElementById('modalClose');
@@ -2571,6 +2630,20 @@
           '<button type="button" class="nav next" aria-label="next image">' + nextSvg + '</button>' +
           '<span class="dots">' + imgs.map((_, idx) => '<i class="' + (idx === 0 ? 'active' : '') + '"></i>').join('') + '</span>'
         : '');
+
+    // show shimmer until the visible image has decoded
+    hero.classList.add('is-loading');
+    const firstShot = hero.querySelector('.slide');
+    if (firstShot) {
+      const clearHeroLoading = () => hero.classList.remove('is-loading');
+      if (firstShot.complete && firstShot.naturalWidth) clearHeroLoading();
+      else {
+        firstShot.addEventListener('load', clearHeroLoading, { once: true });
+        firstShot.addEventListener('error', clearHeroLoading, { once: true });
+      }
+    } else {
+      hero.classList.remove('is-loading');
+    }
 
     if (modalSlider) { modalSlider.stop(); modalSlider = null; }
     modalSlider = initSlider(hero, 4000);
