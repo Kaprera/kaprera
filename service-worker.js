@@ -1,5 +1,5 @@
 /* kaprera service worker — offline shell + smart caching */
-const VERSION = 'kaprera-v1';
+const VERSION = 'kaprera-v3';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -8,7 +8,9 @@ const PRECACHE = [
   '/cookies.js',
   '/branding/logos/icon-192.png',
   '/branding/logos/favicon-512.png',
-  '/branding/logos/kaprera-icon-mark.png'
+  '/branding/logos/kaprera-icon-mark.png',
+  '/branding/logos/kaprera-wordmark-dark.png',
+  '/branding/logos/kaprera-wordmark-light.png'
 ];
 
 self.addEventListener('install', (event) => {

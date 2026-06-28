@@ -450,6 +450,18 @@
     color: var(--blue);
     font-weight: 500;
   }
+  /* horizontal wordmark (transparent png, swapped per theme — no card) */
+  .brand-logo {
+    display: block;
+    height: 30px;
+    aspect-ratio: 640 / 140;
+    background: url('branding/logos/kaprera-wordmark-dark.png') center / contain no-repeat;
+    transition: height .3s var(--ease);
+  }
+  html[data-theme="dark"] .brand-logo {
+    background-image: url('branding/logos/kaprera-wordmark-light.png');
+  }
+  header.nav.scrolled .brand-logo { height: 26px; }
 
   .nav-links {
     display: flex;
@@ -1717,7 +1729,7 @@
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <a href="#top" class="brand" aria-label="kaprera home">
-      <span class="mark">&gt;_</span><span>kaprera</span>
+      <span class="brand-logo" role="img" aria-label="kaprera"></span>
     </a>
 
     <nav class="nav-links" id="navLinks" aria-label="primary">
@@ -2089,7 +2101,7 @@
   <div class="wrap">
     <div class="foot-top">
       <div>
-        <a href="#top" class="brand"><span class="mark">&gt;_</span><span>kaprera</span></a>
+        <a href="#top" class="brand"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
         <p class="foot-tag" data-en="stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</p>
       </div>
       <div class="foot-cols">

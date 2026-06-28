@@ -133,6 +133,15 @@
     font-weight: 800; font-size: 21px; letter-spacing: -0.02em;
   }
   .brand .mark { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-weight: 500; }
+  .brand-logo {
+    display: block; height: 30px; aspect-ratio: 640 / 140;
+    background: url('/branding/logos/kaprera-wordmark-dark.png') center / contain no-repeat;
+    transition: height .3s var(--ease);
+  }
+  html[data-theme="dark"] .brand-logo {
+    background-image: url('/branding/logos/kaprera-wordmark-light.png');
+  }
+  header.nav.scrolled .brand-logo { height: 26px; }
   .nav-utils { display: flex; align-items: center; gap: 14px; }
   .back-link {
     display: inline-flex; align-items: center; gap: 7px;
@@ -243,7 +252,7 @@
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <a href="/" class="brand" aria-label="kaprera home">
-      <span class="mark">&gt;_</span><span>kaprera</span>
+      <span class="brand-logo" role="img" aria-label="kaprera"></span>
     </a>
     <div class="nav-utils">
       <a href="/" class="back-link" aria-label="back to site">
@@ -375,7 +384,7 @@
   <div class="wrap">
     <div class="foot-top">
       <div>
-        <a href="/" class="brand"><span class="mark">&gt;_</span><span>kaprera</span></a>
+        <a href="/" class="brand"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
         <p class="foot-tag" data-en="stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</p>
       </div>
       <div class="foot-cols">
