@@ -449,6 +449,21 @@
   langToggle.addEventListener('click', () => applyLang(currentLang === 'ar' ? 'en' : 'ar'));
   applyLang(currentLang);
 
+  // ── back to site without reloading (use bfcache when we arrived from the site) ──
+  const backLink = document.querySelector('.back-link');
+  if (backLink && history.length > 1) {
+    let cameFromSite = false;
+    try {
+      cameFromSite = !!document.referrer && new URL(document.referrer).origin === location.origin;
+    } catch (e) {}
+    if (cameFromSite) {
+      backLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        history.back();
+      });
+    }
+  }
+
   // ── header shadow on scroll ──
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
