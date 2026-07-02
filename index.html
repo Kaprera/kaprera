@@ -136,6 +136,17 @@
         "creator": { "@type": "Organization", "name": "kaprera" },
         "about": "Bilingual event landing page for Riyadh Season."
       }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "Agri Pro Services",
+        "image": "https://kaprera.com/cases/agripro/image.jpg",
+        "creator": { "@type": "Organization", "name": "kaprera" },
+        "about": "Custom operations platform for pest control services — UI/UX and full-stack web app."
+      }
     }
   ]
 }
@@ -702,6 +713,7 @@
   .thumb-a { background: linear-gradient(135deg, #008cc1, #00b4d8 55%, #0a2540); }
   .thumb-b { background: linear-gradient(135deg, #0a2540, #008cc1 60%, #4cc9f0); }
   .thumb-c { background: linear-gradient(135deg, #0c2b28, #1f6b58 60%, #d9c3a3); }
+  .thumb-d { background: linear-gradient(135deg, #14432a, #2f8f4e 60%, #6bbf59); }
   .case-body { padding: 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
   .case-body h3 {
     font-size: 22px;
@@ -913,6 +925,12 @@
     background-image:
       radial-gradient(120% 120% at 50% 0%, rgba(217,195,163,0.20), transparent 54%),
       linear-gradient(125deg, #0c2b28 0%, #14443c 52%, #1f6b58 100%);
+  }
+  /* agri pro services — forest → leaf green */
+  .b-agripro {
+    background-image:
+      radial-gradient(120% 120% at 15% 5%, rgba(255,255,255,0.18), transparent 52%),
+      linear-gradient(125deg, #14432a 0%, #2f8f4e 52%, #6bbf59 100%);
   }
 
   /* light text + controls over the colored backgrounds */
@@ -1795,6 +1813,7 @@
       <span class="hero-bg b-spotlight"></span>
       <span class="hero-bg b-bayader"></span>
       <span class="hero-bg b-ana"></span>
+      <span class="hero-bg b-agripro"></span>
     </div>
     <span class="hero-mark" aria-hidden="true"></span>
     <div class="wrap">
@@ -1804,7 +1823,7 @@
           <div class="work-track" id="workTrack">
 
             <!-- SLIDE 1 — hero -->
-            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 4 — intro">
+            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 5 — intro">
               <span class="eyebrow reveal"><span class="dot"></span> <span data-en="digital agency · beirut, lebanon" data-ar="وكالة رقمية · بيروت، لبنان">digital agency · beirut, lebanon</span></span>
               <h1 class="reveal" id="heroTitle" data-en="stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</h1>
               <p class="subline reveal" data-en="we design websites and brands that turn audiences into customers." data-ar="نصمّم مواقع وعلامات تجارية تحوّل الجمهور إلى عملاء.">we design websites and brands that turn audiences into customers.</p>
@@ -1815,7 +1834,7 @@
             </div>
 
             <!-- SLIDE 2 — Lebanese Spotlight -->
-            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="2 of 4 — Lebanese Spotlight">
+            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="2 of 5 — Lebanese Spotlight">
               <button class="case-shot thumb-b" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
                 <picture>
                   <source srcset="cases/lbspotlight/image.webp" type="image/webp">
@@ -1835,7 +1854,7 @@
             </div>
 
             <!-- SLIDE 3 — Bayader -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 4 — Bayader Investments">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 5 — Bayader Investments">
               <button class="case-shot thumb-a" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
                 <picture>
                   <source srcset="cases/bayader/image.webp" type="image/webp">
@@ -1855,7 +1874,7 @@
             </div>
 
             <!-- SLIDE 4 — Ana Arabia -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="4 of 4 — Ana Arabia">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="4 of 5 — Ana Arabia">
               <button class="case-shot thumb-c" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
                 <picture>
                   <source srcset="cases/ana-arabia/image.webp" type="image/webp">
@@ -1874,6 +1893,26 @@
               </div>
             </div>
 
+            <!-- SLIDE 5 — Agri Pro Services -->
+            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="5 of 5 — Agri Pro Services">
+              <button class="case-shot thumb-d" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
+                <picture>
+                  <source srcset="cases/agripro/image.webp" type="image/webp">
+                  <img src="cases/agripro/image.jpg" alt="Agri Pro Services pest control operations platform built by kaprera" width="1600" height="948" loading="lazy" decoding="async" />
+                </picture>
+              </button>
+              <div class="case-info">
+                <span class="label"><span class="num">05</span> <span data-en="/ our work" data-ar="/ أعمالنا">/ our work</span></span>
+                <h2>Agri Pro Services</h2>
+                <p class="blurb" data-en="A custom operations platform for a pest control company." data-ar="منصة عمليات مخصّصة لشركة مكافحة آفات.">A custom operations platform for a pest control company.</p>
+                <div class="chips">
+                  <span class="chip" data-en="ui/ux" data-ar="تصميم واجهات">ui/ux</span>
+                  <span class="chip" data-en="web app" data-ar="تطبيق ويب">web app</span>
+                </div>
+                <button type="button" class="btn btn-primary" data-case="agripro" aria-haspopup="dialog" data-en="view case study" data-ar="عرض دراسة الحالة">view case study</button>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -1886,7 +1925,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
           <div class="work-dots" id="workDots" role="tablist" aria-label="our work slides"></div>
-          <div class="work-count"><b id="workNow">01</b> / 04</div>
+          <div class="work-count"><b id="workNow">01</b> / 05</div>
         </div>
       </div>
     </div>
@@ -2240,6 +2279,27 @@
         { big: "AR/EN", small: { en: "full bilingual support", ar: "دعم ثنائي اللغة كامل" } },
         { big: "100%", small: { en: "responsive across devices", ar: "متجاوب على كل الأجهزة" } },
         { big: "<1s", small: { en: "hero load time", ar: "زمن تحميل الواجهة" } }
+      ]
+    },
+    agripro: {
+      name: "Agri Pro Services",
+      ghost: "agri pro services",
+      thumb: "thumb-d",
+      shot: "cases/agripro/image.webp",
+      contain: true,
+      tags: { en: ["ui/ux", "web app"], ar: ["تصميم واجهات", "تطبيق ويب"] },
+      challenge: {
+        en: "Needed a complex, custom system to run their pest control operations — clients, visits, deals, pricing, and field reports — in one place.",
+        ar: "احتاجوا إلى نظام مخصّص ومعقّد لإدارة عمليات مكافحة الآفات — العملاء والزيارات والصفقات والتسعير وتقارير الميدان — في مكان واحد."
+      },
+      solution: {
+        en: "Designed and built a role-based operations platform with a live dashboard, client and deal pipelines, pricing quotes, and visit, inspection, and risk-assessment reporting.",
+        ar: "صمّمنا وطوّرنا منصة عمليات قائمة على الأدوار مع لوحة تحكم حيّة، ومسارات للعملاء والصفقات، وعروض تسعير، وتقارير للزيارات والتفتيش وتقييم المخاطر."
+      },
+      results: [
+        { big: "1", small: { en: "unified operations platform", ar: "منصة عمليات موحّدة" } },
+        { big: "role-based", small: { en: "admin, operator & sysadmin access", ar: "صلاحيات للمشرف والمشغّل ومدير النظام" } },
+        { big: "real-time", small: { en: "dashboard & reporting", ar: "لوحة تحكم وتقارير فورية" } }
       ]
     }
   };
