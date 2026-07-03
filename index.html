@@ -19,6 +19,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-32.png" />
 <link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
+<!-- Preloader logos are the first thing painted — start fetching them before the CSS/DOM is parsed -->
+<link rel="preload" as="image" href="/branding/logos/anim-mark-white.webp" type="image/webp" fetchpriority="high" />
+<link rel="preload" as="image" href="/branding/logos/anim-word-white.webp" type="image/webp" fetchpriority="high" />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
@@ -154,7 +157,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<!-- Latin UI fonts: loaded async (preload→stylesheet) so they don't block first paint. Arabic (Cairo) is loaded on demand only when lang=ar — see the lang script below. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
 
 <style>
   :root {
@@ -412,8 +417,6 @@
   html[lang="ar"] .slider .nav.prev { left: auto; right: 12px; }
   html[lang="ar"] .slider .nav.next { right: auto; left: 12px; }
   html[lang="ar"] .slider .nav svg { transform: scaleX(-1); }  /* mirror chevrons to match flipped positions */
-  html[lang="ar"] .case-more svg { transform: scaleX(-1); }
-  html[lang="ar"] .case-card:hover .case-more svg { transform: scaleX(-1) translateX(4px); }
 
   /* ── nav ── */
   header.nav {
@@ -466,11 +469,11 @@
     display: block;
     height: 30px;
     aspect-ratio: 640 / 140;
-    background: url('branding/logos/kaprera-wordmark-dark.png') center / contain no-repeat;
+    background: url('branding/logos/kaprera-wordmark-dark.webp') center / contain no-repeat;
     transition: height .3s var(--ease);
   }
   html[data-theme="dark"] .brand-logo {
-    background-image: url('branding/logos/kaprera-wordmark-light.png');
+    background-image: url('branding/logos/kaprera-wordmark-light.webp');
   }
   header.nav.scrolled .brand-logo { height: 26px; }
 
@@ -528,8 +531,8 @@
     width: min(600px, 58vw);
     aspect-ratio: 913 / 793;
     background-color: var(--blue);
-    -webkit-mask: url('branding/logos/kaprera-icon-mark.png') center / contain no-repeat;
-            mask: url('branding/logos/kaprera-icon-mark.png') center / contain no-repeat;
+    -webkit-mask: url('branding/logos/kaprera-icon-mark.webp') center / contain no-repeat;
+            mask: url('branding/logos/kaprera-icon-mark.webp') center / contain no-repeat;
     opacity: 0.14;
     pointer-events: none;
     z-index: 0;
@@ -587,58 +590,8 @@
     box-shadow: 0 0 0 4px rgba(0,140,193,0.15);
   }
 
-  /* ── case studies ── */
-  .cases-head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    margin: 96px 0 36px;
-  }
-  .cases {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
-  }
-  .case-card {
-    text-align: left;
-    background: var(--white);
-    border: 1px solid var(--hair);
-    border-radius: var(--radius);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s, background-color .35s var(--ease), color .35s var(--ease);
-    display: flex;
-    flex-direction: column;
-    font: inherit;
-    color: inherit;
-  }
-  .case-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 44px rgba(0,0,0,0.12);
-    border-color: rgba(0,140,193,0.35);
-  }
-  .case-thumb {
-    aspect-ratio: 16 / 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    color: #fff;
-  }
-  .case-thumb .ghost {
-    font-weight: 800;
-    font-size: clamp(26px, 3.4vw, 40px);
-    letter-spacing: -0.02em;
-    text-transform: lowercase;
-    opacity: 0.95;
-    z-index: 1;
-    text-align: center;
-    padding: 0 16px;
-  }
-  .case-thumb img, .modal-hero img {
+  /* ── modal hero image ── */
+  .modal-hero img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -648,10 +601,10 @@
     z-index: 1;
   }
 
-  /* ── slider (card thumb + modal hero) ── */
-  .case-thumb.slider, .modal-hero.slider,
-  .case-thumb.shot-contain, .modal-hero.shot-contain { background: var(--bg-soft); }
-  .case-thumb.shot-contain img, .modal-hero.shot-contain img {
+  /* ── slider (modal hero) ── */
+  .modal-hero.slider,
+  .modal-hero.shot-contain { background: var(--bg-soft); }
+  .modal-hero.shot-contain img {
     object-fit: contain;
     object-position: center;
     padding: 10px;
@@ -705,22 +658,10 @@
   .slider:hover .nav { opacity: 1; }
   .slider .nav:hover { background: #fff; }
   .modal-hero.slider .nav { opacity: 1; width: 42px; height: 42px; }
-  .case-thumb::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(120% 120% at 80% 10%, rgba(255,255,255,0.22), transparent 55%);
-  }
   .thumb-a { background: linear-gradient(135deg, #008cc1, #00b4d8 55%, #0a2540); }
   .thumb-b { background: linear-gradient(135deg, #0a2540, #008cc1 60%, #4cc9f0); }
   .thumb-c { background: linear-gradient(135deg, #0c2b28, #1f6b58 60%, #d9c3a3); }
   .thumb-d { background: linear-gradient(135deg, #14432a, #2f8f4e 60%, #6bbf59); }
-  .case-body { padding: 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-  .case-body h3 {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-  .case-body p { color: var(--muted); font-size: 15px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
   .chip {
     font-family: 'JetBrains Mono', monospace;
@@ -730,17 +671,6 @@
     padding: 5px 11px;
     border-radius: 999px;
   }
-  .case-more {
-    margin-top: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--blue);
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-  }
-  .case-more svg { transition: transform .25s var(--ease); }
-  .case-card:hover .case-more svg { transform: translateX(4px); }
 
   /* ── our work slider (slide 1 = hero, rest = case studies) ── */
   .work-slider { position: relative; }
@@ -1626,7 +1556,6 @@
       margin-top: 20px;
     }
     .nav-panel .btn { width: 100%; margin-top: 14px; }
-    .cases { grid-template-columns: 1fr; }
     .work-case { grid-template-columns: 1fr; gap: 24px; }
     .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
     .work-ctrls { margin-top: 40px; }
@@ -1647,7 +1576,6 @@
     .tst-mark { font-size: clamp(130px, 40vw, 240px); }
     .contact-grid { grid-template-columns: 1fr; gap: 20px; }
     .field-row { grid-template-columns: 1fr; gap: 0; }
-    .cases-head { flex-direction: column; align-items: flex-start; }
     .cs-results { grid-template-columns: 1fr; }
   }
 
@@ -1680,6 +1608,7 @@
   /* width-aware: the lockup is ~3.6:1, so cap by vw too to keep it small on phones */
   .pl-logobox { overflow: hidden; height: min(15vh, 14vw, 150px); }
   .pl-row { display: flex; align-items: stretch; height: 100%; }
+  .pl-row picture { display: block; height: 100%; }
   .pl-row img { height: 100%; width: auto; display: block; }
   /* mark slides in from the left */
   .pl-mark {
@@ -1729,6 +1658,17 @@
     const lang = localStorage.getItem('lang') || 'en';
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+    // Cairo (Arabic) is a heavy 6-weight family — only fetch it when Arabic is actually used.
+    window.loadArabicFont = function () {
+      if (document.getElementById('cairoFont')) return;
+      const l = document.createElement('link');
+      l.id = 'cairoFont';
+      l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap';
+      document.head.appendChild(l);
+    };
+    if (lang === 'ar') window.loadArabicFont();
   })();
 </script>
 </head>
@@ -1739,8 +1679,14 @@
   <div class="pl-stack" aria-hidden="true">
     <div class="pl-logobox">
       <div class="pl-row">
-        <img class="pl-mark" src="branding/logos/anim-mark-white.png" alt="" width="290" height="325" fetchpriority="high">
-        <img class="pl-word" src="branding/logos/anim-word-white.png" alt="kaprera" width="891" height="325" fetchpriority="high">
+        <picture>
+          <source srcset="branding/logos/anim-mark-white.webp" type="image/webp">
+          <img class="pl-mark" src="branding/logos/anim-mark-white.png" alt="" width="290" height="325" fetchpriority="high">
+        </picture>
+        <picture>
+          <source srcset="branding/logos/anim-word-white.webp" type="image/webp">
+          <img class="pl-word" src="branding/logos/anim-word-white.png" alt="kaprera" width="891" height="325" fetchpriority="high">
+        </picture>
       </div>
     </div>
     <div class="pl-tag">design, build, grow.</div>
@@ -2364,6 +2310,7 @@
 
   const applyLang = (lang) => {
     const ar = lang === 'ar';
+    if (ar && window.loadArabicFont) window.loadArabicFont();
     currentLang = lang;
     root.lang = lang;
     root.dir = ar ? 'rtl' : 'ltr';
