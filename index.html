@@ -559,7 +559,15 @@
     text-transform: lowercase;
     max-width: 13ch;
     margin-bottom: 26px;
+    position: relative;
   }
+  /* typewriter layers: an invisible ghost of the final text reserves the full
+     height, and the live layer types over it — no offsetHeight measurement
+     (which would force a reflow) is needed to lock the height */
+  .hero h1 .type-ghost { visibility: hidden; }
+  .hero h1 .type-live { position: absolute; inset: 0; }
+  .hero h1.type-done .type-ghost { display: none; }
+  .hero h1.type-done .type-live { position: static; }
   .hero h1 .caret {
     display: inline-block;
     width: 4px;
@@ -2499,16 +2507,16 @@
   const typeHeroTitle = (lang) => {
     if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     const text = heroTitle.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en') || '';
+    heroTitle.classList.remove('type-done');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      heroTitle.style.minHeight = '';
-      heroTitle.innerHTML = text + '<span class="caret"></span>';
+      heroTitle.textContent = text;
+      heroTitle.insertAdjacentHTML('beforeend', '<span class="caret"></span>');
       return;
     }
-    // reserve full height to avoid layout shift while typing
-    heroTitle.style.minHeight = '';
-    heroTitle.textContent = text;
-    heroTitle.style.minHeight = heroTitle.offsetHeight + 'px';
-    heroTitle.innerHTML = '<span class="typed"></span><span class="caret"></span>';
+    // an invisible ghost of the final text reserves the full height (avoids
+    // layout shift) without measuring offsetHeight, which would force a reflow
+    heroTitle.innerHTML = '<span class="type-ghost" aria-hidden="true"></span><span class="type-live"><span class="typed"></span><span class="caret"></span></span>';
+    heroTitle.querySelector('.type-ghost').textContent = text;
     // hold the keystrokes until the preloader clears; this fn re-runs on unlock
     if (!heroTypingUnlocked) return;
     const typed = heroTitle.querySelector('.typed');
@@ -2525,7 +2533,7 @@
       if (i < text.length) {
         typeTimer = setTimeout(step, delayFor(text[i - 1]));
       } else {
-        heroTitle.style.minHeight = '';
+        heroTitle.classList.add('type-done');
       }
     };
     step();
