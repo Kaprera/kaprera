@@ -401,6 +401,8 @@
   html[lang="ar"] form label,
   html[lang="ar"] .contact-item .k,
   html[lang="ar"] .cs-block .h,
+  html[lang="ar"] .cs-specs .k,
+  html[lang="ar"] .cs-note,
   html[lang="ar"] .lang-toggle {
     font-family: 'Cairo', system-ui, sans-serif;
   }
@@ -1544,6 +1546,33 @@
     color: var(--muted);
     margin-top: 6px;
   }
+  .cs-list { list-style: none; margin: 4px 0 0; padding: 0; }
+  .cs-list li {
+    font-size: 15.5px; color: var(--ink); line-height: 1.65;
+    position: relative; padding-inline-start: 20px; margin-bottom: 8px;
+  }
+  .cs-list li::before {
+    content: ""; position: absolute; inset-inline-start: 2px; top: 10px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+  }
+  .cs-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 14px;
+    margin-top: 8px;
+  }
+  .cs-specs .s { border: 1px solid var(--hair); border-radius: 12px; padding: 12px 14px; }
+  .cs-specs .s .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; color: var(--muted);
+    margin-bottom: 4px; text-transform: lowercase;
+  }
+  .cs-specs .s .v { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+  @media (max-width: 560px) { .cs-specs { grid-template-columns: 1fr; } }
+  .cs-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; color: var(--muted); margin-top: 10px;
+  }
 
   /* ── scroll reveal ── */
   .reveal {
@@ -2207,6 +2236,19 @@
         <a class="url" id="modalUrl" target="_blank" rel="noopener"></a>
         <div class="cs-block"><div class="h" data-en="challenge" data-ar="التحدي">challenge</div><p id="modalChallenge"></p></div>
         <div class="cs-block"><div class="h" data-en="solution" data-ar="الحل">solution</div><p id="modalSolution"></p></div>
+        <div class="cs-block" id="modalHighlightsBlock">
+          <div class="h" data-en="what we built" data-ar="ماذا بنينا">what we built</div>
+          <ul class="cs-list" id="modalHighlights"></ul>
+        </div>
+        <div class="cs-block" id="modalSpecsBlock">
+          <div class="h" data-en="project details" data-ar="تفاصيل المشروع">project details</div>
+          <div class="cs-specs" id="modalSpecs"></div>
+        </div>
+        <div class="cs-block" id="modalPerfBlock">
+          <div class="h" data-en="performance" data-ar="الأداء">performance</div>
+          <div class="cs-results" id="modalPerf"></div>
+          <p class="cs-note" id="modalPerfNote"></p>
+        </div>
         <div class="cs-block">
           <div class="h" data-en="results" data-ar="النتائج">results</div>
           <div class="cs-results" id="modalResults"></div>
@@ -2221,8 +2263,8 @@
   const CASES = {
     bayader: {
       name: "Bayader Investments",
-      url: "bayader.co",
-      href: "https://bayader.co",
+      url: "bayader.sa",
+      href: "https://www.bayader.sa",
       ghost: "bayader",
       thumb: "thumb-a",
       shot: "cases/bayader/image.webp",
@@ -2234,6 +2276,37 @@
       solution: {
         en: "Delivered responsive UI/UX and high-performance web development.",
         ar: "قدّمنا تصميم واجهات متجاوب وتطويرًا عالي الأداء للموقع."
+      },
+      highlights: {
+        en: [
+          "Investment portfolio pages covering equity, direct, and real-estate investments",
+          "News & insights section for company and market updates",
+          "Investor contact flow with an enquiry form",
+          "Image-led corporate design, fully responsive across devices"
+        ],
+        ar: [
+          "صفحات لمحفظة الاستثمارات تغطي استثمارات الأسهم والاستثمارات المباشرة والعقارية",
+          "قسم للأخبار والرؤى لمستجدات الشركة والسوق",
+          "مسار تواصل للمستثمرين مع نموذج استفسار",
+          "تصميم مؤسسي يعتمد على الصور ومتجاوب بالكامل على جميع الأجهزة"
+        ]
+      },
+      specs: [
+        { k: { en: "type", ar: "النوع" }, v: { en: "corporate website", ar: "موقع مؤسسي" } },
+        { k: { en: "stack", ar: "التقنيات" }, v: { en: "Next.js + Tailwind CSS", ar: "Next.js + Tailwind CSS" } },
+        { k: { en: "client", ar: "العميل" }, v: { en: "investment firm — Saudi Arabia", ar: "شركة استثمار — السعودية" } },
+        { k: { en: "scope", ar: "نطاق العمل" }, v: { en: "UI/UX design & web development", ar: "تصميم واجهات وتطوير ويب" } }
+      ],
+      perf: {
+        stats: [
+          { big: "1.5s", small: { en: "first contentful paint", ar: "أول ظهور للمحتوى" } },
+          { big: "0ms", small: { en: "total blocking time", ar: "زمن الحجب الكلي" } },
+          { big: "0.02", small: { en: "cumulative layout shift", ar: "الانزياح التراكمي للتصميم" } }
+        ],
+        note: {
+          en: "measured with Google Lighthouse (desktop), july 2026",
+          ar: "قياس عبر Google Lighthouse (سطح المكتب)، تموز 2026"
+        }
       },
       results: [
         { big: "+55%", small: { en: "faster load speed", ar: "أسرع في التحميل" } },
@@ -2257,6 +2330,39 @@
         en: "Full UI/UX with integrated backend workflow tools.",
         ar: "تصميم واجهات متكامل مع أدوات سير عمل في الخلفية."
       },
+      highlights: {
+        en: [
+          "Volunteer onboarding and management workflows",
+          "Workshops & programs catalog with easy sign-up",
+          "Impact section — 300+ active volunteers and a 10K youth outreach goal",
+          "Community stories and testimonials",
+          "Safeguarding & policy documents built into the site"
+        ],
+        ar: [
+          "مسارات لضمّ المتطوعين وإدارتهم",
+          "دليل لورش العمل والبرامج مع تسجيل سهل",
+          "قسم الأثر — أكثر من 300 متطوع نشط وهدف للوصول إلى 10 آلاف شاب",
+          "قصص وشهادات من المجتمع",
+          "سياسات الحماية والوثائق مدمجة في الموقع"
+        ]
+      },
+      specs: [
+        { k: { en: "type", ar: "النوع" }, v: { en: "NGO platform", ar: "منصة منظمة غير حكومية" } },
+        { k: { en: "stack", ar: "التقنيات" }, v: { en: "Next.js + Node.js", ar: "Next.js + Node.js" } },
+        { k: { en: "client", ar: "العميل" }, v: { en: "youth-led NGO — Beirut, Lebanon", ar: "منظمة شبابية — بيروت، لبنان" } },
+        { k: { en: "scope", ar: "نطاق العمل" }, v: { en: "UI/UX + web app development", ar: "تصميم واجهات وتطوير تطبيق ويب" } }
+      ],
+      perf: {
+        stats: [
+          { big: "87/100", small: { en: "Lighthouse performance", ar: "أداء Lighthouse" } },
+          { big: "1.2s", small: { en: "first contentful paint", ar: "أول ظهور للمحتوى" } },
+          { big: "0ms", small: { en: "total blocking time", ar: "زمن الحجب الكلي" } }
+        ],
+        note: {
+          en: "measured with Google Lighthouse (desktop), july 2026",
+          ar: "قياس عبر Google Lighthouse (سطح المكتب)، تموز 2026"
+        }
+      },
       results: [
         { big: "60%", small: { en: "faster volunteer onboarding", ar: "أسرع في ضمّ المتطوعين" } },
         { big: "2×", small: { en: "workflow efficiency", ar: "كفاءة سير العمل" } },
@@ -2279,6 +2385,37 @@
         en: "Designed and built a fast, responsive landing page with a cinematic hero, seamless RTL/LTR support, and clear event details.",
         ar: "صمّمنا وطوّرنا صفحة هبوط سريعة ومتجاوبة بواجهة بصرية مميزة ودعم سلس للاتجاهين وتفاصيل واضحة للفعالية."
       },
+      highlights: {
+        en: [
+          "Cinematic hero introducing the Riyadh Season event",
+          "Full Arabic/English i18n with instant in-place language switching",
+          "Seamless RTL/LTR layout mirroring",
+          "Firebase hosting and analytics behind the scenes"
+        ],
+        ar: [
+          "واجهة سينمائية تقدّم الفعالية ضمن موسم الرياض",
+          "دعم كامل للعربية والإنجليزية مع تبديل فوري للغة في المكان نفسه",
+          "انعكاس سلس للتخطيط بين الاتجاهين RTL/LTR",
+          "استضافة وتحليلات عبر Firebase في الخلفية"
+        ]
+      },
+      specs: [
+        { k: { en: "type", ar: "النوع" }, v: { en: "event landing page", ar: "صفحة هبوط لفعالية" } },
+        { k: { en: "stack", ar: "التقنيات" }, v: { en: "Nuxt 3 + Firebase", ar: "Nuxt 3 + Firebase" } },
+        { k: { en: "languages", ar: "اللغات" }, v: { en: "Arabic & English (RTL/LTR)", ar: "العربية والإنجليزية (RTL/LTR)" } },
+        { k: { en: "scope", ar: "نطاق العمل" }, v: { en: "design & development", ar: "تصميم وتطوير" } }
+      ],
+      perf: {
+        stats: [
+          { big: "97/100", small: { en: "Lighthouse performance", ar: "أداء Lighthouse" } },
+          { big: "0.6s", small: { en: "first contentful paint", ar: "أول ظهور للمحتوى" } },
+          { big: "0.9s", small: { en: "largest contentful paint", ar: "أكبر ظهور للمحتوى" } }
+        ],
+        note: {
+          en: "measured with Google Lighthouse (desktop), july 2026",
+          ar: "قياس عبر Google Lighthouse (سطح المكتب)، تموز 2026"
+        }
+      },
       results: [
         { big: "AR/EN", small: { en: "full bilingual support", ar: "دعم ثنائي اللغة كامل" } },
         { big: "100%", small: { en: "responsive across devices", ar: "متجاوب على كل الأجهزة" } },
@@ -2299,6 +2436,26 @@
         en: "Designed and built a role-based operations platform with a live dashboard, client and deal pipelines, pricing quotes, and visit, inspection, and risk-assessment reporting.",
         ar: "صمّمنا وطوّرنا منصة عمليات قائمة على الأدوار مع لوحة تحكم حيّة، ومسارات للعملاء والصفقات، وعروض تسعير، وتقارير للزيارات والتفتيش وتقييم المخاطر."
       },
+      highlights: {
+        en: [
+          "Live operations dashboard with real-time stats",
+          "Client records and a deal pipeline with pricing quotes",
+          "Visit scheduling with field, inspection, and risk-assessment reports",
+          "Role-based access for admin, operator, and sysadmin"
+        ],
+        ar: [
+          "لوحة تحكم حيّة للعمليات مع إحصاءات فورية",
+          "سجلات العملاء ومسار الصفقات مع عروض التسعير",
+          "جدولة الزيارات مع تقارير ميدانية وتقارير تفتيش وتقييم مخاطر",
+          "صلاحيات وصول حسب الدور للمشرف والمشغّل ومدير النظام"
+        ]
+      },
+      specs: [
+        { k: { en: "type", ar: "النوع" }, v: { en: "internal operations platform", ar: "منصة عمليات داخلية" } },
+        { k: { en: "stack", ar: "التقنيات" }, v: { en: "Next.js + Node.js", ar: "Next.js + Node.js" } },
+        { k: { en: "client", ar: "العميل" }, v: { en: "pest control company", ar: "شركة مكافحة آفات" } },
+        { k: { en: "scope", ar: "نطاق العمل" }, v: { en: "UI/UX + full-stack development", ar: "تصميم واجهات وتطوير متكامل" } }
+      ],
       results: [
         { big: "1", small: { en: "unified operations platform", ar: "منصة عمليات موحّدة" } },
         { big: "role-based", small: { en: "admin, operator & sysadmin access", ar: "صلاحيات للمشرف والمشغّل ومدير النظام" } },
@@ -2760,6 +2917,23 @@
     document.getElementById('modalSolution').textContent = c.solution[L];
     document.getElementById('modalChips').innerHTML =
       c.tags[L].map(t => '<span class="chip">' + t + '</span>').join('');
+
+    const highlightsBlock = document.getElementById('modalHighlightsBlock');
+    highlightsBlock.hidden = !c.highlights;
+    document.getElementById('modalHighlights').innerHTML =
+      c.highlights ? c.highlights[L].map(h => '<li>' + h + '</li>').join('') : '';
+
+    const specsBlock = document.getElementById('modalSpecsBlock');
+    specsBlock.hidden = !c.specs;
+    document.getElementById('modalSpecs').innerHTML =
+      c.specs ? c.specs.map(s => '<div class="s"><div class="k">' + s.k[L] + '</div><div class="v">' + s.v[L] + '</div></div>').join('') : '';
+
+    const perfBlock = document.getElementById('modalPerfBlock');
+    perfBlock.hidden = !c.perf;
+    document.getElementById('modalPerf').innerHTML =
+      c.perf ? c.perf.stats.map(r => '<div class="r"><div class="big">' + r.big + '</div><div class="small">' + r.small[L] + '</div></div>').join('') : '';
+    document.getElementById('modalPerfNote').textContent = c.perf ? c.perf.note[L] : '';
+
     document.getElementById('modalResults').innerHTML =
       c.results.map(r => '<div class="r"><div class="big">' + r.big + '</div><div class="small">' + r.small[L] + '</div></div>').join('');
 
