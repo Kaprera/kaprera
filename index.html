@@ -15,7 +15,6 @@
 <meta name="apple-mobile-web-app-title" content="kaprera" />
 <link rel="canonical" href="https://kaprera.com/" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" type="image/svg+xml" href="/branding/logos/favicon.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-32.png" />
 <link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
@@ -155,16 +154,21 @@
 }
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<!-- Latin UI fonts: loaded async (preload→stylesheet) so they don't block first paint. Arabic (Cairo) is loaded on demand only when lang=ar — see the lang script below. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
+<!-- Latin UI fonts: self-hosted variable woff2 (no third-party request chain). Arabic (Cairo) is loaded on demand only when lang=ar — see the lang script below. -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/jbm-latin.woff2" crossorigin />
+<style>
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/fonts/inter-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/jbm-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/jbm-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+</style>
 
 <style>
   :root {
     --blue: #008cc1;
     --blue-dark: #0079a8;
+    --blue-text: var(--blue-dark); /* small-text accessible blue: 4.5:1 on light bg */
     --white: #ffffff;
     --ink: #0a0a0a;
     --muted: #5b5b5b;
@@ -176,6 +180,7 @@
   }
 
   html[data-theme="dark"] {
+    --blue-text: var(--blue); /* on dark bg the brand blue itself passes 4.5:1 */
     --white: #0d1117;
     --ink: #e8eaed;
     --muted: #9aa4ad;
@@ -233,7 +238,7 @@
     color: var(--muted);
     margin-bottom: 22px;
   }
-  .label .num { color: var(--blue); }
+  .label .num { color: var(--blue-text); }
   .label::before {
     content: "";
     width: 26px; height: 1px;
@@ -396,7 +401,7 @@
   html[lang="ar"] .eyebrow,
   html[lang="ar"] .industries .lbl,
   html[lang="ar"] .chip,
-  html[lang="ar"] .foot-col h4,
+  html[lang="ar"] .foot-col .fc-h,
   html[lang="ar"] .foot-bottom,
   html[lang="ar"] form label,
   html[lang="ar"] .contact-item .k,
@@ -668,7 +673,7 @@
   .chip {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: var(--blue);
+    color: var(--blue-text);
     background: rgba(0,140,193,0.08);
     padding: 5px 11px;
     border-radius: 999px;
@@ -762,7 +767,7 @@
     font-size: 13px; color: var(--muted);
     margin-bottom: 14px; text-transform: lowercase;
   }
-  .case-info .label .num { color: var(--blue); }
+  .case-info .label .num { color: var(--blue-text); }
   .case-info h2 {
     font-size: clamp(30px, 5vw, 52px);
     font-weight: 900; letter-spacing: -0.03em;
@@ -1400,7 +1405,7 @@
   }
   .foot-tag { color: var(--muted); margin-top: 12px; max-width: 320px; }
   .foot-cols { display: flex; gap: 64px; flex-wrap: wrap; }
-  .foot-col h4 {
+  .foot-col .fc-h {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
     color: var(--muted);
@@ -1511,7 +1516,7 @@
   .modal-content .url {
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
-    color: var(--blue);
+    color: var(--blue-text);
     margin-bottom: 26px;
     display: inline-block;
   }
@@ -1665,6 +1670,7 @@
   }
 
   /* ── preloader: logo fills up ── */
+  html.skip-preloader #preloader { display: none; }
   #preloader {
     position: fixed;
     inset: 0;
@@ -1697,7 +1703,7 @@
   .pl-word {
     opacity: 0;
     clip-path: inset(0 100% 0 0);
-    animation: plWordIn 850ms var(--ease) 360ms forwards;
+    animation: plWordIn 850ms var(--ease) 240ms forwards;
   }
   /* tagline fades up last */
   .pl-tag {
@@ -1705,7 +1711,7 @@
     font: 500 clamp(12px, 1.9vh, 16px)/1 'Inter', system-ui, sans-serif;
     letter-spacing: 0.04em;
     color: rgba(255, 255, 255, 0.9);
-    animation: plTagIn 600ms var(--ease) 1120ms forwards;
+    animation: plTagIn 600ms var(--ease) 800ms forwards;
   }
   @keyframes plMarkIn {
     from { opacity: 0; transform: translateX(-48px); }
@@ -1731,6 +1737,11 @@
     const dark = saved ? saved === 'dark'
       : window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+
+    // repeat views in this session skip the intro preloader (better LCP)
+    try {
+      if (sessionStorage.getItem('kaprera-preloaded')) document.documentElement.classList.add('skip-preloader');
+    } catch (e) {}
 
     // apply saved language + direction before paint
     const lang = localStorage.getItem('lang') || 'en';
@@ -1774,9 +1785,12 @@
   (function () {
     var pl = document.getElementById('preloader');
     if (!pl) return;
+    // already seen this session — remove before the main script reads it, so hero typing starts at once
+    if (document.documentElement.classList.contains('skip-preloader')) { pl.remove(); return; }
+    try { sessionStorage.setItem('kaprera-preloaded', '1'); } catch (e) {}
     var last = pl.querySelector('.pl-tag'); // last element of the reveal sequence
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var done = false, animDone = reduce || !last, loadDone = document.readyState === 'complete';
+    var done = false;
 
     function finish() {
       if (done) return;
@@ -1786,12 +1800,12 @@
       pl.addEventListener('transitionend', function () { pl.remove(); }, { once: true });
       setTimeout(function () { if (pl.parentNode) pl.remove(); }, 900);
     }
-    function maybe() { if (animDone && loadDone) finish(); }
 
-    if (last && !reduce) last.addEventListener('animationend', function () { animDone = true; maybe(); });
-    window.addEventListener('load', function () { loadDone = true; maybe(); });
-    maybe();
-    setTimeout(finish, 4000); // hard fallback
+    // finish when the intro animation ends — the page behind it is inline-rendered,
+    // so there's no need to also wait for window.load
+    if (last && !reduce) last.addEventListener('animationend', finish);
+    else finish();
+    setTimeout(finish, 2500); // hard fallback
   })();
 </script>
 
@@ -1870,7 +1884,7 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 5 — Agri Pro Services">
               <button class="case-shot thumb-d" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
                 <picture>
-                  <source srcset="cases/agripro/image.webp" type="image/webp">
+                  <source srcset="cases/agripro/image-480.webp 480w, cases/agripro/image-800.webp 800w, cases/agripro/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
                   <img src="cases/agripro/image.jpg" alt="Agri Pro Services pest control operations platform built by kaprera" width="1600" height="941" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -1890,7 +1904,7 @@
             <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="3 of 5 — Lebanese Spotlight">
               <button class="case-shot thumb-b" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
                 <picture>
-                  <source srcset="cases/lbspotlight/image.webp" type="image/webp">
+                  <source srcset="cases/lbspotlight/image-480.webp 480w, cases/lbspotlight/image-800.webp 800w, cases/lbspotlight/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
                   <img src="cases/lbspotlight/image.jpg" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="1600" height="944" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -1910,7 +1924,7 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="4 of 5 — Ana Arabia">
               <button class="case-shot thumb-c" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
                 <picture>
-                  <source srcset="cases/ana-arabia/image.webp" type="image/webp">
+                  <source srcset="cases/ana-arabia/image-480.webp 480w, cases/ana-arabia/image-800.webp 800w, cases/ana-arabia/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
                   <img src="cases/ana-arabia/image.jpg" alt="Ana Arabia bilingual event landing page for Riyadh Season by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -1930,7 +1944,7 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 5 — Bayader Investments">
               <button class="case-shot thumb-a" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
                 <picture>
-                  <source srcset="cases/bayader/image.webp" type="image/webp">
+                  <source srcset="cases/bayader/image-480.webp 480w, cases/bayader/image-800.webp 800w, cases/bayader/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
                   <img src="cases/bayader/image.jpg" alt="Bayader Investments website designed and developed by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -2199,18 +2213,18 @@
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h4 data-en="explore" data-ar="استكشف">explore</h4>
+          <div class="fc-h" data-en="explore" data-ar="استكشف">explore</div>
           <a href="#work" data-en="work" data-ar="أعمالنا">work</a>
           <a href="#services" data-en="services" data-ar="خدماتنا">services</a>
           <a href="#testimonials" data-en="testimonials" data-ar="آراء العملاء">testimonials</a>
           <a href="#contact" data-en="contact" data-ar="تواصل">contact</a>
         </div>
         <div class="foot-col">
-          <h4 data-en="legal" data-ar="قانوني">legal</h4>
+          <div class="fc-h" data-en="legal" data-ar="قانوني">legal</div>
           <a href="/privacy-policy.html" data-en="privacy policy" data-ar="سياسة الخصوصية">privacy policy</a>
         </div>
         <div class="foot-col">
-          <h4 data-en="social" data-ar="تواصل اجتماعي">social</h4>
+          <div class="fc-h" data-en="social" data-ar="تواصل اجتماعي">social</div>
           <a class="social-link" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.25 8.25h4.5V24h-4.5V8.25Zm7.25 0h4.31v2.15h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.5v-6.9c0-1.64-.03-3.75-2.29-3.75-2.29 0-2.64 1.79-2.64 3.63V24h-4.5V8.25Z"/></svg><span data-en="linkedin" data-ar="لينكدإن">linkedin</span></a>
           <a class="social-link" href="https://www.instagram.com/kaprera_agency/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span data-en="instagram" data-ar="إنستغرام">instagram</span></a>
           <a class="social-link" href="https://wa.me/9613816405" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="whatsapp" data-ar="واتساب">whatsapp</span></a>

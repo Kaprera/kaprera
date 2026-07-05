@@ -13,7 +13,6 @@
 <meta name="apple-mobile-web-app-title" content="kaprera" />
 <link rel="canonical" href="https://kaprera.com/privacy-policy.html" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" type="image/svg+xml" href="/branding/logos/favicon.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-32.png" />
 <link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
@@ -28,14 +27,21 @@
 <meta property="og:locale" content="en_US" />
 <meta property="og:locale:alternate" content="ar_AR" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<!-- Latin UI fonts: self-hosted variable woff2. Arabic (Cairo) is loaded on demand only when lang=ar. -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/jbm-latin.woff2" crossorigin />
+<style>
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/fonts/inter-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/jbm-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/jbm-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+</style>
 
 <style>
   :root {
     --blue: #008cc1;
     --blue-dark: #0079a8;
+    --blue-text: var(--blue-dark);
     --white: #ffffff;
     --ink: #0a0a0a;
     --muted: #5b5b5b;
@@ -48,6 +54,7 @@
   }
 
   html[data-theme="dark"] {
+    --blue-text: var(--blue);
     --white: #0d1117;
     --ink: #e8eaed;
     --muted: #9aa4ad;
@@ -102,7 +109,7 @@
   /* ── arabic / rtl ── */
   html[lang="ar"] body { font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
   html[lang="ar"] .eyebrow,
-  html[lang="ar"] .foot-col h4,
+  html[lang="ar"] .foot-col .fc-h,
   html[lang="ar"] .foot-bottom,
   html[lang="ar"] .legal-meta,
   html[lang="ar"] .lang-toggle { font-family: 'Cairo', system-ui, sans-serif; }
@@ -190,7 +197,7 @@
     letter-spacing: -0.01em; margin-bottom: 16px;
     display: flex; align-items: baseline; gap: 12px;
   }
-  .legal h2 .num { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--blue); font-weight: 500; }
+  .legal h2 .num { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--blue-text); font-weight: 500; }
   .legal h3 { font-size: 17px; font-weight: 700; margin: 22px 0 8px; }
   .legal p { color: var(--muted); margin-bottom: 14px; line-height: 1.7; }
   .legal ul { list-style: none; margin: 0 0 16px; padding: 0; }
@@ -202,7 +209,7 @@
     content: ""; position: absolute; inset-inline-start: 2px; top: 11px;
     width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
   }
-  .legal a.inline { color: var(--blue); font-weight: 600; }
+  .legal a.inline { color: var(--blue-text); font-weight: 600; }
   .legal a.inline:hover { text-decoration: underline; }
   .legal strong { color: var(--ink); font-weight: 600; }
   .legal .contact-card {
@@ -217,7 +224,7 @@
   .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; margin-bottom: 44px; }
   .foot-tag { color: var(--muted); margin-top: 12px; max-width: 320px; }
   .foot-cols { display: flex; gap: 64px; flex-wrap: wrap; }
-  .foot-col h4 {
+  .foot-col .fc-h {
     font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);
     font-weight: 400; margin-bottom: 14px; text-transform: lowercase;
   }
@@ -389,18 +396,18 @@
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h4 data-en="explore" data-ar="استكشف">explore</h4>
+          <div class="fc-h" data-en="explore" data-ar="استكشف">explore</div>
           <a href="/#work" data-en="work" data-ar="أعمالنا">work</a>
           <a href="/#services" data-en="services" data-ar="خدماتنا">services</a>
           <a href="/#testimonials" data-en="testimonials" data-ar="آراء العملاء">testimonials</a>
           <a href="/#contact" data-en="contact" data-ar="تواصل">contact</a>
         </div>
         <div class="foot-col">
-          <h4 data-en="legal" data-ar="قانوني">legal</h4>
+          <div class="fc-h" data-en="legal" data-ar="قانوني">legal</div>
           <a href="/privacy-policy.html" data-en="privacy policy" data-ar="سياسة الخصوصية">privacy policy</a>
         </div>
         <div class="foot-col">
-          <h4 data-en="social" data-ar="تواصل اجتماعي">social</h4>
+          <div class="fc-h" data-en="social" data-ar="تواصل اجتماعي">social</div>
           <a href="#" target="_blank" rel="noopener" data-en="linkedin" data-ar="لينكدإن">linkedin</a>
           <a href="https://www.instagram.com/kaprera_agency/" target="_blank" rel="noopener" data-en="instagram" data-ar="إنستغرام">instagram</a>
           <a href="https://wa.me/9613816405" target="_blank" rel="noopener" data-en="whatsapp" data-ar="واتساب">whatsapp</a>
@@ -432,8 +439,18 @@
   const langToggle = document.getElementById('langToggle');
   const langLabel = document.getElementById('langLabel');
   let currentLang = localStorage.getItem('lang') || 'en';
+  let cairoLoaded = false;
+  const loadArabicFont = () => {
+    if (cairoLoaded) return;
+    cairoLoaded = true;
+    const l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap';
+    document.head.appendChild(l);
+  };
   const applyLang = (lang) => {
     const ar = lang === 'ar';
+    if (ar) loadArabicFont();
     currentLang = lang;
     root.lang = lang;
     root.dir = ar ? 'rtl' : 'ltr';
