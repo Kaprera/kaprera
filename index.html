@@ -682,7 +682,7 @@
     will-change: transform;
     direction: ltr; /* keep slide order/positioning stable; content dir restored below */
   }
-  .work-slide { flex: 0 0 100%; min-width: 100%; overflow: hidden; padding: 0 2px; }
+  .work-slide { flex: 0 0 100%; min-width: 100%; overflow: hidden; padding: 0 2px; position: relative; }
   html[lang="ar"] .work-slide { direction: rtl; }
 
   /* case-study slide layout */
@@ -907,6 +907,55 @@
   }
   .hero.is-colored .btn-ghost:hover {
     color: #fff; border-color: #fff; background: rgba(255,255,255,0.14);
+  }
+
+  /* ── intro slide: vertical kaprera-mark pattern on the right ── */
+  .hero-pattern {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-end: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    pointer-events: none;
+    animation: heroPatFloat 12s ease-in-out infinite;
+  }
+  .hero-pattern i { display: block; }
+  .hero-pattern .hp-mark {
+    width: clamp(84px, 9.5vw, 124px);
+    aspect-ratio: 913 / 793;
+    /* the icon-mark asset is white-on-transparent, so opacity alone tints it */
+    background: url('branding/logos/kaprera-icon-mark.webp') center / contain no-repeat;
+  }
+  .hero-pattern .hp-mark.flip { transform: rotate(180deg); }
+  .hero-pattern .hp-mark:nth-child(2) { opacity: 0.16; }
+  .hero-pattern .hp-mark:nth-child(4) { opacity: 0.30; }
+  .hero-pattern .hp-mark:nth-child(6) { opacity: 0.48; }
+  .hero-pattern .hp-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+  }
+  .hero-pattern .hp-dot:nth-child(3) { opacity: 0.22; }
+  .hero-pattern .hp-dot:nth-child(5) { opacity: 0.38; }
+  .hero-pattern .hp-tick {
+    width: 2px; height: 26px;
+    border-radius: 1px;
+    background: #fff;
+    opacity: 0.35;
+  }
+  @keyframes heroPatFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-14px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-pattern { animation: none; }
+  }
+  @media (max-width: 960px) {
+    .hero-pattern { display: none; }
   }
 
   /* slider controls */
@@ -1776,6 +1825,15 @@
               <div class="hero-ctas reveal">
                 <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 <button type="button" class="btn btn-ghost" id="seeWork" data-en="see our work" data-ar="شاهد أعمالنا">see our work</button>
+              </div>
+              <div class="hero-pattern" aria-hidden="true">
+                <i class="hp-tick"></i>
+                <i class="hp-mark"></i>
+                <i class="hp-dot"></i>
+                <i class="hp-mark flip"></i>
+                <i class="hp-dot"></i>
+                <i class="hp-mark"></i>
+                <i class="hp-tick"></i>
               </div>
             </div>
 
