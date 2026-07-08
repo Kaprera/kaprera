@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>be right back — kaprera</title>
+<meta name="description" content="kaprera is down for maintenance — we saw one misaligned pixel and couldn't let it go." />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#008cc1" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-32.png" />
+<link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon.png" />
+
+<!-- Latin UI fonts: self-hosted variable woff2. Arabic (Cairo) is loaded on demand only when lang=ar. -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/jbm-latin.woff2" crossorigin />
+<style>
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/fonts/inter-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/jbm-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/jbm-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+</style>
+
+<style>
+  :root {
+    --maxw: 1180px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #fff;
+    background: #0c5a86;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: #fff; color: #0c5a86; }
+  :focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 3px; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  html[lang="ar"] body { font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
+  html[lang="ar"] .keep-mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── full-viewport brand gradient with slow drift ── */
+  main {
+    position: relative;
+    display: flex; flex-direction: column;
+    min-height: 100svh;
+    overflow: hidden;
+  }
+  .mx-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
+      linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
+    background-size: 170% 170%, 100% 100%;
+    background-position: 0% 0%, 0 0;
+    animation: heroDrift 20s ease-in-out infinite;
+  }
+  @keyframes heroDrift {
+    0%, 100% { background-position: 0% 0%, 0 0; }
+    50%      { background-position: 100% 60%, 0 0; }
+  }
+
+  /* giant ghost status code */
+  .mx-ghost {
+    position: absolute;
+    bottom: -6%;
+    inset-inline-end: clamp(-30px, 2vw, 80px);
+    z-index: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(180px, 30vw, 420px);
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(255,255,255,0.08);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── top bar: wordmark + language pill ── */
+  .mx-top {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 28px;
+  }
+  .mx-logo { display: block; height: 30px; width: auto; }
+  .mx-lang {
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.32);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.9);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    transition: background-color .25s;
+  }
+  .mx-lang:hover { background: rgba(255,255,255,0.14); }
+  html[lang="ar"] .mx-lang { font-family: 'Cairo', system-ui, sans-serif; }
+
+  /* ── hero copy ── */
+  .mx-hero {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    flex: 1;
+    padding-top: 64px; padding-bottom: 64px;
+  }
+  .mx-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    width: fit-content;
+    margin-bottom: 26px;
+    border: 1px solid rgba(255,255,255,0.32);
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+    text-transform: lowercase;
+  }
+  html[lang="ar"] .mx-badge { font-family: 'Cairo', system-ui, sans-serif; }
+  .mx-badge .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.22);
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink { 50% { opacity: 0; } }
+
+  h1 {
+    max-width: 17ch;
+    margin-bottom: 22px;
+    font-size: clamp(36px, 6.5vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    text-transform: lowercase;
+  }
+  .mx-lead {
+    max-width: 54ch;
+    margin-bottom: 36px;
+    font-size: clamp(16px, 2.2vw, 20px);
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── log + progress cards ── */
+  .mx-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: stretch;
+    gap: 20px;
+    max-width: 880px;
+  }
+  @media (max-width: 768px) { .mx-grid { grid-template-columns: 1fr; } }
+  .mx-card {
+    border: 1px solid rgba(255,255,255,0.20);
+    background: rgba(255,255,255,0.10);
+    border-radius: 22px;
+    padding: 28px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  @media (max-width: 768px) { .mx-card { padding: 20px; } }
+  .mx-card h2 {
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+  }
+  html[lang="ar"] .mx-card h2 { font-family: 'Cairo', system-ui, sans-serif; letter-spacing: 0; }
+  .mx-log { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .mx-log li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: rgba(255,255,255,0.92); }
+  .mx-log .tick {
+    flex-shrink: 0;
+    display: grid; place-items: center;
+    width: 20px; height: 20px; margin-top: 2px;
+    border: 1px solid rgba(255,255,255,0.28);
+    background: rgba(255,255,255,0.10);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; line-height: 1;
+  }
+  .mx-log .done { text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.45); }
+
+  .mx-progress { display: flex; flex-direction: column; justify-content: center; }
+  .mx-progress-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.82);
+  }
+  html[lang="ar"] .mx-progress-head { font-family: 'Cairo', system-ui, sans-serif; }
+  .mx-progress-head .label { letter-spacing: 0.14em; text-transform: uppercase; }
+  html[lang="ar"] .mx-progress-head .label { letter-spacing: 0; }
+  .mx-progress-head .pct { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: #fff; }
+  .mx-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.20); overflow: hidden; }
+  .mx-bar .fill { height: 100%; width: 0%; border-radius: 999px; background: #fff; transition: width .3s var(--ease); }
+  .mx-progress-note {
+    min-height: 2.6em; margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; line-height: 1.5;
+    color: rgba(255,255,255,0.70);
+  }
+  html[lang="ar"] .mx-progress-note { font-family: 'Cairo', system-ui, sans-serif; }
+
+  /* ── buttons ── */
+  .mx-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 40px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-weight: 600; font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s, color .2s, border-color .2s;
+    text-transform: lowercase;
+    white-space: nowrap;
+  }
+  .btn svg { transition: transform .3s var(--ease); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:hover svg { transform: translateX(4px); }
+  html[lang="ar"] .btn svg { transform: scaleX(-1); }
+  html[lang="ar"] .btn:hover svg { transform: scaleX(-1) translateX(4px); }
+  .btn-inverse { background: #fff; color: #0a2540; }
+  .btn-inverse:hover { background: #eaf7fc; box-shadow: 0 12px 24px -8px rgba(0,0,0,0.35); }
+  .btn-inverse-ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,0.5); }
+  .btn-inverse-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.14); }
+  .btn-shine { position: relative; overflow: hidden; }
+  .btn-shine::after {
+    content: ""; position: absolute; top: 0; left: -75%;
+    width: 50%; height: 100%; pointer-events: none;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg); transition: left .6s var(--ease);
+  }
+  .btn-shine:hover::after { left: 125%; }
+  .mx-actions .quip { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.70); }
+  html[lang="ar"] .mx-actions .quip { font-family: 'Cairo', system-ui, sans-serif; }
+
+  /* ── footer quip ── */
+  .mx-foot { position: relative; z-index: 1; padding-bottom: 28px; }
+  .mx-foot p { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: rgba(255,255,255,0.60); }
+  html[lang="ar"] .mx-foot p { font-family: 'Cairo', system-ui, sans-serif; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    html { scroll-behavior: auto; }
+    .btn:hover, .btn:hover svg { transform: none; }
+    .btn-shine::after { display: none; }
+  }
+</style>
+<script>
+  // apply saved language before paint to avoid flash (page is always on-gradient, no theme)
+  (function () {
+    const lang = localStorage.getItem('lang') || 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  })();
+</script>
+</head>
+<body>
+
+<main>
+  <span class="mx-bg" aria-hidden="true"></span>
+  <span class="mx-ghost keep-mono" aria-hidden="true">503</span>
+
+  <!-- top bar -->
+  <div class="wrap mx-top">
+    <img class="mx-logo" src="/branding/logos/kaprera-wordmark-light.webp" alt="kaprera" width="640" height="140" />
+    <button class="mx-lang" id="langToggle" type="button" aria-label="switch language">العربية</button>
+  </div>
+
+  <!-- hero -->
+  <div class="wrap mx-hero">
+    <span class="mx-badge">
+      <span class="dot" aria-hidden="true"></span>
+      <span><span class="keep-mono">503</span> <span data-en="/ down for maintenance" data-ar="/ متوقف للصيانة">/ down for maintenance</span></span>
+    </span>
+
+    <h1 data-en="we saw one misaligned pixel. one." data-ar="لمحنا بكسلًا واحدًا غير متراصف. واحدًا فقط.">we saw one misaligned pixel. one.</h1>
+    <p class="mx-lead" data-en="so naturally the whole site is down while we fix it. we'll be back shortly — sharper than ever." data-ar="فكان لا بدّ طبعًا من إيقاف الموقع بأكمله لإصلاحه. سنعود بعد قليل — أكثر أناقة من أي وقت.">so naturally the whole site is down while we fix it. we'll be back shortly — sharper than ever.</p>
+
+    <div class="mx-grid">
+      <!-- maintenance log -->
+      <div class="mx-card">
+        <h2 data-en="maintenance log" data-ar="سجلّ الصيانة">maintenance log</h2>
+        <ul class="mx-log">
+          <li><span class="tick" aria-hidden="true">✓</span><span class="done" data-en="turned it off and on again" data-ar="أطفأناه وشغّلناه من جديد">turned it off and on again</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span class="done" data-en="blamed the cache" data-ar="ألقينا اللوم على الكاش">blamed the cache</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span class="done" data-en="made the logo bigger, then smaller, then bigger" data-ar="كبّرنا الشعار، ثم صغّرناه، ثم كبّرناه">made the logo bigger, then smaller, then bigger</span></li>
+          <li><span class="tick" aria-hidden="true"></span><span data-en="pixel perfection" data-ar="الكمال البكسلي">pixel perfection</span></li>
+        </ul>
+      </div>
+
+      <!-- progress: races to 99% and stays there. like every deploy ever. -->
+      <div class="mx-card mx-progress">
+        <div class="mx-progress-head">
+          <span class="label" data-en="progress" data-ar="التقدّم">progress</span>
+          <span class="pct keep-mono" id="pct" aria-hidden="true">0%</span>
+        </div>
+        <div class="mx-bar" role="progressbar" id="bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div class="fill" id="fill"></div>
+        </div>
+        <p class="mx-progress-note" id="note" data-en="loading… smoothly, for now." data-ar="جارٍ التحميل… بسلاسة، حتى الآن.">loading… smoothly, for now.</p>
+      </div>
+    </div>
+
+    <div class="mx-actions">
+      <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-inverse btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="mailto:info@kaprera.com" class="btn btn-inverse-ghost" data-en="email us" data-ar="راسلنا">email us</a>
+      <span class="quip" data-en="yes, the buttons still work. we're down, not gone." data-ar="نعم، الأزرار لا تزال تعمل. الموقع متوقف، لسنا مختفين.">yes, the buttons still work. we're down, not gone.</span>
+    </div>
+  </div>
+
+  <!-- footer quip -->
+  <div class="wrap mx-foot">
+    <p data-en="if this is taking longer than expected, it's because it's going really well." data-ar="إذا طالت المدة أكثر من المتوقع، فذلك لأن الأمور تسير على نحو ممتاز.">if this is taking longer than expected, it's because it's going really well.</p>
+  </div>
+</main>
+
+<script>
+  const root = document.documentElement;
+
+  // ── language toggle (en / ar rtl) — its own on-gradient pill ──
+  const langToggle = document.getElementById('langToggle');
+  let currentLang = localStorage.getItem('lang') || 'en';
+  let cairoLoaded = false;
+  const loadArabicFont = () => {
+    if (cairoLoaded) return;
+    cairoLoaded = true;
+    const l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap';
+    document.head.appendChild(l);
+  };
+  const applyLang = (lang) => {
+    const ar = lang === 'ar';
+    if (ar) loadArabicFont();
+    currentLang = lang;
+    root.lang = lang;
+    root.dir = ar ? 'rtl' : 'ltr';
+    document.title = ar ? 'سنعود قريبًا — كابريرا' : 'be right back — kaprera';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const t = el.getAttribute(ar ? 'data-ar' : 'data-en');
+      if (t != null) el.textContent = t;
+    });
+    langToggle.textContent = ar ? 'English' : 'العربية';
+    localStorage.setItem('lang', lang);
+    syncNote();   // the stuck/loading punchline is set from JS, re-render in the new language
+    syncPct();
+  };
+  langToggle.addEventListener('click', () => applyLang(currentLang === 'ar' ? 'en' : 'ar'));
+
+  // ── progress bar: races to 99% and stays there ──
+  const STUCK_AT = 99;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pctEl = document.getElementById('pct');
+  const bar = document.getElementById('bar');
+  const fill = document.getElementById('fill');
+  const note = document.getElementById('note');
+  let pct = reduce ? STUCK_AT : 0;   // reduced motion skips the count-up, straight to the punchline
+
+  const syncPct = () => {
+    pctEl.textContent = pct + '%';
+    fill.style.width = pct + '%';
+    bar.setAttribute('aria-valuenow', String(pct));
+  };
+  const syncNote = () => {
+    const stuck = pct >= STUCK_AT;
+    const ar = currentLang === 'ar';
+    note.setAttribute('data-en', stuck ? "it's been at 99% for a while now. that's normal. that's the plan." : 'loading… smoothly, for now.');
+    note.setAttribute('data-ar', stuck ? 'عالق عند ٩٩٪ منذ فترة. هذا طبيعي. هذه هي الخطة.' : 'جارٍ التحميل… بسلاسة، حتى الآن.');
+    note.textContent = note.getAttribute(ar ? 'data-ar' : 'data-en');
+  };
+
+  if (!reduce) {
+    const id = setInterval(() => {
+      pct = Math.min(pct + Math.max(1, Math.round((STUCK_AT - pct) / 10)), STUCK_AT);
+      if (pct >= STUCK_AT) clearInterval(id);
+      syncPct();
+      syncNote();
+    }, 130);
+  }
+
+  applyLang(currentLang);
+</script>
+</body>
+</html>

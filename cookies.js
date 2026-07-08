@@ -72,7 +72,7 @@
       var ar = document.documentElement.lang === 'ar';
       var t = ar ? T.ar : T.en;
       textEl.innerHTML =
-        t.msg + ' <a class="ck-link" href="/privacy-policy.html">' + t.policy + '</a>' + t.tail;
+        t.msg + ' <a class="ck-link" href="/privacy-policy">' + t.policy + '</a>' + t.tail;
       acceptEl.textContent = t.accept;
       declineEl.textContent = t.decline;
     }

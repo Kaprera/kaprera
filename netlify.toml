@@ -1,0 +1,67 @@
+# kaprera — static HTML/CSS/JS site, deployed from the repo root.
+# /404.html is picked up automatically as the custom not-found page.
+
+[build]
+  publish = "."
+
+# ── URLs ─────────────────────────────────────────────────────────────
+# The previous (Next.js) deploy 301'd the old *.html addresses to clean
+# URLs, and browsers cache permanent redirects — so clean URLs stay
+# canonical: *.html keeps redirecting, and the clean URL serves the file
+# via an internal rewrite. Reversing this would loop for anyone who
+# cached the old 301s.
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/careers.html"
+  to = "/careers"
+  status = 301
+
+[[redirects]]
+  from = "/privacy-policy.html"
+  to = "/privacy-policy"
+  status = 301
+
+[[redirects]]
+  from = "/maintenance.html"
+  to = "/maintenance"
+  status = 301
+
+[[redirects]]
+  from = "/careers"
+  to = "/careers.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy.html"
+  status = 200
+
+[[redirects]]
+  from = "/maintenance"
+  to = "/maintenance.html"
+  status = 200
+
+# ── caching ──────────────────────────────────────────────────────────
+# Netlify's default is max-age=0, must-revalidate — every view re-fetches
+# every image. Case shots, brand assets, and the self-hosted fonts change
+# rarely (and get new filenames when they do), so cache them for a year.
+
+[[headers]]
+  for = "/cases/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/branding/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

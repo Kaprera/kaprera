@@ -1,10 +1,9 @@
 /* kaprera service worker — offline shell + smart caching */
-const VERSION = 'kaprera-v5';
+const VERSION = 'kaprera-v6';
 const PRECACHE = [
   '/',
-  '/index.html',
-  '/privacy-policy.html',
-  '/careers.html',
+  '/privacy-policy',
+  '/careers',
   '/site.webmanifest',
   '/cookies.js',
   '/branding/logos/icon-192.png',
@@ -45,7 +44,7 @@ self.addEventListener('fetch', (event) => {
           caches.open(VERSION).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(req).then((r) => r || caches.match('/index.html')))
+        .catch(() => caches.match(req).then((r) => r || caches.match('/')))
     );
     return;
   }
