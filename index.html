@@ -1135,12 +1135,13 @@
     border: 1px solid rgba(255,255,255,0.22);
   }
 
-  /* staggered content reveal — only on the active panel, once stage is in view */
+  /* staggered content reveal — only on the active panel, once stage is in view
+     (hidden only under html.js so the copy is never lost without JS) */
   .svc-panel [data-anim] {
-    opacity: 0; transform: translateY(28px);
     transition: opacity .75s var(--ease) var(--ad, 0s),
                 transform .75s var(--ease) var(--ad, 0s);
   }
+  html.js .svc-panel [data-anim] { opacity: 0; transform: translateY(28px); }
   .svc-slider.in .svc-panel.is-active [data-anim] { opacity: 1; transform: none; }
 
   /* side arrows */
@@ -1296,13 +1297,24 @@
      disc so the logo stays legible in every state (idle, active, featured) */
   .pk-avatar.has-logo,
   .tst-pick.is-active .pk-avatar.has-logo,
-  .tst-avatar.has-logo { background: #fff; padding: 0; overflow: hidden; }
+  .tst-avatar.has-logo { position: relative; background: #fff; padding: 0; overflow: hidden; }
   .tst-avatar.has-logo { border-color: rgba(255,255,255,0.55); }
   .pk-avatar.has-logo img,
   .tst-avatar.has-logo img {
     width: 100%; height: 100%;
     object-fit: contain; padding: 5px; border-radius: 50%;
   }
+  /* loading pulse on the white disc until the logo image arrives —
+     JS marks .logo-loaded; without JS the logos are simply visible */
+  html.js .has-logo::before {
+    content: ""; position: absolute; inset: 0;
+    background: rgba(0,0,0,0.07);
+    animation: logo-pulse 1.6s ease-in-out infinite;
+  }
+  html.js .has-logo.logo-loaded::before { content: none; }
+  html.js .has-logo img { opacity: 0; transition: opacity .3s; }
+  html.js .has-logo.logo-loaded img { opacity: 1; }
+  @keyframes logo-pulse { 50% { opacity: 0.45; } }
 
   .industries {
     margin-top: 24px;
@@ -1590,13 +1602,14 @@
     font-size: 11.5px; color: var(--muted); margin-top: 10px;
   }
 
-  /* ── scroll reveal ── */
-  .reveal {
+  /* ── scroll reveal — hidden only under html.js, so content stays
+        visible when JS never runs ── */
+  .reveal { transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  html.js .reveal {
     opacity: 0;
     transform: translateY(28px);
-    transition: opacity .7s var(--ease), transform .7s var(--ease);
   }
-  .reveal.in { opacity: 1; transform: none; }
+  html.js .reveal.in { opacity: 1; transform: none; }
 
   /* ── mobile ── */
   @media (max-width: 860px) {
@@ -1675,9 +1688,12 @@
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-    .reveal { opacity: 1; transform: none; transition: none; }
+    html.js .reveal { opacity: 1; transform: none; transition: none; }
     .svc-panel [data-anim] { opacity: 1 !important; transform: none !important; }
     .svc-bg, .tst-big, .tst-by { transition: none; }
+    /* the animated intro is exactly the motion these visitors opted out
+       of — skip the overlay entirely and show content immediately */
+    #preloader { display: none; }
   }
 
   /* ── preloader: logo fills up ── */
@@ -1692,7 +1708,12 @@
     gap: 22px;
     background: var(--blue);
     transition: opacity .6s var(--ease), visibility .6s var(--ease);
+    /* no-JS safety net: dismissal is an inline script (immediate when JS
+       runs), but the overlay must never hold the page hostage — the intro
+       sequence ends by ~2.5s, so this only ever fires without JS */
+    animation: pl-auto-hide .6s var(--ease) 4s forwards;
   }
+  @keyframes pl-auto-hide { to { opacity: 0; visibility: hidden; } }
   #preloader.done { opacity: 0; visibility: hidden; }
   .pl-stack {
     display: flex;
@@ -1753,6 +1774,10 @@
     try {
       if (sessionStorage.getItem('kaprera-preloaded')) document.documentElement.classList.add('skip-preloader');
     } catch (e) {}
+
+    // mark JS as available — entrance animations hide content only under
+    // html.js, so nothing is ever invisible for no-JS visitors
+    document.documentElement.classList.add('js');
 
     // apply saved language + direction before paint
     const lang = localStorage.getItem('lang') || 'en';
@@ -2761,6 +2786,16 @@
     go(0); start();
   })();
 
+  // ── logo avatars: clear the loading pulse once the image arrives ──
+  const watchLogo = (img) => {
+    if (!img) return;
+    const markLogoLoaded = () => img.closest('.has-logo')?.classList.add('logo-loaded');
+    if (img.complete && img.naturalWidth) { markLogoLoaded(); return; }
+    img.addEventListener('load', markLogoLoaded, { once: true });
+    img.addEventListener('error', markLogoLoaded, { once: true });
+  };
+  document.querySelectorAll('.has-logo img').forEach(watchLogo);
+
   // ── testimonials: featured quote + clickable client picker ──
   (function initTestimonials() {
     const wrap = document.getElementById('tstWrap');
@@ -2809,7 +2844,9 @@
         roleEl.textContent = ar ? d.role_ar : d.role_en;
         if (d.logo) {
           avatarEl.classList.add('has-logo');
+          avatarEl.classList.remove('logo-loaded');   // pulse again until the new logo decodes
           avatarEl.innerHTML = '<img src="' + d.logo + '" alt="' + (ar ? d.name_ar : d.name_en) + ' logo">';
+          watchLogo(avatarEl.querySelector('img'));
         } else {
           avatarEl.classList.remove('has-logo');
           avatarEl.textContent = d.initial;
