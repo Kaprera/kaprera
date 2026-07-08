@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAutoplay, usePrefersReducedMotion } from "@/hooks/useAutoplay";
 import { bi, useLang, type Bi } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
@@ -46,28 +46,42 @@ const TESTIMONIALS: readonly Testimonial[] = [
 export function Testimonials() {
   const { t } = useLang();
   const reduce = usePrefersReducedMotion();
+  // the picked card highlights instantly; only the featured quote waits for
+  // its fade-out, so clicks never feel delayed
   const [index, setIndex] = useState(0);
+  const [shownIndex, setShownIndex] = useState(0);
   const [swapping, setSwapping] = useState(false);
+  const swapTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const select = useCallback(
     (n: number, animate = true) => {
       const next =
         ((n % TESTIMONIALS.length) + TESTIMONIALS.length) % TESTIMONIALS.length;
+      setIndex(next);
+      if (swapTimer.current) clearTimeout(swapTimer.current);
       if (!animate || reduce) {
-        setIndex(next);
+        setShownIndex(next);
+        setSwapping(false);
         return;
       }
       setSwapping(true);
-      setTimeout(() => {
-        setIndex(next);
+      swapTimer.current = setTimeout(() => {
+        setShownIndex(next);
         setSwapping(false);
       }, SWAP_MS);
     },
     [reduce],
   );
 
+  useEffect(
+    () => () => {
+      if (swapTimer.current) clearTimeout(swapTimer.current);
+    },
+    [],
+  );
+
   const autoplay = useAutoplay(AUTO_MS, () => select(index + 1), !reduce);
-  const featured = TESTIMONIALS[index];
+  const featured = TESTIMONIALS[shownIndex];
 
   return (
     <>

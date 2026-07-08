@@ -19,7 +19,7 @@ const columnLink = "mb-2.5 block text-[15px] lowercase transition-colors duratio
 export function Footer() {
   const { t } = useLang();
   return (
-    <footer className="border-t border-hair bg-[#f1f2f4] py-14 pb-10 dark:bg-[#0a0d12]">
+    <footer id="footer" className="border-t border-hair bg-[#f1f2f4] py-14 pb-10 dark:bg-[#0a0d12]">
       <div className="wrap">
         <div className="mb-11 flex flex-wrap justify-between gap-[30px]">
           <div>
