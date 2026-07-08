@@ -1691,9 +1691,6 @@
     html.js .reveal { opacity: 1; transform: none; transition: none; }
     .svc-panel [data-anim] { opacity: 1 !important; transform: none !important; }
     .svc-bg, .tst-big, .tst-by { transition: none; }
-    /* the animated intro is exactly the motion these visitors opted out
-       of — skip the overlay entirely and show content immediately */
-    #preloader { display: none; }
   }
 
   /* ── preloader: logo fills up ── */
@@ -1710,10 +1707,26 @@
     transition: opacity .6s var(--ease), visibility .6s var(--ease);
     /* no-JS safety net: dismissal is an inline script (immediate when JS
        runs), but the overlay must never hold the page hostage — the intro
-       sequence ends by ~2.5s, so this only ever fires without JS */
-    animation: pl-auto-hide .6s var(--ease) 4s forwards;
+       sequence ends by ~2.5s, so this only ever fires without JS.
+       Two animations because fill-forwards can hold just shy of the final
+       frame, which would leave discrete `visibility` stuck on visible and
+       the invisible overlay still swallowing clicks: the first fades, the
+       second locks the hidden end-state from both of its keyframes. */
+    animation:
+      pl-auto-fade .6s var(--ease) 4s forwards,
+      pl-auto-gone 1ms linear 4.6s forwards;
   }
-  @keyframes pl-auto-hide { to { opacity: 0; visibility: hidden; } }
+  @keyframes pl-auto-fade { to { opacity: 0; } }
+  @keyframes pl-auto-gone {
+    from { opacity: 0; visibility: hidden; }
+    to   { opacity: 0; visibility: hidden; }
+  }
+  /* placed after the base #preloader rule so it wins the source-order tie */
+  @media (prefers-reduced-motion: reduce) {
+    /* the animated intro is exactly the motion these visitors opted out
+       of — skip the overlay entirely and show content immediately */
+    #preloader { display: none; }
+  }
   #preloader.done { opacity: 0; visibility: hidden; }
   .pl-stack {
     display: flex;
