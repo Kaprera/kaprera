@@ -1621,9 +1621,12 @@
     font-size: 11.5px; color: var(--muted); margin-top: 10px;
   }
 
-  /* nav feedback: brief brand tint when the clicked section is already on screen */
-  @keyframes section-flash { 30% { background-color: rgba(0,140,193,0.07); } }
-  .section-flash { animation: section-flash .9s var(--ease); }
+  /* nav feedback: double brand-tint pulse when the clicked section is already on screen */
+  @keyframes section-flash {
+    20%, 65% { background-color: rgba(0,140,193,0.16); }
+    42% { background-color: rgba(0,140,193,0.05); }
+  }
+  .section-flash { animation: section-flash 1.1s var(--ease); }
 
   /* ── scroll reveal — hidden only under html.js, so content stays
         visible when JS never runs ── */
