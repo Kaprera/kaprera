@@ -4,6 +4,7 @@ import Link from "next/link";
 import { bi, useLang, type Bi } from "@/lib/i18n";
 import { CONTACT } from "@/lib/site";
 import { InstagramIcon, LinkedInIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { LinkPending } from "@/components/ui/LinkPending";
 
 const EXPLORE: ReadonlyArray<{ href: string; label: Bi }> = [
   { href: "/#work", label: bi("work", "أعمالنا") },
@@ -36,6 +37,7 @@ export function Footer() {
               {EXPLORE.map(({ href, label }) => (
                 <Link key={href} href={href} className={columnLink}>
                   {t(label)}
+                  <LinkPending />
                 </Link>
               ))}
             </nav>
@@ -43,6 +45,7 @@ export function Footer() {
               <h2 className={columnHeading}>{t(bi("legal", "قانوني"))}</h2>
               <Link href="/privacy-policy" className={columnLink}>
                 {t(bi("privacy policy", "سياسة الخصوصية"))}
+                <LinkPending />
               </Link>
             </nav>
             <nav aria-label="social">

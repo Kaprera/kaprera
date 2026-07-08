@@ -6,6 +6,7 @@ import { bi, useLang } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 import { ArrowLeftIcon } from "@/components/ui/icons";
 import { LangToggle } from "@/components/ui/LangToggle";
+import { LinkPending } from "@/components/ui/LinkPending";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 /** Condensing header for careers / privacy: brand, back link, and the two toggles. */
@@ -55,6 +56,7 @@ export function SubpageHeader() {
           >
             <ArrowLeftIcon className="transition-[translate,scale] duration-300 ease-brand group-hover:-translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:translate-x-[3px]" />
             <span className="max-[600px]:hidden">{t(bi("back to site", "العودة إلى الموقع"))}</span>
+            <LinkPending />
           </Link>
           <LangToggle />
           <ThemeToggle />

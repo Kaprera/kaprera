@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useAutoplay, usePrefersReducedMotion } from "@/hooks/useAutoplay";
+import { useHydrated } from "@/hooks/useHydrated";
 import { bi, useLang, type Bi } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 import { CONTACT } from "@/lib/site";
@@ -276,12 +277,15 @@ function StageArrow({ direction, onClick }: { direction: "prev" | "next"; onClic
 }
 
 function Staggered({ delay, animate, children }: { delay: number; animate: boolean; children: ReactNode }) {
+  const hydrated = useHydrated();
   return (
     <div
       style={{ "--ad": `${delay}s` } as CSSProperties}
       className={cn(
         "transition-[opacity,translate] duration-750 ease-brand [transition-delay:var(--ad)]",
-        animate ? "translate-y-0 opacity-100" : "translate-y-7 opacity-0",
+        // pre-hydration the server HTML stays visible — on slow connections
+        // the panel copy must not wait for the JS bundle to fade in
+        !hydrated || animate ? "translate-y-0 opacity-100" : "translate-y-7 opacity-0",
         "motion-reduce:translate-y-0 motion-reduce:opacity-100",
       )}
     >

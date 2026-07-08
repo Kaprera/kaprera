@@ -9,10 +9,17 @@ interface RevealProps {
   children: ReactNode;
 }
 
+type Phase =
+  /** server HTML / pre-hydration — keep content visible for slow connections */
+  | "ssr"
+  /** hydrated and off-screen — hidden, waiting to enter */
+  | "waiting"
+  | "shown";
+
 /** Fade/slide-up once when scrolled into view (skipped for reduced motion). */
 export function Reveal({ as: Tag = "div", className, children }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
+  const [phase, setPhase] = useState<Phase>("ssr");
 
   useEffect(() => {
     const el = ref.current;
@@ -20,8 +27,12 @@ export function Reveal({ as: Tag = "div", className, children }: RevealProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true);
+          // already (or now) on screen — show; the entrance only ever plays
+          // for content that was hidden while off-screen
+          setPhase("shown");
           observer.disconnect();
+        } else {
+          setPhase("waiting");
         }
       },
       { threshold: 0.12 },
@@ -35,7 +46,7 @@ export function Reveal({ as: Tag = "div", className, children }: RevealProps) {
       ref={ref}
       className={cn(
         "transition-[opacity,translate] duration-700 ease-brand motion-reduce:translate-y-0 motion-reduce:opacity-100",
-        inView ? "translate-y-0 opacity-100" : "translate-y-7 opacity-0",
+        phase === "waiting" ? "translate-y-7 opacity-0" : "translate-y-0 opacity-100",
         className,
       )}
     >

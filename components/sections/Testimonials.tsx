@@ -42,6 +42,33 @@ const TESTIMONIALS: readonly Testimonial[] = [
   },
 ];
 
+/** Client logo on a white disc, with a loading pulse until the image arrives. */
+function LogoAvatar({ src, alt, size, className }: { src: string; alt: string; size: number; className?: string }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <span
+      className={cn(
+        "relative flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-white",
+        className,
+      )}
+      style={{ width: size, height: size }}
+    >
+      {!loaded && <span aria-hidden className="absolute inset-0 animate-pulse bg-[rgba(0,0,0,0.07)]" />}
+      <Image
+        src={src}
+        alt={alt}
+        width={size}
+        height={size}
+        onLoad={() => setLoaded(true)}
+        className={cn(
+          "size-full rounded-full object-contain p-[5px] transition-opacity duration-300",
+          loaded ? "opacity-100" : "opacity-0",
+        )}
+      />
+    </span>
+  );
+}
+
 /** Featured quote + clickable client picker (auto-rotates, pauses on hover/focus). */
 export function Testimonials() {
   const { t } = useLang();
@@ -126,15 +153,12 @@ export function Testimonials() {
                 : "translate-y-0 opacity-100",
             )}
           >
-            <span className="flex size-[50px] shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/55 bg-white">
-              <Image
-                src={featured.logo}
-                alt={featured.logoAlt}
-                width={50}
-                height={50}
-                className="size-full rounded-full object-contain p-[5px]"
-              />
-            </span>
+            <LogoAvatar
+              src={featured.logo}
+              alt={featured.logoAlt}
+              size={50}
+              className="border border-white/55"
+            />
             <span className="flex flex-col gap-0.5">
               <span className="text-base font-bold tracking-[-0.01em]">
                 {featured.name}
@@ -172,15 +196,7 @@ export function Testimonials() {
                     : "border-hair bg-surface hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)]",
                 )}
               >
-                <span className="flex size-[46px] shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
-                  <Image
-                    src={testimonial.logo}
-                    alt={testimonial.logoAlt}
-                    width={46}
-                    height={46}
-                    className="size-full rounded-full object-contain p-[5px]"
-                  />
-                </span>
+                <LogoAvatar src={testimonial.logo} alt={testimonial.logoAlt} size={46} />
                 <span className="flex min-w-0 flex-col gap-0.5">
                   <span className="text-[15px] font-bold tracking-[-0.01em]">
                     {testimonial.name}

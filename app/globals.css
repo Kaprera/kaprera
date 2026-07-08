@@ -109,6 +109,28 @@ html.skip-preloader #preloader {
   display: none;
 }
 
+/* Slow-JS safety net: dismissing the intro needs hydration, but the page
+   under it is server-rendered and ready — never hold it hostage to the JS
+   bundle. The JS path unmounts the overlay by ~3.2s, so this only ever
+   fires when hydration is late (or JS never arrives). */
+#preloader {
+  animation: pl-auto-hide 0.6s var(--ease-brand) 4s forwards;
+}
+@keyframes pl-auto-hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+/* The reduced-motion reset above kills that fallback animation — and for
+   these visitors the animated intro is exactly the motion they opted out
+   of, so skip the overlay entirely and show content immediately. */
+@media (prefers-reduced-motion: reduce) {
+  #preloader {
+    display: none;
+  }
+}
+
 /* ── keyframes ── */
 @keyframes caret-blink {
   50% {

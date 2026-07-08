@@ -1,13 +1,17 @@
 import { Cairo, Inter, JetBrains_Mono } from "next/font/google";
 
+// Only the latin files are preloaded — every other subset (latin-ext included)
+// still gets its unicode-range @font-face and downloads on demand if a glyph
+// ever needs it. Site copy is plain English + Arabic, so preloading latin-ext
+// was ~100 KB of critical-path fonts for glyphs that never render.
 export const inter = Inter({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
 
 export const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-jbm",
   display: "swap",
 });
