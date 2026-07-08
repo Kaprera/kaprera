@@ -46,6 +46,22 @@
   to = "/maintenance.html"
   status = 200
 
+# ── security headers ─────────────────────────────────────────────────
+# Static site, HTTPS-only on Netlify. No full CSP: the pages rely on
+# inline styles/scripts by design, so a CSP would need unsafe-inline
+# and add no real protection; frame-ancestors covers the clickjacking
+# case a CSP would otherwise handle.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Content-Security-Policy = "frame-ancestors 'none'"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=31536000"
+
 # ── caching ──────────────────────────────────────────────────────────
 # Netlify's default is max-age=0, must-revalidate — every view re-fetches
 # every image. Case shots, brand assets, and the self-hosted fonts change
