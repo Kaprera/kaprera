@@ -47,17 +47,17 @@
   status = 200
 
 # ── security headers ─────────────────────────────────────────────────
-# Static site, HTTPS-only on Netlify. No full CSP: the pages rely on
-# inline styles/scripts by design, so a CSP would need unsafe-inline
-# and add no real protection; frame-ancestors covers the clickjacking
-# case a CSP would otherwise handle.
+# Static site, HTTPS-only on Netlify. The pages use inline styles and
+# scripts by design, so script-src/style-src carry 'unsafe-inline' —
+# the policy's value is pinning every *external* origin (only Google
+# Fonts) and locking frames, objects, base and form targets.
 
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "DENY"
-    Content-Security-Policy = "frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Strict-Transport-Security = "max-age=31536000"

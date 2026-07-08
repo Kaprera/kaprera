@@ -349,6 +349,7 @@
     transform: skewX(-20deg); transition: left .6s var(--ease);
   }
   .btn-shine:hover::after { left: 125%; }
+  .btn[disabled] { opacity: .7; pointer-events: none; }
   @media (prefers-reduced-motion: reduce) {
     .btn:hover, .btn:hover svg { transform: none; }
     .btn-shine::after { display: none; }
@@ -1620,6 +1621,10 @@
     font-size: 11.5px; color: var(--muted); margin-top: 10px;
   }
 
+  /* nav feedback: brief brand tint when the clicked section is already on screen */
+  @keyframes section-flash { 30% { background-color: rgba(0,140,193,0.07); } }
+  .section-flash { animation: section-flash .9s var(--ease); }
+
   /* ── scroll reveal — hidden only under html.js, so content stays
         visible when JS never runs ── */
   .reveal { transition: opacity .7s var(--ease), transform .7s var(--ease); }
@@ -2244,7 +2249,9 @@
       <h2 class="title reveal" data-en="tell us about your project." data-ar="أخبرنا عن مشروعك.">tell us about your project.</h2>
 
       <div class="contact-grid">
-        <form id="contactForm" class="contact-card reveal" novalidate>
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-card reveal" novalidate>
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden aria-hidden="true"><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
           <div class="field-row">
             <div class="field">
               <label for="name" data-en="full name" data-ar="الاسم الكامل">full name</label>
@@ -2676,10 +2683,13 @@
 
   // ── pointer-follow spotlight (services + testimonials cards) ──
   document.querySelectorAll('[data-svc], [data-tst]').forEach(card => {
+    // rect cached on enter — reading it on every pointermove forces layout
+    let rect = null;
+    card.addEventListener('pointerenter', () => { rect = card.getBoundingClientRect(); });
     card.addEventListener('pointermove', (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      if (!rect) rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
     });
   });
 
@@ -2711,8 +2721,11 @@
       const a = dots[i];
       if (!a || reduce) return;
       a.style.setProperty('--work-auto', AUTO + 'ms');
-      void a.offsetWidth;            // reflow so the animation restarts from 0
-      a.classList.add('fill');
+      // double rAF restarts the animation without forcing a synchronous reflow;
+      // re-check the dot is still active in case of rapid navigation
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (dots[i] === a) a.classList.add('fill');
+      }));
     };
     const go = (n) => {
       i = (n + slides.length) % slides.length;
@@ -2796,8 +2809,11 @@
       const a = dots[i];
       if (!a || reduce) return;
       a.style.setProperty('--svc-auto', AUTO + 'ms');
-      void a.offsetWidth;            // reflow so the animation restarts from 0
-      a.classList.add('fill');
+      // double rAF restarts the animation without forcing a synchronous reflow;
+      // re-check the dot is still active in case of rapid navigation
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (dots[i] === a) a.classList.add('fill');
+      }));
     };
     const go = (n) => {
       i = (n + panels.length) % panels.length;
@@ -2941,6 +2957,22 @@
     start();
   })();
 
+  // ── nav links: if the target section is already on screen, flash it
+  //    briefly so the click still gives feedback ──
+  document.querySelectorAll('.nav-links a[href^="#"]:not([href="#work"])').forEach(a => {
+    a.addEventListener('click', () => {
+      const sec = document.getElementById(a.getAttribute('href').slice(1));
+      if (!sec) return;
+      const r = sec.getBoundingClientRect();
+      const mid = window.innerHeight / 2;
+      if (r.top <= mid && r.bottom >= mid) {   // viewport middle is inside the section
+        sec.classList.remove('section-flash');
+        requestAnimationFrame(() => requestAnimationFrame(() => sec.classList.add('section-flash')));
+        sec.addEventListener('animationend', () => sec.classList.remove('section-flash'), { once: true });
+      }
+    });
+  });
+
   // ── nav: scroll condense ──
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
@@ -3081,16 +3113,43 @@
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 
-  // ── contact → mailto ──
-  document.getElementById('contactForm').addEventListener('submit', (e) => {
+  // ── contact → Netlify Forms, falling back to the mail client when no
+  //    form backend answers (e.g. local preview) ──
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const submitLabel = submitBtn.querySelector('span');
+  const setSubmitLabel = (en, arText) => {
+    submitLabel.setAttribute('data-en', en);
+    submitLabel.setAttribute('data-ar', arText);
+    submitLabel.textContent = currentLang === 'ar' ? arText : en;
+  };
+  const mailtoFallback = (f) => {
+    const els = f.elements;
+    const name = encodeURIComponent(els.name.value.trim());
+    const body = encodeURIComponent(els.message.value.trim() + "\n\n— " + els.name.value.trim() + " (" + els.email.value.trim() + ")");
+    window.location.href =
+      "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" + name + "&body=" + body;
+  };
+  contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const f = e.target;
     if (!f.checkValidity()) { f.reportValidity(); return; }
-    const name = encodeURIComponent(f.name.value.trim());
-    const email = encodeURIComponent(f.email.value.trim());
-    const body = encodeURIComponent(f.message.value.trim() + "\n\n— " + f.name.value.trim() + " (" + f.email.value.trim() + ")");
-    window.location.href =
-      "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" + name + "&body=" + body;
+    submitBtn.disabled = true;
+    setSubmitLabel('sending…', 'جارٍ الإرسال…');
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(f)).toString()
+    }).then((res) => {
+      if (!res.ok) throw new Error('form endpoint unavailable');
+      f.reset();
+      setSubmitLabel('message sent ✓', 'تم الإرسال ✓');
+      setTimeout(() => { setSubmitLabel('send', 'إرسال'); submitBtn.disabled = false; }, 4000);
+    }).catch(() => {
+      setSubmitLabel('send', 'إرسال');
+      submitBtn.disabled = false;
+      mailtoFallback(f);
+    });
   });
 
   // apply saved language (swap text/placeholders) on load
