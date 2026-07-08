@@ -1,0 +1,10 @@
+# Next.js on Netlify — overrides the site's old static-site build settings
+[build]
+command = "npm run build"
+publish = ".next"
+
+[build.environment]
+NODE_VERSION = "22"
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"
