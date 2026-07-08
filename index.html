@@ -2739,6 +2739,16 @@
     const seeWork = document.getElementById('seeWork');
     if (seeWork) seeWork.addEventListener('click', () => { go(1); rest(); }); // jump to first case
 
+    // "work" links: keep the page pinned at the very top (no anchor nudge)
+    // and just slide the showcase to the first case study
+    document.querySelectorAll('a[href="#work"]').forEach(a =>
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+        go(1); rest();
+      })
+    );
+
     // pause autoplay only while keyboard focus is inside the slider
     // (hover does NOT pause — autoplay keeps running over the image)
     const slider = track.closest('.work-slider');
