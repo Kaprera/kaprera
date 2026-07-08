@@ -48,8 +48,9 @@ export function SubpageHeader() {
           />
         </Link>
         <div className="flex items-center gap-3.5">
+          {/* subpages are reached from the footer links — return the visitor there */}
           <Link
-            href="/"
+            href="/#footer"
             className="group inline-flex items-center gap-[7px] text-[15px] lowercase text-ink transition-colors duration-200 hover:text-blue"
           >
             <ArrowLeftIcon className="transition-[translate,scale] duration-300 ease-brand group-hover:-translate-x-[3px] rtl:-scale-x-100 rtl:group-hover:translate-x-[3px]" />
