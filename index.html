@@ -3096,7 +3096,8 @@
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('no-scroll');
-    modalClose.focus();
+    // focus after the frame so it doesn't force a layout mid-batch
+    requestAnimationFrame(() => modalClose.focus());
   };
 
   const closeModal = () => {
@@ -3104,7 +3105,11 @@
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('no-scroll');
-    if (lastFocus) lastFocus.focus();
+    if (lastFocus) {
+      const el = lastFocus;
+      // preventScroll: restoring focus must not yank the page around
+      requestAnimationFrame(() => el.focus({ preventScroll: true }));
+    }
   };
 
   document.querySelectorAll('[data-case]').forEach(el =>
