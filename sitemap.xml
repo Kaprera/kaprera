@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://kaprera.com/</loc>
-    <lastmod>2026-07-08</lastmod>
+    <lastmod>2026-07-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -21,6 +21,46 @@
     <image:image>
       <image:loc>https://kaprera.com/cases/agripro/image.jpg</image:loc>
       <image:title>Agri Pro Services website by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/bayader/</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/bayader/image.jpg</image:loc>
+      <image:title>Bayader Investments corporate website by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/lbspotlight/</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/lbspotlight/image.jpg</image:loc>
+      <image:title>Lebanese Spotlight volunteer platform by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/ana-arabia/</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/ana-arabia/image.jpg</image:loc>
+      <image:title>Ana Arabia bilingual event landing page by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/agripro/</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/agripro/image.jpg</image:loc>
+      <image:title>Agri Pro Services operations platform by kaprera</image:title>
     </image:image>
   </url>
   <url>

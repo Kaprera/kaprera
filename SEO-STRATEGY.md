@@ -106,13 +106,15 @@ sitemap present, rich JSON-LD). Gaps and hardening below.
   `/careers`, `/privacy-policy`. Confirm `maintenance` stays excluded, keep `lastmod` accurate on
   every deploy, and add `/ar/` **(B only)**. Consider giving each case study a crawlable URL
   (see §5) and listing them.
-- [ ] **P1 [code]** — **Image SEO.** Case-study mockups (`cases/*/image.jpg`) are the site's main
-  images. Verify descriptive `alt` text with keyword + location (e.g. "agri pro services website
-  built by kaprera, a web development agency in beirut"), lazy-load below-the-fold, and serve
-  modern formats (WebP/AVIF) at sane dimensions for Core Web Vitals.
-- [ ] **P1 [code]** — **Core Web Vitals pass.** Run Lighthouse (the `/lighthouse` skill) on the
-  homepage; the single-page build ships a lot of inline CSS/JS + images. Confirm LCP < 2.5s,
-  CLS < 0.1, INP healthy. Defer non-critical JS, preload the hero font, compress images.
+- [x] **P1 [code]** — **Image SEO.** ✅ Case mockups already ship responsive `<picture>` (480/800/
+  1600 WebP + JPG fallback), keyword+brand `alt`, explicit `width`/`height`, and `loading="lazy"`.
+  Added dimensions/`loading` to the testimonial avatars and modal slide images that were missing
+  them, and enriched the modal slide `alt`.
+- [x] **P1 [code]** — **Core Web Vitals pass.** ✅ Lighthouse (desktop): **home 100/100/100/100**
+  (LCP 0.6s, CLS 0, TBT 0); **case pages 100/100/100/100** (after fixing a button-contrast + a
+  heading-order issue on the new pages). **Mobile home: perf 95, LCP 2.9s, CLS 0, TBT 0.**
+  **⚠️ watch-item:** mobile LCP 2.9s is just over the 2.5s "good" bar (likely the hero preloader
+  animation) — worth revisiting; monitor real CrUX field data in GSC before optimizing further.
 - [ ] **P2 [code]** — **Robots hygiene.** `robots.txt` is `Allow: /` + sitemap — good. Make sure
   `maintenance.html` / `404.html` aren't indexable (they shouldn't be linked/sitemapped; add
   `X-Robots-Tag: noindex` via `netlify.toml` headers for `maintenance` if it's ever linked).
@@ -133,11 +135,12 @@ plus giving case studies real SEO surface area.
   services carousel already carries a strong "web development" panel and the eyebrow/testimonials
   already say "beirut, lebanon" — page was largely aligned; kept the H1 as the brand statement
   rather than stuff it.
-- [ ] **P1 [code]** — **Give case studies indexable URLs.** Today cases open as in-page modals
-  (no crawlable URL). Add lightweight static pages `cases/<slug>/index.html` (or `#`-anchored deep
-  links that also render server-side) so "web development case study lebanon" style queries have a
-  landing target. Each should carry `CreativeWork`/`Article`-style schema, results metrics, and an
-  `alt`-rich hero. This is the highest-value *content* move within the "no blog" constraint.
+- [x] **P1 [code]** — **Give case studies indexable URLs.** ✅ Built 4 standalone pages —
+  `cases/{bayader,lbspotlight,ana-arabia,agripro}/index.html` — sharing `cases/case.css`, each with
+  hero, overview, highlights, specs, results/perf, unique title+description+canonical, OG/Twitter
+  tags, and `BreadcrumbList` + `CreativeWork` JSON-LD. The homepage "view case study" CTAs are now
+  real `<a href="/cases/…/">` links (JS still opens the modal; middle/⌘-click and no-JS get the full
+  page), and all four are in `sitemap.xml`. Lighthouse 100 across the board.
 - [ ] **P1 [code]** — **Services depth.** Expand the services section copy so "web development"
   and "ui/ux design" each read as a mini service page with concrete deliverables, stack, and
   outcomes — enough text for Google to understand intent. Add the "industries we serve" line as
@@ -161,10 +164,11 @@ You already emit `ProfessionalService`, `Organization`, `WebSite`, `Service`, `O
   I'll update `aggregateRating` to reflect the full GBP total (must match what's publicly visible).
   Note: self-hosted reviews rarely trigger star rich-snippets anymore, but the markup still
   strengthens entity/local understanding.
-- [ ] **P1 [code]** — **`FAQPage`** with 4–6 real buyer questions ("how much does a website cost
-  in lebanon", "do you work with clients in the gulf", "how long does a build take"). Free SERP
-  real estate and captures long-tail intent without a blog.
-- [ ] **P1 [code]** — **`BreadcrumbList`** on case-study pages once they get URLs (§5).
+- [x] **P1 [code]** — **`FAQPage`** ✅ Added a visible, bilingual FAQ section (`#faq`, native
+  `<details>`, no extra JS) with 6 buyer questions (cost, timeline, working outside Lebanon, SEO &
+  support, tech stack, Arabic/English) + matching `FAQPage` JSON-LD. Linked in the footer; contact
+  section renumbered to 05.
+- [x] **P1 [code]** — **`BreadcrumbList`** ✅ on all four case-study pages (Home › Work › Case).
 - [x] **P2 [code]** — ✅ `areaServed` widened from `"LB"` to Lebanon + Saudi Arabia + UAE (Country
   objects). Still confirm NAP (name/address/phone) in schema **exactly** matches the GBP listing (§7).
 - [ ] **P2 [code]** — Validate everything in Google's Rich Results Test after each change.
