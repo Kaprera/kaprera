@@ -81,13 +81,62 @@ Group by intent. Lowercase brand tone is fine on-page; keywords below are for ta
 - brand and website design agency
 - next.js / modern website development lebanon _(only if you want to signal stack)_
 
+### Software (custom apps / SaaS — distinct from "web development")
+- software company beirut / lebanon _(also a candidate GBP primary category, §7)_
+- software development agency lebanon
+- custom software development lebanon _(Agri Pro platform, Zeevora SaaS)_
+
 ### Arabic (B only)
 - شركة تطوير مواقع بيروت / لبنان · تصميم مواقع لبنان · وكالة رقمية بيروت
 
-**➡️ Action P1 [you+code]:** finalize a 12–15 keyword shortlist, assign each to a page/section
-(homepage hero, services, each case study). Track them in GSC.
+### Finalized shortlist (18) — keyword → page map
 
-- [ ] **P1** — Lock the keyword shortlist and map keyword → page.
+Locked target list. **P** = primary keyword for that URL (title/H1/first-paragraph
+priority); **S** = secondary (supported in body/schema/alt). Track all 15 in GSC and
+watch positions 11–20 first (best ROI). "Support today" = where the term is already
+reinforced on-page, so you can see the gap at a glance.
+
+| # | Keyword | Pri | Target page / section | Type | Support today |
+|---|---|---|---|---|---|
+| 1 | web development company beirut | P | Home — hero + `#services` (web-dev panel) | Local commercial | Title, services panel, "beirut, lebanon" eyebrow |
+| 2 | web development agency lebanon | P | Home — hero + `#services` | Local commercial | Title/meta, services copy |
+| 3 | digital agency beirut | P | Home — H1 / eyebrow / `<title>` | Local commercial | H1 brand line + title |
+| 4 | digital agency lebanon | S | Home — `<title>` / meta / footer | Local commercial | Meta description, footer |
+| 5 | website design company lebanon | P | Home — `#services` (design panel) | Local commercial | Design service panel |
+| 6 | ui ux design agency lebanon | S | Home — `#services` (UI/UX panel) | Local commercial | UI/UX panel + deliverable chips |
+| 7 | ecommerce website development lebanon | S | Home — `#services` | Local commercial | Web-dev panel (add ecommerce chip) |
+| 8 | web development agency saudi arabia | P | `cases/bayader/` + Home `areaServed` | Regional (GCC) | Bayader case (KSA client), schema areaServed |
+| 9 | website design company uae / gulf | S | `cases/bayader/` + Home regional copy | Regional (GCC) | areaServed = LB+SA+AE |
+| 10 | bilingual website development (ar/en) | P | `cases/ana-arabia/` + `/ar/` | Regional / niche | Ana Arabia case, `/ar/` page |
+| 11 | custom website development | P | `cases/agripro/` | Mid-funnel service | Agri Pro custom platform case |
+| 12 | fast / high-performance website development | S | Home hero subline + case results | Differentiator | CWV metrics in case results, hero subline |
+| 13 | next.js website development lebanon | S | Home — `#services` (web-dev copy) | Stack signal | Stack named (Next.js/Nuxt) in web-dev panel |
+| 14 | software company beirut / lebanon | P | Home — eyebrow / `#services` + schema | Local commercial | ⚠️ "software" 0× on home — gap |
+| 15 | software development agency lebanon | S | Home + `cases/agripro/` | Local commercial | Agri Pro platform (add "software" to home) |
+| 16 | custom software development lebanon | S | `cases/agripro/` + `zeevora/` | Mid-funnel service | Agri Pro platform, Zeevora SaaS (`SoftwareApplication`) |
+| 17 | شركة تطوير مواقع بيروت | P | `/ar/` — title / H1 | Arabic (B) | `/ar/` Arabic homepage |
+| 18 | تصميم مواقع لبنان · وكالة رقمية بيروت | S | `/ar/` — body / meta | Arabic (B) | `/ar/` Arabic copy + meta |
+
+**Notes on the map**
+- **One primary per URL** keeps title/H1 focused — the home page owns 5 primaries only
+  because they're near-synonyms (web dev × beirut/lebanon × digital agency); treat #1–3 as
+  the home page's real title-tag battle and let #4–7 live in body/services/schema.
+- **Regional keywords ride the case pages**, not the home page — Bayader (KSA) and Ana Arabia
+  (Riyadh Season, bilingual) are the genuine GCC proof, so they're the ranking surface for
+  #8–10 rather than stuffing "saudi arabia" onto a Beirut home page.
+- **Software is a distinct positioning**, not a synonym for web development — you build custom
+  web apps (Agri Pro) and partner a SaaS product (Zeevora). "Software company" is also a strong
+  **GBP primary/secondary category** candidate (§7), so #14–16 reinforce the map pack, not just organic.
+- **Gaps closed ([code], ✅ applied 2026-07-11 — EN + AR + /ar/):**
+  - #7 ✅ — added an "ecommerce" deliverable chip to the web-dev services panel (home + `/ar/`).
+  - #11 ✅ — Agri Pro hero now reads "custom operations platform" (eyebrow) + "custom, role-based
+    operations platform" (lede), putting "custom" in the H1-adjacent first lines.
+  - #14 ✅ — web-dev panel detail now names "custom software" ("…websites, web apps, and custom
+    software engineered to scale…") on the home page and `/ar/`; "software" is no longer 0× on home.
+- **GSC tracking:** add each phrase to a saved GSC filter / a tracking sheet; re-rank monthly (§10).
+
+- [x] **P1 [you+code]** — ✅ Keyword shortlist locked (18) and mapped keyword → page above.
+  **[you]:** add these 18 to your GSC/position-tracking sheet and capture baselines (§10).
 
 ---
 
