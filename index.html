@@ -1593,6 +1593,7 @@
     gap: 14px;
   }
   .cs-cta p { color: var(--muted); font-size: 15px; }
+  .cs-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
   .cs-block .h {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
@@ -2478,7 +2479,10 @@
         </div>
         <div class="cs-cta">
           <p data-en="want results like these? let's talk about your project." data-ar="تريد نتائج كهذه؟ لنتحدث عن مشروعك.">want results like these? let's talk about your project.</p>
-          <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <div class="cs-cta-actions">
+            <a id="modalMore" class="btn btn-ghost"><span data-en="more details" data-ar="مزيد من التفاصيل">more details</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
         </div>
       </div>
     </div>
@@ -3141,6 +3145,13 @@
   // ── modal ──
   const modal = document.getElementById('modal');
   const modalClose = document.getElementById('modalClose');
+  // maps a case key to its full case-study page
+  const CASE_PATHS = {
+    agripro: '/cases/agripro/',
+    spotlight: '/cases/lbspotlight/',
+    ana: '/cases/ana-arabia/',
+    bayader: '/cases/bayader/'
+  };
   let lastFocus = null;
   let modalSlider = null;
   let currentCase = null;
@@ -3187,6 +3198,10 @@
     const url = document.getElementById('modalUrl');
     if (c.url) { url.textContent = c.url; url.href = c.href; url.hidden = false; }
     else { url.textContent = ''; url.removeAttribute('href'); url.hidden = true; }
+    const more = document.getElementById('modalMore');
+    const morePath = CASE_PATHS[key];
+    if (morePath) { more.href = morePath; more.hidden = false; }
+    else { more.removeAttribute('href'); more.hidden = true; }
     document.getElementById('modalChallenge').textContent = c.challenge[L];
     document.getElementById('modalSolution').textContent = c.solution[L];
     document.getElementById('modalChips').innerHTML =
