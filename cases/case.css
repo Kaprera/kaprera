@@ -43,7 +43,9 @@ a{color:inherit}
 .crumb .sep{opacity:.5; margin:0 .45em}
 
 /* ── hero ── */
-.hero{padding:64px 0 8px}
+/* only set vertical padding — the .wrap class supplies horizontal padding;
+   a shorthand here would override it and zero the side gutters on mobile. */
+.hero{padding-top:64px; padding-bottom:8px}
 .eyebrow{font-family:var(--mono); font-size:13px; letter-spacing:.06em; color:var(--blue-ink); text-transform:lowercase; display:inline-flex; gap:.5em; align-items:center}
 .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--blue)}
 h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; font-weight:800; margin:.35em 0 .2em}
