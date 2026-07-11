@@ -82,9 +82,10 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# The case shots above get new filenames when they change, so immutable is
-# safe — but the case-study *pages* and shared stylesheet are edited in place.
-# Override them back to revalidate so updates aren't stuck for a year.
+# The case shots get new filenames when they change, so immutable is safe —
+# but the case-study *pages* and shared stylesheet are edited in place. Netlify
+# applies the LAST matching rule, so: revalidate everything under /cases/ first,
+# then re-pin the immutable image extensions after it (images win, pages don't).
 [[headers]]
   for = "/cases/*/"
   [headers.values]
@@ -94,6 +95,21 @@
   for = "/cases/case.css"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/cases/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/cases/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/cases/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 # ── indexing ─────────────────────────────────────────────────────────
 # Belt-and-suspenders: the maintenance page already carries a noindex meta,
