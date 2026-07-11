@@ -54,7 +54,8 @@ impossible** in the current setup: Arabic search terms have nothing to rank.
 **➡️ Action P0 [you]:** Decide A or B. The runbook below assumes **A now, B as a fast-follow**.
 Tasks that only apply to B are marked **(B only)**.
 
-- [ ] **P0 [you]** — Confirm bilingual approach (A or B).
+- [x] **P0 [you]** — Bilingual approach confirmed: **B** — a real Arabic page at `/ar/` was built
+  and shipped (see §5). Arabic keywords can now rank.
 
 ---
 
@@ -150,8 +151,13 @@ plus giving case studies real SEO surface area.
 - [x] **P2 [code]** — **Internal linking.** ✅ Case pages now cross-link each other via a "more case
   studies" grid (descriptive anchors: name + type), plus back-links to `/#work`, `/#services`,
   `/#contact` — building a crawlable link mesh. Homepage → case links added via the CTA anchors (§5).
-- [ ] **P1 [code] (B only)** — Build `/ar/index.html` mirroring the homepage in Arabic with
-  `lang="ar" dir="rtl"`, translated title/description/schema, reciprocal `hreflang`, own canonical.
+- [x] **P1 [code] (B — done)** — ✅ Built `/ar/index.html`: full Arabic mirror of the homepage with
+  `lang="ar" dir="rtl"`, all 126 bilingual strings + placeholders rendered in Arabic server-side,
+  Arabic `<title>`/description/OG/keywords, Arabic `ProfessionalService` description + `FAQPage`
+  schema, own canonical (`/ar/`), and reciprocal `hreflang` (en ↔ ar ↔ x-default) on **both** pages
+  + in `sitemap.xml`. Relative asset paths absolutized so they resolve from `/ar/`; the language
+  toggle navigates between `/` and `/ar/`; Cairo font eager-loaded (preconnect + head stylesheet)
+  to kill the FOUT shift. Lighthouse desktop **97 / 100 / 100 / 100**, LCP 1.0s, CLS 0.023.
 
 ---
 

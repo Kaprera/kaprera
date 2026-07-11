@@ -108,6 +108,7 @@ footer nav a:hover{color:var(--blue-ink)}
 footer .cc{font-size:13px; color:var(--muted); width:100%}
 
 @media (max-width:720px){
+  .wrap{padding:0 22px}
   .two{grid-template-columns:1fr; gap:22px}
   .stats{grid-template-columns:1fr}
   dl.specs{grid-template-columns:1fr}
