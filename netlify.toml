@@ -81,3 +81,24 @@
   for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# The case shots above get new filenames when they change, so immutable is
+# safe — but the case-study *pages* and shared stylesheet are edited in place.
+# Override them back to revalidate so updates aren't stuck for a year.
+[[headers]]
+  for = "/cases/*/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/cases/case.css"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ── indexing ─────────────────────────────────────────────────────────
+# Belt-and-suspenders: the maintenance page already carries a noindex meta,
+# add the header too so it can never be indexed even if linked or crawled.
+[[headers]]
+  for = "/maintenance"
+  [headers.values]
+    X-Robots-Tag = "noindex"

@@ -98,14 +98,13 @@ sitemap present, rich JSON-LD). Gaps and hardening below.
 - [x] **P0 [code]** — **Social share image.** ✅ Built a 2400×1260 (2:1) on-brand card at
   `branding/og-cover.png`; repointed `og:image` + `twitter:image` and updated width/height + alt.
   _(Was the 1563×1563 square logo.)_
-- [ ] **P1 [code]** — **Per-page titles & descriptions are thin.** `careers.html`,
-  `privacy-policy.html` use bare `"careers — kaprera"` style titles. Fine for non-SEO pages, but
-  ensure every indexable page has a unique, keyword-aware `<title>` (≤60 chars) and
-  `meta description` (≤155 chars). _(Homepage title is already strong.)_
-- [ ] **P1 [code]** — **Sitemap freshness & coverage.** `sitemap.xml` lists `/`, `/zeevora/`,
-  `/careers`, `/privacy-policy`. Confirm `maintenance` stays excluded, keep `lastmod` accurate on
-  every deploy, and add `/ar/` **(B only)**. Consider giving each case study a crawlable URL
-  (see §5) and listing them.
+- [x] **P1 [code]** — **Per-page titles & descriptions.** ✅ Audited all indexable pages —
+  `privacy-policy`, `zeevora`, and the case pages already had unique, descriptive titles +
+  descriptions; `404`/`maintenance` are correctly `noindex`. Improved the bare `careers` title →
+  "careers — join kaprera, a digital agency in beirut" (+ og:title).
+- [x] **P1 [code]** — **Sitemap freshness & coverage.** ✅ `maintenance`/`404` excluded; homepage
+  `lastmod` bumped; all 4 case-study URLs added with image entries (§5). `/ar/` still pending the
+  §2 decision. **[you]:** resubmit `sitemap.xml` in GSC so the new URLs are discovered.
 - [x] **P1 [code]** — **Image SEO.** ✅ Case mockups already ship responsive `<picture>` (480/800/
   1600 WebP + JPG fallback), keyword+brand `alt`, explicit `width`/`height`, and `loading="lazy"`.
   Added dimensions/`loading` to the testimonial avatars and modal slide images that were missing
@@ -115,11 +114,14 @@ sitemap present, rich JSON-LD). Gaps and hardening below.
   heading-order issue on the new pages). **Mobile home: perf 95, LCP 2.9s, CLS 0, TBT 0.**
   **⚠️ watch-item:** mobile LCP 2.9s is just over the 2.5s "good" bar (likely the hero preloader
   animation) — worth revisiting; monitor real CrUX field data in GSC before optimizing further.
-- [ ] **P2 [code]** — **Robots hygiene.** `robots.txt` is `Allow: /` + sitemap — good. Make sure
-  `maintenance.html` / `404.html` aren't indexable (they shouldn't be linked/sitemapped; add
-  `X-Robots-Tag: noindex` via `netlify.toml` headers for `maintenance` if it's ever linked).
-- [ ] **P2 [code]** — **Canonical audit.** Every page already self-canonicalizes; re-verify after
-  any URL change so the cached-301 clean-URL scheme (`*.html → clean`) stays intact.
+- [x] **P2 [code]** — **Robots hygiene.** ✅ `404`/`maintenance` carry `noindex` metas and aren't
+  sitemapped; added a belt-and-suspenders `X-Robots-Tag: noindex` header for `/maintenance` in
+  `netlify.toml`. **Also fixed a caching bug:** the `/cases/*` immutable 1-year rule now applied to
+  the new case *pages* + `case.css` (would freeze them for a year) — scoped those back to
+  `must-revalidate`; only the image assets stay immutable.
+- [x] **P2 [code]** — **Canonical audit.** ✅ Verified all 8 indexable pages self-canonicalize
+  correctly (home, careers, privacy-policy, zeevora, 4 case pages); clean-URL `*.html → clean`
+  scheme intact.
 - [ ] **P0 [you]** — **Verify GSC coverage.** In Search Console: submit `sitemap.xml`, check
   Pages report for "Crawled – not indexed" / exclusions, and request indexing for the homepage.
 
@@ -141,12 +143,13 @@ plus giving case studies real SEO surface area.
   tags, and `BreadcrumbList` + `CreativeWork` JSON-LD. The homepage "view case study" CTAs are now
   real `<a href="/cases/…/">` links (JS still opens the modal; middle/⌘-click and no-JS get the full
   page), and all four are in `sitemap.xml`. Lighthouse 100 across the board.
-- [ ] **P1 [code]** — **Services depth.** Expand the services section copy so "web development"
-  and "ui/ux design" each read as a mini service page with concrete deliverables, stack, and
-  outcomes — enough text for Google to understand intent. Add the "industries we serve" line as
-  crawlable text.
-- [ ] **P2 [code]** — **Internal linking.** Link hero/services → relevant case studies with
-  descriptive anchor text ("see our beirut web development work"), not "learn more."
+- [x] **P1 [code]** — **Services depth.** ✅ Each service already reads as a mini panel (statement +
+  detail paragraph + deliverable chips), and "industries we serve" is crawlable text. Enriched the
+  priority **web development** copy with stack (Next.js/Nuxt), "web apps," and Core Web Vitals for
+  more topical depth (EN + AR).
+- [x] **P2 [code]** — **Internal linking.** ✅ Case pages now cross-link each other via a "more case
+  studies" grid (descriptive anchors: name + type), plus back-links to `/#work`, `/#services`,
+  `/#contact` — building a crawlable link mesh. Homepage → case links added via the CTA anchors (§5).
 - [ ] **P1 [code] (B only)** — Build `/ar/index.html` mirroring the homepage in Arabic with
   `lang="ar" dir="rtl"`, translated title/description/schema, reciprocal `hreflang`, own canonical.
 
@@ -171,7 +174,10 @@ You already emit `ProfessionalService`, `Organization`, `WebSite`, `Service`, `O
 - [x] **P1 [code]** — **`BreadcrumbList`** ✅ on all four case-study pages (Home › Work › Case).
 - [x] **P2 [code]** — ✅ `areaServed` widened from `"LB"` to Lebanon + Saudi Arabia + UAE (Country
   objects). Still confirm NAP (name/address/phone) in schema **exactly** matches the GBP listing (§7).
-- [ ] **P2 [code]** — Validate everything in Google's Rich Results Test after each change.
+- [x] **P2 [code]** — Schema validated. ✅ All **14 JSON-LD blocks** site-wide parse cleanly
+  (home: ProfessionalService, WebSite, ItemList, FAQPage · each case: BreadcrumbList + CreativeWork
+  · zeevora: SoftwareApplication + BreadcrumbList). **[you]:** run Google's live Rich Results Test
+  on the deployed URLs after this ships for the final eligibility check.
 
 ---
 
