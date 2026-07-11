@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Work — case studies &amp; portfolio | kaprera</title>
+<meta name="description" content="Selected work from kaprera — case studies across custom web apps, operations platforms, corporate websites, and event landing pages. A digital agency in Beirut, Lebanon." />
+<link rel="canonical" href="https://kaprera.com/work/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#008cc1" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-32.png" />
+<link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="kaprera" />
+<meta property="og:title" content="Work — case studies &amp; portfolio | kaprera" />
+<meta property="og:description" content="Selected work from kaprera — case studies across custom web apps, operations platforms, corporate websites, and event landing pages." />
+<meta property="og:url" content="https://kaprera.com/work/" />
+<meta property="og:image" content="https://kaprera.com/branding/og-cover.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Work — case studies &amp; portfolio | kaprera" />
+<meta name="twitter:description" content="Selected work from kaprera — case studies across custom web apps, operations platforms, corporate websites, and event landing pages." />
+<meta name="twitter:image" content="https://kaprera.com/branding/og-cover.png" />
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="/cases/case.css" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kaprera.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Work", "item": "https://kaprera.com/work/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "kaprera — selected work",
+  "url": "https://kaprera.com/work/",
+  "inLanguage": "en",
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "kaprera case studies",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "CreativeWork",
+          "name": "Bayader Investments",
+          "url": "https://kaprera.com/cases/bayader/",
+          "image": "https://kaprera.com/cases/bayader/image.jpg",
+          "creator": { "@type": "Organization", "name": "kaprera" },
+          "about": "Responsive, high-performance corporate website — UI/UX and web development."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "CreativeWork",
+          "name": "Lebanese Spotlight",
+          "url": "https://kaprera.com/cases/lbspotlight/",
+          "image": "https://kaprera.com/cases/lbspotlight/image.jpg",
+          "creator": { "@type": "Organization", "name": "kaprera" },
+          "about": "Volunteer management platform — UI/UX and backend workflow tools."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "CreativeWork",
+          "name": "Ana Arabia",
+          "url": "https://kaprera.com/cases/ana-arabia/",
+          "image": "https://kaprera.com/cases/ana-arabia/image.jpg",
+          "creator": { "@type": "Organization", "name": "kaprera" },
+          "about": "Bilingual event landing page for Riyadh Season."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "CreativeWork",
+          "name": "Agri Pro Services",
+          "url": "https://kaprera.com/cases/agripro/",
+          "image": "https://kaprera.com/cases/agripro/image.jpg",
+          "creator": { "@type": "Organization", "name": "kaprera" },
+          "about": "Custom operations platform for pest control services — UI/UX and full-stack web app."
+        }
+      }
+    ]
+  }
+}
+</script>
+
+<style>
+  /* ── work index · portfolio grid ── */
+  .grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:26px;
+    padding:20px 0 8px;
+  }
+  .work-item{
+    display:flex; flex-direction:column;
+    text-decoration:none; color:var(--ink);
+    border:1px solid var(--hair); border-radius:18px; overflow:hidden;
+    background:var(--panel);
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .work-item:hover{
+    transform:translateY(-3px); border-color:var(--blue);
+    box-shadow:0 12px 32px -18px rgba(0,140,193,.5);
+  }
+  .work-item .thumb{
+    aspect-ratio:1600/941; background:var(--bg);
+    border-bottom:1px solid var(--hair); overflow:hidden;
+  }
+  .work-item .thumb img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .35s ease;
+  }
+  .work-item:hover .thumb img{ transform:scale(1.03); }
+  .work-item .body{ padding:22px 22px 24px; display:flex; flex-direction:column; gap:10px; }
+  .work-item .kind{
+    font-family:var(--mono); font-size:12px; letter-spacing:.05em;
+    color:var(--blue-ink); text-transform:lowercase;
+    display:inline-flex; align-items:center; gap:.5em;
+  }
+  .work-item .kind .dot{ width:7px; height:7px; border-radius:50%; background:var(--blue); }
+  .work-item h2{ font-size:clamp(21px,2.6vw,26px); margin:0; letter-spacing:-.01em; }
+  .work-item .blurb{ margin:0; color:var(--muted); font-size:15.5px; line-height:1.55; }
+  .work-item .chips{ margin:6px 0 0; }
+  .work-item .go{
+    margin-top:6px; font-family:var(--mono); font-size:13px; font-weight:600;
+    color:var(--blue-ink); display:inline-flex; align-items:center; gap:.5em;
+  }
+  .work-item .go svg{ width:15px; height:15px; transition:transform .18s ease; }
+  .work-item:hover .go svg{ transform:translateX(3px); }
+
+  @media (max-width:720px){
+    .grid{ grid-template-columns:1fr; gap:20px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .work-item, .work-item .thumb img, .work-item .go svg{ transition:none; }
+    .work-item:hover{ transform:none; }
+    .work-item:hover .thumb img{ transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="mk">&gt;_</span>kaprera</a>
+    <nav class="crumb"><a href="/">home</a><span class="sep">/</span>work</nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <span class="eyebrow"><span class="dot"></span> selected work</span>
+    <h1>Case studies.</h1>
+    <p class="lede">A look at what we design and build — custom web apps, operations platforms, corporate websites, and event landing pages. Picked for the problems behind them, not just the pixels.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener">start a project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn btn-ghost" href="/#services">see services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="blk">
+      <div class="grid">
+
+        <a class="work-item" href="/cases/bayader/">
+          <div class="thumb">
+            <picture>
+              <source srcset="/cases/bayader/image-480.webp 480w, /cases/bayader/image-800.webp 800w, /cases/bayader/image.webp 1600w" sizes="(max-width: 720px) 92vw, 510px" type="image/webp" />
+              <img src="/cases/bayader/image.jpg" width="1600" height="941" alt="Bayader Investments corporate website designed and built by kaprera" loading="lazy" decoding="async" />
+            </picture>
+          </div>
+          <div class="body">
+            <span class="kind"><span class="dot"></span> corporate website</span>
+            <h2>Bayader Investments</h2>
+            <p class="blurb">A responsive, high-performance corporate website — image-led, fast, and easy to manage.</p>
+            <div class="chips"><span class="chip">ui/ux</span><span class="chip">web development</span></div>
+            <span class="go">read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+        </a>
+
+        <a class="work-item" href="/cases/lbspotlight/">
+          <div class="thumb">
+            <picture>
+              <source srcset="/cases/lbspotlight/image-480.webp 480w, /cases/lbspotlight/image-800.webp 800w, /cases/lbspotlight/image.webp 1600w" sizes="(max-width: 720px) 92vw, 510px" type="image/webp" />
+              <img src="/cases/lbspotlight/image.jpg" width="1600" height="941" alt="Lebanese Spotlight volunteer management platform designed and built by kaprera" loading="lazy" decoding="async" />
+            </picture>
+          </div>
+          <div class="body">
+            <span class="kind"><span class="dot"></span> NGO platform</span>
+            <h2>Lebanese Spotlight</h2>
+            <p class="blurb">A full UI/UX with integrated backend workflow tools for volunteer onboarding and program management.</p>
+            <div class="chips"><span class="chip">ui/ux</span><span class="chip">web app</span></div>
+            <span class="go">read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+        </a>
+
+        <a class="work-item" href="/cases/ana-arabia/">
+          <div class="thumb">
+            <picture>
+              <source srcset="/cases/ana-arabia/image-480.webp 480w, /cases/ana-arabia/image-800.webp 800w, /cases/ana-arabia/image.webp 1600w" sizes="(max-width: 720px) 92vw, 510px" type="image/webp" />
+              <img src="/cases/ana-arabia/image.jpg" width="1600" height="941" alt="Ana Arabia bilingual event landing page designed and built by kaprera" loading="lazy" decoding="async" />
+            </picture>
+          </div>
+          <div class="body">
+            <span class="kind"><span class="dot"></span> event landing page</span>
+            <h2>Ana Arabia</h2>
+            <p class="blurb">A fast, responsive landing page with a cinematic hero and seamless RTL/LTR support for Riyadh Season.</p>
+            <div class="chips"><span class="chip">ui/ux</span><span class="chip">web development</span></div>
+            <span class="go">read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+        </a>
+
+        <a class="work-item" href="/cases/agripro/">
+          <div class="thumb">
+            <picture>
+              <source srcset="/cases/agripro/image-480.webp 480w, /cases/agripro/image-800.webp 800w, /cases/agripro/image.webp 1600w" sizes="(max-width: 720px) 92vw, 510px" type="image/webp" />
+              <img src="/cases/agripro/image.jpg" width="1600" height="941" alt="Agri Pro Services custom operations platform designed and built by kaprera" loading="lazy" decoding="async" />
+            </picture>
+          </div>
+          <div class="body">
+            <span class="kind"><span class="dot"></span> custom operations platform</span>
+            <h2>Agri Pro Services</h2>
+            <p class="blurb">A custom, role-based operations platform — live dashboard, client and deal pipelines, and field reporting.</p>
+            <div class="chips"><span class="chip">ui/ux</span><span class="chip">web app</span></div>
+            <span class="go">read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="cta">
+      <span class="label">/ let's build something</span>
+      <h2>want results like these?</h2>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener">book a call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="btn btn-ghost" href="/#contact">contact us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="fbrand"><span class="mk">&gt;_</span> kaprera</span>
+    <nav>
+      <a href="/">home</a>
+      <a href="/work/">work</a>
+      <a href="/#services">services</a>
+      <a href="/#contact">contact</a>
+    </nav>
+    <span class="cc">© 2026 kaprera — digital agency in beirut, lebanon. all rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
