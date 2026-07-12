@@ -73,6 +73,11 @@ html[data-theme="dark"] .theme-toggle .seg.moon,
 html:not([lang="ar"]) .lang-toggle .seg.en,
 html[lang="ar"] .lang-toggle .seg.ar{background:var(--blue); color:#fff}
 
+/* compact nav CTA (sits beside the toggles) */
+.nav-cta{padding:9px 15px; font-size:14px; border-radius:10px; gap:6px}
+.nav-cta svg{width:15px; height:15px}
+.nav-cta .cta-cal{display:none}
+
 /* ── hero ── */
 /* only set vertical padding — the .wrap class supplies horizontal padding;
    a shorthand here would override it and zero the side gutters on mobile. */
@@ -170,9 +175,24 @@ html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
 
 @media (max-width:720px){
   .crumb{padding-top:22px}
+  .nav .wrap{gap:10px}
+  .nav-utils{gap:6px}
+  .nav-cta{padding:8px 12px; font-size:13px}
   .wrap{padding:0 30px}
   .two{grid-template-columns:1fr; gap:22px}
   .stats{grid-template-columns:1fr}
   dl.specs{grid-template-columns:1fr}
   .more{grid-template-columns:1fr}
+}
+
+/* small phones: collapse the nav CTA to an icon-only button so the bar fits */
+@media (max-width:480px){
+  .nav .wrap{padding-left:18px; padding-right:18px}
+  .nav-cta{padding:9px; border-radius:50%}
+  .nav-cta .cta-txt, .nav-cta .cta-arrow{display:none}
+  .nav-cta .cta-cal{display:block}
+  .brand-logo{height:22px}
+  .theme-toggle, .lang-toggle{height:34px; padding:3px}
+  .theme-toggle .seg, .lang-toggle .seg{width:26px; height:26px}
+  .lang-toggle .seg{min-width:26px; padding:0 5px}
 }
