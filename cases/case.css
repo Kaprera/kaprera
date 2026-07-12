@@ -44,11 +44,13 @@ a{color:inherit}
   background:url('/branding/logos/kaprera-wordmark-dark.webp') center / contain no-repeat;
 }
 html[data-theme="dark"] .brand-logo{ background-image:url('/branding/logos/kaprera-wordmark-light.webp'); }
-.crumb{font-family:var(--mono); font-size:13px; color:var(--muted); text-decoration:none; overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
+.nav-utils{display:flex; align-items:center; gap:8px; flex-shrink:0; margin-inline-start:auto}
+
+/* breadcrumb — its own row just under the nav, not crammed beside the logo */
+.crumb{font-family:var(--mono); font-size:13px; color:var(--muted); text-decoration:none; padding-top:26px}
 .crumb a{color:var(--muted); text-decoration:none}
 .crumb a:hover{color:var(--blue-ink)}
 .crumb .sep{opacity:.5; margin:0 .45em}
-.nav-utils{display:flex; align-items:center; gap:8px; flex-shrink:0; margin-inline-start:auto}
 
 /* ── segmented theme / language switches (mirror the home page) ── */
 .theme-toggle,.lang-toggle{
@@ -74,7 +76,7 @@ html[lang="ar"] .lang-toggle .seg.ar{background:var(--blue); color:#fff}
 /* ── hero ── */
 /* only set vertical padding — the .wrap class supplies horizontal padding;
    a shorthand here would override it and zero the side gutters on mobile. */
-.hero{padding-top:64px; padding-bottom:8px}
+.hero{padding-top:32px; padding-bottom:8px}
 .eyebrow{font-family:var(--mono); font-size:13px; letter-spacing:.06em; color:var(--blue-ink); text-transform:lowercase; display:inline-flex; gap:.5em; align-items:center}
 .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--blue)}
 h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; font-weight:800; margin:.35em 0 .2em}
@@ -167,7 +169,7 @@ html[lang="ar"] .btn:hover svg{transform:scaleX(-1)}
 html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
 
 @media (max-width:720px){
-  .crumb{display:none}
+  .crumb{padding-top:22px}
   .wrap{padding:0 30px}
   .two{grid-template-columns:1fr; gap:22px}
   .stats{grid-template-columns:1fr}
