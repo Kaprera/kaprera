@@ -29,22 +29,65 @@ img{max-width:100%; height:auto; display:block}
 a{color:inherit}
 .wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
 
-/* ── nav ── */
+/* ── nav (duplicated from the landing page) ── */
 .nav{
-  position:sticky; top:0; z-index:10;
-  background:color-mix(in srgb,var(--bg) 82%,transparent);
-  backdrop-filter:saturate(150%) blur(10px);
-  border-bottom:1px solid var(--hair);
+  position:sticky; top:0; z-index:60;
+  border-bottom:1px solid transparent;
+  transition:border-color .3s, box-shadow .3s;
 }
-.nav .wrap{display:flex; align-items:center; gap:18px; height:64px}
-.brand{display:inline-flex; align-items:center; text-decoration:none; flex-shrink:0}
+/* background + blur live on a pseudo-element so the header itself doesn't
+   become a containing block for the fixed mobile-nav overlay */
+.nav::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:color-mix(in srgb,var(--bg) 72%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  transition:background-color .3s var(--ease);
+}
+.nav.scrolled{ border-bottom-color:var(--hair); box-shadow:0 4px 24px rgba(0,0,0,0.04); }
+.nav-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  height:78px; transition:height .3s var(--ease);
+}
+.nav.scrolled .nav-inner{ height:64px; }
+.brand{display:inline-flex; align-items:baseline; gap:6px; text-decoration:none; flex-shrink:0}
 /* horizontal wordmark (transparent webp, swapped per theme) */
 .brand-logo{
-  display:block; height:26px; aspect-ratio:640/140;
+  display:block; height:30px; aspect-ratio:640/140;
   background:url('/branding/logos/kaprera-wordmark-dark.webp') center / contain no-repeat;
+  transition:height .3s var(--ease);
 }
 html[data-theme="dark"] .brand-logo{ background-image:url('/branding/logos/kaprera-wordmark-light.webp'); }
-.nav-utils{display:flex; align-items:center; gap:8px; flex-shrink:0; margin-inline-start:auto}
+.nav.scrolled .brand-logo{ height:26px; }
+
+/* desktop: links sit straight in the bar (panel + utils are display:contents) */
+.nav-links{ display:flex; align-items:center; gap:34px; }
+.nav-panel{ display:contents; }
+.nav-utils{ display:contents; }
+.nav-links a.link{
+  font-size:15px; color:var(--ink); text-decoration:none;
+  position:relative; transition:color .2s;
+}
+.nav-links a.link::after{
+  content:""; position:absolute; left:0; bottom:-6px; width:0; height:2px;
+  background:var(--blue); transition:width .25s var(--ease);
+}
+.nav-links a.link:hover{ color:var(--blue); }
+.nav-links a.link:hover::after{ width:100%; }
+
+/* hamburger — mobile only */
+.menu-btn{
+  display:none; flex-direction:column; gap:5px;
+  background:none; border:none; cursor:pointer; padding:8px;
+}
+.menu-btn span{
+  width:24px; height:2px; background:var(--ink);
+  transition:transform .3s var(--ease), opacity .2s;
+}
+.menu-btn.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.menu-btn.open span:nth-child(2){ opacity:0; }
+.menu-btn.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+body.no-scroll{ overflow:hidden; }
 
 /* breadcrumb — its own row just under the nav, not crammed beside the logo */
 .crumb{font-family:var(--mono); font-size:13px; color:var(--muted); text-decoration:none; padding-top:26px}
@@ -188,11 +231,35 @@ html[lang="ar"] .work-item .go svg{transform:scaleX(-1)}
 html[lang="ar"] .btn:hover svg{transform:scaleX(-1)}
 html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
 
+/* ── mobile nav: hamburger + centered card (mirrors the landing) ── */
+@media (max-width:860px){
+  .menu-btn{ display:flex; position:relative; z-index:101; }
+  .menu-btn.open span{ background:#fff; }   /* X stays visible over the dark scrim */
+  /* nav-links becomes a dimmed backdrop holding a centered card */
+  .nav-links{
+    position:fixed; inset:0; z-index:100;
+    display:flex; align-items:center; justify-content:center; gap:0; padding:24px;
+    background:rgba(10,10,10,0.55);
+    backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+    opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+  }
+  .nav-links.open{ opacity:1; pointer-events:auto; }
+  .nav-panel{
+    display:flex; flex-direction:column; align-items:stretch; gap:0;
+    width:100%; max-width:340px; max-height:86vh; overflow-y:auto;
+    background:var(--bg); border-radius:20px; padding:14px 22px 24px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.35);
+    transform:translateY(24px) scale(0.98); transition:transform .35s var(--ease);
+  }
+  .nav-links.open .nav-panel{ transform:translateY(0) scale(1); }
+  .nav-panel a.link{ font-size:18px; font-weight:500; padding:16px 2px; border-bottom:1px solid var(--hair); }
+  .nav-panel a.link:last-of-type{ border-bottom:0; }
+  .nav-utils{ display:flex; gap:10px; margin-top:20px; }
+  .nav-panel .nav-cta{ width:100%; margin-top:14px; }
+}
+
 @media (max-width:720px){
   .crumb{padding-top:22px}
-  .nav .wrap{gap:10px}
-  .nav-utils{gap:6px}
-  .nav-cta{padding:8px 12px; font-size:13px}
   .wrap{padding:0 30px}
   .two{grid-template-columns:1fr; gap:22px}
   .stats{grid-template-columns:1fr}
@@ -200,20 +267,9 @@ html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
   .more{grid-template-columns:1fr}
 }
 
-/* small phones: collapse the nav CTA to an icon-only button so the bar fits */
 @media (max-width:480px){
-  .nav-cta{padding:9px; border-radius:50%}
-  .nav-cta .cta-txt, .nav-cta .cta-arrow{display:none}
-  .nav-cta .cta-cal{display:block}
   .brand-logo{height:22px}
-  .theme-toggle, .lang-toggle{height:34px; padding:3px}
-  .theme-toggle .seg, .lang-toggle .seg{width:26px; height:26px}
-  .lang-toggle .seg{min-width:26px; padding:0 5px}
-  .nav-utils{gap:5px}
 }
 @media (max-width:360px){
   .brand-logo{height:20px}
-  .theme-toggle, .lang-toggle{height:32px}
-  .theme-toggle .seg, .lang-toggle .seg{width:23px; height:23px}
-  .lang-toggle .seg{min-width:23px; padding:0 4px}
 }

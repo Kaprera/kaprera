@@ -174,9 +174,16 @@
 <body>
 
 <header class="nav">
-  <div class="wrap">
+  <div class="wrap nav-inner">
     <a class="brand" href="/" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
-    <div class="nav-utils">
+
+    <nav class="nav-links" id="navLinks" aria-label="primary">
+      <div class="nav-panel" role="document">
+      <a href="/work/" class="link" data-en="Work" data-ar="أعمالنا">Work</a>
+      <a href="/#services" class="link" data-en="Services" data-ar="خدماتنا">Services</a>
+      <a href="/#testimonials" class="link" data-en="Testimonials" data-ar="آراء العملاء">Testimonials</a>
+      <a href="/#contact" class="link" data-en="Contact" data-ar="تواصل">Contact</a>
+      <div class="nav-utils">
       <button class="lang-toggle" id="langToggle" type="button" role="switch" aria-checked="false" aria-label="switch language EN / ع">
         <span class="seg en" aria-hidden="true">EN</span>
         <span class="seg ar" aria-hidden="true">ع</span>
@@ -185,8 +192,14 @@
         <span class="seg sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
         <span class="seg moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
       </button>
+      </div>
       <a class="btn btn-shine nav-cta" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" aria-label="book a call"><svg class="cta-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="cta-txt" data-en="Book a call" data-ar="احجز مكالمة">Book a call</span> <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-    </div>
+      </div>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
