@@ -122,9 +122,13 @@
 
 <style>
   /* ── work index · portfolio grid ── */
+  /* even breathing room around the divider between the intro and the grid
+     (the hero buttons were nearly touching the line) */
+  .hero{ padding-bottom:28px; }
+  section.blk{ padding-top:34px; }
   .grid{
     display:grid; grid-template-columns:repeat(2,1fr); gap:26px;
-    padding:20px 0 8px;
+    padding:4px 0 8px;
   }
   .work-item{
     display:flex; flex-direction:column;
@@ -198,12 +202,12 @@
 
 <main>
   <section class="hero wrap">
-    <span class="eyebrow"><span class="dot"></span> <span data-en="selected work" data-ar="أعمالنا المختارة">selected work</span></span>
+    <span class="eyebrow"><span class="dot"></span> <span data-en="Selected work" data-ar="أعمالنا المختارة">Selected work</span></span>
     <h1 data-en="Case studies." data-ar="دراسات الحالة.">Case studies.</h1>
     <p class="lede" data-en="A look at what we design and build — custom web apps, operations platforms, corporate websites, and event landing pages. Picked for the problems behind them, not just the pixels." data-ar="نظرة على ما نصمّمه ونبنيه — تطبيقات ويب مخصّصة، ومنصات عمليات، ومواقع مؤسسية، وصفحات هبوط للفعاليات. مختارة لأجل المشكلات التي تحلّها، لا للمظهر وحده.">A look at what we design and build — custom web apps, operations platforms, corporate websites, and event landing pages. Picked for the problems behind them, not just the pixels.</p>
     <div class="actions">
-      <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener"><span data-en="start a project" data-ar="ابدأ مشروعاً">start a project</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      <a class="btn btn-ghost" href="/#services"><span data-en="see services" data-ar="استكشف خدماتنا">see services</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener"><span data-en="Start a project" data-ar="ابدأ مشروعاً">Start a project</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn btn-ghost" href="/#services"><span data-en="See services" data-ar="استكشف خدماتنا">See services</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
   </section>
 
@@ -219,11 +223,11 @@
             </picture>
           </div>
           <div class="body">
-            <span class="kind"><span class="dot"></span> <span data-en="corporate website" data-ar="موقع مؤسسي">corporate website</span></span>
+            <span class="kind"><span class="dot"></span> <span data-en="Corporate website" data-ar="موقع مؤسسي">Corporate website</span></span>
             <h2>Bayader Investments</h2>
             <p class="blurb" data-en="A responsive, high-performance corporate website — image-led, fast, and easy to manage." data-ar="موقع مؤسسي متجاوب وعالي الأداء — يعتمد على الصور، سريع، وسهل الإدارة.">A responsive, high-performance corporate website — image-led, fast, and easy to manage.</p>
             <div class="chips"><span class="chip" data-en="ui/ux" data-ar="تصميم واجهات">ui/ux</span><span class="chip" data-en="web development" data-ar="تطوير ويب">web development</span></div>
-            <span class="go"><span data-en="read case study" data-ar="اقرأ دراسة الحالة">read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
           </div>
         </a>
 
@@ -239,7 +243,7 @@
             <h2>Lebanese Spotlight</h2>
             <p class="blurb" data-en="A full UI/UX with integrated backend workflow tools for volunteer onboarding and program management." data-ar="تصميم واجهات متكامل مع أدوات سير عمل في الخلفية لضمّ المتطوعين وإدارة البرامج.">A full UI/UX with integrated backend workflow tools for volunteer onboarding and program management.</p>
             <div class="chips"><span class="chip" data-en="ui/ux" data-ar="تصميم واجهات">ui/ux</span><span class="chip" data-en="web app" data-ar="تطبيق ويب">web app</span></div>
-            <span class="go"><span data-en="read case study" data-ar="اقرأ دراسة الحالة">read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
           </div>
         </a>
 
@@ -251,11 +255,11 @@
             </picture>
           </div>
           <div class="body">
-            <span class="kind"><span class="dot"></span> <span data-en="event landing page" data-ar="صفحة هبوط لفعالية">event landing page</span></span>
+            <span class="kind"><span class="dot"></span> <span data-en="Event landing page" data-ar="صفحة هبوط لفعالية">Event landing page</span></span>
             <h2>Ana Arabia</h2>
             <p class="blurb" data-en="A fast, responsive landing page with a cinematic hero and seamless RTL/LTR support for Riyadh Season." data-ar="صفحة هبوط سريعة ومتجاوبة بواجهة سينمائية ودعم سلس للاتجاهين ضمن موسم الرياض.">A fast, responsive landing page with a cinematic hero and seamless RTL/LTR support for Riyadh Season.</p>
             <div class="chips"><span class="chip" data-en="ui/ux" data-ar="تصميم واجهات">ui/ux</span><span class="chip" data-en="web development" data-ar="تطوير ويب">web development</span></div>
-            <span class="go"><span data-en="read case study" data-ar="اقرأ دراسة الحالة">read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
           </div>
         </a>
 
@@ -267,11 +271,11 @@
             </picture>
           </div>
           <div class="body">
-            <span class="kind"><span class="dot"></span> <span data-en="custom operations platform" data-ar="منصة عمليات مخصّصة">custom operations platform</span></span>
+            <span class="kind"><span class="dot"></span> <span data-en="Custom operations platform" data-ar="منصة عمليات مخصّصة">Custom operations platform</span></span>
             <h2>Agri Pro Services</h2>
             <p class="blurb" data-en="A custom, role-based operations platform — live dashboard, client and deal pipelines, and field reporting." data-ar="منصة عمليات مخصّصة قائمة على الأدوار — لوحة تحكم حيّة، ومسارات للعملاء والصفقات، وتقارير ميدانية.">A custom, role-based operations platform — live dashboard, client and deal pipelines, and field reporting.</p>
             <div class="chips"><span class="chip" data-en="ui/ux" data-ar="تصميم واجهات">ui/ux</span><span class="chip" data-en="web app" data-ar="تطبيق ويب">web app</span></div>
-            <span class="go"><span data-en="read case study" data-ar="اقرأ دراسة الحالة">read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
           </div>
         </a>
 
@@ -279,11 +283,11 @@
     </section>
 
     <section class="cta">
-      <span class="label" data-en="/ let's build something" data-ar="/ لنبنِ شيئاً">/ let's build something</span>
-      <h2 data-en="want results like these?" data-ar="تريد نتائج كهذه؟">want results like these?</h2>
+      <span class="label" data-en="/ Let's build something" data-ar="/ لنبنِ شيئاً">/ Let's build something</span>
+      <h2 data-en="Want results like these?" data-ar="تريد نتائج كهذه؟">Want results like these?</h2>
       <div class="actions">
-        <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a class="btn btn-ghost" href="/#contact"><span data-en="contact us" data-ar="تواصل معنا">contact us</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="btn btn-ghost" href="/#contact"><span data-en="Contact us" data-ar="تواصل معنا">Contact us</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </section>
   </div>
