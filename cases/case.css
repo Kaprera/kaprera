@@ -7,13 +7,15 @@
   --muted:#5a5f66; --hair:#e6e6e6;
   --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   --mono:'JetBrains Mono','SF Mono',ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
   --wrap:1060px;
 }
-@media (prefers-color-scheme:dark){
-  :root{
-    --ink:#f2f3f4; --bg:#0a0b0c; --panel:#141618;
-    --muted:#9aa1a8; --hair:#23262a; --blue-ink:#4bb6df;
-  }
+/* Dark is driven by the html[data-theme] attribute (set pre-paint by the head
+   script from saved choice / system preference) — same mechanism as the home
+   page, so the toggle can flip it live without a media-query fighting it. */
+html[data-theme="dark"]{
+  --ink:#f2f3f4; --bg:#0a0b0c; --panel:#141618;
+  --muted:#9aa1a8; --hair:#23262a; --blue-ink:#4bb6df;
 }
 
 *{box-sizing:border-box}
@@ -34,13 +36,40 @@ a{color:inherit}
   backdrop-filter:saturate(150%) blur(10px);
   border-bottom:1px solid var(--hair);
 }
-.nav .wrap{display:flex; align-items:center; justify-content:space-between; height:60px}
-.brand{font-family:var(--mono); font-weight:700; text-decoration:none; letter-spacing:.02em}
-.brand .mk{color:var(--blue); margin-right:.4em}
-.crumb{font-family:var(--mono); font-size:13px; color:var(--muted); text-decoration:none}
+.nav .wrap{display:flex; align-items:center; gap:18px; height:64px}
+.brand{display:inline-flex; align-items:center; text-decoration:none; flex-shrink:0}
+/* horizontal wordmark (transparent webp, swapped per theme) */
+.brand-logo{
+  display:block; height:26px; aspect-ratio:640/140;
+  background:url('/branding/logos/kaprera-wordmark-dark.webp') center / contain no-repeat;
+}
+html[data-theme="dark"] .brand-logo{ background-image:url('/branding/logos/kaprera-wordmark-light.webp'); }
+.crumb{font-family:var(--mono); font-size:13px; color:var(--muted); text-decoration:none; overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
 .crumb a{color:var(--muted); text-decoration:none}
 .crumb a:hover{color:var(--blue-ink)}
 .crumb .sep{opacity:.5; margin:0 .45em}
+.nav-utils{display:flex; align-items:center; gap:8px; flex-shrink:0; margin-inline-start:auto}
+
+/* ── segmented theme / language switches (mirror the home page) ── */
+.theme-toggle,.lang-toggle{
+  display:inline-flex; align-items:center; gap:2px; height:38px; padding:4px;
+  border-radius:999px; border:1px solid var(--hair); background:transparent;
+  cursor:pointer; flex-shrink:0; font-family:var(--sans);
+  transition:border-color .25s, transform .25s var(--ease);
+}
+.theme-toggle:hover,.lang-toggle:hover{border-color:var(--blue); transform:translateY(-2px)}
+.theme-toggle .seg,.lang-toggle .seg{
+  display:flex; align-items:center; justify-content:center; width:28px; height:28px;
+  border-radius:50%; color:var(--muted); font-weight:600; font-size:13px;
+  transition:background-color .25s, color .25s;
+}
+.lang-toggle .seg{width:auto; min-width:28px; padding:0 6px}
+.lang-toggle .seg.ar{padding-bottom:3px}
+.theme-toggle svg{width:15px; height:15px}
+html:not([data-theme="dark"]) .theme-toggle .seg.sun,
+html[data-theme="dark"] .theme-toggle .seg.moon,
+html:not([lang="ar"]) .lang-toggle .seg.en,
+html[lang="ar"] .lang-toggle .seg.ar{background:var(--blue); color:#fff}
 
 /* ── hero ── */
 /* only set vertical padding — the .wrap class supplies horizontal padding;
@@ -99,17 +128,46 @@ dl.specs dd{margin:0; font-weight:600}
 .cta h2{margin-bottom:18px}
 .cta .actions{justify-content:center}
 
-/* ── footer ── */
-footer{border-top:1px solid var(--hair); padding:30px 0; margin-top:20px}
-footer .wrap{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between}
-footer .fbrand{font-family:var(--mono); font-weight:700}
-footer .fbrand .mk{color:var(--blue)}
-footer nav{display:flex; gap:18px}
-footer nav a{font-size:14px; color:var(--muted); text-decoration:none}
-footer nav a:hover{color:var(--blue-ink)}
-footer .cc{font-size:13px; color:var(--muted); width:100%}
+/* ── footer (mirrors the home page) ── */
+footer{border-top:1px solid var(--hair); padding:56px 0 40px; margin-top:20px; background:#f1f2f4}
+html[data-theme="dark"] footer{background:#0a0d12}
+.foot-top{display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px; margin-bottom:44px}
+.foot-top .brand{display:inline-flex}
+.foot-tag{color:var(--muted); margin:12px 0 0; max-width:320px}
+.foot-cols{display:flex; gap:64px; flex-wrap:wrap}
+.foot-col .fc-h{font-family:var(--mono); font-size:13px; color:var(--muted); font-weight:400; margin-bottom:14px; text-transform:lowercase}
+.foot-col a{display:block; font-size:15px; margin-bottom:10px; text-transform:lowercase; text-decoration:none; color:var(--ink); transition:color .2s}
+.foot-col a:hover{color:var(--blue)}
+.foot-col a.social-link{display:flex; align-items:center; gap:9px}
+.foot-col a.social-link svg{width:16px; height:16px; flex-shrink:0}
+.foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:26px; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; color:var(--muted)}
+.foot-bottom .accent{color:var(--blue)}
+
+/* ── arabic / rtl ── */
+html[lang="ar"] body{font-family:'Cairo',system-ui,-apple-system,sans-serif}
+html[lang="ar"] .crumb,
+html[lang="ar"] .eyebrow,
+html[lang="ar"] .chip,
+html[lang="ar"] .label,
+html[lang="ar"] .two-h,
+html[lang="ar"] figcaption,
+html[lang="ar"] dl.specs dt,
+html[lang="ar"] dl.specs dd,
+html[lang="ar"] .note,
+html[lang="ar"] .stat .small,
+html[lang="ar"] .more-type,
+html[lang="ar"] .work-item .kind,
+html[lang="ar"] .foot-col .fc-h,
+html[lang="ar"] .foot-bottom,
+html[lang="ar"] .lang-toggle{font-family:'Cairo',system-ui,sans-serif; letter-spacing:0}
+/* flip directional arrows for rtl */
+html[lang="ar"] .btn svg,
+html[lang="ar"] .work-item .go svg{transform:scaleX(-1)}
+html[lang="ar"] .btn:hover svg{transform:scaleX(-1)}
+html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
 
 @media (max-width:720px){
+  .crumb{display:none}
   .wrap{padding:0 30px}
   .two{grid-template-columns:1fr; gap:22px}
   .stats{grid-template-columns:1fr}

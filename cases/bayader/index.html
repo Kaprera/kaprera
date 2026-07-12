@@ -3,6 +3,25 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+  /* apply saved/system theme + language before paint (no flash) */
+  (function () {
+    var saved; try { saved = localStorage.getItem('theme'); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    var lang; try { lang = localStorage.getItem('lang'); } catch (e) {} lang = lang || 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    window.loadArabicFont = function () {
+      if (document.getElementById('cairoFont')) return;
+      var l = document.createElement('link');
+      l.id = 'cairoFont'; l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap';
+      document.head.appendChild(l);
+    };
+    if (lang === 'ar') window.loadArabicFont();
+  })();
+</script>
 <title>Bayader Investments — corporate website case study | kaprera</title>
 <meta name="description" content="Case study: kaprera designed and built a modern, high-performance corporate website for Bayader Investments (Saudi Arabia) — +55% faster load and +32% SEO visibility." />
 <link rel="canonical" href="https://kaprera.com/cases/bayader/" />
@@ -28,6 +47,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="/cases/case.css" />
+<script src="/cases/case.js" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -78,20 +98,30 @@
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="/"><span class="mk">&gt;_</span>kaprera</a>
-    <nav class="crumb"><a href="/">home</a><span class="sep">/</span><a href="/work/">work</a><span class="sep">/</span>bayader investments</nav>
+    <a class="brand" href="/" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
+    <nav class="crumb" aria-label="breadcrumb"><a href="/" data-en="home" data-ar="الرئيسية">home</a><span class="sep">/</span><a href="/work/" data-en="work" data-ar="أعمالنا">work</a><span class="sep">/</span>bayader investments</nav>
+    <div class="nav-utils">
+      <button class="lang-toggle" id="langToggle" type="button" role="switch" aria-checked="false" aria-label="switch language EN / ع">
+        <span class="seg en" aria-hidden="true">EN</span>
+        <span class="seg ar" aria-hidden="true">ع</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="toggle dark mode">
+        <span class="seg sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="seg moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+      </button>
+    </div>
   </div>
 </header>
 
 <main>
   <section class="hero wrap">
-    <span class="eyebrow"><span class="dot"></span> case study · corporate website</span>
+    <span class="eyebrow"><span class="dot"></span> <span data-en="case study · corporate website" data-ar="دراسة حالة · موقع مؤسسي">case study · corporate website</span></span>
     <h1>Bayader Investments</h1>
-    <p class="lede">We designed and built a responsive, high-performance corporate website — image-led, fast, and easy to manage.</p>
-    <div class="chips"><span class="chip">ui/ux</span><span class="chip">web development</span></div>
+    <p class="lede" data-en="We designed and built a responsive, high-performance corporate website — image-led, fast, and easy to manage." data-ar="صمّمنا وطوّرنا موقعاً مؤسسياً متجاوباً وعالي الأداء — يعتمد على الصور، سريع، وسهل الإدارة.">We designed and built a responsive, high-performance corporate website — image-led, fast, and easy to manage.</p>
+    <div class="chips"><span class="chip" data-en="ui/ux" data-ar="تصميم واجهات">ui/ux</span><span class="chip" data-en="web development" data-ar="تطوير ويب">web development</span></div>
     <div class="actions">
-      <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener">start a project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      <a class="btn btn-ghost" href="https://www.bayader.sa" target="_blank" rel="noopener nofollow">visit bayader.sa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener"><span data-en="start a project" data-ar="ابدأ مشروعاً">start a project</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn btn-ghost" href="https://www.bayader.sa" target="_blank" rel="noopener nofollow"><span data-en="visit bayader.sa" data-ar="زيارة bayader.sa">visit bayader.sa</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
   </section>
 
@@ -101,85 +131,85 @@
         <source srcset="/cases/bayader/image-480.webp 480w, /cases/bayader/image-800.webp 800w, /cases/bayader/image.webp 1600w" sizes="(max-width: 1060px) 92vw, 1012px" type="image/webp" />
         <img src="/cases/bayader/image.jpg" width="1600" height="943" alt="Bayader Investments corporate website designed and built by kaprera" decoding="async" fetchpriority="high" />
       </picture>
-      <figcaption>Bayader Investments — corporate website by kaprera</figcaption>
+      <figcaption data-en="Bayader Investments — corporate website by kaprera" data-ar="بيادر للاستثمار — موقع مؤسسي من kaprera">Bayader Investments — corporate website by kaprera</figcaption>
     </figure>
   </div>
 
   <div class="wrap">
     <section class="blk">
-      <span class="label">/ overview</span>
+      <span class="label" data-en="/ overview" data-ar="/ نظرة عامة">/ overview</span>
       <div class="two">
-        <div><h2 class="two-h">the challenge</h2><p>Bayader needed a modern, UX-centered website to present their investment services and latest news professionally.</p></div>
-        <div><h2 class="two-h">the solution</h2><p>We designed and built a responsive, high-performance corporate website — image-led, fast, and easy to manage.</p></div>
+        <div><h2 class="two-h" data-en="the challenge" data-ar="التحدي">the challenge</h2><p data-en="Bayader needed a modern, UX-centered website to present their investment services and latest news professionally." data-ar="احتاجت بيادر إلى موقع عصري يركّز على تجربة المستخدم لعرض خدماتها الاستثمارية وآخر أخبارها باحترافية.">Bayader needed a modern, UX-centered website to present their investment services and latest news professionally.</p></div>
+        <div><h2 class="two-h" data-en="the solution" data-ar="الحل">the solution</h2><p data-en="We designed and built a responsive, high-performance corporate website — image-led, fast, and easy to manage." data-ar="صمّمنا وطوّرنا موقعاً مؤسسياً متجاوباً وعالي الأداء — يعتمد على الصور، سريع، وسهل الإدارة.">We designed and built a responsive, high-performance corporate website — image-led, fast, and easy to manage.</p></div>
       </div>
     </section>
 
     <section class="blk">
-      <span class="label">/ what we built</span>
-      <h2>inside the project.</h2>
+      <span class="label" data-en="/ what we built" data-ar="/ ماذا بنينا">/ what we built</span>
+      <h2 data-en="inside the project." data-ar="داخل المشروع.">inside the project.</h2>
       <ul class="hl">
-          <li>Investment portfolio pages covering equity, direct, and real-estate investments</li>
-          <li>News &amp; insights section for company and market updates</li>
-          <li>Investor contact flow with an enquiry form</li>
-          <li>Image-led corporate design, fully responsive across devices</li>
+          <li data-en="Investment portfolio pages covering equity, direct, and real-estate investments" data-ar="صفحات لمحفظة الاستثمارات تغطي استثمارات الأسهم والاستثمارات المباشرة والعقارية">Investment portfolio pages covering equity, direct, and real-estate investments</li>
+          <li data-en="News &amp; insights section for company and market updates" data-ar="قسم للأخبار والرؤى لمستجدات الشركة والسوق">News &amp; insights section for company and market updates</li>
+          <li data-en="Investor contact flow with an enquiry form" data-ar="مسار تواصل للمستثمرين مع نموذج استفسار">Investor contact flow with an enquiry form</li>
+          <li data-en="Image-led corporate design, fully responsive across devices" data-ar="تصميم مؤسسي يعتمد على الصور ومتجاوب بالكامل على جميع الأجهزة">Image-led corporate design, fully responsive across devices</li>
       </ul>
     </section>
 
     <section class="blk">
-      <span class="label">/ specs</span>
+      <span class="label" data-en="/ specs" data-ar="/ المواصفات">/ specs</span>
       <dl class="specs">
-        <div><dt>type</dt><dd>corporate website</dd></div>
-        <div><dt>stack</dt><dd>Next.js + Tailwind CSS</dd></div>
-        <div><dt>client</dt><dd>investment firm — Saudi Arabia</dd></div>
-        <div><dt>scope</dt><dd>UI/UX design &amp; web development</dd></div>
+        <div><dt data-en="type" data-ar="النوع">type</dt><dd data-en="corporate website" data-ar="موقع مؤسسي">corporate website</dd></div>
+        <div><dt data-en="stack" data-ar="التقنيات">stack</dt><dd>Next.js + Tailwind CSS</dd></div>
+        <div><dt data-en="client" data-ar="العميل">client</dt><dd data-en="investment firm — Saudi Arabia" data-ar="شركة استثمار — السعودية">investment firm — Saudi Arabia</dd></div>
+        <div><dt data-en="scope" data-ar="نطاق العمل">scope</dt><dd data-en="UI/UX design &amp; web development" data-ar="تصميم واجهات وتطوير ويب">UI/UX design &amp; web development</dd></div>
       </dl>
     </section>
 
     <section class="blk">
-      <span class="label">/ results</span>
-      <h2>the outcome.</h2>
+      <span class="label" data-en="/ results" data-ar="/ النتائج">/ results</span>
+      <h2 data-en="the outcome." data-ar="النتيجة.">the outcome.</h2>
       <div class="stats">
-        <div class="stat"><span class="big">+55%</span><span class="small">faster load speed</span></div>
-        <div class="stat"><span class="big">+48%</span><span class="small">engagement</span></div>
-        <div class="stat"><span class="big">+32%</span><span class="small">SEO visibility</span></div>
+        <div class="stat"><span class="big">+55%</span><span class="small" data-en="faster load speed" data-ar="أسرع في التحميل">faster load speed</span></div>
+        <div class="stat"><span class="big">+48%</span><span class="small" data-en="engagement" data-ar="تفاعل أعلى">engagement</span></div>
+        <div class="stat"><span class="big">+32%</span><span class="small" data-en="SEO visibility" data-ar="ظهور في البحث">SEO visibility</span></div>
       </div>
     </section>
 
     <section class="blk">
-      <span class="label">/ performance</span>
-      <h2>fast by default.</h2>
+      <span class="label" data-en="/ performance" data-ar="/ الأداء">/ performance</span>
+      <h2 data-en="fast by default." data-ar="سريع بطبيعته.">fast by default.</h2>
       <div class="stats">
-        <div class="stat"><span class="big">83/100</span><span class="small">Lighthouse SEO</span></div>
-        <div class="stat"><span class="big">1.5s</span><span class="small">first contentful paint</span></div>
-        <div class="stat"><span class="big">0.02</span><span class="small">cumulative layout shift</span></div>
+        <div class="stat"><span class="big">83/100</span><span class="small" data-en="Lighthouse SEO" data-ar="SEO في Lighthouse">Lighthouse SEO</span></div>
+        <div class="stat"><span class="big">1.5s</span><span class="small" data-en="first contentful paint" data-ar="أول ظهور للمحتوى">first contentful paint</span></div>
+        <div class="stat"><span class="big">0.02</span><span class="small" data-en="cumulative layout shift" data-ar="الانزياح التراكمي للتصميم">cumulative layout shift</span></div>
       </div>
-      <p class="note">measured with Google Lighthouse (desktop), july 2026</p>
+      <p class="note" data-en="measured with Google Lighthouse (desktop), july 2026" data-ar="قياس عبر Google Lighthouse (سطح المكتب)، تموز 2026">measured with Google Lighthouse (desktop), july 2026</p>
     </section>
     <section class="blk">
-      <span class="label">/ more work</span>
-      <h2>more case studies.</h2>
+      <span class="label" data-en="/ more work" data-ar="/ أعمال أخرى">/ more work</span>
+      <h2 data-en="more case studies." data-ar="دراسات حالة أخرى.">more case studies.</h2>
       <div class="more">
         <a class="more-card" href="/cases/lbspotlight/">
           <span class="more-name">Lebanese Spotlight</span>
-          <span class="more-type">NGO platform</span>
+          <span class="more-type" data-en="NGO platform" data-ar="منصة منظمة غير حكومية">NGO platform</span>
         </a>
         <a class="more-card" href="/cases/ana-arabia/">
           <span class="more-name">Ana Arabia</span>
-          <span class="more-type">event landing page</span>
+          <span class="more-type" data-en="event landing page" data-ar="صفحة هبوط لفعالية">event landing page</span>
         </a>
         <a class="more-card" href="/cases/agripro/">
           <span class="more-name">Agri Pro Services</span>
-          <span class="more-type">internal operations platform</span>
+          <span class="more-type" data-en="internal operations platform" data-ar="منصة عمليات داخلية">internal operations platform</span>
         </a>
       </div>
     </section>
 
     <section class="cta">
-      <span class="label">/ let's build something</span>
-      <h2>want results like these?</h2>
+      <span class="label" data-en="/ let's build something" data-ar="/ لنبنِ شيئاً">/ let's build something</span>
+      <h2 data-en="want results like these?" data-ar="تريد نتائج كهذه؟">want results like these?</h2>
       <div class="actions">
-        <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener">book a call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a class="btn btn-ghost" href="/work/">see more work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="btn btn-primary" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener"><span data-en="book a call" data-ar="احجز مكالمة">book a call</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="btn btn-ghost" href="/work/"><span data-en="see more work" data-ar="شاهد أعمالاً أخرى">see more work</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </section>
   </div>
@@ -187,14 +217,37 @@
 
 <footer>
   <div class="wrap">
-    <span class="fbrand"><span class="mk">&gt;_</span> kaprera</span>
-    <nav>
-      <a href="/">home</a>
-      <a href="/work/">work</a>
-      <a href="/#services">services</a>
-      <a href="/#contact">contact</a>
-    </nav>
-    <span class="cc">© 2026 kaprera — digital agency in beirut, lebanon. all rights reserved.</span>
+    <div class="foot-top">
+      <div>
+        <a href="/" class="brand" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
+        <p class="foot-tag" data-en="stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <div class="fc-h" data-en="explore" data-ar="استكشف">explore</div>
+          <a href="/work/" data-en="work" data-ar="أعمالنا">work</a>
+          <a href="/#services" data-en="services" data-ar="خدماتنا">services</a>
+          <a href="/#testimonials" data-en="testimonials" data-ar="آراء العملاء">testimonials</a>
+          <a href="/#faq" data-en="faq" data-ar="الأسئلة الشائعة">faq</a>
+          <a href="/#contact" data-en="contact" data-ar="تواصل">contact</a>
+          <a href="/careers" data-en="careers" data-ar="وظائف">careers</a>
+        </div>
+        <div class="foot-col">
+          <div class="fc-h" data-en="legal" data-ar="قانوني">legal</div>
+          <a href="/privacy-policy" data-en="privacy policy" data-ar="سياسة الخصوصية">privacy policy</a>
+        </div>
+        <div class="foot-col">
+          <div class="fc-h" data-en="social" data-ar="تواصل اجتماعي">social</div>
+          <a class="social-link" href="https://www.linkedin.com/company/kaprera/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.25 8.25h4.5V24h-4.5V8.25Zm7.25 0h4.31v2.15h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.5v-6.9c0-1.64-.03-3.75-2.29-3.75-2.29 0-2.64 1.79-2.64 3.63V24h-4.5V8.25Z"/></svg><span data-en="linkedin" data-ar="لينكدإن">linkedin</span></a>
+          <a class="social-link" href="https://www.instagram.com/kaprera_agency/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span data-en="instagram" data-ar="إنستغرام">instagram</span></a>
+          <a class="social-link" href="https://wa.me/9613816405" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="whatsapp" data-ar="واتساب">whatsapp</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-en="© 2026 kaprera. all rights reserved." data-ar="© 2026 كابريرا. جميع الحقوق محفوظة.">© 2026 kaprera. all rights reserved.</span>
+      <span><span data-en="made in lebanon ·" data-ar="صُنع في لبنان ·">made in lebanon ·</span> <span class="accent">&gt;_</span></span>
+    </div>
   </div>
 </footer>
 
