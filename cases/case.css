@@ -187,7 +187,6 @@ html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
 
 /* small phones: collapse the nav CTA to an icon-only button so the bar fits */
 @media (max-width:480px){
-  .nav .wrap{padding-left:18px; padding-right:18px}
   .nav-cta{padding:9px; border-radius:50%}
   .nav-cta .cta-txt, .nav-cta .cta-arrow{display:none}
   .nav-cta .cta-cal{display:block}
@@ -195,4 +194,11 @@ html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
   .theme-toggle, .lang-toggle{height:34px; padding:3px}
   .theme-toggle .seg, .lang-toggle .seg{width:26px; height:26px}
   .lang-toggle .seg{min-width:26px; padding:0 5px}
+  .nav-utils{gap:5px}
+}
+@media (max-width:360px){
+  .brand-logo{height:20px}
+  .theme-toggle, .lang-toggle{height:32px}
+  .theme-toggle .seg, .lang-toggle .seg{width:23px; height:23px}
+  .lang-toggle .seg{min-width:23px; padding:0 4px}
 }
