@@ -138,6 +138,18 @@
       "position": 1,
       "item": {
         "@type": "CreativeWork",
+        "name": "War Action Research",
+        "url": "https://kaprera.com/cases/war/",
+        "image": "https://kaprera.com/cases/war/image.jpg",
+        "creator": { "@type": "Organization", "name": "kaprera" },
+        "about": "Interactive research platform with a clickable world map — UI/UX and web development."
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "CreativeWork",
         "name": "Bayader Investments",
         "url": "https://www.bayader.sa",
         "image": "https://kaprera.com/cases/bayader/image.jpg",
@@ -147,7 +159,7 @@
     },
     {
       "@type": "ListItem",
-      "position": 2,
+      "position": 3,
       "item": {
         "@type": "CreativeWork",
         "name": "Lebanese Spotlight",
@@ -159,7 +171,7 @@
     },
     {
       "@type": "ListItem",
-      "position": 3,
+      "position": 4,
       "item": {
         "@type": "CreativeWork",
         "name": "Ana Arabia",
@@ -170,7 +182,7 @@
     },
     {
       "@type": "ListItem",
-      "position": 4,
+      "position": 5,
       "item": {
         "@type": "CreativeWork",
         "name": "Agri Pro Services",
@@ -704,6 +716,7 @@
   .thumb-b { background: linear-gradient(135deg, #0a2540, #008cc1 60%, #4cc9f0); }
   .thumb-c { background: linear-gradient(135deg, #0c2b28, #1f6b58 60%, #d9c3a3); }
   .thumb-d { background: linear-gradient(135deg, #14432a, #2f8f4e 60%, #6bbf59); }
+  .thumb-e { background: linear-gradient(135deg, #1a1a1a, #3a3a3a 55%, #e6c619); }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
   .chip {
     font-family: 'JetBrains Mono', monospace;
@@ -903,6 +916,12 @@
     background-image:
       radial-gradient(120% 120% at 15% 5%, rgba(255,255,255,0.18), transparent 52%),
       linear-gradient(125deg, #14432a 0%, #2f8f4e 52%, #6bbf59 100%);
+  }
+  /* war action research — graphite → amber */
+  .b-war {
+    background-image:
+      radial-gradient(120% 120% at 82% 6%, rgba(230,198,25,0.22), transparent 52%),
+      linear-gradient(125deg, #141414 0%, #33322b 52%, #7a6a1c 100%);
   }
 
   /* light text + controls over the colored backgrounds */
@@ -1963,6 +1982,7 @@
   <section class="hero is-colored">
     <div class="hero-bgs" aria-hidden="true">
       <span class="hero-bg b-intro active"></span>
+      <span class="hero-bg b-war"></span>
       <span class="hero-bg b-agripro"></span>
       <span class="hero-bg b-spotlight"></span>
       <span class="hero-bg b-ana"></span>
@@ -1976,7 +1996,7 @@
           <div class="work-track" id="workTrack">
 
             <!-- SLIDE 1 — hero -->
-            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 5 — intro">
+            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 6 — intro">
               <span class="eyebrow reveal"><span class="dot"></span> <span data-en="Digital agency · Beirut, Lebanon" data-ar="وكالة رقمية · بيروت، لبنان">Digital agency · Beirut, Lebanon</span></span>
               <h1 class="reveal" id="heroTitle" data-en="Stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</h1>
               <p class="subline reveal" data-en="We design and build websites and brands that turn audiences into customers." data-ar="نصمّم ونطوّر مواقع وعلامات تجارية تحوّل الجمهور إلى عملاء.">We design and build websites and brands that turn audiences into customers.</p>
@@ -1995,8 +2015,28 @@
               </div>
             </div>
 
-            <!-- SLIDE 2 — Agri Pro Services -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 5 — Agri Pro Services">
+            <!-- SLIDE 2 — War Action Research -->
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 6 — War Action Research">
+              <button class="case-shot thumb-e" data-case="war" aria-haspopup="dialog" aria-label="open War Action Research case study">
+                <picture>
+                  <source srcset="cases/war/image-480.webp 480w, cases/war/image-800.webp 800w, cases/war/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                  <img src="cases/war/image.jpg" alt="War Action Research interactive research platform built by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
+                </picture>
+              </button>
+              <div class="case-info">
+                <span class="label"><span class="num">02</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <h2>War Action Research</h2>
+                <p class="blurb" data-en="An interactive research platform with a clickable world map for global conflict research." data-ar="منصة أبحاث تفاعلية بخريطة عالمية قابلة للنقر لأبحاث النزاعات العالمية.">An interactive research platform with a clickable world map for global conflict research.</p>
+                <div class="chips">
+                  <span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span>
+                  <span class="chip" data-en="Web development" data-ar="تطوير ويب">Web development</span>
+                </div>
+                <a href="/cases/war/" class="btn btn-primary" data-case="war" aria-haspopup="dialog" data-en="View case study" data-ar="عرض دراسة الحالة">View case study</a>
+              </div>
+            </div>
+
+            <!-- SLIDE 3 — Agri Pro Services -->
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 6 — Agri Pro Services">
               <button class="case-shot thumb-d" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
                 <picture>
                   <source srcset="cases/agripro/image-480.webp 480w, cases/agripro/image-800.webp 800w, cases/agripro/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
@@ -2004,7 +2044,7 @@
                 </picture>
               </button>
               <div class="case-info">
-                <span class="label"><span class="num">02</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <span class="label"><span class="num">03</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
                 <h2>Agri Pro Services</h2>
                 <p class="blurb" data-en="A custom operations platform for a pest control company." data-ar="منصة عمليات مخصّصة لشركة مكافحة آفات.">A custom operations platform for a pest control company.</p>
                 <div class="chips">
@@ -2015,8 +2055,8 @@
               </div>
             </div>
 
-            <!-- SLIDE 3 — Lebanese Spotlight -->
-            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="3 of 5 — Lebanese Spotlight">
+            <!-- SLIDE 4 — Lebanese Spotlight -->
+            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 6 — Lebanese Spotlight">
               <button class="case-shot thumb-b" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
                 <picture>
                   <source srcset="cases/lbspotlight/image-480.webp 480w, cases/lbspotlight/image-800.webp 800w, cases/lbspotlight/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
@@ -2024,7 +2064,7 @@
                 </picture>
               </button>
               <div class="case-info">
-                <span class="label"><span class="num">03</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <span class="label"><span class="num">04</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
                 <h2>Lebanese Spotlight</h2>
                 <p class="blurb" data-en="A platform to manage volunteers efficiently, end to end." data-ar="منصة لإدارة المتطوعين بكفاءة من البداية إلى النهاية.">A platform to manage volunteers efficiently, end to end.</p>
                 <div class="chips">
@@ -2035,8 +2075,8 @@
               </div>
             </div>
 
-            <!-- SLIDE 4 — Ana Arabia -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="4 of 5 — Ana Arabia">
+            <!-- SLIDE 5 — Ana Arabia -->
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 6 — Ana Arabia">
               <button class="case-shot thumb-c" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
                 <picture>
                   <source srcset="cases/ana-arabia/image-480.webp 480w, cases/ana-arabia/image-800.webp 800w, cases/ana-arabia/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
@@ -2044,7 +2084,7 @@
                 </picture>
               </button>
               <div class="case-info">
-                <span class="label"><span class="num">04</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <span class="label"><span class="num">05</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
                 <h2>Ana Arabia</h2>
                 <p class="blurb" data-en="An elegant, bilingual landing page for a Riyadh Season event." data-ar="صفحة هبوط أنيقة وثنائية اللغة لفعالية ضمن موسم الرياض.">An elegant, bilingual landing page for a Riyadh Season event.</p>
                 <div class="chips">
@@ -2054,8 +2094,8 @@
               </div>
             </div>
 
-            <!-- SLIDE 5 — Bayader -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 5 — Bayader Investments">
+            <!-- SLIDE 6 — Bayader -->
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 6 — Bayader Investments">
               <button class="case-shot thumb-a" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
                 <picture>
                   <source srcset="cases/bayader/image-480.webp 480w, cases/bayader/image-800.webp 800w, cases/bayader/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
@@ -2063,7 +2103,7 @@
                 </picture>
               </button>
               <div class="case-info">
-                <span class="label"><span class="num">05</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <span class="label"><span class="num">06</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
                 <h2>Bayader Investments</h2>
                 <p class="blurb" data-en="A modern, UX-centered website for an investment firm." data-ar="موقع عصري يركّز على تجربة المستخدم لشركة استثمار.">A modern, UX-centered website for an investment firm.</p>
                 <div class="chips">
@@ -2085,7 +2125,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
           <div class="work-dots" id="workDots" role="tablist" aria-label="our work slides"></div>
-          <div class="work-count"><b id="workNow">01</b> / 05</div>
+          <div class="work-count"><b id="workNow">01</b> / 06</div>
         </div>
       </div>
     </div>
@@ -2491,6 +2531,49 @@
 <script>
   // ── case study data ──
   const CASES = {
+    war: {
+      name: "War Action Research",
+      ghost: "war action research",
+      thumb: "thumb-e",
+      shot: "cases/war/image.webp",
+      slides: ["cases/war/image.webp", "cases/war/image-2.webp"],
+      tags: { en: ["ui/ux", "web development"], ar: ["تصميم واجهات", "تطوير ويب"] },
+      challenge: {
+        en: "Needed an interactive, dynamic platform to give researchers, practitioners, and the public access to up-to-date research on global conflict and its impact on women, children, and youth.",
+        ar: "احتاجوا إلى منصة تفاعلية وديناميكية تتيح للباحثين والممارسين والجمهور الوصول إلى أحدث الأبحاث حول النزاعات العالمية وأثرها على النساء والأطفال والشباب."
+      },
+      solution: {
+        en: "Designed and built a platform anchored by a clickable world map — select any country to explore its research — with projects and training & consulting sections.",
+        ar: "صمّمنا وطوّرنا منصة ترتكز على خريطة عالمية قابلة للنقر — اختر أي دولة لاستكشاف أبحاثها — مع أقسام للمشاريع والتدريب والاستشارات."
+      },
+      highlights: {
+        en: [
+          "Interactive world map — click or tap any country to view its research papers",
+          "Research library organized by country and conflict",
+          "Projects, Map, and Training & Consulting sections",
+          "Focus on vulnerable populations — women, children, and youth",
+          "Bold editorial art direction, fully responsive across devices"
+        ],
+        ar: [
+          "خريطة عالمية تفاعلية — انقر أو المس أي دولة لعرض أبحاثها",
+          "مكتبة أبحاث منظّمة حسب الدولة والنزاع",
+          "أقسام للمشاريع والخريطة والتدريب والاستشارات",
+          "تركيز على الفئات الأكثر هشاشة — النساء والأطفال والشباب",
+          "أسلوب بصري تحريري جريء ومتجاوب بالكامل على جميع الأجهزة"
+        ]
+      },
+      specs: [
+        { k: { en: "type", ar: "النوع" }, v: { en: "interactive research platform", ar: "منصة أبحاث تفاعلية" } },
+        { k: { en: "stack", ar: "التقنيات" }, v: { en: "Mapbox GL JS + web app", ar: "Mapbox GL JS + تطبيق ويب" } },
+        { k: { en: "client", ar: "العميل" }, v: { en: "conflict research organization", ar: "منظمة أبحاث النزاعات" } },
+        { k: { en: "scope", ar: "نطاق العمل" }, v: { en: "UI/UX design & web development", ar: "تصميم واجهات وتطوير ويب" } }
+      ],
+      results: [
+        { big: "interactive", small: { en: "clickable world map", ar: "خريطة عالمية قابلة للنقر" } },
+        { big: "by country", small: { en: "research surfaced geographically", ar: "أبحاث معروضة جغرافياً" } },
+        { big: "100%", small: { en: "responsive across devices", ar: "متجاوب على كل الأجهزة" } }
+      ]
+    },
     bayader: {
       name: "Bayader Investments",
       url: "bayader.sa",
@@ -3146,6 +3229,7 @@
   const modalClose = document.getElementById('modalClose');
   // maps a case key to its full case-study page
   const CASE_PATHS = {
+    war: '/cases/war/',
     agripro: '/cases/agripro/',
     spotlight: '/cases/lbspotlight/',
     ana: '/cases/ana-arabia/',
