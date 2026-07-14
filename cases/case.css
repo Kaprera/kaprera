@@ -183,10 +183,19 @@ dl.specs dd{margin:0; font-weight:600}
 
 /* ── more work ── */
 .more{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
-.more-card{display:flex; flex-direction:column; gap:6px; text-decoration:none; border:1px solid var(--hair); border-radius:14px; padding:20px 18px; background:var(--panel); transition:transform .15s ease, border-color .15s ease}
-.more-card:hover{transform:translateY(-2px); border-color:var(--blue)}
+.more-card{display:flex; flex-direction:column; text-decoration:none; border:1px solid var(--hair); border-radius:14px; overflow:hidden; background:var(--panel); transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease}
+.more-card:hover{transform:translateY(-2px); border-color:var(--blue); box-shadow:0 12px 30px -18px rgba(0,140,193,.5)}
+.more-thumb{display:block; aspect-ratio:1600/941; background:var(--bg); border-bottom:1px solid var(--hair); overflow:hidden}
+.more-thumb img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s ease}
+.more-card:hover .more-thumb img{transform:scale(1.04)}
+.more-body{display:flex; flex-direction:column; gap:6px; padding:16px 18px}
 .more-name{font-weight:700; letter-spacing:-.01em}
 .more-type{font-family:var(--mono); font-size:12px; color:var(--muted)}
+@media (prefers-reduced-motion:reduce){
+  .more-card, .more-thumb img{transition:none}
+  .more-card:hover{transform:none}
+  .more-card:hover .more-thumb img{transform:none}
+}
 
 /* ── cta ── */
 .cta{text-align:center; padding:56px 0}
