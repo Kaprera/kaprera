@@ -580,8 +580,14 @@
     width: min(600px, 58vw);
     aspect-ratio: 913 / 793;
     background-color: var(--blue);
-    -webkit-mask: url('/branding/logos/kaprera-icon-mark.webp') center / contain no-repeat;
-            mask: url('/branding/logos/kaprera-icon-mark.webp') center / contain no-repeat;
+    -webkit-mask-image: url('/branding/logos/kaprera-icon-mark.webp');
+            mask-image: url('/branding/logos/kaprera-icon-mark.webp');
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+            mask-position: center;
+    -webkit-mask-size: contain;
+            mask-size: contain;
     opacity: 0.14;
     pointer-events: none;
     z-index: 0;
@@ -1861,6 +1867,16 @@
   @media (prefers-reduced-motion: reduce) {
     .pl-mark, .pl-word, .pl-tag { opacity: 1; transform: none; clip-path: none; animation: none; }
   }
+  .faq-list { max-width: 840px; margin-top: 10px; border-top: 1px solid var(--hair); }
+  .faq-item { border-bottom: 1px solid var(--hair); }
+  .faq-item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 4px; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .faq-item > summary::-webkit-details-marker { display: none; }
+  .faq-item > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+  .faq-ic { flex: none; width: 22px; height: 22px; color: var(--blue); transition: transform 0.25s var(--ease); }
+  .faq-item[open] .faq-ic { transform: rotate(45deg); }
+  .faq-a { padding: 0 4px 24px; margin: 0; color: var(--muted); max-width: 72ch; line-height: 1.65; }
+  html[lang="ar"] .faq-item > summary,
+  html[lang="ar"] .faq-a { text-align: right; }
 </style>
 <script>
   // apply saved/system theme before paint to avoid flash
@@ -2156,7 +2172,7 @@
             <div class="svc-track" id="svcTrack">
 
               <!-- PANEL 01 — UI/UX Design -->
-              <article class="svc-panel is-active" role="group" aria-roledescription="slide" aria-label="1 of 3 — UI/UX Design">
+              <article class="svc-panel is-active" aria-roledescription="slide" aria-label="1 of 3 — UI/UX Design">
                 <span class="svc-figure" aria-hidden="true">01</span>
                 <div class="svc-col">
                   <span class="svc-eyebrow" data-anim style="--ad:.05s">
@@ -2185,7 +2201,7 @@
               </article>
 
               <!-- PANEL 02 — Web Development -->
-              <article class="svc-panel" role="group" aria-roledescription="slide" aria-label="2 of 3 — Web Development">
+              <article class="svc-panel" aria-roledescription="slide" aria-label="2 of 3 — Web Development">
                 <span class="svc-figure" aria-hidden="true">02</span>
                 <div class="svc-col">
                   <span class="svc-eyebrow" data-anim style="--ad:.05s">
@@ -2215,7 +2231,7 @@
               </article>
 
               <!-- PANEL 03 — SEO -->
-              <article class="svc-panel" role="group" aria-roledescription="slide" aria-label="3 of 3 — SEO">
+              <article class="svc-panel" aria-roledescription="slide" aria-label="3 of 3 — SEO">
                 <span class="svc-figure" aria-hidden="true">03</span>
                 <div class="svc-col">
                   <span class="svc-eyebrow" data-anim style="--ad:.05s">
@@ -2282,7 +2298,7 @@
       <div class="tst-feature-grid reveal" id="tstWrap">
         <figure class="tst-feature">
           <span class="tst-mark" aria-hidden="true">&ldquo;</span>
-          <div class="tst-stars" aria-label="5 out of 5">★★★★★</div>
+          <div class="tst-stars" role="img" aria-label="5 out of 5">★★★★★</div>
           <blockquote class="tst-big" id="tstQuote" data-en="Kaprera built a website that perfectly represents our organization and makes it easy for people to discover and engage with our initiatives, with a smooth, reliable structure that supports our growing community." data-ar="بنت kaprera موقعًا يمثّل منظمتنا تمثيلًا مثاليًا ويسهّل على الناس اكتشاف مبادراتنا والتفاعل معها، ببنية سلسة وموثوقة تدعم مجتمعنا المتنامي.">بنت kaprera موقعًا يمثّل منظمتنا تمثيلًا مثاليًا ويسهّل على الناس اكتشاف مبادراتنا والتفاعل معها، ببنية سلسة وموثوقة تدعم مجتمعنا المتنامي.</blockquote>
           <figcaption class="tst-by">
             <span class="tst-avatar has-logo" id="tstAvatar"><img src="/cases/lbspotlight/favicon.png" alt="Lebanese Spotlight logo" width="48" height="48" loading="lazy" decoding="async"></span>
@@ -2293,15 +2309,15 @@
           </figcaption>
         </figure>
 
-        <div class="tst-picker" role="tablist" aria-label="clients">
-          <button type="button" class="tst-pick is-active" data-i="0" role="tab" aria-selected="true" data-logo="/cases/lbspotlight/favicon.png" data-q-en="Kaprera built a website that perfectly represents our organization and makes it easy for people to discover and engage with our initiatives, with a smooth, reliable structure that supports our growing community." data-q-ar="بنت kaprera موقعًا يمثّل منظمتنا تمثيلًا مثاليًا ويسهّل على الناس اكتشاف مبادراتنا والتفاعل معها، ببنية سلسة وموثوقة تدعم مجتمعنا المتنامي.">
+        <div class="tst-picker" role="group" aria-label="clients">
+          <button type="button" class="tst-pick is-active" data-i="0" aria-pressed="true" data-logo="/cases/lbspotlight/favicon.png" data-q-en="Kaprera built a website that perfectly represents our organization and makes it easy for people to discover and engage with our initiatives, with a smooth, reliable structure that supports our growing community." data-q-ar="بنت kaprera موقعًا يمثّل منظمتنا تمثيلًا مثاليًا ويسهّل على الناس اكتشاف مبادراتنا والتفاعل معها، ببنية سلسة وموثوقة تدعم مجتمعنا المتنامي.">
             <span class="pk-avatar has-logo"><img src="/cases/lbspotlight/favicon.png" alt="Lebanese Spotlight logo" width="46" height="46" loading="lazy" decoding="async" /></span>
             <span class="pk-meta">
               <span class="pk-name">Lebanese Spotlight</span>
               <span class="pk-role" data-en="NGO" data-ar="منظمة غير حكومية">منظمة غير حكومية</span>
             </span>
           </button>
-          <button type="button" class="tst-pick" data-i="1" role="tab" aria-selected="false" data-logo="/cases/agripro/favicon.png" data-q-en="They built a complex, custom system for our pest control services with exceptional speed and efficiency. The owner uniquely combines high technical competence with strict professional ethics and privacy." data-q-ar="بنوا نظامًا مخصصًا ومعقّدًا لخدمات مكافحة الآفات لدينا بسرعة وكفاءة استثنائية. يجمع المالك بشكل فريد بين كفاءة تقنية عالية والتزام صارم بأخلاقيات المهنة والخصوصية.">
+          <button type="button" class="tst-pick" data-i="1" aria-pressed="false" data-logo="/cases/agripro/favicon.png" data-q-en="They built a complex, custom system for our pest control services with exceptional speed and efficiency. The owner uniquely combines high technical competence with strict professional ethics and privacy." data-q-ar="بنوا نظامًا مخصصًا ومعقّدًا لخدمات مكافحة الآفات لدينا بسرعة وكفاءة استثنائية. يجمع المالك بشكل فريد بين كفاءة تقنية عالية والتزام صارم بأخلاقيات المهنة والخصوصية.">
             <span class="pk-avatar has-logo"><img src="/cases/agripro/favicon.png" alt="Agri Pro Services logo" width="46" height="46" loading="lazy" decoding="async" /></span>
             <span class="pk-meta">
               <span class="pk-name" data-en="Agri Pro Services" data-ar="Agri Pro Services">Agri Pro Services</span>
@@ -2335,18 +2351,6 @@
     ]
   }
   </script>
-  <style>
-    .faq-list { max-width: 840px; margin-top: 10px; border-top: 1px solid var(--hair); }
-    .faq-item { border-bottom: 1px solid var(--hair); }
-    .faq-item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 4px; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
-    .faq-item > summary::-webkit-details-marker { display: none; }
-    .faq-item > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
-    .faq-ic { flex: none; width: 22px; height: 22px; color: var(--blue); transition: transform 0.25s var(--ease); }
-    .faq-item[open] .faq-ic { transform: rotate(45deg); }
-    .faq-a { padding: 0 4px 24px; margin: 0; color: var(--muted); max-width: 72ch; line-height: 1.65; }
-    html[lang="ar"] .faq-item > summary,
-    html[lang="ar"] .faq-a { text-align: right; }
-  </style>
   <section class="section" id="faq">
     <div class="wrap">
       <span class="label reveal"><span class="num">04</span> <span data-en="/ Questions" data-ar="/ الأسئلة">/ الأسئلة</span></span>
@@ -2388,9 +2392,9 @@
       <h2 class="title reveal" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">أخبرنا عن مشروعك.</h2>
 
       <div class="contact-grid">
-        <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-card reveal" novalidate>
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card reveal" novalidate>
           <input type="hidden" name="form-name" value="contact" />
-          <p hidden aria-hidden="true"><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
           <div class="field-row">
             <div class="field">
               <label for="name" data-en="Full name" data-ar="الاسم الكامل">الاسم الكامل</label>
@@ -2477,7 +2481,7 @@
       <div class="modal-content">
         <div class="chips" id="modalChips"></div>
         <h3 id="modalTitle"></h3>
-        <a class="url" id="modalUrl" target="_blank" rel="noopener"></a>
+        <a class="url" id="modalUrl" href="#" target="_blank" rel="noopener" hidden></a>
         <div class="cs-block"><div class="h" data-en="Challenge" data-ar="التحدي">التحدي</div><p id="modalChallenge"></p></div>
         <div class="cs-block"><div class="h" data-en="Solution" data-ar="الحل">الحل</div><p id="modalSolution"></p></div>
         <div class="cs-block" id="modalHighlightsBlock">
@@ -3113,7 +3117,7 @@
       picks.forEach((p, idx) => {
         const on = idx === i;
         p.classList.toggle('is-active', on);
-        p.setAttribute('aria-selected', String(on));
+        p.setAttribute('aria-pressed', String(on));
       });
       if (animate && !reduce) {
         feature.classList.add('swapping');
