@@ -2615,14 +2615,10 @@
       ],
       perf: {
         stats: [
-          { big: "83/100", small: { en: "Lighthouse SEO", ar: "SEO في Lighthouse" } },
-          { big: "1.5s", small: { en: "first contentful paint", ar: "أول ظهور للمحتوى" } },
-          { big: "0.02", small: { en: "cumulative layout shift", ar: "الانزياح التراكمي للتصميم" } }
-        ],
-        note: {
-          en: "measured with Google Lighthouse (desktop), july 2026",
-          ar: "قياس عبر Google Lighthouse (سطح المكتب)، تموز 2026"
-        }
+          { big: { en: "Fast", ar: "سريع" }, small: { en: "load speed", ar: "سرعة التحميل" } },
+          { big: { en: "Optimized", ar: "مُحسّن" }, small: { en: "performance", ar: "الأداء" } },
+          { big: { en: "Responsive", ar: "متجاوب" }, small: { en: "all devices", ar: "كل الأجهزة" } }
+        ]
       },
       results: [
         { big: "+55%", small: { en: "faster load speed", ar: "أسرع في التحميل" } },
@@ -2670,14 +2666,10 @@
       ],
       perf: {
         stats: [
-          { big: "87/100", small: { en: "Lighthouse performance", ar: "أداء Lighthouse" } },
-          { big: "1.2s", small: { en: "first contentful paint", ar: "أول ظهور للمحتوى" } },
-          { big: "0ms", small: { en: "total blocking time", ar: "زمن الحجب الكلي" } }
-        ],
-        note: {
-          en: "measured with Google Lighthouse (desktop), july 2026",
-          ar: "قياس عبر Google Lighthouse (سطح المكتب)، تموز 2026"
-        }
+          { big: { en: "Fast", ar: "سريع" }, small: { en: "load speed", ar: "سرعة التحميل" } },
+          { big: { en: "Optimized", ar: "مُحسّن" }, small: { en: "performance", ar: "الأداء" } },
+          { big: { en: "Responsive", ar: "متجاوب" }, small: { en: "all devices", ar: "كل الأجهزة" } }
+        ]
       },
       results: [
         { big: "60%", small: { en: "faster volunteer onboarding", ar: "أسرع في ضمّ المتطوعين" } },
@@ -2723,14 +2715,10 @@
       ],
       perf: {
         stats: [
-          { big: "97/100", small: { en: "Lighthouse performance", ar: "أداء Lighthouse" } },
-          { big: "0.6s", small: { en: "first contentful paint", ar: "أول ظهور للمحتوى" } },
-          { big: "0.9s", small: { en: "largest contentful paint", ar: "أكبر ظهور للمحتوى" } }
-        ],
-        note: {
-          en: "measured with Google Lighthouse (desktop), july 2026",
-          ar: "قياس عبر Google Lighthouse (سطح المكتب)، تموز 2026"
-        }
+          { big: { en: "Fast", ar: "سريع" }, small: { en: "load speed", ar: "سرعة التحميل" } },
+          { big: { en: "Optimized", ar: "مُحسّن" }, small: { en: "performance", ar: "الأداء" } },
+          { big: { en: "Responsive", ar: "متجاوب" }, small: { en: "all devices", ar: "كل الأجهزة" } }
+        ]
       },
       results: [
         { big: "AR/EN", small: { en: "full bilingual support", ar: "دعم ثنائي اللغة كامل" } },
@@ -3305,12 +3293,15 @@
 
     const perfBlock = document.getElementById('modalPerfBlock');
     perfBlock.hidden = !c.perf;
+    const bigVal = r => (typeof r.big === 'object' ? r.big[L] : r.big);
     document.getElementById('modalPerf').innerHTML =
-      c.perf ? c.perf.stats.map(r => '<div class="r"><div class="big">' + r.big + '</div><div class="small">' + r.small[L] + '</div></div>').join('') : '';
-    document.getElementById('modalPerfNote').textContent = c.perf ? c.perf.note[L] : '';
+      c.perf ? c.perf.stats.map(r => '<div class="r"><div class="big">' + bigVal(r) + '</div><div class="small">' + r.small[L] + '</div></div>').join('') : '';
+    const perfNote = document.getElementById('modalPerfNote');
+    perfNote.textContent = c.perf && c.perf.note ? c.perf.note[L] : '';
+    perfNote.hidden = !(c.perf && c.perf.note);
 
     document.getElementById('modalResults').innerHTML =
-      c.results.map(r => '<div class="r"><div class="big">' + r.big + '</div><div class="small">' + r.small[L] + '</div></div>').join('');
+      c.results.map(r => '<div class="r"><div class="big">' + bigVal(r) + '</div><div class="small">' + r.small[L] + '</div></div>').join('');
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
