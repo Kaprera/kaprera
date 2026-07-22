@@ -2952,6 +2952,12 @@
       if (e.key === 'ArrowRight') { go(i + 1); rest(); }
     });
 
+    // touch swipe (left/right); track is forced LTR so index mapping is stable
+    let sx = 0, sdx = 0, swiping = false;
+    track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sdx = 0; swiping = true; stop(); }, { passive: true });
+    track.addEventListener('touchmove', (e) => { if (swiping) sdx = e.touches[0].clientX - sx; }, { passive: true });
+    track.addEventListener('touchend', () => { if (swiping && Math.abs(sdx) > 50) { go(sdx < 0 ? i + 1 : i - 1); } swiping = false; start(); });
+
     go(0); start();
   })();
 
