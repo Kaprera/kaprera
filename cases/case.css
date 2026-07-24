@@ -155,7 +155,7 @@ h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; fo
 
 /* ── figure ── */
 .shot{margin:34px 0 8px; border:1px solid var(--hair); border-radius:18px; overflow:hidden; background:var(--panel)}
-.shot img{width:100%}
+.shot img{width:100%; display:block}
 figcaption{font-family:var(--mono); font-size:12px; color:var(--muted); padding:10px 4px 0}
 
 /* ── sections ── */
