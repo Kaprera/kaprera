@@ -30,6 +30,10 @@
       <image:loc>https://kaprera.com/cases/agripro/image.jpg</image:loc>
       <image:title>Agri Pro Services website by kaprera</image:title>
     </image:image>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/oplinx/image.jpg</image:loc>
+      <image:title>Oplinx Solutions bilingual consultancy website by kaprera</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://kaprera.com/ar/</loc>
@@ -98,6 +102,16 @@
     <image:image>
       <image:loc>https://kaprera.com/cases/agripro/image.jpg</image:loc>
       <image:title>Agri Pro Services operations platform by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/oplinx/</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/oplinx/image.jpg</image:loc>
+      <image:title>Oplinx Solutions bilingual consultancy website by kaprera</image:title>
     </image:image>
   </url>
   <url>
