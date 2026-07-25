@@ -154,9 +154,212 @@ h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; fo
 .nav-cta .cta-cal{display:none}
 
 /* ── figure ── */
-.shot{margin:34px 0 8px; border:1px solid var(--hair); border-radius:18px; overflow:hidden; background:var(--panel)}
-.shot img{width:100%; display:block}
+/* .shot only positions the hero now; the framing lives in the .mk-* mockups
+   below, one of which every case study uses. */
+.shot{margin:34px 0 8px}
 figcaption{font-family:var(--mono); font-size:12px; color:var(--muted); padding:10px 4px 0}
+
+/* ── device mockups ─────────────────────────────────────────────────────
+   The hero screenshot sits in a device frame rather than a bare panel, and
+   each case gets the frame that matches the product it is showing: browser
+   chrome for the marketing sites, a monitor for the back-office tool, a
+   laptop for the research platform, a tablet for the corporate site, and a
+   plain elevated card for the event poster.
+
+   Every frame is pure CSS — no extra image assets, nothing to build, and no
+   weight added to a page whose whole selling point is that it loads fast.
+   Markup contract:
+
+     <figure class="shot mk mk-{browser|laptop|monitor|tablet|poster}">
+       <div class="mk-frame">
+         …optional chrome…
+         <div class="mk-screen"><picture>…</picture></div>
+       </div>
+       …optional <span class="mk-base"> / <span class="mk-stand">…
+       <figcaption>…</figcaption>
+     </figure>
+
+   .mk-screen is the only element that clips, so a frame is free to hang
+   parts (a hinge, a stand) outside the screen without them being cut off.
+   Sizes scale with clamp()/vw so a frame stays in proportion on a phone. */
+.mk-frame{position:relative}
+.mk-screen{overflow:hidden; background:var(--panel); line-height:0}
+.mk-screen img{width:100%; display:block}
+/* browser chrome is a picture of an LTR browser — it must not mirror in Arabic */
+.mk-chrome,.mk-tabbar{direction:ltr; display:flex; align-items:center; flex-shrink:0}
+
+/* traffic lights */
+.mk-dots{display:flex; gap:6px; flex-shrink:0}
+.mk-dots i{width:clamp(8px,1vw,10px); height:clamp(8px,1vw,10px); border-radius:50%; background:#ff5f57}
+.mk-dots i:nth-child(2){background:#febc2e}
+.mk-dots i:nth-child(3){background:#28c840}
+
+/* address pill */
+.mk-url{
+  display:flex; align-items:center; gap:7px; min-width:0;
+  height:clamp(22px,2.6vw,26px); padding:0 clamp(9px,1.2vw,13px);
+  border-radius:999px; background:var(--bg); border:1px solid var(--hair);
+  font-family:var(--mono); font-size:clamp(10px,1.2vw,12px); color:var(--muted);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.mk-url svg{width:11px; height:11px; flex-shrink:0; opacity:.7}
+.mk-favicon{width:14px; height:14px; flex-shrink:0; border-radius:3px}
+
+/* ── browser · oplinx ──
+   Single-bar light chrome. The marketing sites are judged as URLs, so the
+   address is the point of the frame. */
+.mk-browser .mk-frame{
+  border:1px solid var(--hair); border-radius:14px; overflow:hidden;
+  background:var(--panel); box-shadow:0 30px 60px -34px rgba(0,0,0,.42);
+}
+.mk-browser .mk-chrome{
+  gap:clamp(8px,1.4vw,14px);
+  height:clamp(36px,4.4vw,46px); padding:0 clamp(11px,1.5vw,16px);
+  background:color-mix(in srgb,var(--ink) 4%,var(--bg));
+  border-bottom:1px solid var(--hair);
+}
+.mk-browser .mk-url{flex:0 1 auto; margin:0 auto; max-width:min(60%,420px)}
+.mk-chip{
+  flex-shrink:0; font-family:var(--mono); font-size:clamp(9px,1.1vw,11px);
+  letter-spacing:.04em; color:var(--muted);
+  padding:3px 8px; border:1px solid var(--hair); border-radius:999px;
+}
+
+/* ── browser, dark + tab strip · lbspotlight ──
+   Two bars and a named tab: reads as an app you keep open, which is what a
+   volunteer-facing NGO platform actually is. Colours are literal rather than
+   token-driven — this is a picture of someone else's browser, and it should
+   look the same whichever theme the case page is in. */
+.mk-tabbed .mk-frame{
+  border-radius:14px; overflow:hidden;
+  background:#20242b; border:1px solid #2c3138;
+  box-shadow:0 30px 60px -32px rgba(0,0,0,.55);
+}
+.mk-tabbed .mk-tabbar{
+  gap:clamp(8px,1.4vw,14px); padding:clamp(7px,1vw,10px) clamp(11px,1.5vw,16px) 0;
+}
+.mk-tabbed .mk-tab{
+  display:flex; align-items:center; gap:8px; min-width:0;
+  max-width:min(58%,300px); padding:clamp(5px,.8vw,8px) clamp(10px,1.4vw,14px);
+  border-radius:9px 9px 0 0; background:#2c313a;
+  font-size:clamp(10px,1.2vw,12px); color:#c8ced6;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.mk-tabbed .mk-chrome{
+  gap:clamp(8px,1.4vw,14px);
+  height:clamp(34px,4.2vw,44px); padding:0 clamp(11px,1.5vw,16px);
+  background:#2c313a;
+}
+.mk-tabbed .mk-url{
+  flex:1; background:#191d23; border-color:#363c45; color:#98a1ac;
+}
+.mk-tabbed .mk-dots i{background:#4a515b}
+
+/* ── laptop · war ──
+   Lid, then a hinge bar wider than the lid with a thumb notch. The base is a
+   sibling of the frame so the lid can keep its own overflow clipping. */
+.mk-laptop .mk-frame{
+  padding:clamp(9px,1.2vw,15px);
+  border-radius:clamp(11px,1.5vw,18px) clamp(11px,1.5vw,18px) 0 0;
+  background:linear-gradient(180deg,#31363e,#1c2026);
+}
+.mk-laptop .mk-screen{border-radius:clamp(3px,.5vw,5px)}
+/* camera */
+.mk-laptop .mk-frame::before{
+  content:""; position:absolute; top:clamp(3px,.45vw,6px); left:50%;
+  width:4px; height:4px; margin-left:-2px; border-radius:50%;
+  background:#565d66;
+}
+/* The hinge overhangs the lid, half on each side. Its total stays under twice
+   the .wrap gutter (24px desktop / 30px mobile) so it can never push the page
+   sideways. Both margins are set rather than just margin-left: with only one
+   set the box is over-constrained, and the margin the browser solves for is
+   the *start* one under RTL — which threw the whole overhang onto one side and
+   pushed the Arabic page 11px wide. */
+.mk-laptop{--hinge:clamp(16px,3vw,44px)}
+.mk-laptop .mk-base{
+  display:block; position:relative;
+  width:calc(100% + var(--hinge));
+  margin-inline:calc(-0.5 * var(--hinge));
+  height:clamp(9px,1.2vw,15px);
+  border-radius:0 0 clamp(7px,1vw,11px) clamp(7px,1vw,11px);
+  background:linear-gradient(180deg,#3d434c,#22262c);
+  box-shadow:0 22px 40px -22px rgba(0,0,0,.55);
+}
+.mk-laptop .mk-base::after{
+  content:""; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:clamp(56px,8vw,104px); height:clamp(3px,.45vw,5px);
+  border-radius:0 0 5px 5px; background:rgba(0,0,0,.32);
+}
+
+/* ── monitor · agripro ──
+   Deeper chin than a laptop, on a neck and a foot. Agri Pro's platform is
+   something staff sit in front of all day, so it gets a desk machine. */
+.mk-monitor .mk-frame{
+  padding:clamp(10px,1.4vw,16px);
+  padding-bottom:clamp(20px,2.8vw,34px);
+  border-radius:clamp(10px,1.4vw,16px);
+  border:1px solid var(--hair);
+  background:linear-gradient(180deg,#f4f5f7,#dcdfe4);
+}
+.mk-monitor .mk-screen{border-radius:clamp(2px,.35vw,4px)}
+/* power dot on the chin */
+.mk-monitor .mk-frame::after{
+  content:""; position:absolute; left:50%; bottom:clamp(8px,1.1vw,14px);
+  width:5px; height:5px; margin-left:-2.5px; border-radius:50%;
+  background:var(--blue); opacity:.75;
+}
+.mk-monitor .mk-stand{
+  display:block; position:relative;
+  width:clamp(56px,8vw,96px); height:clamp(16px,2.4vw,30px); margin:0 auto;
+  background:linear-gradient(180deg,#e2e5ea,#cdd2d9);
+}
+.mk-monitor .mk-stand::after{           /* foot */
+  content:""; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+  width:clamp(120px,17vw,210px); height:clamp(6px,.85vw,10px);
+  border-radius:4px; background:linear-gradient(180deg,#d3d8de,#b9bfc7);
+  box-shadow:0 20px 34px -20px rgba(0,0,0,.4);
+}
+html[data-theme="dark"] .mk-monitor .mk-frame{background:linear-gradient(180deg,#262a30,#15181c)}
+html[data-theme="dark"] .mk-monitor .mk-stand{background:linear-gradient(180deg,#22262b,#181b1f)}
+html[data-theme="dark"] .mk-monitor .mk-stand::after{background:linear-gradient(180deg,#1e2226,#121518)}
+
+/* ── tablet · bayader ──
+   Even bezel on all four sides with the camera on the short edge, so it
+   reads as landscape rather than as a very thin monitor. */
+.mk-tablet .mk-frame{
+  padding:clamp(11px,1.6vw,20px) clamp(20px,2.8vw,34px);
+  border-radius:clamp(16px,2.4vw,30px);
+  background:linear-gradient(145deg,#33383f,#1a1d22);
+  box-shadow:0 32px 64px -34px rgba(0,0,0,.5);
+}
+.mk-tablet .mk-screen{border-radius:clamp(3px,.5vw,6px)}
+.mk-tablet .mk-frame::before{           /* camera, on the left short edge */
+  content:""; position:absolute; top:50%; left:clamp(8px,1.2vw,15px);
+  width:5px; height:5px; margin-top:-2.5px; border-radius:50%;
+  background:#5b626b;
+}
+
+/* ── poster · ana-arabia ──
+   No device at all. The Ana Arabia hero is a full-bleed key visual, so it is
+   mounted like printed artwork: floated, warm-lit, with a soft floor under
+   it. A frame here would only get in the way of the artwork. */
+.mk-poster .mk-frame{
+  border-radius:clamp(10px,1.4vw,16px); overflow:hidden;
+  box-shadow:0 2px 4px rgba(0,0,0,.12), 0 40px 70px -34px rgba(0,0,0,.55);
+}
+.mk-poster .mk-screen{border-radius:inherit}
+/* pooled light under the artwork. Anchored off the caption (bottom:100% puts
+   it directly above), because the caption is the only element that sits below
+   the frame — hanging it off .mk-poster itself would land it *behind* the
+   image, where the frame's own overflow:hidden hides it. */
+.mk-poster figcaption{position:relative}
+.mk-poster figcaption::before{
+  content:""; position:absolute; z-index:-1; left:12%; right:12%;
+  bottom:calc(100% - clamp(26px,3.6vw,46px)); height:clamp(32px,4.6vw,58px);
+  background:radial-gradient(50% 50% at 50% 50%,rgba(0,140,193,.45),transparent 72%);
+  filter:blur(18px); pointer-events:none;
+}
 
 /* ── sections ── */
 section.blk{padding:44px 0; border-top:1px solid var(--hair)}
