@@ -777,37 +777,104 @@
     align-items: center;
     padding: 6px 0 4px;
   }
+  /* ── case screenshot, framed as a laptop ──
+     A screenshot on its own reads as a floating rectangle against the colored
+     hero backgrounds; in a device it reads as a product shot. The frame is
+     pure CSS, so the slider still ships nothing but the screenshots.
+
+       button.case-shot
+         span.mk-lid  →  span.mk-notch + span.mk-screen > picture
+         span.mk-base
+
+     .mk-screen is the only part that clips, which lets the notch dip past the
+     screen's top edge. Nothing may be wider than the button itself: the
+     slide hides its overflow, so an overhanging hinge would be sliced off at
+     the slide edge (and, under RTL, sliced off unevenly). Sizes scale with vw
+     so the laptop keeps its proportions down to phone widths. */
   .case-shot {
-    border: 1px solid var(--hair);
-    border-radius: var(--radius);
-    overflow: hidden;
-    aspect-ratio: 16 / 10;
-    background: var(--bg-soft);
+    display: block; width: 100%;
+    padding: 0; border: 0; background: none;
     cursor: pointer;
-    padding: 0;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
-    width: 100%;
+    transition: transform .35s var(--ease);
   }
-  .case-shot:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 44px rgba(0,0,0,0.12);
-    border-color: rgba(0,140,193,0.35);
+  .case-shot:hover { transform: translateY(-6px); }
+
+  .mk-lid {
+    display: block; position: relative;
+    padding: clamp(6px, .9vw, 10px);
+    padding-top: clamp(8px, 1.05vw, 12px);  /* deeper top bezel — the notch sits in it */
+    border-radius: clamp(10px, 1.5vw, 17px) clamp(10px, 1.5vw, 17px) 0 0;
+    background: linear-gradient(180deg, #3c424b 0%, #2a2f36 45%, #1e2228 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.16),
+      0 1px 1px rgba(4,18,38,0.10),
+      0 18px 34px -16px rgba(4,18,38,0.45);
+    transition: box-shadow .35s var(--ease);
   }
-  .case-shot img {
+  .mk-notch {
+    position: absolute; z-index: 3; top: 0; left: 50%;
+    transform: translateX(-50%);
+    /* sized off the lid, not the viewport, so the proportion holds at any width */
+    width: 13%; min-width: 34px; max-width: 92px;
+    height: clamp(10px, 1.35vw, 15px);      /* taller than the bezel: dips over the screen */
+    border-radius: 0 0 clamp(5px, .7vw, 8px) clamp(5px, .7vw, 8px);
+    background: #16191e;
+  }
+  .mk-notch::after {                        /* camera */
+    content: "";
+    position: absolute; bottom: clamp(2px, .3vw, 4px); left: 50%;
+    width: 3px; height: 3px; margin-left: -1.5px;
+    border-radius: 50%; background: #454c56;
+  }
+  .mk-screen {
+    display: block; position: relative; overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border-radius: clamp(2px, .35vw, 4px);
+    background: #fff;
+  }
+  /* glare + the bezel's inner edge. Both sit on the ::after rather than on
+     .mk-screen itself: an inset shadow on the box would paint under the
+     screenshot, which covers the whole screen. */
+  .mk-screen::after {
+    content: "";
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(104deg, rgba(255,255,255,0.15) 0 16%, rgba(255,255,255,0) 40%);
+    /* light hairline: it separates a dark screenshot from the dark bezel and
+       stays invisible over a light one */
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .mk-screen img {
     width: 100%; height: 100%;
     object-fit: cover; object-position: top center;
     display: block;
     -webkit-user-drag: none; user-select: none; /* don't let native image-drag cancel a swipe */
   }
-  .work-case.contain .case-shot img { object-fit: contain; padding: 12px; }
+  .work-case.contain .mk-screen img { object-fit: contain; padding: 10px; }
+
+  /* base: the front edge of the body below the lid, with its thumb notch */
+  .mk-base {
+    display: block; position: relative;
+    height: clamp(8px, 1.15vw, 13px);
+    border-radius: 0 0 clamp(7px, 1vw, 11px) clamp(7px, 1vw, 11px);
+    background: linear-gradient(180deg, #474d57 0%, #2b3037 55%, #1d2126 100%);
+    box-shadow: 0 22px 34px -22px rgba(4,18,38,0.55);
+    transition: box-shadow .35s var(--ease);
+  }
+  .mk-base::after {
+    content: "";
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: clamp(48px, 7vw, 92px); height: clamp(3px, .45vw, 5px);
+    border-radius: 0 0 5px 5px;
+    background: rgba(0,0,0,0.30);
+  }
 
   /* ── image loading state: shimmer skeleton + fade-in ── */
-  .case-shot { position: relative; }
-  .case-shot picture { display: contents; }
-  .case-shot img { position: relative; z-index: 1; opacity: 0; transition: opacity .5s var(--ease); }
-  .case-shot img.is-loaded { opacity: 1; }
-  .case-shot::before {
+  .mk-screen picture { display: contents; }
+  .mk-screen img { position: relative; z-index: 1; opacity: 0; transition: opacity .5s var(--ease); }
+  .mk-screen img.is-loaded { opacity: 1; }
+  .mk-screen::before {
     content: "";
     position: absolute; inset: 0; z-index: 0;
     background: linear-gradient(100deg,
@@ -819,7 +886,9 @@
     transition: opacity .4s ease;
     pointer-events: none;
   }
-  .case-shot.is-loaded::before { opacity: 0; animation: none; }
+  .case-shot.is-loaded .mk-screen::before { opacity: 0; animation: none; }
+  /* tint the screen while it loads — a white shimmer on a white screen is invisible */
+  .case-shot:not(.is-loaded) .mk-screen { background: #e9edf1; }
   .modal-hero.is-loading::before {
     content: "";
     position: absolute; inset: 0; z-index: 0;
@@ -836,8 +905,8 @@
     100% { background-position: -120% 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .case-shot::before, .modal-hero.is-loading::before { animation: none; }
-    .case-shot img { transition: none; }
+    .mk-screen::before, .modal-hero.is-loading::before { animation: none; }
+    .mk-screen img { transition: none; }
   }
   .case-info .label {
     display: inline-flex; align-items: center; gap: 8px;
@@ -979,22 +1048,21 @@
   .hero.is-colored .case-info .blurb { color: rgba(255,255,255,0.86); }
   .hero.is-colored .chip { color: #fff; background: rgba(255,255,255,0.18); }
 
-  /* clean white project cards so screenshots pop on the colored bg */
-  .hero.is-colored .case-shot {
-    background: #fff;
-    border-color: rgba(255,255,255,0.7);
+  /* the laptop sits on a colored backdrop, so it casts a deeper shadow here */
+  .hero.is-colored .mk-lid {
     box-shadow:
-      0 1px 1px rgba(4,18,38,0.10),
-      0 10px 20px -8px rgba(4,18,38,0.28),
-      0 26px 48px -18px rgba(4,18,38,0.38);
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      0 2px 4px rgba(4,18,38,0.18),
+      0 22px 40px -18px rgba(4,18,38,0.50);
   }
-  .hero.is-colored .case-shot:hover {
-    border-color: #fff;
+  .hero.is-colored .mk-base { box-shadow: 0 26px 40px -22px rgba(4,18,38,0.62); }
+  .hero.is-colored .case-shot:hover .mk-lid {
     box-shadow:
-      0 2px 4px rgba(4,18,38,0.12),
-      0 16px 30px -8px rgba(4,18,38,0.32),
-      0 40px 68px -20px rgba(4,18,38,0.44);
+      inset 0 1px 0 rgba(255,255,255,0.26),
+      0 3px 6px rgba(4,18,38,0.20),
+      0 34px 58px -20px rgba(4,18,38,0.58);
   }
+  .hero.is-colored .case-shot:hover .mk-base { box-shadow: 0 38px 54px -24px rgba(4,18,38,0.70); }
 
   /* buttons */
   .hero.is-colored .btn-primary { background: #fff; color: #0a2540; }
@@ -2063,11 +2131,17 @@
 
             <!-- SLIDE 2 — Agri Pro Services -->
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 7 — Agri Pro Services">
-              <button class="case-shot thumb-d" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
-                <picture>
-                  <source srcset="/cases/agripro/image-480.webp 480w, /cases/agripro/image-800.webp 800w, /cases/agripro/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                  <img src="/cases/agripro/image.jpg" alt="Agri Pro Services pest control operations platform built by kaprera" width="1600" height="941" loading="lazy" decoding="async" />
-                </picture>
+              <button class="case-shot" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="/cases/agripro/image-480.webp 480w, /cases/agripro/image-800.webp 800w, /cases/agripro/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="/cases/agripro/image.jpg" alt="Agri Pro Services pest control operations platform built by kaprera" width="1600" height="941" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">02</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ أعمالنا</span></span>
@@ -2083,11 +2157,17 @@
 
             <!-- SLIDE 3 — Oplinx -->
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 7 — Oplinx Solutions">
-              <button class="case-shot thumb-f" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
-                <picture>
-                  <source srcset="/cases/oplinx/image-480.webp 480w, /cases/oplinx/image-800.webp 800w, /cases/oplinx/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                  <img src="/cases/oplinx/image.jpg" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1600" height="828" loading="lazy" decoding="async" />
-                </picture>
+              <button class="case-shot" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="/cases/oplinx/image-480.webp 480w, /cases/oplinx/image-800.webp 800w, /cases/oplinx/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="/cases/oplinx/image.jpg" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1600" height="828" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">03</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ أعمالنا</span></span>
@@ -2103,11 +2183,17 @@
 
             <!-- SLIDE 4 — Lebanese Spotlight -->
             <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 7 — Lebanese Spotlight">
-              <button class="case-shot thumb-b" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
-                <picture>
-                  <source srcset="/cases/lbspotlight/image-480.webp 480w, /cases/lbspotlight/image-800.webp 800w, /cases/lbspotlight/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                  <img src="/cases/lbspotlight/image.jpg" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="1600" height="804" loading="lazy" decoding="async" />
-                </picture>
+              <button class="case-shot" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="/cases/lbspotlight/image-480.webp 480w, /cases/lbspotlight/image-800.webp 800w, /cases/lbspotlight/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="/cases/lbspotlight/image.jpg" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="1600" height="804" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">04</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ أعمالنا</span></span>
@@ -2123,11 +2209,17 @@
 
             <!-- SLIDE 5 — War Action Research -->
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 7 — War Action Research">
-              <button class="case-shot thumb-e" data-case="war" aria-haspopup="dialog" aria-label="open War Action Research case study">
-                <picture>
-                  <source srcset="/cases/war/image-480.webp 480w, /cases/war/image-800.webp 800w, /cases/war/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                  <img src="/cases/war/image.jpg" alt="War Action Research interactive research platform built by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
-                </picture>
+              <button class="case-shot" data-case="war" aria-haspopup="dialog" aria-label="open War Action Research case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="/cases/war/image-480.webp 480w, /cases/war/image-800.webp 800w, /cases/war/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="/cases/war/image.jpg" alt="War Action Research interactive research platform built by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">05</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ أعمالنا</span></span>
@@ -2143,11 +2235,17 @@
 
             <!-- SLIDE 6 — Ana Arabia -->
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 7 — Ana Arabia">
-              <button class="case-shot thumb-c" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
-                <picture>
-                  <source srcset="/cases/ana-arabia/image-480.webp 480w, /cases/ana-arabia/image-800.webp 800w, /cases/ana-arabia/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                  <img src="/cases/ana-arabia/image.jpg" alt="Ana Arabia bilingual event landing page for Riyadh Season by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
-                </picture>
+              <button class="case-shot" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="/cases/ana-arabia/image-480.webp 480w, /cases/ana-arabia/image-800.webp 800w, /cases/ana-arabia/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="/cases/ana-arabia/image.jpg" alt="Ana Arabia bilingual event landing page for Riyadh Season by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">06</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ أعمالنا</span></span>
@@ -2163,11 +2261,17 @@
 
             <!-- SLIDE 7 — Bayader -->
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="7 of 7 — Bayader Investments">
-              <button class="case-shot thumb-a" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
-                <picture>
-                  <source srcset="/cases/bayader/image-480.webp 480w, /cases/bayader/image-800.webp 800w, /cases/bayader/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                  <img src="/cases/bayader/image.jpg" alt="Bayader Investments website designed and developed by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
-                </picture>
+              <button class="case-shot" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="/cases/bayader/image-480.webp 480w, /cases/bayader/image-800.webp 800w, /cases/bayader/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="/cases/bayader/image.jpg" alt="Bayader Investments website designed and developed by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">07</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ أعمالنا</span></span>
