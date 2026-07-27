@@ -212,6 +212,18 @@
         "creator": { "@type": "Organization", "name": "kaprera" },
         "about": "Bilingual English/Arabic consultancy website with full RTL support — UI/UX and web development."
       }
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "Mr. Ibrahim Hussein",
+        "url": "https://ibrahim-hussein.com",
+        "image": "https://kaprera.com/cases/ibrahim-hussein/image.jpg",
+        "creator": { "@type": "Organization", "name": "kaprera" },
+        "about": "Programming teaching platform with published courses, C++/Java exercises and a scored evaluation test."
+      }
     }
   ]
 }
@@ -745,6 +757,7 @@
   .thumb-d { background: linear-gradient(135deg, #14432a, #2f8f4e 60%, #6bbf59); }
   .thumb-e { background: linear-gradient(135deg, #1a1a1a, #3a3a3a 55%, #e6c619); }
   .thumb-f { background: linear-gradient(135deg, #00365f, #004885 55%, #f26524); }
+  .thumb-g { background: linear-gradient(135deg, #16213f, #2b3859 55%, #c7a02e); }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
   .chip {
     font-family: 'JetBrains Mono', monospace;
@@ -1027,6 +1040,13 @@
     background-image:
       radial-gradient(120% 120% at 18% 4%, rgba(242,101,36,0.22), transparent 52%),
       linear-gradient(125deg, #00365f 0%, #0d5385 52%, #b8501f 100%);
+  }
+
+  /* mr. ibrahim hussein — brand navy → brass gold */
+  .b-ihussein {
+    background-image:
+      radial-gradient(120% 120% at 16% 6%, rgba(199,160,46,0.24), transparent 52%),
+      linear-gradient(125deg, #16213f 0%, #2b3859 50%, #8a6d12 100%);
   }
 
   /* light text + controls over the colored backgrounds */
@@ -2101,6 +2121,7 @@
       <span class="hero-bg b-war"></span>
       <span class="hero-bg b-ana"></span>
       <span class="hero-bg b-bayader"></span>
+      <span class="hero-bg b-ihussein"></span>
     </div>
     <span class="hero-mark" aria-hidden="true"></span>
     <div class="wrap">
@@ -2110,7 +2131,7 @@
           <div class="work-track" id="workTrack">
 
             <!-- SLIDE 1 — hero -->
-            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 7 — intro">
+            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 8 — intro">
               <span class="eyebrow reveal"><span class="dot"></span> <span data-en="Digital agency · Beirut, Lebanon" data-ar="وكالة رقمية · بيروت، لبنان">وكالة رقمية · بيروت، لبنان</span></span>
               <h1 class="reveal" id="heroTitle" data-en="Stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">حضور رقمي أقوى للشركات الناشئة والمتنامية.</h1>
               <p class="subline reveal" data-en="We design and build websites and brands that turn audiences into customers." data-ar="نصمّم ونطوّر مواقع وعلامات تجارية تحوّل الجمهور إلى عملاء.">نصمّم ونطوّر مواقع وعلامات تجارية تحوّل الجمهور إلى عملاء.</p>
@@ -2130,7 +2151,7 @@
             </div>
 
             <!-- SLIDE 2 — Agri Pro Services -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 7 — Agri Pro Services">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 8 — Agri Pro Services">
               <button class="case-shot" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2156,7 +2177,7 @@
             </div>
 
             <!-- SLIDE 3 — Oplinx -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 7 — Oplinx Solutions">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 8 — Oplinx Solutions">
               <button class="case-shot" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2182,7 +2203,7 @@
             </div>
 
             <!-- SLIDE 4 — Lebanese Spotlight -->
-            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 7 — Lebanese Spotlight">
+            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 8 — Lebanese Spotlight">
               <button class="case-shot" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2208,7 +2229,7 @@
             </div>
 
             <!-- SLIDE 5 — War Action Research -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 7 — War Action Research">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 8 — War Action Research">
               <button class="case-shot" data-case="war" aria-haspopup="dialog" aria-label="open War Action Research case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2234,7 +2255,7 @@
             </div>
 
             <!-- SLIDE 6 — Ana Arabia -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 7 — Ana Arabia">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 8 — Ana Arabia">
               <button class="case-shot" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2260,7 +2281,7 @@
             </div>
 
             <!-- SLIDE 7 — Bayader -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="7 of 7 — Bayader Investments">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="7 of 8 — Bayader Investments">
               <button class="case-shot" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2285,6 +2306,32 @@
               </div>
             </div>
 
+            <!-- SLIDE 8 — Mr. Ibrahim Hussein -->
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="8 of 8 — Mr. Ibrahim Hussein">
+              <button class="case-shot" data-case="ihussein" aria-haspopup="dialog" aria-label="open Mr. Ibrahim Hussein case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="/cases/ibrahim-hussein/image-480.webp 480w, /cases/ibrahim-hussein/image-800.webp 800w, /cases/ibrahim-hussein/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="/cases/ibrahim-hussein/image.jpg" alt="Mr. Ibrahim Hussein programming teaching platform built by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
+              </button>
+              <div class="case-info">
+                <span class="label"><span class="num">08</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ أعمالنا</span></span>
+                <h2>Mr. Ibrahim Hussein</h2>
+                <p class="blurb" data-en="A teaching platform for a programming tutor, with every exercise in both C++ and Java." data-ar="منصة تعليمية لمدرّس برمجة، بكل تمرين متاح بلغتَي C++ وJava.">منصة تعليمية لمدرّس برمجة، بكل تمرين متاح بلغتَي C++ وJava.</p>
+                <div class="chips">
+                  <span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">تصميم واجهات</span>
+                  <span class="chip" data-en="Web app" data-ar="تطبيق ويب">تطبيق ويب</span>
+                </div>
+                <a href="/cases/ibrahim-hussein/" class="btn btn-primary" data-case="ihussein" aria-haspopup="dialog" data-en="View case study" data-ar="عرض دراسة الحالة">عرض دراسة الحالة</a>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -2297,7 +2344,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
           <div class="work-dots" id="workDots" role="tablist" aria-label="our work slides"></div>
-          <div class="work-count"><b id="workNow">01</b> / 07</div>
+          <div class="work-count"><b id="workNow">01</b> / 08</div>
         </div>
       </div>
     </div>
@@ -2672,6 +2719,52 @@
 <script>
   // ── case study data ──
   const CASES = {
+    ihussein: {
+      name: "Mr. Ibrahim Hussein",
+      url: "ibrahim-hussein.com",
+      href: "https://ibrahim-hussein.com",
+      ghost: "ibrahim hussein",
+      thumb: "thumb-g",
+      shot: "/cases/ibrahim-hussein/image.webp",
+      tags: { en: ["ui/ux", "web app"], ar: ["تصميم واجهات", "تطبيق ويب"] },
+      challenge: {
+        en: "A private tutor needed more than a flyer. Students had no way to see what a course actually covers, no way to judge whether they were ready for it, and no way to practise between sessions.",
+        ar: "لم يكن المنشور الدعائي كافياً لمدرّس خاص. لم يكن أمام الطلاب وسيلة لمعرفة ما يغطّيه المساق فعلياً، ولا لتقدير جاهزيتهم له، ولا للتمرّن بين الحصص."
+      },
+      solution: {
+        en: "Designed and built an open teaching platform: the full curriculum published objective by objective, every exercise available in both C++ and Java, and a scored evaluation test — with booking one tap away on WhatsApp.",
+        ar: "صمّمنا وطوّرنا منصة تعليمية مفتوحة: المنهج كاملاً منشوراً هدفاً بهدف، وكل تمرين متاح بلغتَي C++ وJava، واختبار تقييم بدرجات — مع حجز على بُعد نقرة واحدة عبر واتساب."
+      },
+      highlights: {
+        en: [
+          "Two published courses — Programming Fundamentals and Object-Oriented Programming — across 15 modules",
+          "Every exercise published in both C++ and Java, switchable in place",
+          "A scored evaluation test that tells a student where they stand before they book",
+          "Curriculum stored as plain data files — new exercises and courses are added without touching the app",
+          "Service and pricing blocks that end in a pre-filled WhatsApp message",
+          "Self-contained static build — no frameworks, no backend, no third-party trackers"
+        ],
+        ar: [
+          "مساقان منشوران — أساسيات البرمجة والبرمجة كائنية التوجّه — عبر 15 وحدة",
+          "كل تمرين منشور بلغتَي C++ وJava مع تبديل فوري بينهما",
+          "اختبار تقييم بدرجات يُظهر للطالب مستواه قبل الحجز",
+          "المنهج مخزّن كملفات بيانات بسيطة — تُضاف التمارين والمساقات دون المساس بالتطبيق",
+          "أقسام للخدمات والأسعار تنتهي برسالة واتساب معبّأة مسبقاً",
+          "بناء ثابت مكتفٍ ذاتياً — بلا أطر عمل أو خادم خلفي أو أدوات تتبّع خارجية"
+        ]
+      },
+      specs: [
+        { k: { en: "type", ar: "النوع" }, v: { en: "teaching & exercise platform", ar: "منصة تعليم وتمارين" } },
+        { k: { en: "stack", ar: "التقنيات" }, v: { en: "static HTML, CSS & JavaScript", ar: "HTML وCSS وJavaScript ثابتة" } },
+        { k: { en: "client", ar: "العميل" }, v: { en: "private tutor — Beirut, Lebanon", ar: "مدرّس خاص — بيروت، لبنان" } },
+        { k: { en: "scope", ar: "نطاق العمل" }, v: { en: "UI/UX design & web development", ar: "تصميم واجهات وتطوير ويب" } }
+      ],
+      results: [
+        { big: "84", small: { en: "exercises published", ar: "تمريناً منشوراً" } },
+        { big: "C++ / Java", small: { en: "every exercise in both languages", ar: "كل تمرين بكلتا اللغتين" } },
+        { big: "100%", small: { en: "responsive across devices", ar: "متجاوب على كل الأجهزة" } }
+      ]
+    },
     oplinx: {
       name: "Oplinx Solutions",
       url: "oplinx.netlify.app",
