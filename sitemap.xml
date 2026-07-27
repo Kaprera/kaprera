@@ -34,6 +34,10 @@
       <image:loc>https://kaprera.com/cases/oplinx/image.jpg</image:loc>
       <image:title>Oplinx Solutions bilingual consultancy website by kaprera</image:title>
     </image:image>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/ibrahim-hussein/image.jpg</image:loc>
+      <image:title>Mr. Ibrahim Hussein programming teaching platform by kaprera</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://kaprera.com/ar/</loc>
@@ -112,6 +116,16 @@
     <image:image>
       <image:loc>https://kaprera.com/cases/oplinx/image.jpg</image:loc>
       <image:title>Oplinx Solutions bilingual consultancy website by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/ibrahim-hussein/</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/ibrahim-hussein/image.jpg</image:loc>
+      <image:title>Mr. Ibrahim Hussein programming teaching platform by kaprera</image:title>
     </image:image>
   </url>
   <url>
