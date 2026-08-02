@@ -1811,19 +1811,7 @@
   /* ── mobile ── */
   @media (max-width: 860px) {
     .section { padding: 80px 0; }
-    /* ── shorter hero on phones ──
-       The desktop rhythm (150px of top padding, a 13ch headline measure, 26/38px
-       gaps) pushes the CTAs and the slider controls past the thumb zone on a
-       phone. Tightening the spacing and letting the headline run wider — fewer,
-       not smaller, lines — keeps the whole first slide inside one screen. */
-    .hero { padding: 104px 0 34px; }
-    .hero .eyebrow { font-size: 12px; padding: 6px 12px; margin-bottom: 16px; }
-    .hero h1 {
-      font-size: clamp(34px, 9vw, 46px);
-      max-width: 18ch;
-      margin-bottom: 16px;
-    }
-    .hero .subline { font-size: 16px; margin-bottom: 24px; }
+    .hero { padding: 138px 0 50px; }
     .menu-btn { display: flex; position: relative; z-index: 101; }
     .menu-btn.open span { background: #fff; }  /* X stays visible over the dark scrim */
     /* nav becomes a dimmed backdrop holding a centered card (like the case modal) */
@@ -1872,15 +1860,9 @@
       margin-top: 20px;
     }
     .nav-panel .btn { width: 100%; margin-top: 14px; }
-    /* the track is as tall as its tallest slide, so tightening the case slides
-       shortens the hero on every slide — including slide 1 */
-    .work-case { grid-template-columns: 1fr; gap: 20px; }
-    .case-info .label { margin-bottom: 10px; }
-    .case-info h2 { font-size: clamp(28px, 8vw, 40px); margin-bottom: 10px; }
-    .case-info .blurb { margin-bottom: 16px; }
-    .case-info .chips { margin-bottom: 18px; }
-    .work-ctrls { margin-top: 28px; padding-top: 20px; }
-    .work-arrow { width: 42px; height: 42px; }
+    .work-case { grid-template-columns: 1fr; gap: 24px; }
+    .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
+    .work-ctrls { margin-top: 40px; }
     /* services slider → single column, arrows drop to the bottom corners */
     .svc-panel {
       grid-template-columns: 1fr;
