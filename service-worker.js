@@ -1,5 +1,5 @@
 /* kaprera service worker — offline shell + smart caching */
-const VERSION = 'kaprera-v6';
+const VERSION = 'kaprera-v7';
 const PRECACHE = [
   '/',
   '/privacy-policy',
@@ -49,20 +49,49 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Same-origin static assets: stale-while-revalidate.
+  const cachePut = (request, res) => {
+    if (res && res.status === 200 && res.type === 'basic') {
+      const copy = res.clone();
+      return caches.open(VERSION).then((c) => c.put(request, copy));
+    }
+    return Promise.resolve();
+  };
+
   if (url.origin === self.location.origin) {
+    // CSS and JS are edited in place and ship alongside the markup, so a stale
+    // copy paired with fresh HTML renders a broken page (the case-study pages
+    // and /work/ carry no inline styles — they went unstyled this way).
+    // Network-first keeps them in lockstep with the navigation response; the
+    // cache is only the offline fallback.
+    if (/\.(css|js)$/.test(url.pathname)) {
+      event.respondWith(
+        fetch(req)
+          .then((res) => {
+            event.waitUntil(cachePut(req, res));
+            return res;
+          })
+          .catch(() => caches.match(req))
+      );
+      return;
+    }
+
+    // Everything else same-origin (images, fonts, manifest) is content-addressed
+    // or changes rarely: stale-while-revalidate. waitUntil keeps the worker
+    // alive until the refreshed copy is actually written, otherwise the SW can
+    // be killed mid-revalidation and serve the same stale entry forever.
     event.respondWith(
       caches.match(req).then((cached) => {
         const network = fetch(req)
           .then((res) => {
-            if (res && res.status === 200 && res.type === 'basic') {
-              const copy = res.clone();
-              caches.open(VERSION).then((c) => c.put(req, copy));
-            }
+            event.waitUntil(cachePut(req, res));
             return res;
           })
           .catch(() => cached);
-        return cached || network;
+        if (cached) {
+          event.waitUntil(network.catch(() => {}));
+          return cached;
+        }
+        return network;
       })
     );
     return;
