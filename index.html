@@ -221,6 +221,18 @@
         "creator": { "@type": "Organization", "name": "kaprera" },
         "about": "Programming teaching platform with published courses, C++/Java exercises and a scored evaluation test."
       }
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "AL-Shamaa Engineering",
+        "url": "https://kaprera.com/cases/al-shamaa/",
+        "image": "https://kaprera.com/cases/al-shamaa/image.jpg",
+        "creator": { "@type": "Organization", "name": "kaprera" },
+        "about": "Bilingual English/Arabic landing page for an engineering consultancy — reinforcement detailing, BIM and structural design, illustrated in hand-drawn SVG."
+      }
     }
   ]
 }
@@ -755,6 +767,7 @@
   .thumb-e { background: linear-gradient(135deg, #1a1a1a, #3a3a3a 55%, #e6c619); }
   .thumb-f { background: linear-gradient(135deg, #00365f, #004885 55%, #f26524); }
   .thumb-g { background: linear-gradient(135deg, #16213f, #2b3859 55%, #c7a02e); }
+  .thumb-h { background: linear-gradient(135deg, #0b2136, #143651 55%, #c2a15e); }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
   .chip {
     font-family: 'JetBrains Mono', monospace;
@@ -1044,6 +1057,11 @@
     background-image:
       radial-gradient(120% 120% at 16% 6%, rgba(199,160,46,0.24), transparent 52%),
       linear-gradient(125deg, #16213f 0%, #2b3859 50%, #8a6d12 100%);
+  }
+  .b-shamaa {
+    background-image:
+      radial-gradient(120% 120% at 16% 6%, rgba(194,161,94,0.24), transparent 52%),
+      linear-gradient(125deg, #0b2136 0%, #143651 50%, #8a6f2e 100%);
   }
 
   /* light text + controls over the colored backgrounds */
@@ -2120,6 +2138,7 @@
       <span class="hero-bg b-ana"></span>
       <span class="hero-bg b-bayader"></span>
       <span class="hero-bg b-ihussein"></span>
+      <span class="hero-bg b-shamaa"></span>
     </div>
     <span class="hero-mark" aria-hidden="true"></span>
     <div class="wrap">
@@ -2129,7 +2148,7 @@
           <div class="work-track" id="workTrack">
 
             <!-- SLIDE 1 — hero -->
-            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 8 — intro">
+            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 9 — intro">
               <span class="eyebrow reveal"><span class="dot"></span> <span data-en="Digital agency · Beirut, Lebanon" data-ar="وكالة رقمية · بيروت، لبنان">Digital agency · Beirut, Lebanon</span></span>
               <h1 class="reveal" id="heroTitle" data-en="Stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</h1>
               <p class="subline reveal" data-en="We design and build websites and brands that turn audiences into customers." data-ar="نصمّم ونطوّر مواقع وعلامات تجارية تحوّل الجمهور إلى عملاء.">We design and build websites and brands that turn audiences into customers.</p>
@@ -2149,7 +2168,7 @@
             </div>
 
             <!-- SLIDE 2 — Agri Pro Services -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 8 — Agri Pro Services">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 9 — Agri Pro Services">
               <button class="case-shot" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2175,7 +2194,7 @@
             </div>
 
             <!-- SLIDE 3 — Oplinx -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 8 — Oplinx Solutions">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 9 — Oplinx Solutions">
               <button class="case-shot" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2201,7 +2220,7 @@
             </div>
 
             <!-- SLIDE 4 — Lebanese Spotlight -->
-            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 8 — Lebanese Spotlight">
+            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 9 — Lebanese Spotlight">
               <button class="case-shot" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2227,7 +2246,7 @@
             </div>
 
             <!-- SLIDE 5 — War Action Research -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 8 — War Action Research">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 9 — War Action Research">
               <button class="case-shot" data-case="war" aria-haspopup="dialog" aria-label="open War Action Research case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2253,7 +2272,7 @@
             </div>
 
             <!-- SLIDE 6 — Ana Arabia -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 8 — Ana Arabia">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 9 — Ana Arabia">
               <button class="case-shot" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2278,7 +2297,7 @@
             </div>
 
             <!-- SLIDE 7 — Bayader -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="7 of 8 — Bayader Investments">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="7 of 9 — Bayader Investments">
               <button class="case-shot" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2303,7 +2322,7 @@
             </div>
 
             <!-- SLIDE 8 — Mr. Ibrahim Hussein -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="8 of 8 — Mr. Ibrahim Hussein">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="8 of 9 — Mr. Ibrahim Hussein">
               <button class="case-shot" data-case="ihussein" aria-haspopup="dialog" aria-label="open Mr. Ibrahim Hussein case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2328,6 +2347,31 @@
               </div>
             </div>
 
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="9 of 9 — AL-Shamaa Engineering">
+              <button class="case-shot" data-case="shamaa" aria-haspopup="dialog" aria-label="open AL-Shamaa Engineering case study">
+                <span class="mk-lid">
+                  <span class="mk-notch" aria-hidden="true"></span>
+                  <span class="mk-screen">
+                    <picture>
+                      <source srcset="cases/al-shamaa/image-480.webp 480w, cases/al-shamaa/image-800.webp 800w, cases/al-shamaa/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
+                      <img src="cases/al-shamaa/image.jpg" alt="AL-Shamaa Engineering bilingual landing page built by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
+                    </picture>
+                  </span>
+                </span>
+                <span class="mk-base" aria-hidden="true"></span>
+              </button>
+              <div class="case-info">
+                <span class="label"><span class="num">09</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <h2>AL-Shamaa Engineering</h2>
+                <p class="blurb" data-en="A bilingual landing page for an engineering consultancy, illustrated entirely in hand-drawn SVG." data-ar="صفحة هبوط ثنائية اللغة لشركة استشارات هندسية، برسوم SVG مرسومة يدوياً بالكامل.">A bilingual landing page for an engineering consultancy, illustrated entirely in hand-drawn SVG.</p>
+                <div class="chips">
+                  <span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span>
+                  <span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span>
+                </div>
+                <a href="/cases/al-shamaa/" class="btn btn-primary" data-case="shamaa" aria-haspopup="dialog" data-en="View case study" data-ar="عرض دراسة الحالة">View case study</a>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -2340,7 +2384,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
           <div class="work-dots" id="workDots" role="tablist" aria-label="our work slides"></div>
-          <div class="work-count"><b id="workNow">01</b> / 08</div>
+          <div class="work-count"><b id="workNow">01</b> / 09</div>
         </div>
       </div>
     </div>
@@ -3065,6 +3109,48 @@
         { big: "role-based", small: { en: "admin, operator & sysadmin access", ar: "صلاحيات للمشرف والمشغّل ومدير النظام" } },
         { big: "real-time", small: { en: "dashboard & reporting", ar: "لوحة تحكم وتقارير فورية" } }
       ]
+    },
+    shamaa: {
+      name: "AL-Shamaa Engineering",
+      ghost: "al-shamaa",
+      thumb: "thumb-h",
+      shot: "cases/al-shamaa/image.webp",
+      tags: { en: ["ui/ux", "landing page"], ar: ["تصميم واجهات", "صفحة هبوط"] },
+      challenge: {
+        en: "A reinforcement detailing and BIM practice needed a first presence that reads as technical rather than generic — one page explaining shop drawings, BIM modelling and structural design to contractors and consultants, in both English and Arabic.",
+        ar: "احتاجت شركة متخصّصة بتفصيل حديد التسليح ونمذجة BIM إلى حضور رقمي أول ذي طابع تقني لا نمطي — صفحة واحدة تشرح المخططات التنفيذية ونمذجة BIM والتصميم الإنشائي للمقاولين والاستشاريين، بالإنجليزية والعربية."
+      },
+      solution: {
+        en: "Designed and built a self-contained bilingual landing page whose artwork is the discipline itself — a reinforcement cage, a beam elevation and an isometric BIM frame, all drawn as SVG. One button converts the whole page to Arabic and flips it right-to-left.",
+        ar: "صمّمنا وطوّرنا صفحة هبوط ثنائية اللغة مكتفية ذاتياً تكون أعمالها الفنية هي التخصّص نفسه — قفص تسليح، ومقطع جانبي لجائز، وإطار BIM متساوي القياس، مرسومة كلها بصيغة SVG. زر واحد يحوّل الصفحة بالكامل إلى العربية ويقلب اتجاهها."
+      },
+      highlights: {
+        en: [
+          "Ten sections in one page — hero, capability marquee, practice profile, services, capabilities, process, sectors and enquiry",
+          "Every illustration drawn as inline SVG, so nothing depends on stock photography and everything stays sharp at any size",
+          "Full English/Arabic conversion from one button — the two languages never coexist in the markup and the choice persists between visits",
+          "Arabic typography handled properly: tracking and uppercasing neutralised, looser line heights, figures isolated against bidi reordering",
+          "Motion throughout — scroll reveals, count-up figures, stroke-drawn blueprint lines — all collapsing to a static page under reduced motion"
+        ],
+        ar: [
+          "عشرة أقسام في صفحة واحدة — واجهة، وشريط قدرات، ونبذة عن الشركة، والخدمات، والقدرات، ومسار العمل، والقطاعات، والاستفسار",
+          "كل عمل توضيحي مرسوم بصيغة SVG مضمّنة، فلا شيء يعتمد على صور جاهزة ويبقى كل شيء حاداً بأي مقاس",
+          "تحويل كامل بين الإنجليزية والعربية بزر واحد — اللغتان لا تجتمعان في الشيفرة والاختيار يُحفظ بين الزيارات",
+          "معالجة صحيحة للطباعة العربية: إلغاء التباعد والأحرف الكبيرة، وارتفاعات أسطر أوسع، وعزل الأرقام ضد إعادة الترتيب ثنائي الاتجاه",
+          "حركة في كل الصفحة — ظهور عند التمرير، وأرقام تتصاعد، وخطوط مخطّط تُرسم — تتحوّل كلها إلى صفحة ساكنة عند طلب تقليل الحركة"
+        ]
+      },
+      specs: [
+        { k: { en: "type", ar: "النوع" }, v: { en: "bilingual landing page", ar: "صفحة هبوط ثنائية اللغة" } },
+        { k: { en: "stack", ar: "التقنيات" }, v: { en: "static HTML, CSS & JavaScript", ar: "HTML وCSS وJavaScript ثابتة" } },
+        { k: { en: "client", ar: "العميل" }, v: { en: "engineering consultancy — detailing & BIM", ar: "شركة استشارات هندسية — تفصيل ونمذجة BIM" } },
+        { k: { en: "scope", ar: "نطاق العمل" }, v: { en: "UI/UX design, illustration & front-end", ar: "تصميم واجهات ورسم توضيحي وواجهة أمامية" } }
+      ],
+      results: [
+        { big: "2", small: { en: "languages, one codebase", ar: "لغتان بقاعدة شيفرة واحدة" } },
+        { big: "0", small: { en: "stock photos — every visual drawn as SVG", ar: "صور جاهزة — كل عنصر بصري مرسوم بصيغة SVG" } },
+        { big: "100%", small: { en: "right-to-left support", ar: "دعم كامل للاتجاه من اليمين" } }
+      ]
     }
   };
 
@@ -3537,7 +3623,8 @@
     ana: '/cases/ana-arabia/',
     bayader: '/cases/bayader/',
     oplinx: '/cases/oplinx/',
-    ihussein: '/cases/ibrahim-hussein/'
+    ihussein: '/cases/ibrahim-hussein/',
+    shamaa: '/cases/al-shamaa/'
   };
   let lastFocus = null;
   let modalSlider = null;

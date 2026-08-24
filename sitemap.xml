@@ -38,6 +38,10 @@
       <image:loc>https://kaprera.com/cases/ibrahim-hussein/image.jpg</image:loc>
       <image:title>Mr. Ibrahim Hussein programming teaching platform by kaprera</image:title>
     </image:image>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/al-shamaa/image.jpg</image:loc>
+      <image:title>AL-Shamaa Engineering bilingual landing page by kaprera</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://kaprera.com/ar/</loc>
@@ -126,6 +130,16 @@
     <image:image>
       <image:loc>https://kaprera.com/cases/ibrahim-hussein/image.jpg</image:loc>
       <image:title>Mr. Ibrahim Hussein programming teaching platform by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/al-shamaa/</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/al-shamaa/image.jpg</image:loc>
+      <image:title>AL-Shamaa Engineering bilingual landing page by kaprera</image:title>
     </image:image>
   </url>
   <url>
