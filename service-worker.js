@@ -1,5 +1,5 @@
 /* kaprera service worker — offline shell + smart caching */
-const VERSION = 'kaprera-v7';
+const VERSION = 'kaprera-v8';
 const PRECACHE = [
   '/',
   '/privacy-policy',
@@ -12,6 +12,27 @@ const PRECACHE = [
   '/branding/logos/kaprera-wordmark-dark.webp',
   '/branding/logos/kaprera-wordmark-light.webp'
 ];
+
+/* Until 2026-07-12 everything under /cases/* went out with
+   Cache-Control: public, max-age=31536000, immutable. A browser still holding
+   one of those responses will not revalidate it — "immutable" suppresses the
+   conditional request a normal reload would make — so it can keep rendering a
+   year-old page against today's stylesheet, and nothing the server sends now
+   can dislodge it. Re-issuing the request with cache:'no-cache' forces
+   validation regardless of freshness, which defeats immutable and overwrites
+   the poisoned entry. A 304 keeps the repair cheap on every later visit.
+
+   Copy-construct so redirect mode survives: a navigation request is
+   redirect:'manual', and this site 301s its clean URLs — building a fresh
+   Request from the URL alone would default to 'follow', and a followed
+   response cannot be handed back for a navigation. */
+const revalidate = (req) => {
+  try {
+    return new Request(req, { cache: 'no-cache' });
+  } catch (e) {
+    return req;   /* older engines: fall back to the plain request */
+  }
+};
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -38,7 +59,7 @@ self.addEventListener('fetch', (event) => {
   // falling back to the cached shell when offline.
   if (req.mode === 'navigate') {
     event.respondWith(
-      fetch(req)
+      fetch(revalidate(req))
         .then((res) => {
           const copy = res.clone();
           caches.open(VERSION).then((c) => c.put(req, copy));
@@ -65,7 +86,7 @@ self.addEventListener('fetch', (event) => {
     // cache is only the offline fallback.
     if (/\.(css|js)$/.test(url.pathname)) {
       event.respondWith(
-        fetch(req)
+        fetch(revalidate(req))
           .then((res) => {
             event.waitUntil(cachePut(req, res));
             return res;
