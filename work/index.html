@@ -347,6 +347,29 @@
     transition-delay:calc(var(--i,0) * 70ms);
   }
 
+  /* ── maintained averages + the case for ongoing support ──
+     The average band reuses the .m card from /cases/case.css so a figure means
+     the same thing here as it does on a case study. The reason cards are local
+     to this page. */
+  #maintained .lede, #support .lede{ max-width:70ch; margin-bottom:0; }
+  #maintained .mgroup{ margin-top:22px; }
+  #support .reasons{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));
+    gap:14px; margin-top:24px;
+  }
+  .reason{
+    border:1px solid var(--hair); border-radius:14px;
+    padding:20px 18px; background:var(--panel);
+  }
+  .reason .r-n{
+    font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.08em;
+    color:var(--blue-ink);
+  }
+  .reason .r-h{ font-size:16px; line-height:1.3; letter-spacing:-.01em; margin:10px 0 8px; }
+  .reason .r-p{ margin:0; font-size:14px; line-height:1.6; color:var(--muted); }
+  html[lang="ar"] .reason .r-h,
+  html[lang="ar"] .reason .r-p{ font-family:'Cairo',system-ui,sans-serif; letter-spacing:0; }
+
   /* ── closing cta ── */
   .cta{
     position:relative; overflow:hidden; text-align:center; color:#fff;
@@ -612,6 +635,39 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <section class="blk" id="maintained">
+      <span class="label" data-en="/ Under our care" data-ar="/ تحت رعايتنا">/ Under our care</span>
+      <h2 data-en="What ongoing support looks like." data-ar="هكذا يبدو الدعم المستمر.">What ongoing support looks like.</h2>
+      <p class="lede" data-en="These are averages across the five client sites we currently maintain — not our best result, the mean of all five. Every figure is measured with the same tools we use on the individual case studies." data-ar="هذه متوسطات عبر خمسة مواقع عملاء نتولّى صيانتها حالياً — ليست أفضل نتيجة لدينا، بل متوسط الخمسة جميعاً. وكل رقم مقيس بالأدوات نفسها المستخدمة في دراسات الحالة المفردة.">These are averages across the five client sites we currently maintain — not our best result, the mean of all five. Every figure is measured with the same tools we use on the individual case studies.</p>
+      <div class="mgroup">
+      <div class="mgrid">
+        <div class="m good"><span class="m-v">96</span><span class="m-k"><span data-en="Performance" data-ar="الأداء">Performance</span></span><span class="m-d" data-en="Speed, scored out of 100 by Google." data-ar="السرعة، بتقييم جوجل من 100.">Speed, scored out of 100 by Google.</span></div>
+        <div class="m good"><span class="m-v">100</span><span class="m-k"><span data-en="Accessibility" data-ar="إمكانية الوصول">Accessibility</span> <span class="abbr">A11Y · WCAG</span></span><span class="m-d" data-en="Usable with a screen reader or keyboard." data-ar="قابل للاستخدام بقارئ الشاشة أو لوحة المفاتيح.">Usable with a screen reader or keyboard.</span></div>
+        <div class="m good"><span class="m-v">100</span><span class="m-k"><span data-en="Best practices" data-ar="أفضل الممارسات">Best practices</span> <span class="abbr">BP</span></span><span class="m-d" data-en="HTTPS, safe libraries, a clean console." data-ar="HTTPS ومكتبات آمنة ووحدة تحكّم نظيفة.">HTTPS, safe libraries, a clean console.</span></div>
+        <div class="m good"><span class="m-v">100</span><span class="m-k"><span data-en="SEO" data-ar="تحسين محركات البحث">SEO</span></span><span class="m-d" data-en="Readable to search engines end to end." data-ar="مقروء لمحركات البحث من أوله إلى آخره.">Readable to search engines end to end.</span></div>
+        <div class="m good"><span class="m-v">0.6 <span class="u" data-en="s" data-ar="ث">s</span></span><span class="m-k"><span data-en="First contentful paint" data-ar="أول ظهور للمحتوى">First contentful paint</span> <span class="abbr">FCP</span></span><span class="m-d" data-en="Before the visitor sees anything." data-ar="قبل أن يرى الزائر أي شيء.">Before the visitor sees anything.</span></div>
+        <div class="m good"><span class="m-v">0.9 <span class="u" data-en="s" data-ar="ث">s</span></span><span class="m-k"><span data-en="Largest contentful paint" data-ar="أكبر عنصر مرئي">Largest contentful paint</span> <span class="abbr">LCP</span></span><span class="m-d" data-en="Until the page looks ready. Google wants under 2.5s." data-ar="حتى تبدو الصفحة جاهزة. تفضّل جوجل أقل من 2.5 ثانية.">Until the page looks ready. Google wants under 2.5s.</span></div>
+        <div class="m good"><span class="m-v">0</span><span class="m-k"><span data-en="Cumulative layout shift" data-ar="إجمالي إزاحة التخطيط">Cumulative layout shift</span> <span class="abbr">CLS</span></span><span class="m-d" data-en="Nothing moves under the reader mid-tap." data-ar="لا شيء يتحرك تحت القارئ أثناء النقر.">Nothing moves under the reader mid-tap.</span></div>
+        <div class="m good"><span class="m-v">23 <span class="u" data-en="KB" data-ar="ك.ب">KB</span></span><span class="m-k"><span data-en="HTML, compressed" data-ar="حجم HTML بعد الضغط">HTML, compressed</span> <span class="abbr">GZIP / BR</span></span><span class="m-d" data-en="What the page actually costs to download." data-ar="ما تكلّفه الصفحة فعلياً عند التحميل.">What the page actually costs to download.</span></div>
+        <div class="m good"><span class="m-v">0</span><span class="m-k"><span data-en="W3C errors" data-ar="أخطاء W3C">W3C errors</span> <span class="abbr">HTML + CSS</span></span><span class="m-d" data-en="Standards-clean markup and stylesheets." data-ar="شيفرة وأوراق أنماط مطابقة للمعايير.">Standards-clean markup and stylesheets.</span></div>
+        <div class="m good"><span class="m-v">0</span><span class="m-k"><span data-en="Third-party origins" data-ar="المصادر الخارجية">Third-party origins</span></span><span class="m-d" data-en="No outside server can slow or track them." data-ar="لا خادم خارجي يستطيع إبطاءها أو تعقّب زوّارها.">No outside server can slow or track them.</span></div>
+      </div>
+      </div>
+      <p class="note" data-en="Mean of Lebanese Spotlight, Agri Pro Services, Oplinx Solutions, Mr. Ibrahim Hussein and AL-Shamaa Engineering — Google Lighthouse 12.8.2 (desktop) and the W3C validators, August 2026." data-ar="متوسط ⁨Lebanese Spotlight⁩ و ⁨Agri Pro Services⁩ و ⁨Oplinx Solutions⁩ و ⁨Mr. Ibrahim Hussein⁩ و ⁨AL-Shamaa Engineering⁩ — عبر ⁨Google Lighthouse 12.8.2⁩ (سطح المكتب) ومدقّقات ⁨W3C⁩، آب 2026.">Mean of Lebanese Spotlight, Agri Pro Services, Oplinx Solutions, Mr. Ibrahim Hussein and AL-Shamaa Engineering — Google Lighthouse 12.8.2 (desktop) and the W3C validators, August 2026.</p>
+    </section>
+
+    <section class="blk" id="support">
+      <span class="label" data-en="/ Why ongoing support" data-ar="/ لماذا الدعم المستمر">/ Why ongoing support</span>
+      <h2 data-en="A site is not finished when it launches." data-ar="الموقع لا ينتهي عند إطلاقه.">A site is not finished when it launches.</h2>
+      <p class="lede" data-en="Those numbers are not what the sites scored on launch day. They are what they score now, because someone has been watching them since." data-ar="هذه الأرقام ليست ما سجّلته المواقع يوم إطلاقها، بل ما تسجّله الآن، لأن هناك من يراقبها منذ ذلك الحين.">Those numbers are not what the sites scored on launch day. They are what they score now, because someone has been watching them since.</p>
+      <div class="reasons">
+        <div class="reason"><span class="r-n" aria-hidden="true">01</span><h3 class="r-h" data-en="Browsers ship every few weeks" data-ar="المتصفحات تتحدّث كل بضعة أسابيع">Browsers ship every few weeks</h3><p class="r-p" data-en="Chrome and Safari update constantly. Something that renders correctly today — a layout, a form, a checkout step — can break quietly months later, and nobody files a bug. Someone has to keep looking." data-ar="يتحدّث كروم وسفاري باستمرار. وما يُعرض اليوم بشكل صحيح — تخطيط أو نموذج أو خطوة دفع — قد ينكسر بصمت بعد أشهر دون أن يبلّغ أحد عن العطل. لا بدّ من جهة تواصل المراقبة.">Chrome and Safari update constantly. Something that renders correctly today — a layout, a form, a checkout step — can break quietly months later, and nobody files a bug. Someone has to keep looking.</p></div>
+        <div class="reason"><span class="r-n" aria-hidden="true">02</span><h3 class="r-h" data-en="Google keeps moving the line" data-ar="جوجل تغيّر المعيار باستمرار">Google keeps moving the line</h3><p class="r-p" data-en="The thresholds behind these scores get revised — INP replaced FID as a Core Web Vital in 2024. A perfect score is a reading from one day, not a permanent state." data-ar="تُراجَع العتبات التي تقوم عليها هذه الدرجات — فقد حلّ INP محلّ FID ضمن مؤشرات الويب الأساسية عام 2024. والدرجة الكاملة قراءة ليوم واحد لا حالة دائمة.">The thresholds behind these scores get revised — INP replaced FID as a Core Web Vital in 2024. A perfect score is a reading from one day, not a permanent state.</p></div>
+        <div class="reason"><span class="r-n" aria-hidden="true">03</span><h3 class="r-h" data-en="Dependencies age into vulnerabilities" data-ar="الاعتماديات تتحوّل مع الوقت إلى ثغرات">Dependencies age into vulnerabilities</h3><p class="r-p" data-en="Every framework, plugin and library accumulates published security advisories. Left unpatched, a site becomes a public list of known ways in." data-ar="يتراكم على كل إطار عمل وإضافة ومكتبة عدد من التنبيهات الأمنية المنشورة. وبلا ترقيع، يتحوّل الموقع إلى قائمة معلنة بطرق الاختراق المعروفة.">Every framework, plugin and library accumulates published security advisories. Left unpatched, a site becomes a public list of known ways in.</p></div>
+        <div class="reason"><span class="r-n" aria-hidden="true">04</span><h3 class="r-h" data-en="Content is what slows a site down" data-ar="المحتوى هو ما يُبطئ الموقع">Content is what slows a site down</h3><p class="r-p" data-en="Launch figures are measured on an empty site. Real ones fill up with unoptimised images, embeds and marketing tags — and that is where the seconds come from." data-ar="تُقاس أرقام الإطلاق على موقع فارغ. أما المواقع الحقيقية فتمتلئ بصور غير محسّنة وعناصر مضمّنة ووسوم تسويقية — ومن هنا تأتي الثواني الضائعة.">Launch figures are measured on an empty site. Real ones fill up with unoptimised images, embeds and marketing tags — and that is where the seconds come from.</p></div>
       </div>
     </section>
 
