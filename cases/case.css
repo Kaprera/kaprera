@@ -153,6 +153,70 @@ h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; fo
 .nav-cta svg{width:16px; height:16px}
 .nav-cta .cta-cal{display:none}
 
+/* ── hero wash · ported from the work index so the top of a case study and
+      the top of /work/ read as the same page family ──────────────────────
+   .hero is a .wrap here (not a full-bleed section as on the work index), so
+   the blob layer breaks out of the content column itself rather than relying
+   on a full-width parent. body gets overflow-x:clip — not hidden, which would
+   kill the sticky nav — so 100vw can never open a horizontal scrollbar. */
+body{overflow-x:clip}
+.hero{position:relative; isolation:isolate}
+.aurora{
+  position:absolute; top:-150px; left:calc(-50vw + 50%); width:100vw; height:660px;
+  overflow:hidden; z-index:-1; pointer-events:none;
+  /* the box has to clip the blobs so they can't widen the page; the mask keeps
+     that clip from showing up as a hard line above the content */
+  -webkit-mask-image:linear-gradient(to bottom,#000 0 46%,transparent 100%);
+          mask-image:linear-gradient(to bottom,#000 0 46%,transparent 100%);
+}
+.aurora i{
+  position:absolute; display:block; width:52vw; max-width:680px; aspect-ratio:1;
+  border-radius:50%; filter:blur(90px); opacity:.30;
+}
+/* weighted to the top and the outer edges, so the copy sits on quiet ground */
+.aurora .b1{background:#008cc1; left:-14%; top:-18%}
+.aurora .b2{background:#4cc9f0; left:30%; top:-42%; opacity:.22}
+.aurora .b3{background:#f26524; right:-12%; top:-14%; opacity:.15}
+html[data-theme="dark"] .aurora i{opacity:.26}
+html[data-theme="dark"] .aurora .b3{opacity:.15}
+@media (prefers-reduced-motion:no-preference){
+  .aurora i{will-change:transform}
+  .aurora .b1{animation:drift 24s var(--ease) infinite alternate}
+  .aurora .b2{animation:drift 30s var(--ease) infinite alternate-reverse}
+  .aurora .b3{animation:drift 27s var(--ease) infinite alternate}
+}
+@keyframes drift{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to{transform:translate3d(5%,9%,0) scale(1.14)}
+}
+
+/* the headline resolves from ink into brand blue */
+.grad{
+  background:linear-gradient(102deg,var(--ink) 0%,var(--ink) 46%,#0079a8 72%,#00a6d6 96%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+/* mirrored so the fade still runs with the reading direction in Arabic */
+html[lang="ar"] .grad{
+  background-image:linear-gradient(258deg,var(--ink) 0%,var(--ink) 46%,#0079a8 72%,#00a6d6 96%);
+}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){
+  .grad{color:var(--ink)}
+}
+
+/* against the hero wash the default ghost button — a --hair border and no
+   hover at all — read as a borderless block of text */
+.hero .btn-ghost{
+  color:var(--blue-ink);
+  border-color:color-mix(in srgb,var(--blue) 45%,transparent);
+  background:color-mix(in srgb,var(--bg) 66%,transparent);
+  transition:transform .15s ease, background .2s ease, border-color .2s ease, color .2s ease;
+}
+.hero .btn-ghost:hover{
+  color:var(--blue);
+  border-color:var(--blue);
+  background:color-mix(in srgb,var(--blue) 10%,transparent);
+}
+
 /* ── figure ── */
 .shot{margin:34px 0 8px; border:1px solid var(--hair); border-radius:18px; overflow:hidden; background:var(--panel)}
 .shot img{width:100%; display:block}
@@ -180,6 +244,55 @@ dl.specs dd{margin:0; font-weight:600}
 .stat .big{font-size:clamp(26px,3.6vw,38px); font-weight:800; letter-spacing:-.02em; color:var(--blue-ink); line-height:1}
 .stat .small{display:block; margin-top:8px; font-size:14px; color:var(--muted)}
 .note{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:14px}
+
+/* ── measured metrics ─────────────────────────────────────────────────────
+   Every card is one measurement: the figure, what it is called, and one line
+   of plain language telling the client what it buys them. The verdict colour
+   follows Lighthouse's own convention (green >=90 / amber 50-89 / red <50) so
+   a number the reader already knows how to read keeps meaning the same thing. */
+.mgroup{margin-top:26px}
+.mgroup:first-of-type{margin-top:18px}
+.mgroup-h{
+  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted);
+  margin:0 0 14px; padding-bottom:10px; border-bottom:1px solid var(--hair);
+  font-weight:600;
+}
+.mgroup-h .mgroup-note{text-transform:none; letter-spacing:0; font-weight:400; opacity:.8}
+
+/* auto-fit, not a fixed count: a group of five fills one row and a group of
+   four collapses the spare track and shares the width between them, so no
+   group ever ends on a single orphan card */
+.mgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr)); gap:14px}
+.m{
+  display:flex; flex-direction:column;
+  border:1px solid var(--hair); border-radius:14px;
+  padding:18px 16px 16px; background:var(--panel);
+}
+.m-v{
+  font-size:clamp(24px,2.9vw,32px); font-weight:800; letter-spacing:-.02em;
+  line-height:1; color:var(--blue-ink);
+}
+.m-v .u{font-size:.5em; font-weight:600; letter-spacing:0; margin-inline-start:.18em; opacity:.75}
+/* verdict tints — the swatch behind the figure, not the figure itself, so the
+   number keeps a contrast ratio that clears AA in both themes */
+.m.good .m-v{color:#1a7f4b}
+.m.ok   .m-v{color:#9a6100}
+.m.poor .m-v{color:#b3261e}
+html[data-theme="dark"] .m.good .m-v{color:#5fd39a}
+html[data-theme="dark"] .m.ok   .m-v{color:#e0a938}
+html[data-theme="dark"] .m.poor .m-v{color:#ff8f86}
+.m-k{
+  display:block; margin-top:10px; font-size:14px; font-weight:700;
+  letter-spacing:-.005em; color:var(--ink);
+}
+.m-k .abbr{font-family:var(--mono); font-weight:500; font-size:12px; color:var(--muted); white-space:nowrap}
+.m-d{display:block; margin-top:6px; font-size:13px; line-height:1.5; color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){
+  .aurora i{animation:none}
+}
 
 /* ── more work ── */
 .more{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
@@ -229,6 +342,9 @@ html[lang="ar"] dl.specs dt,
 html[lang="ar"] dl.specs dd,
 html[lang="ar"] .note,
 html[lang="ar"] .stat .small,
+html[lang="ar"] .mgroup-h,
+html[lang="ar"] .m-k,
+html[lang="ar"] .m-d,
 html[lang="ar"] .more-type,
 html[lang="ar"] .work-item .kind,
 html[lang="ar"] .foot-col .fc-h,
