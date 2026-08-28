@@ -353,22 +353,110 @@
      to this page. */
   #maintained .lede, #support .lede{ max-width:70ch; margin-bottom:0; }
   #maintained .mgroup{ margin-top:22px; }
+  /* Four risks that compound the longer a site goes untended, so the palette
+     escalates with them: brand blue, teal, amber, then the orange the aurora
+     already uses. Each card carries its own accent the way a .work-item does,
+     and a short rule runs across the gap from one numbered node to the next so
+     the four read as a sequence rather than four unrelated boxes. */
   #support .reasons{
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));
-    gap:14px; margin-top:24px;
+    --gap:18px;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap);
+    margin-top:28px;
   }
+  /* .reason is the track the connector hangs off; .r-card is the card itself,
+     which clips its own gradient bar to the rounded corner */
   .reason{
-    border:1px solid var(--hair); border-radius:14px;
-    padding:20px 18px; background:var(--panel);
+    --c-deep:#0a2540; --c-mid:#0079a8; --c-vivid:#4cc9f0;
+    --c-ink:#0a6f97; --c-ink-dark:#4bb6df;
+    --c:var(--c-ink);
+    position:relative; display:flex;
+  }
+  .reason .r-card{
+    position:relative; isolation:isolate; flex:1;
+    display:flex; flex-direction:column;
+    border:1px solid var(--hair); border-radius:16px; overflow:hidden;
+    background:var(--panel); padding:0 0 20px;
+  }
+  html[data-theme="dark"] .reason{ --c:var(--c-ink-dark); }
+
+  .reason.r1{ --c-deep:#0a2540; --c-mid:#0079a8; --c-vivid:#4cc9f0; --c-ink:#0a6f97; --c-ink-dark:#4bb6df; }
+  .reason.r2{ --c-deep:#06333a; --c-mid:#0d7c82; --c-vivid:#49d8d0; --c-ink:#0d6f74; --c-ink-dark:#54d6cf; }
+  .reason.r3{ --c-deep:#4a3405; --c-mid:#b3800f; --c-vivid:#f0c04a; --c-ink:#8a6108; --c-ink-dark:#e6bb4d; }
+  .reason.r4{ --c-deep:#4a1e05; --c-mid:#c94d16; --c-vivid:#f68a4e; --c-ink:#a8420f; --c-ink-dark:#ff9666; }
+
+  /* the wash is strongest at the top, where the number sits, and clears before
+     the body copy so the paragraph keeps its contrast */
+  .reason .r-card::before{
+    content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    border-radius:inherit;
+    background:linear-gradient(168deg,
+      color-mix(in srgb,var(--c-mid) 14%,transparent), transparent 60%);
+  }
+  html[data-theme="dark"] .reason .r-card::before{
+    background:linear-gradient(168deg,
+      color-mix(in srgb,var(--c-mid) 26%,transparent), transparent 62%);
+  }
+
+  .reason .r-bar{
+    display:block; height:4px; flex-shrink:0;
+    background:linear-gradient(90deg,var(--c-deep),var(--c-mid) 55%,var(--c-vivid));
   }
   .reason .r-n{
-    font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.08em;
-    color:var(--blue-ink);
+    display:inline-flex; align-items:center; justify-content:center;
+    width:38px; height:38px; margin:18px 0 0; margin-inline-start:18px;
+    border-radius:50%; flex-shrink:0;
+    font-family:var(--mono); font-size:12.5px; font-weight:700; letter-spacing:.04em;
+    color:#fff; background:linear-gradient(145deg,var(--c-mid),var(--c-vivid));
+    box-shadow:0 6px 16px -8px color-mix(in srgb,var(--c-mid) 90%,transparent);
   }
-  .reason .r-h{ font-size:16px; line-height:1.3; letter-spacing:-.01em; margin:10px 0 8px; }
-  .reason .r-p{ margin:0; font-size:14px; line-height:1.6; color:var(--muted); }
+  .reason .r-h{
+    font-size:16.5px; line-height:1.3; letter-spacing:-.01em;
+    margin:14px 18px 8px; color:var(--c);
+  }
+  .reason .r-p{ margin:0 18px; font-size:14px; line-height:1.6; color:var(--muted); }
+
+  /* the connector: sits in the gutter, level with the node it leaves */
+  .reason::after{
+    content:""; position:absolute; top:40px; height:2px;
+    inset-inline-end:calc(-1 * var(--gap)); width:var(--gap);
+    background:linear-gradient(to var(--flow,right),
+      color-mix(in srgb,var(--c-mid) 85%,transparent), transparent);
+  }
+  html[lang="ar"] .reason{ --flow:left; }
+  .reason:last-child::after{ content:none; }
+
+  /* the wash is anchored to the corner the node sits in, so it mirrors with the
+     reading direction the way .grad does */
+  html[lang="ar"] .reason .r-card::before{
+    background-image:linear-gradient(192deg,
+      color-mix(in srgb,var(--c-mid) 14%,transparent), transparent 60%);
+  }
+  html[lang="ar"][data-theme="dark"] .reason .r-card::before{
+    background-image:linear-gradient(192deg,
+      color-mix(in srgb,var(--c-mid) 26%,transparent), transparent 62%);
+  }
+
   html[lang="ar"] .reason .r-h,
   html[lang="ar"] .reason .r-p{ font-family:'Cairo',system-ui,sans-serif; letter-spacing:0; }
+
+  @media (max-width:1020px){
+    #support .reasons{ grid-template-columns:repeat(2,1fr); }
+    /* second of each pair ends its row */
+    .reason:nth-child(2n)::after{ content:none; }
+  }
+  @media (max-width:620px){
+    #support .reasons{ grid-template-columns:1fr; }
+    /* stacked, the flow runs downward from under each node */
+    .reason::after,
+    .reason:nth-child(2n)::after{
+      content:""; top:auto; bottom:calc(-1 * var(--gap));
+      inset-inline-end:auto; inset-inline-start:36px;
+      width:2px; height:var(--gap);
+      background:linear-gradient(to bottom,
+        color-mix(in srgb,var(--c-mid) 85%,transparent), transparent);
+    }
+    .reason:last-child::after{ content:none; }
+  }
 
   /* ── closing cta ── */
   .cta{
@@ -664,10 +752,10 @@
       <h2 data-en="A site is not finished when it launches." data-ar="الموقع لا ينتهي عند إطلاقه.">A site is not finished when it launches.</h2>
       <p class="lede" data-en="Those numbers are not what the sites scored on launch day. They are what they score now, because someone has been watching them since." data-ar="هذه الأرقام ليست ما سجّلته المواقع يوم إطلاقها، بل ما تسجّله الآن، لأن هناك من يراقبها منذ ذلك الحين.">Those numbers are not what the sites scored on launch day. They are what they score now, because someone has been watching them since.</p>
       <div class="reasons">
-        <div class="reason"><span class="r-n" aria-hidden="true">01</span><h3 class="r-h" data-en="Browsers ship every few weeks" data-ar="المتصفحات تتحدّث كل بضعة أسابيع">Browsers ship every few weeks</h3><p class="r-p" data-en="Chrome and Safari update constantly. Something that renders correctly today — a layout, a form, a checkout step — can break quietly months later, and nobody files a bug. Someone has to keep looking." data-ar="يتحدّث كروم وسفاري باستمرار. وما يُعرض اليوم بشكل صحيح — تخطيط أو نموذج أو خطوة دفع — قد ينكسر بصمت بعد أشهر دون أن يبلّغ أحد عن العطل. لا بدّ من جهة تواصل المراقبة.">Chrome and Safari update constantly. Something that renders correctly today — a layout, a form, a checkout step — can break quietly months later, and nobody files a bug. Someone has to keep looking.</p></div>
-        <div class="reason"><span class="r-n" aria-hidden="true">02</span><h3 class="r-h" data-en="Google keeps moving the line" data-ar="جوجل تغيّر المعيار باستمرار">Google keeps moving the line</h3><p class="r-p" data-en="The thresholds behind these scores get revised — INP replaced FID as a Core Web Vital in 2024. A perfect score is a reading from one day, not a permanent state." data-ar="تُراجَع العتبات التي تقوم عليها هذه الدرجات — فقد حلّ INP محلّ FID ضمن مؤشرات الويب الأساسية عام 2024. والدرجة الكاملة قراءة ليوم واحد لا حالة دائمة.">The thresholds behind these scores get revised — INP replaced FID as a Core Web Vital in 2024. A perfect score is a reading from one day, not a permanent state.</p></div>
-        <div class="reason"><span class="r-n" aria-hidden="true">03</span><h3 class="r-h" data-en="Dependencies age into vulnerabilities" data-ar="الاعتماديات تتحوّل مع الوقت إلى ثغرات">Dependencies age into vulnerabilities</h3><p class="r-p" data-en="Every framework, plugin and library accumulates published security advisories. Left unpatched, a site becomes a public list of known ways in." data-ar="يتراكم على كل إطار عمل وإضافة ومكتبة عدد من التنبيهات الأمنية المنشورة. وبلا ترقيع، يتحوّل الموقع إلى قائمة معلنة بطرق الاختراق المعروفة.">Every framework, plugin and library accumulates published security advisories. Left unpatched, a site becomes a public list of known ways in.</p></div>
-        <div class="reason"><span class="r-n" aria-hidden="true">04</span><h3 class="r-h" data-en="Content is what slows a site down" data-ar="المحتوى هو ما يُبطئ الموقع">Content is what slows a site down</h3><p class="r-p" data-en="Launch figures are measured on an empty site. Real ones fill up with unoptimised images, embeds and marketing tags — and that is where the seconds come from." data-ar="تُقاس أرقام الإطلاق على موقع فارغ. أما المواقع الحقيقية فتمتلئ بصور غير محسّنة وعناصر مضمّنة ووسوم تسويقية — ومن هنا تأتي الثواني الضائعة.">Launch figures are measured on an empty site. Real ones fill up with unoptimised images, embeds and marketing tags — and that is where the seconds come from.</p></div>
+        <div class="reason r1"><div class="r-card"><span class="r-bar" aria-hidden="true"></span><span class="r-n" aria-hidden="true">01</span><h3 class="r-h" data-en="Browsers ship every few weeks" data-ar="المتصفحات تتحدّث كل بضعة أسابيع">Browsers ship every few weeks</h3><p class="r-p" data-en="Chrome and Safari update constantly. Something that renders correctly today — a layout, a form, a checkout step — can break quietly months later, and nobody files a bug. Someone has to keep looking." data-ar="يتحدّث كروم وسفاري باستمرار. وما يُعرض اليوم بشكل صحيح — تخطيط أو نموذج أو خطوة دفع — قد ينكسر بصمت بعد أشهر دون أن يبلّغ أحد عن العطل. لا بدّ من جهة تواصل المراقبة.">Chrome and Safari update constantly. Something that renders correctly today — a layout, a form, a checkout step — can break quietly months later, and nobody files a bug. Someone has to keep looking.</p></div></div>
+        <div class="reason r2"><div class="r-card"><span class="r-bar" aria-hidden="true"></span><span class="r-n" aria-hidden="true">02</span><h3 class="r-h" data-en="Google keeps moving the line" data-ar="جوجل تغيّر المعيار باستمرار">Google keeps moving the line</h3><p class="r-p" data-en="The thresholds behind these scores get revised — INP replaced FID as a Core Web Vital in 2024. A perfect score is a reading from one day, not a permanent state." data-ar="تُراجَع العتبات التي تقوم عليها هذه الدرجات — فقد حلّ INP محلّ FID ضمن مؤشرات الويب الأساسية عام 2024. والدرجة الكاملة قراءة ليوم واحد لا حالة دائمة.">The thresholds behind these scores get revised — INP replaced FID as a Core Web Vital in 2024. A perfect score is a reading from one day, not a permanent state.</p></div></div>
+        <div class="reason r3"><div class="r-card"><span class="r-bar" aria-hidden="true"></span><span class="r-n" aria-hidden="true">03</span><h3 class="r-h" data-en="Dependencies age into vulnerabilities" data-ar="الاعتماديات تتحوّل مع الوقت إلى ثغرات">Dependencies age into vulnerabilities</h3><p class="r-p" data-en="Every framework, plugin and library accumulates published security advisories. Left unpatched, a site becomes a public list of known ways in." data-ar="يتراكم على كل إطار عمل وإضافة ومكتبة عدد من التنبيهات الأمنية المنشورة. وبلا ترقيع، يتحوّل الموقع إلى قائمة معلنة بطرق الاختراق المعروفة.">Every framework, plugin and library accumulates published security advisories. Left unpatched, a site becomes a public list of known ways in.</p></div></div>
+        <div class="reason r4"><div class="r-card"><span class="r-bar" aria-hidden="true"></span><span class="r-n" aria-hidden="true">04</span><h3 class="r-h" data-en="Content is what slows a site down" data-ar="المحتوى هو ما يُبطئ الموقع">Content is what slows a site down</h3><p class="r-p" data-en="Launch figures are measured on an empty site. Real ones fill up with unoptimised images, embeds and marketing tags — and that is where the seconds come from." data-ar="تُقاس أرقام الإطلاق على موقع فارغ. أما المواقع الحقيقية فتمتلئ بصور غير محسّنة وعناصر مضمّنة ووسوم تسويقية — ومن هنا تأتي الثواني الضائعة.">Launch figures are measured on an empty site. Real ones fill up with unoptimised images, embeds and marketing tags — and that is where the seconds come from.</p></div></div>
       </div>
     </section>
 
