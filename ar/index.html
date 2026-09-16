@@ -1467,10 +1467,38 @@
   .tst-cta p { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
 
   /* client picker: clickable list, active one highlighted */
+  /* height: 0 + min-height: 100% keeps the list from growing the row: it takes
+     the featured card's height and scrolls, however many clients are in it */
   .tst-picker {
-    display: flex; flex-direction: column;
-    justify-content: center; gap: 10px;
+    --fade-dir: to bottom; --fs: 0px; --fe: 0px;
+    display: flex; flex-direction: column; gap: 10px;
+    height: 0; min-height: 100%;
+    overflow-y: auto; overscroll-behavior: contain;
+    scroll-snap-type: y proximity;
+    scrollbar-width: thin; scrollbar-color: var(--hair) transparent;
+    padding: 4px; margin: -4px;
+    -webkit-mask-image: linear-gradient(var(--fade-dir), transparent 0, #000 var(--fs), #000 calc(100% - var(--fe)), transparent 100%);
+            mask-image: linear-gradient(var(--fade-dir), transparent 0, #000 var(--fs), #000 calc(100% - var(--fe)), transparent 100%);
   }
+  .tst-picker.fade-start { --fs: 36px; }
+  .tst-picker.fade-end { --fe: 36px; }
+  .tst-pick { scroll-snap-align: start; flex-shrink: 0; }
+
+  /* prev / next + counter inside the featured card */
+  .tst-ctrls { display: flex; align-items: center; gap: 10px; }
+  .tst-arrow {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.32);
+    color: #fff; cursor: pointer;
+    transition: background .3s;
+  }
+  .tst-arrow:hover { background: rgba(255,255,255,0.32); }
+  .tst-arrow:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  html[lang="ar"] .tst-arrow svg { transform: scaleX(-1); }
+  .tst-count { margin-inline-start: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.80); }
+  .tst-count b { color: #fff; font-weight: 700; }
   .tst-pick {
     position: relative;
     display: flex; align-items: center; gap: 14px;
@@ -1916,6 +1944,19 @@
     .svc-arrow.prev:hover svg, .svc-arrow.next:hover svg { transform: none; }
     /* testimonials → stack featured over the client picker */
     .tst-feature-grid { grid-template-columns: 1fr; gap: 16px; }
+    /* picker → one swipeable row of compact client chips */
+    .tst-picker {
+      --fade-dir: to right;
+      flex-direction: row; height: auto; min-height: 0;
+      overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x proximity;
+    }
+    html[lang="ar"] .tst-picker { --fade-dir: to left; }
+    .tst-pick { width: auto; max-width: 250px; padding: 10px 16px 10px 10px; gap: 10px; }
+    html[lang="ar"] .tst-pick { padding: 10px 10px 10px 16px; }
+    .tst-pick .pk-avatar { width: 38px; height: 38px; }
+    .tst-pick .pk-name { white-space: nowrap; }
+    .tst-pick .pk-role { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .tst-feature { min-height: 0; padding: 34px 26px; }
     .tst-cta { margin-top: 32px; }
     .tst-mark { font-size: clamp(130px, 40vw, 240px); }
@@ -2681,6 +2722,11 @@
               <span class="tst-role" id="tstRole" data-en="NGO" data-ar="منظمة غير حكومية">منظمة غير حكومية</span>
             </span>
           </figcaption>
+          <div class="tst-ctrls">
+            <button type="button" class="tst-arrow" id="tstPrev" aria-label="previous review"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button type="button" class="tst-arrow" id="tstNext" aria-label="next review"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <span class="tst-count"><b id="tstNow">01</b> / <span id="tstTotal">01</span></span>
+          </div>
         </figure>
 
         <div class="tst-picker" role="group" aria-label="clients">
@@ -3622,7 +3668,12 @@
     const roleEl = document.getElementById('tstRole');
     const nameEl = document.getElementById('tstName');
     const avatarEl = document.getElementById('tstAvatar');
+    const picker = wrap.querySelector('.tst-picker');
     const picks = [...wrap.querySelectorAll('.tst-pick')];
+    const nowEl = document.getElementById('tstNow');
+    const pad2 = (n) => String(n).padStart(2, '0');
+    document.getElementById('tstTotal').textContent = pad2(picks.length);
+    picks.forEach((p, idx) => { p.dataset.i = idx; });
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let i = 0, timer = null;
     const AUTO = 5000;
@@ -3643,6 +3694,27 @@
         q_ar: p.getAttribute('data-q-ar')
       };
     });
+
+    // scroll the picker (never the page) so the active client is visible and
+    // clear of the edge fades. Absolute targets, so quick clicks don't lose ground
+    const reveal = (el) => {
+      const pad = 40;
+      const pr = picker.getBoundingClientRect(), er = el.getBoundingClientRect();
+      const dy = er.top < pr.top + pad ? er.top - pr.top - pad : er.bottom > pr.bottom - pad ? er.bottom - pr.bottom + pad : 0;
+      const dx = er.left < pr.left + pad ? er.left - pr.left - pad : er.right > pr.right - pad ? er.right - pr.right + pad : 0;
+      if (dx || dy) picker.scrollTo({ left: picker.scrollLeft + dx, top: picker.scrollTop + dy, behavior: reduce ? 'auto' : 'smooth' });
+    };
+    // fade whichever edge still has clients hidden behind it
+    const edges = () => {
+      const row = getComputedStyle(picker).flexDirection === 'row';
+      const pos = row ? Math.abs(picker.scrollLeft) : picker.scrollTop;
+      const max = row ? picker.scrollWidth - picker.clientWidth : picker.scrollHeight - picker.clientHeight;
+      picker.classList.toggle('fade-start', pos > 2);
+      picker.classList.toggle('fade-end', pos < max - 2);
+    };
+    picker.addEventListener('scroll', edges, { passive: true });
+    window.addEventListener('resize', edges);
+    edges();
 
     const select = (n, animate = true) => {
       i = (n + picks.length) % picks.length;
@@ -3674,6 +3746,8 @@
         p.classList.toggle('is-active', on);
         p.setAttribute('aria-pressed', String(on));
       });
+      nowEl.textContent = pad2(i + 1);
+      reveal(picks[i]);
       if (animate && !reduce) {
         feature.classList.add('swapping');
         setTimeout(() => { apply(); feature.classList.remove('swapping'); }, 280);
@@ -3689,6 +3763,12 @@
     picks.forEach((p) => {
       p.addEventListener('click', () => { select(+p.dataset.i); rest(); });
     });
+
+    document.getElementById('tstPrev').addEventListener('click', () => { select(i - 1); rest(); });
+    document.getElementById('tstNext').addEventListener('click', () => { select(i + 1); rest(); });
+    // swiping the chip row shouldn't be fought by autoplay
+    picker.addEventListener('touchstart', stop, { passive: true });
+    picker.addEventListener('touchend', start, { passive: true });
 
     // pause autoplay while hovering or keyboard-focused inside, resume after
     wrap.addEventListener('mouseenter', stop);
