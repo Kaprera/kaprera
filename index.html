@@ -2020,6 +2020,56 @@
   .faq-a { padding: 0 4px 24px; margin: 0; color: var(--muted); max-width: 72ch; line-height: 1.65; }
   html[lang="ar"] .faq-item > summary,
   html[lang="ar"] .faq-a { text-align: right; }
+
+  /* ── problem cards + process steps ── */
+  .pain-grid, .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .pain-card {
+    background: var(--white);
+    border: 1px solid var(--hair);
+    border-radius: 18px;
+    padding: 26px 24px;
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .pain-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.08); }
+  .pain-card h3, .step h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+  .pain-card p, .step p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+  .pain-ic {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; margin-bottom: 18px;
+    border-radius: 11px;
+    background: var(--bg-soft);
+    color: var(--blue);
+  }
+  .pain-next { margin-top: 32px; }
+  .steps { list-style: none; padding: 0; }
+  .step { position: relative; padding-top: 22px; border-top: 2px solid var(--hair); }
+  .step::before {
+    content: "";
+    position: absolute; top: -2px; inset-inline-start: 0;
+    width: 40px; height: 2px;
+    background: var(--blue);
+  }
+  .step-num {
+    display: block; margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--blue-text);
+  }
+  html[lang="ar"] .pain-card h3, html[lang="ar"] .step h3 { letter-spacing: 0; }
+  @media (max-width: 960px) {
+    .pain-grid, .steps { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .pain-grid, .steps { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pain-card, .pain-card:hover { transition: none; transform: none; }
+  }
 </style>
 <script>
   // apply saved/system theme before paint to avoid flash
@@ -2402,10 +2452,46 @@
     </div>
   </section>
 
+  <!-- ───────────── PROBLEM ───────────── -->
+  <section class="section" id="problem">
+    <div class="wrap">
+      <span class="label reveal"><span class="num">02</span> <span data-en="/ Sound familiar?" data-ar="/ هل يبدو هذا مألوفًا؟">/ Sound familiar?</span></span>
+      <h2 class="title reveal" data-en="Your website should be bringing you work." data-ar="موقعك يجب أن يجلب لك العمل.">Your website should be bringing you work.</h2>
+      <p class="lede reveal" data-en="Most businesses that get in touch with us already have a website. The trouble is it isn&#x27;t doing much for them." data-ar="معظم الشركات التي تتواصل معنا لديها موقع بالفعل. المشكلة أنه لا يقدّم لها الكثير.">Most businesses that get in touch with us already have a website. The trouble is it isn't doing much for them.</p>
+
+      <div class="pain-grid reveal">
+        <article class="pain-card">
+          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+          <h3 data-en="It looks fine, but nobody gets in touch." data-ar="يبدو جيدًا، لكن لا أحد يتواصل.">It looks fine, but nobody gets in touch.</h3>
+          <p data-en="People visit, scroll, and leave. The page never tells them what to do next, so they don&#x27;t do anything." data-ar="يزور الناس الموقع ويتصفّحونه ثم يغادرون. الصفحة لا تقول لهم ما الخطوة التالية، فلا يفعلون شيئًا.">People visit, scroll, and leave. The page never tells them what to do next, so they don't do anything.</p>
+        </article>
+        <article class="pain-card">
+          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><polyline points="12 9 12 13 14.5 15"/><line x1="10" y1="2" x2="14" y2="2"/></svg></span>
+          <h3 data-en="It&#x27;s slow on a phone." data-ar="بطيء على الهاتف.">It's slow on a phone.</h3>
+          <p data-en="Most of your visitors are on mobile data. When a page takes five seconds to load, a lot of them leave before it finishes." data-ar="معظم زوّارك يتصفّحون عبر بيانات الهاتف. حين تحتاج الصفحة خمس ثوانٍ لتفتح، يغادر كثيرون منهم قبل أن تكتمل.">Most of your visitors are on mobile data. When a page takes five seconds to load, a lot of them leave before it finishes.</p>
+        </article>
+        <article class="pain-card">
+          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+          <h3 data-en="Google can&#x27;t find you." data-ar="Google لا يجدك.">Google can't find you.</h3>
+          <p data-en="Your competitors come up when customers search for what you sell. You&#x27;re on page three, or you don&#x27;t show up at all." data-ar="منافسوك يظهرون حين يبحث العملاء عمّا تبيعه، وأنت في الصفحة الثالثة أو لا تظهر أصلًا.">Your competitors come up when customers search for what you sell. You're on page three, or you don't show up at all.</p>
+        </article>
+        <article class="pain-card">
+          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="21" x2="16" y2="21"/></svg></span>
+          <h3 data-en="It doesn&#x27;t look like your business anymore." data-ar="لم يعد يشبه شركتك.">It doesn't look like your business anymore.</h3>
+          <p data-en="The site was built for the company you were a few years ago. The business has grown since then and the site still looks the same." data-ar="بُني الموقع للشركة التي كنتها قبل سنوات. شركتك كبرت منذ ذلك الحين، والموقع بقي على حاله.">The site was built for the company you were a few years ago. The business has grown since then and the site still looks the same.</p>
+        </article>
+      </div>
+
+      <div class="pain-next reveal">
+        <a href="#services" class="btn btn-ghost"><span data-en="See how we fix it" data-ar="شاهد كيف نعالج ذلك">See how we fix it</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </section>
+
   <!-- ───────────── SERVICES ───────────── -->
   <section class="section" id="services">
     <div class="wrap">
-      <span class="label reveal"><span class="num">02</span> <span data-en="/ What we do" data-ar="/ ماذا نقدّم">/ What we do</span></span>
+      <span class="label reveal"><span class="num">03</span> <span data-en="/ What we do" data-ar="/ ماذا نقدّم">/ What we do</span></span>
       <h2 class="title reveal" data-en="Design, Development, SEO." data-ar="تصميم وتطوير وتحسين لمحركات البحث.">Design, Development, SEO.</h2>
       <p class="lede reveal" data-en="We design the interface, build the site, and do the SEO that gets it found. Most often all three on the same project, so there's no handoff to lose things in." data-ar="نصمّم الواجهة، ونبني الموقع، ونتولّى تحسين محركات البحث الذي يجعله يظهر. غالبًا الثلاثة في المشروع نفسه، فلا تسليم بين فرق تضيع فيه التفاصيل.">We design the interface, build the site, and do the SEO that gets it found. Most often all three on the same project, so there's no handoff to lose things in.</p>
 
@@ -2530,10 +2616,42 @@
     </div>
   </section>
 
+  <!-- ───────────── PROCESS ───────────── -->
+  <section class="section" id="process">
+    <div class="wrap">
+      <span class="label reveal"><span class="num">04</span> <span data-en="/ How we work" data-ar="/ كيف نعمل">/ How we work</span></span>
+      <h2 class="title reveal" data-en="From the first call to launch day." data-ar="من أول مكالمة حتى يوم الإطلاق.">From the first call to launch day.</h2>
+      <p class="lede reveal" data-en="There are four steps, and at each one you know what we&#x27;re working on and what comes next." data-ar="أربع خطوات، وفي كل منها تعرف ما نعمل عليه وما الذي يليه.">There are four steps, and at each one you know what we're working on and what comes next.</p>
+
+      <ol class="steps reveal" role="list">
+        <li class="step">
+          <span class="step-num" aria-hidden="true">01</span>
+          <h3 data-en="Discovery call" data-ar="مكالمة تعارف">Discovery call</h3>
+          <p data-en="A short call about your business, who you want to reach, and what the site has to do. We won&#x27;t show you a pitch deck." data-ar="مكالمة قصيرة عن عملك، ومن تريد الوصول إليه، وما يجب أن يحقّقه الموقع. لن نعرض عليك عرضًا تقديميًا.">A short call about your business, who you want to reach, and what the site has to do. We won't show you a pitch deck.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">02</span>
+          <h3 data-en="Scope and quote" data-ar="النطاق والسعر">Scope and quote</h3>
+          <p data-en="We send back what we&#x27;ll build, a timeline, and a fixed quote, so you know the cost before any work starts." data-ar="نرسل لك ما سنبنيه، والجدول الزمني، وسعرًا ثابتًا، فتعرف التكلفة قبل أن يبدأ أي عمل.">We send back what we'll build, a timeline, and a fixed quote, so you know the cost before any work starts.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">03</span>
+          <h3 data-en="Design and build" data-ar="التصميم والتطوير">Design and build</h3>
+          <p data-en="You approve the designs before we write code, and you get a working preview before anything goes live." data-ar="توافق على التصميم قبل أن نكتب الكود، وتحصل على نسخة تجريبية تعمل قبل نشر أي شيء.">You approve the designs before we write code, and you get a working preview before anything goes live.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">04</span>
+          <h3 data-en="Launch and support" data-ar="الإطلاق والدعم">Launch and support</h3>
+          <p data-en="We launch the site, then test its speed and SEO again once it&#x27;s live. If you want us to keep looking after it, there&#x27;s a yearly support plan." data-ar="نطلق الموقع، ثم نعيد قياس سرعته وتحسينه لمحركات البحث بعد النشر. وإن أردت أن نواصل الاعتناء به، لدينا خطة دعم سنوية.">We launch the site, then test its speed and SEO again once it's live. If you want us to keep looking after it, there's a yearly support plan.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <!-- ───────────── TESTIMONIALS ───────────── -->
   <section class="section" id="testimonials">
     <div class="wrap">
-      <span class="label reveal"><span class="num">03</span> <span data-en="/ What clients say" data-ar="/ ماذا يقول عملاؤنا">/ What clients say</span></span>
+      <span class="label reveal"><span class="num">05</span> <span data-en="/ What clients say" data-ar="/ ماذا يقول عملاؤنا">/ What clients say</span></span>
       <h2 class="title reveal" data-en="Trusted by teams across Lebanon." data-ar="موثوق به من فرق في جميع أنحاء لبنان.">Trusted by teams across Lebanon.</h2>
 
       <div class="industries reveal">
@@ -2673,7 +2791,7 @@
   </script>
   <section class="section" id="faq">
     <div class="wrap">
-      <span class="label reveal"><span class="num">04</span> <span data-en="/ Questions" data-ar="/ الأسئلة">/ Questions</span></span>
+      <span class="label reveal"><span class="num">06</span> <span data-en="/ Questions" data-ar="/ الأسئلة">/ Questions</span></span>
       <h2 class="title reveal" data-en="Questions, answered." data-ar="أسئلة وأجوبة.">Questions, answered.</h2>
 
       <div class="faq-list reveal">
@@ -2728,7 +2846,7 @@
   <!-- ───────────── CONTACT ───────────── -->
   <section class="section" id="contact">
     <div class="wrap">
-      <span class="label reveal"><span class="num">05</span> <span data-en="/ Let's build something" data-ar="/ لنبنِ شيئًا معًا">/ Let's build something</span></span>
+      <span class="label reveal"><span class="num">07</span> <span data-en="/ Let's build something" data-ar="/ لنبنِ شيئًا معًا">/ Let's build something</span></span>
       <h2 class="title reveal" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
 
       <div class="contact-grid">
