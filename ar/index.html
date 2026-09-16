@@ -1533,6 +1533,56 @@
     transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .3s, background-color .35s var(--ease);
   }
   .contact-card:hover { box-shadow: 0 18px 40px rgba(0,0,0,0.08); }
+  /* one-question-at-a-time form */
+  .step-form { display: flex; flex-direction: column; }
+  .step-progress {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .step-count { unicode-bidi: isolate; direction: ltr; }
+  .step-bar { flex: 1; height: 4px; border-radius: 4px; background: var(--hair); overflow: hidden; }
+  .step-bar span { display: block; height: 100%; width: 25%; background: var(--blue); border-radius: inherit; transition: width .35s var(--ease); }
+  .form-step { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .form-step:not([hidden]) { animation: step-in .35s var(--ease); }
+  @keyframes step-in { from { opacity: 0; transform: translateY(8px); } }
+  .step-q {
+    padding: 0;
+    margin-bottom: 18px;
+    font-size: clamp(20px, 2.2vw, 24px);
+    font-weight: 600;
+    color: var(--ink);
+    outline: none;
+  }
+  .step-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+  form label.step-opt { display: block; margin: 0; font: inherit; color: inherit; cursor: pointer; }
+  .step-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+  .step-opt span {
+    display: flex;
+    align-items: center;
+    min-height: 58px;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--bg-soft);
+    border: 1px solid var(--hair);
+    border-radius: 11px;
+    transition: border-color .2s, background .2s, color .2s;
+  }
+  .step-opt:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .step-opt:hover span { border-color: var(--blue); }
+  .step-opt input:checked + span { border-color: var(--blue); background: var(--white); box-shadow: inset 0 0 0 1px var(--blue); color: var(--blue); }
+  .step-opt input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .step-nav { display: flex; gap: 12px; margin-top: auto; }
+  .step-nav .btn[hidden] { display: none; }
+  html[dir="rtl"] .step-nav .btn svg { transform: scaleX(-1); }
+  @media (max-width: 560px) { .step-options { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .form-step:not([hidden]) { animation: none; } .step-bar span { transition: none; } }
   /* form fields laid out horizontally */
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   form .field { margin-bottom: 18px; }
@@ -1543,7 +1593,7 @@
     color: var(--muted);
     margin-bottom: 9px;
   }
-  form input, form textarea {
+  form input, form select, form textarea {
     width: 100%;
     font: inherit;
     font-size: 15px;
@@ -1554,8 +1604,8 @@
     padding: 14px 16px;
     transition: border-color .2s, background .2s;
   }
-  form input:focus, form textarea:focus,
-  form input:focus-visible, form textarea:focus-visible {
+  form input:focus, form select:focus, form textarea:focus,
+  form input:focus-visible, form select:focus-visible, form textarea:focus-visible {
     outline: none;
     border-radius: 11px;
     border-width: 2px;
@@ -1564,6 +1614,19 @@
     background: var(--white);
   }
   form textarea { resize: vertical; min-height: 130px; }
+  form select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 34px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+  }
+  form select:focus, form select:focus-visible { padding-right: 33px; }
+  /* phone numbers read left to right in both languages */
+  .phone-input { display: flex; gap: 8px; direction: ltr; }
+  .phone-input select { flex: none; width: auto; }
+  .phone-input input { flex: 1; min-width: 0; }
   form .btn { margin-top: 6px; }
 
   /* info panel: vertical, subtly tinted, rows split by hairlines */
@@ -2798,24 +2861,83 @@
       <h2 class="title reveal" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">أخبرنا عن مشروعك.</h2>
 
       <div class="contact-grid">
-        <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card reveal" novalidate>
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card step-form reveal" novalidate>
           <input type="hidden" name="form-name" value="contact" />
           <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-          <div class="field-row">
-            <div class="field">
-              <label for="name" data-en="Full name" data-ar="الاسم الكامل">الاسم الكامل</label>
-              <input type="text" id="name" name="name" placeholder="اسمك" data-en-ph="Your name" data-ar-ph="اسمك" required />
-            </div>
-            <div class="field">
-              <label for="email" data-en="Email" data-ar="البريد الإلكتروني">البريد الإلكتروني</label>
-              <input type="email" id="email" name="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
-            </div>
+          <div class="step-progress" aria-hidden="true">
+            <span class="step-count"><span id="stepNum">1</span> / 4</span>
+            <span class="step-bar"><span id="stepBar"></span></span>
           </div>
-          <div class="field">
-            <label for="message" data-en="Message" data-ar="الرسالة">الرسالة</label>
-            <textarea id="message" name="message" placeholder="ما الذي تبنيه؟" data-en-ph="What are you building?" data-ar-ph="ما الذي تبنيه؟" required></textarea>
+          <fieldset class="form-step" data-step="1">
+            <legend class="step-q" tabindex="-1" data-en="What do you need?" data-ar="ما الذي تحتاج إليه؟">ما الذي تحتاج إليه؟</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="service" value="ui-ux" required /><span data-en="UI/UX design" data-ar="تصميم الواجهات وتجربة المستخدم">تصميم الواجهات وتجربة المستخدم</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="website" required /><span data-en="A website" data-ar="موقع إلكتروني">موقع إلكتروني</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="web-app" required /><span data-en="A web app or platform" data-ar="تطبيق ويب أو منصة">تطبيق ويب أو منصة</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="seo" required /><span data-en="SEO &amp; growth" data-ar="تحسين محركات البحث والنمو">تحسين محركات البحث والنمو</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="2" hidden>
+            <legend class="step-q" tabindex="-1" data-en="When do you want to launch?" data-ar="متى تريد الإطلاق؟">متى تريد الإطلاق؟</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="timeline" value="asap" required /><span data-en="As soon as possible" data-ar="في أقرب وقت ممكن">في أقرب وقت ممكن</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="1-3-months" required /><span data-en="In 1–3 months" data-ar="خلال شهر إلى ثلاثة أشهر">خلال شهر إلى ثلاثة أشهر</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="3-plus-months" required /><span data-en="In 3 months or more" data-ar="بعد ثلاثة أشهر أو أكثر">بعد ثلاثة أشهر أو أكثر</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="exploring" required /><span data-en="Just exploring" data-ar="أستكشف الخيارات فقط">أستكشف الخيارات فقط</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="3" hidden>
+            <legend class="step-q" tabindex="-1" data-en="What's your budget?" data-ar="ما ميزانيتك؟">ما ميزانيتك؟</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="budget" value="under-2k" required /><span data-en="Under $2,000" data-ar="أقل من 2,000$">أقل من 2,000$</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="2k-5k" required /><span data-en="$2,000–$5,000" data-ar="2,000$ – 5,000$">2,000$ – 5,000$</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="5k-15k" required /><span data-en="$5,000–$15,000" data-ar="5,000$ – 15,000$">5,000$ – 15,000$</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="15k-plus" required /><span data-en="$15,000+" data-ar="أكثر من 15,000$">أكثر من 15,000$</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="4" hidden>
+            <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">كيف نتواصل معك؟</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="name" data-en="Your name" data-ar="اسمك">اسمك</label>
+                <input type="text" id="name" name="name" autocomplete="name" placeholder="اسمك" data-en-ph="Your name" data-ar-ph="اسمك" required />
+              </div>
+              <div class="field">
+                <label for="phone" data-en="Phone number" data-ar="رقم الهاتف">رقم الهاتف</label>
+                <div class="phone-input">
+                  <select id="phoneCode" name="phone-code" autocomplete="tel-country-code" aria-label="رمز الدولة">
+                    <option value="+971">AE +971</option>
+                    <option value="+973">BH +973</option>
+                    <option value="+253">DJ +253</option>
+                    <option value="+213">DZ +213</option>
+                    <option value="+20">EG +20</option>
+                    <option value="+964">IQ +964</option>
+                    <option value="+962">JO +962</option>
+                    <option value="+269">KM +269</option>
+                    <option value="+965">KW +965</option>
+                    <option value="+961" selected>LB +961</option>
+                    <option value="+218">LY +218</option>
+                    <option value="+212">MA +212</option>
+                    <option value="+222">MR +222</option>
+                    <option value="+968">OM +968</option>
+                    <option value="+970">PS +970</option>
+                    <option value="+974">QA +974</option>
+                    <option value="+966">SA +966</option>
+                    <option value="+249">SD +249</option>
+                    <option value="+252">SO +252</option>
+                    <option value="+963">SY +963</option>
+                    <option value="+216">TN +216</option>
+                    <option value="+967">YE +967</option>
+                  </select>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" required />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">رجوع</span></button>
+            <button type="submit" class="btn btn-primary btn-shine"><span data-en="Next" data-ar="التالي">التالي</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
           </div>
-          <button type="submit" class="btn btn-primary btn-shine"><span data-en="Send" data-ar="إرسال">إرسال</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
         </form>
 
         <aside class="contact-card contact-aside reveal">
@@ -3815,36 +3937,102 @@
   const contactForm = document.getElementById('contactForm');
   const submitBtn = contactForm.querySelector('button[type="submit"]');
   const submitLabel = submitBtn.querySelector('span');
+  const backBtn = document.getElementById('stepBack');
+  const steps = [...contactForm.querySelectorAll('.form-step')];
+  const stepNum = document.getElementById('stepNum');
+  const stepBar = document.getElementById('stepBar');
+  let stepIndex = 0;
   const setSubmitLabel = (en, arText) => {
     submitLabel.setAttribute('data-en', en);
     submitLabel.setAttribute('data-ar', arText);
     submitLabel.textContent = currentLang === 'ar' ? arText : en;
   };
+  const isLastStep = () => stepIndex === steps.length - 1;
+  const showStep = (i, focus = true) => {
+    stepIndex = i;
+    steps.forEach((s, n) => { s.hidden = n !== i; });
+    stepNum.textContent = i + 1;
+    stepBar.style.width = ((i + 1) / steps.length * 100) + '%';
+    backBtn.hidden = i === 0;
+    if (isLastStep()) setSubmitLabel('Send', 'إرسال');
+    else setSubmitLabel('Next', 'التالي');
+    if (focus) {
+      const q = steps[i].querySelector(isLastStep() ? 'input' : '.step-q');
+      q.focus({ preventScroll: true });
+    }
+  };
+  const stepValid = () => {
+    const invalid = [...steps[stepIndex].querySelectorAll('input, select')].find(el => !el.checkValidity());
+    if (invalid) { invalid.reportValidity(); return false; }
+    return true;
+  };
+  backBtn.addEventListener('click', () => showStep(stepIndex - 1));
+  // a pointer click on an answer moves straight on; keyboard users confirm
+  // with Enter or the Next button so arrow keys can still move between answers
+  contactForm.addEventListener('click', (e) => {
+    const opt = e.target.closest('.step-opt input');
+    if (!opt || e.detail === 0) return;
+    setTimeout(() => { if (steps[stepIndex].contains(opt)) showStep(stepIndex + 1); }, 180);
+  });
+  // each answer as it reads inside the enquiry email
+  const emailPhrases = {
+    service: {
+      'ui-ux': 'the UI/UX design of a product',
+      'website': 'a new website',
+      'web-app': 'a web app or platform',
+      'seo': 'SEO and growing our traffic'
+    },
+    timeline: {
+      'asap': "We'd like to launch as soon as possible",
+      '1-3-months': "We're aiming to launch in the next one to three months",
+      '3-plus-months': "We're planning to launch in three months or more",
+      'exploring': "We're still exploring, so the timing is open"
+    },
+    budget: {
+      'under-2k': 'our budget is under $2,000',
+      '2k-5k': 'our budget is between $2,000 and $5,000',
+      '5k-15k': 'our budget is between $5,000 and $15,000',
+      '15k-plus': 'our budget is $15,000 or more'
+    }
+  };
+  const phrase = (f, name) => emailPhrases[name][f.elements[name].value] || '';
   const mailtoFallback = (f) => {
     const els = f.elements;
-    const name = encodeURIComponent(els.name.value.trim());
-    const body = encodeURIComponent(els.message.value.trim() + "\n\n— " + els.name.value.trim() + " (" + els.email.value.trim() + ")");
+    const name = els.name.value.trim();
+    const phone = els['phone-code'].value + ' ' + els.phone.value.trim();
+    const body = "Hi kaprera,\n\n" +
+      "My name is " + name + " and I'd like to work with you on " + phrase(f, 'service') + ". " +
+      phrase(f, 'timeline') + ", and " + phrase(f, 'budget') + ".\n\n" +
+      "You can reach me on " + phone + ". I look forward to hearing from you.\n\n" +
+      "Best regards,\n" + name;
     window.location.href =
-      "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" + name + "&body=" + body;
+      "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" + encodeURIComponent(name) + "&body=" + encodeURIComponent(body);
   };
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const f = e.target;
-    if (!f.checkValidity()) { f.reportValidity(); return; }
+    if (!stepValid()) return;
+    if (!isLastStep()) { showStep(stepIndex + 1); return; }
     submitBtn.disabled = true;
-    setSubmitLabel('sending…', 'جارٍ الإرسال…');
+    backBtn.disabled = true;
+    setSubmitLabel('Sending…', 'جارٍ الإرسال…');
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(f)).toString()
     }).then((res) => {
       if (!res.ok) throw new Error('form endpoint unavailable');
-      f.reset();
-      setSubmitLabel('message sent ✓', 'تم الإرسال ✓');
-      setTimeout(() => { setSubmitLabel('send', 'إرسال'); submitBtn.disabled = false; }, 4000);
+      setSubmitLabel('Message sent ✓', 'تم الإرسال ✓');
+      setTimeout(() => {
+        f.reset();
+        showStep(0, false);
+        submitBtn.disabled = false;
+        backBtn.disabled = false;
+      }, 4000);
     }).catch(() => {
-      setSubmitLabel('send', 'إرسال');
+      setSubmitLabel('Send', 'إرسال');
       submitBtn.disabled = false;
+      backBtn.disabled = false;
       mailtoFallback(f);
     });
   });
