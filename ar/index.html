@@ -273,6 +273,9 @@
     --muted: #5b5b5b;
     --hair: #e6e6e6;
     --bg-soft: #fafafa;
+    --err-ink: #8d2f2f;   /* 4.5:1 on --err-bg */
+    --err-bg: #fdf4f4;
+    --err-line: #e4b4b4;
     --maxw: 1180px;
     --radius: 14px;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -285,6 +288,9 @@
     --muted: #9aa4ad;
     --hair: #232a31;
     --bg-soft: #161b22;
+    --err-ink: #ff9d9d;   /* 4.5:1 on --err-bg in dark */
+    --err-bg: #2a1618;
+    --err-line: #5c2b2f;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -306,6 +312,9 @@
   }
 
   body.no-scroll { overflow: hidden; }
+  /* position: fixed is what actually holds the scroll position on iOS Safari;
+     body.style.top carries the offset so nothing jumps on close */
+  body.scroll-locked { position: fixed; inset-inline: 0; width: 100%; }
 
   a { color: inherit; text-decoration: none; }
 
@@ -666,7 +675,8 @@
   /* typewriter layers: an invisible ghost of the final text reserves the full
      height, and the live layer types over it, so no offsetHeight measurement
      (which would force a reflow) is needed to lock the height */
-  .hero h1 .type-ghost { visibility: hidden; }
+  /* reserves the final height; user-select keeps it out of a copied headline */
+  .hero h1 .type-ghost { visibility: hidden; user-select: none; -webkit-user-select: none; }
   .hero h1 .type-live { position: absolute; inset: 0; }
   .hero h1.type-done .type-ghost { display: none; }
   .hero h1.type-done .type-live { position: static; }
@@ -966,11 +976,12 @@
 
   /* controls */
   .work-ctrls {
-    display: flex; align-items: center; gap: 16px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
     margin-top: 56px; padding-top: 28px;
     border-top: 1px solid var(--hair);
   }
   .work-arrow {
+    flex: 0 0 auto;
     width: 46px; height: 46px; border-radius: 50%;
     border: 1px solid var(--hair); background: var(--white);
     color: var(--ink); cursor: pointer;
@@ -980,26 +991,52 @@
   .work-arrow:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
   .work-arrow:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
   html[lang="ar"] .work-arrow svg { transform: scaleX(-1); }   /* mirror prev/next chevrons for rtl */
-  .work-dots { display: flex; gap: 8px; }
-  .work-dots i {
+  /* dots are real buttons: keyboard-reachable, with a 24px target (WCAG 2.5.8)
+     supplied by ::before so the visible dot can stay small */
+  .work-dots { display: flex; gap: 16px; align-items: center; }
+  .work-dots button {
+    appearance: none; -webkit-appearance: none; padding: 0; border: 0;
     width: 8px; height: 8px; border-radius: 50%;
     background: var(--hair); cursor: pointer;
     transition: background .3s, width .3s;
-    position: relative; overflow: hidden;
+    position: relative;
   }
+  .work-dots button::before {
+    content: ""; position: absolute;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 24px; height: 24px;
+  }
+  .work-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
   /* active dot becomes a track; a blue fill "loads" over the autoplay interval */
-  .work-dots i.active { width: 26px; border-radius: 4px; background: var(--hair); }
-  .work-dots i.active::after {
+  .work-dots button.active { width: 26px; border-radius: 4px; background: var(--hair); }
+  .work-dots button.active::after {
     content: ""; position: absolute; inset: 0; border-radius: inherit;
     background: var(--blue); transform-origin: left; transform: scaleX(0);
   }
-  html[lang="ar"] .work-dots i.active::after { transform-origin: right; }
-  .work-dots i.active.fill::after { animation: workFill var(--work-auto, 7000ms) linear forwards; }
-  .work-dots.paused i.active::after { animation-play-state: paused; }
+  html[lang="ar"] .work-dots button.active::after { transform-origin: right; }
+  .work-dots button.active.fill::after { animation: workFill var(--work-auto, 7000ms) linear forwards; }
+  .work-dots.paused button.active::after { animation-play-state: paused; }
   @keyframes workFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  /* pause / play control for the showcase */
+  .work-play {
+    appearance: none; -webkit-appearance: none;
+    flex: 0 0 auto;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--hair); background: var(--white); color: var(--ink);
+    cursor: pointer; margin-inline-end: 4px;
+    transition: border-color .25s, color .25s, background-color .25s;
+  }
+  .work-play:hover { border-color: var(--blue); color: var(--blue); }
+  .work-play:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) {
-    .work-dots i.active { background: var(--blue); }
-    .work-dots i.active::after { display: none; }
+    .work-dots button.active { background: var(--hair); }
+    .work-dots button.active::after { display: none; }
+  }
+  @media (max-width: 720px) {
+    /* nine dots at a 24px pitch do not fit beside the arrows, so they wrap to
+       their own row rather than shrinking the controls */
+    .work-dots { order: 4; flex: 1 0 100%; justify-content: center; margin-top: 6px; }
   }
   .work-count {
     margin-inline-start: auto;
@@ -1175,11 +1212,17 @@
 
   /* slider controls */
   .hero.is-colored .work-ctrls { border-top-color: rgba(255,255,255,0.28); }
-  .hero.is-colored .work-dots i { background: rgba(255,255,255,0.42); }
-  .hero.is-colored .work-dots i.active { background: rgba(255,255,255,0.32); }
-  .hero.is-colored .work-dots i.active::after { background: #fff; }
+  .hero.is-colored .work-dots button { background: rgba(255,255,255,0.42); }
+  .hero.is-colored .work-dots button.active { background: rgba(255,255,255,0.32); }
+  .hero.is-colored .work-dots button.active::after { background: #fff; }
+  .hero.is-colored .work-dots button:focus-visible { outline-color: #fff; }
+  .hero.is-colored .work-play {
+    background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.34); color: #fff;
+  }
+  .hero.is-colored .work-play:hover { background: rgba(255,255,255,0.22); border-color: #fff; color: #fff; }
+  .hero.is-colored .work-play:focus-visible { outline-color: #fff; }
   @media (prefers-reduced-motion: reduce) {
-    .hero.is-colored .work-dots i.active { background: #fff; }
+    .hero.is-colored .work-dots button.active { background: #fff; }
   }
   .hero.is-colored .work-count { color: rgba(255,255,255,0.8); }
   .hero.is-colored .work-count b { color: #fff; }
@@ -1373,25 +1416,43 @@
     display: flex; align-items: center; justify-content: center;
     gap: 18px; margin-top: 28px;
   }
-  .svc-dots { display: flex; gap: 9px; }
-  .svc-dots i {
+  /* dots are real buttons; ::before supplies a 24px target (WCAG 2.5.8) */
+  .svc-dots { display: flex; gap: 16px; align-items: center; }
+  .svc-dots button {
+    appearance: none; -webkit-appearance: none; padding: 0; border: 0;
     width: 9px; height: 9px; border-radius: 50%;
     background: var(--hair); cursor: pointer;
     transition: width .35s var(--ease), background-color .3s var(--ease), border-radius .35s var(--ease);
-    position: relative; overflow: hidden;
+    position: relative;
   }
+  .svc-dots button::before {
+    content: ""; position: absolute;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 24px; height: 24px;
+  }
+  .svc-dots button:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
   /* active dot becomes a track; a blue fill "loads" over the autoplay interval, then slides */
-  .svc-dots i.active { width: 34px; border-radius: 5px; background: var(--hair); }
-  .svc-dots i.active::after {
+  .svc-dots button.active { width: 34px; border-radius: 5px; background: var(--hair); }
+  .svc-dots button.active::after {
     content: ""; position: absolute; inset: 0; border-radius: inherit;
     background: var(--svc-fill, var(--blue)); transform-origin: left; transform: scaleX(0);
   }
-  html[lang="ar"] .svc-dots i.active::after { transform-origin: right; }
-  .svc-dots i.active.fill::after { animation: workFill var(--svc-auto, 4000ms) linear forwards; }
-  .svc-dots.paused i.active::after { animation-play-state: paused; }
+  html[lang="ar"] .svc-dots button.active::after { transform-origin: right; }
+  .svc-dots button.active.fill::after { animation: workFill var(--svc-auto, 9000ms) linear forwards; }
+  .svc-dots.paused button.active::after { animation-play-state: paused; }
+  .svc-play {
+    appearance: none; -webkit-appearance: none;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.14);
+    color: #fff; cursor: pointer;
+    transition: background-color .25s, border-color .25s;
+  }
+  .svc-play:hover { background: rgba(255,255,255,0.26); border-color: #fff; }
+  .svc-play:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) {
-    .svc-dots i.active { background: var(--svc-fill, var(--blue)); }
-    .svc-dots i.active::after { display: none; }
+    .svc-dots button.active { background: var(--svc-fill, var(--blue)); }
+    .svc-dots button.active::after { display: none; }
   }
   .svc-count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
   .svc-count b { color: var(--ink); font-weight: 700; }
@@ -1547,6 +1608,45 @@
   .step-count { unicode-bidi: isolate; direction: ltr; }
   .step-bar { flex: 1; height: 4px; border-radius: 4px; background: var(--hair); overflow: hidden; }
   .step-bar span { display: block; height: 100%; width: 25%; background: var(--blue); border-radius: inherit; transition: width .35s var(--ease); }
+  /* screen-reader-only text: used for the step count and the submit status */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+  form label .opt {
+    font-weight: 500; color: var(--muted); text-transform: none;
+    letter-spacing: 0; margin-inline-start: 6px;
+  }
+  /* submit failure: visible, keeps the answers, offers a way through */
+  .form-error {
+    margin-top: 16px; padding: 16px 18px;
+    border: 1px solid var(--err-line, #e4b4b4);
+    background: var(--err-bg, #fdf4f4);
+    border-radius: 12px;
+  }
+  .form-error-msg { margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: var(--err-ink, #8d2f2f); }
+  .form-error-acts { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .form-error-mail { font-size: 14px; font-weight: 600; color: var(--blue-text); text-decoration: underline; }
+  /* the confirmation replaces the form and stays put */
+  .form-sent { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .form-sent:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+  .form-sent-tick {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--blue) 14%, transparent); color: var(--blue-text);
+  }
+  .form-sent h3 { font-size: clamp(20px, 2.4vw, 26px); line-height: 1.25; margin: 0; }
+  .form-sent > p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+  .form-sent-recap {
+    margin: 4px 0 0; width: 100%;
+    border-top: 1px solid var(--hair); padding-top: 14px;
+    display: grid; gap: 8px;
+  }
+  .form-sent-recap div { display: flex; gap: 12px; align-items: baseline; font-size: 14px; }
+  .form-sent-recap dt { flex: 0 0 96px; color: var(--muted); }
+  .form-sent-recap dd { margin: 0; color: var(--ink); font-weight: 600; }
+  @media (max-width: 560px) { .form-sent-recap dt { flex-basis: 78px; } }
   .form-step { border: 0; padding: 0; margin: 0; min-width: 0; }
   .form-step:not([hidden]) { animation: step-in .35s var(--ease); }
   @keyframes step-in { from { opacity: 0; transform: translateY(8px); } }
@@ -1894,9 +1994,17 @@
       -webkit-backdrop-filter: blur(4px);
       opacity: 0;
       pointer-events: none;
-      transition: opacity .3s var(--ease);
+      /* visibility (not opacity alone) is what takes the links out of the tab
+         order — without it all 7 controls stay focusable behind a closed menu */
+      visibility: hidden;
+      transition: opacity .3s var(--ease), visibility 0s linear .3s;
     }
-    .nav-links.open { opacity: 1; pointer-events: auto; }
+    .nav-links.open {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+      transition: opacity .3s var(--ease), visibility 0s;
+    }
     .nav-panel {
       display: flex;
       flex-direction: column;
@@ -2481,6 +2589,7 @@
           <button type="button" class="work-arrow next" id="workNext" aria-label="next slide">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
+          <button type="button" class="work-play" id="workPlay" aria-label="pause slideshow" aria-pressed="false"></button>
           <div class="work-dots" id="workDots" role="tablist" aria-label="our work slides"></div>
           <div class="work-count"><b id="workNow">01</b> / 09</div>
         </div>
@@ -2644,6 +2753,7 @@
         </div>
 
         <div class="svc-ctrls">
+          <button type="button" class="svc-play" id="svcPlay" aria-label="pause services slideshow" aria-pressed="false"></button>
           <div class="svc-dots" id="svcDots" role="tablist" aria-label="services"></div>
           <div class="svc-count"><b id="svcNow">01</b> / 03</div>
         </div>
@@ -2864,9 +2974,11 @@
         <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card step-form reveal" novalidate>
           <input type="hidden" name="form-name" value="contact" />
           <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-          <div class="step-progress" aria-hidden="true">
-            <span class="step-count"><span id="stepNum">1</span> / 4</span>
-            <span class="step-bar"><span id="stepBar"></span></span>
+          <div class="step-progress">
+            <span class="step-count">
+              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 4</span><span class="sr-only" data-en=" of 4" data-ar=" من 4"> of 4</span>
+            </span>
+            <span class="step-bar" aria-hidden="true"><span id="stepBar"></span></span>
           </div>
           <fieldset class="form-step" data-step="1">
             <legend class="step-q" tabindex="-1" data-en="What do you need?" data-ar="ما الذي تحتاج إليه؟">ما الذي تحتاج إليه؟</legend>
@@ -2893,6 +3005,7 @@
               <label class="step-opt"><input type="radio" name="budget" value="2k-5k" required /><span data-en="$2,000–$5,000" data-ar="2,000$ – 5,000$">2,000$ – 5,000$</span></label>
               <label class="step-opt"><input type="radio" name="budget" value="5k-15k" required /><span data-en="$5,000–$15,000" data-ar="5,000$ – 15,000$">5,000$ – 15,000$</span></label>
               <label class="step-opt"><input type="radio" name="budget" value="15k-plus" required /><span data-en="$15,000+" data-ar="أكثر من 15,000$">أكثر من 15,000$</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="unsure" required /><span data-en="Not sure yet" data-ar="لست متأكدًا بعد">لست متأكدًا بعد</span></label>
             </div>
           </fieldset>
           <fieldset class="form-step" data-step="4" hidden>
@@ -2903,42 +3016,115 @@
                 <input type="text" id="name" name="name" autocomplete="name" placeholder="اسمك" data-en-ph="Your name" data-ar-ph="اسمك" required />
               </div>
               <div class="field">
-                <label for="phone" data-en="Phone number" data-ar="رقم الهاتف">رقم الهاتف</label>
-                <div class="phone-input">
-                  <select id="phoneCode" name="phone-code" autocomplete="tel-country-code" aria-label="رمز الدولة">
+                <label for="email" data-en="Email" data-ar="البريد الإلكتروني">البريد الإلكتروني</label>
+                <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="phone">
+                <span data-en="Phone number" data-ar="رقم الهاتف">رقم الهاتف</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">اختياري</span>
+              </label>
+              <div class="phone-input">
+                <select id="phoneCode" name="phone-code" autocomplete="tel-country-code" aria-label="رمز الدولة">
                     <option value="+971">AE +971</option>
+                    <option value="+43">AT +43</option>
+                    <option value="+61">AU +61</option>
+                    <option value="+32">BE +32</option>
                     <option value="+973">BH +973</option>
+                    <option value="+55">BR +55</option>
+                    <option value="+1">CA +1</option>
+                    <option value="+41">CH +41</option>
+                    <option value="+86">CN +86</option>
+                    <option value="+357">CY +357</option>
+                    <option value="+420">CZ +420</option>
+                    <option value="+49">DE +49</option>
                     <option value="+253">DJ +253</option>
+                    <option value="+45">DK +45</option>
                     <option value="+213">DZ +213</option>
                     <option value="+20">EG +20</option>
+                    <option value="+34">ES +34</option>
+                    <option value="+358">FI +358</option>
+                    <option value="+33">FR +33</option>
+                    <option value="+44">GB +44</option>
+                    <option value="+30">GR +30</option>
+                    <option value="+852">HK +852</option>
+                    <option value="+353">IE +353</option>
+                    <option value="+972">IL +972</option>
+                    <option value="+91">IN +91</option>
                     <option value="+964">IQ +964</option>
+                    <option value="+39">IT +39</option>
                     <option value="+962">JO +962</option>
+                    <option value="+81">JP +81</option>
+                    <option value="+254">KE +254</option>
                     <option value="+269">KM +269</option>
+                    <option value="+82">KR +82</option>
                     <option value="+965">KW +965</option>
                     <option value="+961" selected>LB +961</option>
                     <option value="+218">LY +218</option>
                     <option value="+212">MA +212</option>
                     <option value="+222">MR +222</option>
+                    <option value="+356">MT +356</option>
+                    <option value="+52">MX +52</option>
+                    <option value="+60">MY +60</option>
+                    <option value="+234">NG +234</option>
+                    <option value="+31">NL +31</option>
+                    <option value="+47">NO +47</option>
+                    <option value="+64">NZ +64</option>
                     <option value="+968">OM +968</option>
+                    <option value="+63">PH +63</option>
+                    <option value="+48">PL +48</option>
                     <option value="+970">PS +970</option>
+                    <option value="+351">PT +351</option>
                     <option value="+974">QA +974</option>
+                    <option value="+40">RO +40</option>
+                    <option value="+7">RU +7</option>
                     <option value="+966">SA +966</option>
                     <option value="+249">SD +249</option>
+                    <option value="+46">SE +46</option>
+                    <option value="+65">SG +65</option>
                     <option value="+252">SO +252</option>
                     <option value="+963">SY +963</option>
+                    <option value="+66">TH +66</option>
                     <option value="+216">TN +216</option>
+                    <option value="+90">TR +90</option>
+                    <option value="+380">UA +380</option>
+                    <option value="+1">US +1</option>
                     <option value="+967">YE +967</option>
-                  </select>
-                  <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" required />
-                </div>
+                    <option value="+27">ZA +27</option>
+                </select>
+                <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" />
               </div>
             </div>
           </fieldset>
           <div class="step-nav">
-            <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">رجوع</span></button>
-            <button type="submit" class="btn btn-primary btn-shine"><span data-en="Next" data-ar="التالي">التالي</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+            <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">Back</span></button>
+            <button type="submit" class="btn btn-primary btn-shine"><span data-en="Next" data-ar="التالي">Next</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+          <!-- submit failed: say so, keep the answers, and offer an explicit way out -->
+          <div class="form-error" id="formError" hidden>
+            <p class="form-error-msg" data-en="We couldn't reach our server, so nothing has been sent yet." data-ar="تعذّر الوصول إلى الخادم، ولم يُرسل شيء بعد.">تعذّر الوصول إلى الخادم، ولم يُرسل شيء بعد.</p>
+            <div class="form-error-acts">
+              <button type="button" class="btn btn-primary" id="formRetry"><span data-en="Try again" data-ar="حاول مرة أخرى">حاول مرة أخرى</span></button>
+              <a class="form-error-mail" id="formErrorMail" href="mailto:info@kaprera.com" data-en="Send it as an email instead" data-ar="أرسلها عبر البريد الإلكتروني بدلًا من ذلك">أرسلها عبر البريد الإلكتروني بدلًا من ذلك</a>
+            </div>
           </div>
         </form>
+
+        <!-- outside the form on purpose: the form is hidden on success, and a live
+             region inside a hidden subtree is never announced -->
+        <p class="form-status sr-only" id="formStatus" role="status" aria-live="polite"></p>
+
+        <!-- the confirmation stays on screen instead of a button label that clears itself -->
+        <div class="contact-card form-sent reveal" id="formSent" hidden>
+          <span class="form-sent-tick" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <h3 data-en="Thank you — your enquiry is on its way." data-ar="شكرًا لك — طلبك في طريقه إلينا.">شكرًا لك — طلبك في طريقه إلينا.</h3>
+          <p data-en="We read every message and reply within one business day, Beirut time. If it's urgent, WhatsApp us and we'll pick it up faster." data-ar="نقرأ كل رسالة ونردّ خلال يوم عمل واحد بتوقيت بيروت. وإذا كان الأمر عاجلًا، راسلنا على واتساب وسنتابعه أسرع.">نقرأ كل رسالة ونردّ خلال يوم عمل واحد بتوقيت بيروت. وإذا كان الأمر عاجلًا، راسلنا على واتساب وسنتابعه أسرع.</p>
+          <dl class="form-sent-recap" id="formSentRecap"></dl>
+          <button type="button" class="btn btn-ghost" id="formAgain"><span data-en="Send another enquiry" data-ar="إرسال طلب آخر">إرسال طلب آخر</span></button>
+        </div>
 
         <aside class="contact-card contact-aside reveal">
           <div class="contact-item">
@@ -3444,11 +3630,13 @@
     // hold the keystrokes until the preloader clears; this fn re-runs on unlock
     if (!heroTypingUnlocked) return;
     const typed = heroTitle.querySelector('.typed');
+    // the headline is the page's value proposition, so it has to finish while the
+    // hero slide is still on screen — roughly 2s for a 50-character line
     const delayFor = (ch) => {
-      if (ch === ',' || ch === '،') return 320;          // pause after comma
-      if (ch === '.' || ch === '&' || ch === '—') return 300; // pause after punctuation
-      if (ch === ' ') return 120;                        // small hesitation between words
-      return 75;                                          // base typing speed
+      if (ch === ',' || ch === '،') return 150;          // pause after comma
+      if (ch === '.' || ch === '&' || ch === '—') return 140; // pause after punctuation
+      if (ch === ' ') return 55;                         // small hesitation between words
+      return 32;                                         // base typing speed
     };
     let i = 0;
     const step = () => {
@@ -3465,7 +3653,14 @@
 
   // ── language toggle (en / ar rtl) ──
   const langToggle = document.getElementById('langToggle');
-  let currentLang = 'ar';
+  // ?lang= wins over the stored preference, so a language choice can be shared or
+  // bookmarked; the canonical URL itself is unchanged (/ar/ stays the indexed
+  // Arabic page and / stays English-canonical)
+  const PAGE_LANG = 'ar';            // the language this page is published in
+  const langParam = new URLSearchParams(location.search).get('lang');
+  let currentLang = (langParam === 'ar' || langParam === 'en')
+    ? langParam
+    : 'ar';
 
   const applyLang = (lang) => {
     const ar = lang === 'ar';
@@ -3484,6 +3679,16 @@
     });
     langToggle.setAttribute('aria-checked', String(ar));
     localStorage.setItem('lang', lang);
+    // keep the address bar in step so the link a visitor copies opens in the
+    // language they are actually reading
+    try {
+      const u = new URL(location.href);
+      // only when it differs from this page's own language, so the canonical
+      // address stays clean for everyone reading it as published
+      if (lang === PAGE_LANG) u.searchParams.delete('lang');
+      else u.searchParams.set('lang', lang);
+      history.replaceState(null, '', u);
+    } catch (e) {}
     if (modal.classList.contains('open') && currentCase) openCase(currentCase);
   };
 
@@ -3501,8 +3706,13 @@
       i = (n + slides.length) % slides.length;
       slides[i].classList.add('active'); dots[i]?.classList.add('active');
     };
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-    const start = () => { stop(); if (autoMs) timer = setInterval(() => show(i + 1), autoMs); };
+    // case-study shots sit behind reading copy: never rotate them under reduced
+    // motion, and hold while the pointer is over the gallery
+    const start = () => { stop(); if (autoMs && !reduce) timer = setInterval(() => show(i + 1), autoMs); };
+    root.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') stop(); });
+    root.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') start(); });
     root.querySelectorAll('.nav').forEach(btn => {
       const go = (e) => {
         e.stopPropagation(); e.preventDefault();
@@ -3540,12 +3750,14 @@
     const nowEl = document.getElementById('workNow');
     const bgs = [...document.querySelectorAll('.hero-bgs .hero-bg')];
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let i = 0, timer = null;
+    let i = 0, timer = null, paused = false, seenFirst = false;
 
     slides.forEach((_, idx) => {
-      const d = document.createElement('i');
+      const d = document.createElement('button');
+      d.type = 'button';
       d.setAttribute('role', 'tab');
       d.setAttribute('aria-label', 'go to slide ' + (idx + 1));
+      d.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
       if (idx === 0) d.classList.add('active');
       d.addEventListener('click', () => { go(idx); rest(); });
       dotsWrap.appendChild(d);
@@ -3553,6 +3765,9 @@
     const dots = [...dotsWrap.children];
 
     const AUTO = 7000;
+    // slide 1 carries the headline, which types itself in; hold it long enough
+    // to be read before the showcase moves on
+    const FIRST_AUTO = 11000;
     // restart the "loading" fill on the active dot so it tracks the autoplay timer
     const paintFill = () => {
       dots.forEach(d => d.classList.remove('fill'));
@@ -3568,20 +3783,36 @@
     const go = (n) => {
       i = (n + slides.length) % slides.length;
       track.style.transform = 'translateX(' + (-i * 100) + '%)'; // track forced LTR in CSS
-      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      dots.forEach((d, idx) => {
+        d.classList.toggle('active', idx === i);
+        d.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+      });
       bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
+      // off-screen slides must not hold focus stops or be read out
+      slides.forEach((s, idx) => {
+        if (idx === i) { s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
+        else { s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
+      });
       if (nowEl) nowEl.textContent = String(i + 1).padStart(2, '0');
       paintFill();
     };
     const stop = () => {
-      if (timer) { clearInterval(timer); timer = null; }
+      if (timer) { clearTimeout(timer); timer = null; }
       dotsWrap.classList.add('paused');   // freeze the fill while paused
     };
     const start = () => {
       stop();
+      // never auto-advance for people who asked for reduced motion, or once the
+      // visitor has explicitly paused
+      if (reduce || paused) return;
       dotsWrap.classList.remove('paused');
       paintFill();                         // resync fill with the fresh interval
-      timer = setInterval(() => go(i + 1), AUTO);
+      const ms = (i === 0 && !seenFirst) ? FIRST_AUTO : AUTO;
+      timer = setTimeout(function tick() {
+        seenFirst = true;
+        go(i + 1);
+        timer = setTimeout(tick, AUTO);
+      }, ms);
     };
     const rest = () => { stop(); start(); };
 
@@ -3627,7 +3858,41 @@
     track.addEventListener('touchend', swipeEnd);
     track.addEventListener('touchcancel', swipeEnd);
 
-    go(0); start();
+    // ── pause / play: WCAG 2.2.2 needs a way to stop content that moves on its own ──
+    const playBtn = document.getElementById('workPlay');
+    if (playBtn) {
+      const PAUSE_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+      const PLAY_SVG  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
+      const paintPlay = () => {
+        const showPlay = paused || reduce;
+        playBtn.innerHTML = showPlay ? PLAY_SVG : PAUSE_SVG;
+        playBtn.setAttribute('aria-label', showPlay ? 'play slideshow' : 'pause slideshow');
+        playBtn.setAttribute('aria-pressed', String(showPlay));
+      };
+      playBtn.addEventListener('click', () => {
+        paused = !paused;
+        if (paused) stop(); else start();
+        paintPlay();
+      });
+      // reduced motion means it never starts, so the control opens in "play"
+      if (reduce) paused = true;
+      paintPlay();
+    }
+
+    // hovering to read a slide should not race the timer
+    const sliderEl = track.closest('.work-slider');
+    sliderEl.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') stop(); });
+    sliderEl.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') start(); });
+
+    go(0);
+    // hold the timer until the preloader is gone, so the headline gets its full
+    // dwell instead of racing a clock that started at page load
+    if (document.getElementById('preloader')) {
+      document.addEventListener('kaprera:loaded', start, { once: true });
+      setTimeout(() => { if (!timer) start(); }, 3000); // safety net
+    } else {
+      start();
+    }
   })();
 
   // ── services slider (full-panel, colour-morphing) ──
@@ -3640,15 +3905,18 @@
     const dotsWrap = document.getElementById('svcDots');
     const nowEl = document.getElementById('svcNow');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let i = 0, timer = null;
-    const AUTO = 4000;
+    let i = 0, timer = null, paused = false;
+    // these panels carry a paragraph of copy each, so 4s was less than a read
+    const AUTO = 9000;
     // mid-tone of each service's background gradient, so the playing dot matches the panel
     const FILL = ['#008cc1', '#4a37c9', '#0c9b86'];
 
     panels.forEach((_, idx) => {
-      const d = document.createElement('i');
+      const d = document.createElement('button');
+      d.type = 'button';
       d.setAttribute('role', 'tab');
       d.setAttribute('aria-label', 'go to service ' + (idx + 1));
+      d.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
       d.addEventListener('click', () => { go(idx); rest(); });
       dotsWrap.appendChild(d);
     });
@@ -3671,7 +3939,15 @@
       track.style.transform = 'translateX(' + (-i * 100) + '%)';
       panels.forEach((p, idx) => p.classList.toggle('is-active', idx === i));
       bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
-      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      dots.forEach((d, idx) => {
+        d.classList.toggle('active', idx === i);
+        d.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+      });
+      // off-screen panels keep their links out of the tab order
+      panels.forEach((p, idx) => {
+        if (idx === i) { p.removeAttribute('inert'); p.removeAttribute('aria-hidden'); }
+        else { p.setAttribute('inert', ''); p.setAttribute('aria-hidden', 'true'); }
+      });
       dotsWrap.style.setProperty('--svc-fill', FILL[i] || FILL[0]);
       if (nowEl) nowEl.textContent = String(i + 1).padStart(2, '0');
       paintFill();
@@ -3681,7 +3957,7 @@
       dotsWrap.classList.add('paused');     // freeze the fill while paused
     };
     const start = () => {
-      if (reduce) return;
+      if (reduce || paused) return;
       stop();
       dotsWrap.classList.remove('paused');
       paintFill();                          // resync fill with the fresh interval
@@ -3707,6 +3983,29 @@
     track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sdx = 0; swiping = true; stop(); }, { passive: true });
     track.addEventListener('touchmove', (e) => { if (swiping) sdx = e.touches[0].clientX - sx; }, { passive: true });
     track.addEventListener('touchend', () => { if (swiping && Math.abs(sdx) > 50) go(sdx < 0 ? i + 1 : i - 1); swiping = false; start(); });
+
+    // ── pause / play ──
+    const playBtn = document.getElementById('svcPlay');
+    if (playBtn) {
+      const PAUSE_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+      const PLAY_SVG  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
+      const paintPlay = () => {
+        const showPlay = paused || reduce;
+        playBtn.innerHTML = showPlay ? PLAY_SVG : PAUSE_SVG;
+        playBtn.setAttribute('aria-label', showPlay ? 'play services slideshow' : 'pause services slideshow');
+        playBtn.setAttribute('aria-pressed', String(showPlay));
+      };
+      playBtn.addEventListener('click', () => {
+        paused = !paused;
+        if (paused) stop(); else start();
+        paintPlay();
+      });
+      if (reduce) paused = true;
+      paintPlay();
+    }
+    // hovering to read a panel should not race the timer
+    slider.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') stop(); });
+    slider.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') start(); });
 
     go(0); start();
   })();
@@ -3785,6 +4084,21 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  // ── keep Tab inside the open dialog ──
+  // without this the first Tab lands on the page behind, where the focus ring is
+  // hidden by the overlay and there is no way back but Escape
+  const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  const trapTab = (container, e) => {
+    if (e.key !== 'Tab') return;
+    const items = [...container.querySelectorAll(FOCUSABLE)]
+      .filter(el => el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    if (!items.length) return;
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!container.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  };
+
   // ── mobile menu ──
   const menuBtn = document.getElementById('menuBtn');
   const navLinks = document.getElementById('navLinks');
@@ -3794,13 +4108,25 @@
     menuBtn.classList.toggle('open', open);
     menuBtn.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('no-scroll', open);   // lock page scroll behind the card
+    if (open) {
+      // move focus into the panel so the keyboard lands where the eye does
+      const first = navLinks.querySelector('a, button');
+      if (first) requestAnimationFrame(() => first.focus());
+    } else if (document.activeElement && navLinks.contains(document.activeElement)) {
+      // and hand it back to the trigger on close, never to <body>
+      menuBtn.focus();
+    }
   };
   menuBtn.addEventListener('click', () => toggleMenu());
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
   // tap the dimmed backdrop (outside the card) to close
   navLinks.addEventListener('click', (e) => { if (e.target === navLinks) toggleMenu(false); });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && navLinks.classList.contains('open')) toggleMenu(false);
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) { toggleMenu(false); menuBtn.focus(); }
+  });
+  // Tab stays inside the open menu, as it does in the case-study dialog
+  navLinks.addEventListener('keydown', (e) => {
+    if (navLinks.classList.contains('open')) trapTab(navLinks, e);
   });
 
   // ── scroll reveal ──
@@ -3826,6 +4152,10 @@
   // ── modal ──
   const modal = document.getElementById('modal');
   const modalClose = document.getElementById('modalClose');
+  let scrollLock = 0;
+  // the page's top-level regions, i.e. everything that is not the dialog itself
+  const pageRegions = () => [document.getElementById('nav'), document.getElementById('top'),
+                             document.getElementById('footer')].filter(Boolean);
   let lastFocus = null;
   let modalSlider = null;
   let currentCase = null;
@@ -3901,6 +4231,13 @@
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('no-scroll');
+    // hold the page's scroll position: `overflow: hidden` alone lets iOS Safari
+    // scroll the background and lose the reader's place
+    scrollLock = window.scrollY;
+    document.body.style.top = (-scrollLock) + 'px';
+    document.body.classList.add('scroll-locked');
+    // everything behind the dialog leaves the tab order and the a11y tree
+    pageRegions().forEach(el => el.setAttribute('inert', ''));
     // focus after the frame so it doesn't force a layout mid-batch
     requestAnimationFrame(() => modalClose.focus());
   };
@@ -3909,7 +4246,11 @@
     if (modalSlider) { modalSlider.stop(); modalSlider = null; }
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
+    pageRegions().forEach(el => el.removeAttribute('inert'));
     document.body.classList.remove('no-scroll');
+    document.body.classList.remove('scroll-locked');
+    document.body.style.top = '';
+    window.scrollTo({ top: scrollLock, behavior: 'auto' });
     if (lastFocus) {
       const el = lastFocus;
       // preventScroll: restoring focus must not yank the page around
@@ -3930,6 +4271,12 @@
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  modal.addEventListener('keydown', (e) => trapTab(modal, e));
+  // a Tab pressed while focus somehow sits outside still returns to the dialog
+  document.addEventListener('keydown', (e) => {
+    if (modal.classList.contains('open') && !modal.contains(e.target)) trapTab(modal, e);
   });
 
   // ── contact → Netlify Forms, falling back to the mail client when no
@@ -3992,49 +4339,132 @@
       'under-2k': 'our budget is under $2,000',
       '2k-5k': 'our budget is between $2,000 and $5,000',
       '5k-15k': 'our budget is between $5,000 and $15,000',
-      '15k-plus': 'our budget is $15,000 or more'
+      '15k-plus': 'our budget is $15,000 or more',
+      'unsure': "we haven't settled on a budget yet"
     }
   };
   const phrase = (f, name) => emailPhrases[name][f.elements[name].value] || '';
-  const mailtoFallback = (f) => {
+  // the same enquiry as an email, for the manual fallback when the POST fails
+  const mailtoHref = (f) => {
     const els = f.elements;
     const name = els.name.value.trim();
-    const phone = els['phone-code'].value + ' ' + els.phone.value.trim();
+    const email = els.email.value.trim();
+    const tel = els.phone.value.trim();
+    const reach = tel
+      ? "You can reach me on " + els['phone-code'].value + ' ' + tel + " or at " + email + "."
+      : "You can reach me at " + email + ".";
     const body = "Hi kaprera,\n\n" +
       "My name is " + name + " and I'd like to work with you on " + phrase(f, 'service') + ". " +
       phrase(f, 'timeline') + ", and " + phrase(f, 'budget') + ".\n\n" +
-      "You can reach me on " + phone + ". I look forward to hearing from you.\n\n" +
+      reach + " I look forward to hearing from you.\n\n" +
       "Best regards,\n" + name;
-    window.location.href =
-      "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" + encodeURIComponent(name) + "&body=" + encodeURIComponent(body);
+    return "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" +
+      encodeURIComponent(name) + "&body=" + encodeURIComponent(body);
   };
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const f = e.target;
-    if (!stepValid()) return;
-    if (!isLastStep()) { showStep(stepIndex + 1); return; }
+
+  const formError = document.getElementById('formError');
+  const formErrorMail = document.getElementById('formErrorMail');
+  const formRetry = document.getElementById('formRetry');
+  const formSent = document.getElementById('formSent');
+  const formAgain = document.getElementById('formAgain');
+  const formStatus = document.getElementById('formStatus');
+  const say = (en, arText) => {
+    if (formStatus) formStatus.textContent = currentLang === 'ar' ? arText : en;
+  };
+
+  // what the visitor told us, echoed back so the confirmation is a receipt
+  const recapRows = (f) => {
+    const L = currentLang === 'ar' ? 'ar' : 'en';
+    const labels = {
+      service:  { en: 'Project',  ar: 'المشروع' },
+      timeline: { en: 'Timeline', ar: 'الجدول الزمني' },
+      budget:   { en: 'Budget',   ar: 'الميزانية' },
+      contact:  { en: 'Reply to', ar: 'الرد إلى' }
+    };
+    const chosen = (name) => {
+      const el = f.elements[name];
+      const opt = el && [...f.querySelectorAll('input[name="' + name + '"]')]
+        .find(r => r.checked);
+      const span = opt && opt.parentElement.querySelector('span');
+      return span ? span.getAttribute(L === 'ar' ? 'data-ar' : 'data-en') || span.textContent : '';
+    };
+    const tel = f.elements.phone.value.trim();
+    return [
+      [labels.service[L],  chosen('service')],
+      [labels.timeline[L], chosen('timeline')],
+      [labels.budget[L],   chosen('budget')],
+      [labels.contact[L],  f.elements.email.value.trim() +
+        (tel ? ' · ' + f.elements['phone-code'].value + ' ' + tel : '')]
+    ];
+  };
+
+  const showSent = (f) => {
+    const recap = document.getElementById('formSentRecap');
+    if (recap) {
+      recap.textContent = '';
+      recapRows(f).filter(r => r[1]).forEach(([k, v]) => {
+        const row = document.createElement('div');
+        const dt = document.createElement('dt');
+        const dd = document.createElement('dd');
+        dt.textContent = k; dd.textContent = v;      // textContent: never inject user input
+        row.append(dt, dd);
+        recap.appendChild(row);
+      });
+    }
+    contactForm.hidden = true;
+    formSent.hidden = false;
+    formSent.classList.add('in');   // .reveal starts transparent; it never scrolled into view while hidden
+    say('Your enquiry has been sent. We reply within one business day.',
+        'تم إرسال طلبك. نردّ خلال يوم عمل واحد.');
+    // land the reader on the confirmation rather than leaving it below the fold
+    formSent.setAttribute('tabindex', '-1');
+    requestAnimationFrame(() => formSent.focus({ preventScroll: false }));
+  };
+
+  const showError = (f) => {
+    formErrorMail.href = mailtoHref(f);
+    formError.hidden = false;
+    setSubmitLabel('Send', 'إرسال');
+    submitBtn.disabled = false;
+    backBtn.disabled = false;
+    say("We couldn't send that — nothing has been submitted yet.",
+        'تعذّر الإرسال — لم يُرسل شيء بعد.');
+  };
+
+  const postForm = (f) => {
+    formError.hidden = true;
     submitBtn.disabled = true;
     backBtn.disabled = true;
     setSubmitLabel('Sending…', 'جارٍ الإرسال…');
-    fetch('/', {
+    say('Sending your enquiry…', 'جارٍ إرسال طلبك…');
+    return fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(f)).toString()
     }).then((res) => {
       if (!res.ok) throw new Error('form endpoint unavailable');
-      setSubmitLabel('Message sent ✓', 'تم الإرسال ✓');
-      setTimeout(() => {
-        f.reset();
-        showStep(0, false);
-        submitBtn.disabled = false;
-        backBtn.disabled = false;
-      }, 4000);
-    }).catch(() => {
-      setSubmitLabel('Send', 'إرسال');
-      submitBtn.disabled = false;
-      backBtn.disabled = false;
-      mailtoFallback(f);
-    });
+      showSent(f);
+    }).catch(() => showError(f));
+  };
+
+  if (formRetry) formRetry.addEventListener('click', () => postForm(contactForm));
+  if (formAgain) formAgain.addEventListener('click', () => {
+    contactForm.reset();
+    formSent.hidden = true;
+    contactForm.hidden = false;
+    formError.hidden = true;
+    submitBtn.disabled = false;
+    backBtn.disabled = false;
+    say('', '');
+    showStep(0);
+  });
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = e.target;
+    if (!stepValid()) return;
+    if (!isLastStep()) { showStep(stepIndex + 1); return; }
+    postForm(f);
   });
 
   // apply saved language (swap text/placeholders) on load

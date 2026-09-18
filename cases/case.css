@@ -366,9 +366,15 @@ html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
     display:flex; align-items:center; justify-content:center; gap:0; padding:24px;
     background:rgba(10,10,10,0.55);
     backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
-    opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+    /* visibility (not opacity alone) is what takes the links out of the tab
+       order — without it every nav control stays focusable behind a closed menu */
+    opacity:0; pointer-events:none; visibility:hidden;
+    transition:opacity .3s var(--ease), visibility 0s linear .3s;
   }
-  .nav-links.open{ opacity:1; pointer-events:auto; }
+  .nav-links.open{
+    opacity:1; pointer-events:auto; visibility:visible;
+    transition:opacity .3s var(--ease), visibility 0s;
+  }
   .nav-panel{
     display:flex; flex-direction:column; align-items:stretch; gap:0;
     width:100%; max-width:340px; max-height:86vh; overflow-y:auto;
