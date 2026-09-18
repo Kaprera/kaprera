@@ -1,5 +1,5 @@
 /* kaprera service worker — offline shell + smart caching */
-const VERSION = 'kaprera-v8';
+const VERSION = 'kaprera-v9';
 const PRECACHE = [
   '/',
   '/privacy-policy',

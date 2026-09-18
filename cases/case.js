@@ -60,12 +60,30 @@
   var menuBtn = document.getElementById('menuBtn');
   var navLinks = document.getElementById('navLinks');
   if (menuBtn && navLinks) {
+    var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    var trapTab = function (container, e) {
+      if (e.key !== 'Tab') return;
+      var items = [].slice.call(container.querySelectorAll(FOCUSABLE)).filter(function (el) {
+        return el.offsetWidth || el.offsetHeight || el.getClientRects().length;
+      });
+      if (!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      else if (!container.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    };
     var toggleMenu = function (force) {
       var open = force == null ? !navLinks.classList.contains('open') : force;
       navLinks.classList.toggle('open', open);
       menuBtn.classList.toggle('open', open);
       menuBtn.setAttribute('aria-expanded', String(open));
       document.body.classList.toggle('no-scroll', open);   // lock page scroll behind the card
+      if (open) {
+        var firstLink = navLinks.querySelector('a, button');
+        if (firstLink) requestAnimationFrame(function () { firstLink.focus(); });
+      } else if (document.activeElement && navLinks.contains(document.activeElement)) {
+        menuBtn.focus();   // hand focus back to the trigger, never to <body>
+      }
     };
     menuBtn.addEventListener('click', function () { toggleMenu(); });
     navLinks.querySelectorAll('a').forEach(function (a) {
@@ -74,7 +92,11 @@
     /* tap the dimmed backdrop (outside the card) to close */
     navLinks.addEventListener('click', function (e) { if (e.target === navLinks) toggleMenu(false); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && navLinks.classList.contains('open')) toggleMenu(false);
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) { toggleMenu(false); menuBtn.focus(); }
+    });
+    /* Tab stays inside the open menu */
+    navLinks.addEventListener('keydown', function (e) {
+      if (navLinks.classList.contains('open')) trapTab(navLinks, e);
     });
   }
 })();

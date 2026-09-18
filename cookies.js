@@ -53,8 +53,9 @@
 
     var bar = document.createElement('div');
     bar.className = 'ck-bar';
-    bar.setAttribute('role', 'dialog');
-    bar.setAttribute('aria-live', 'polite');
+    // a dialog is not a live region; announcing it both ways makes screen
+    // readers read the banner twice
+    bar.setAttribute('role', 'region');
     bar.setAttribute('aria-label', 'cookie consent');
     bar.innerHTML =
       '<p class="ck-text"></p>' +
@@ -101,6 +102,15 @@
     });
   }
 
-  if (document.body) init();
-  else document.addEventListener('DOMContentLoaded', init);
+  // wait for the intro overlay to finish before adding a fourth thing to look at
+  function whenSettled() {
+    if (!document.getElementById('preloader')) { init(); return; }
+    var started = false;
+    var go = function () { if (!started) { started = true; init(); } };
+    document.addEventListener('kaprera:loaded', go, { once: true });
+    setTimeout(go, 3000);   // safety net if the event never fires
+  }
+
+  if (document.body) whenSettled();
+  else document.addEventListener('DOMContentLoaded', whenSettled);
 })();
