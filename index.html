@@ -933,11 +933,8 @@
 
   /* ── designed renders ──
      Four projects show the device render from their own mockup artwork in
-     place of the CSS laptop. There is no frame: each slide background is
-     matched to its render's backdrop (see the .b-* backgrounds below) and the
-     render's edges are feathered into it, so the device stands in the hero
-     rather than in a picture pasted onto it. The bottom fade is the longest:
-     it takes out the pedestals and tabletops the renders stand on. */
+     place of the CSS laptop. Each render is cut out of its backdrop, so it
+     sits straight on the slide's flat colour with nothing to blend into. */
   .case-render {
     position: relative;
     width: 100%;
@@ -945,28 +942,11 @@
   }
   .case-render img {
     display: block; width: 100%; height: auto;
-    -webkit-mask-image:
-      linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 12%, #000 var(--fade-from, 70%), transparent var(--fade-to, 100%));
-    -webkit-mask-composite: source-in;
-            mask-image:
-      linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 12%, #000 var(--fade-from, 70%), transparent var(--fade-to, 100%));
-            mask-composite: intersect;
     opacity: 0;
     transition: opacity .5s var(--ease);
     -webkit-user-drag: none; user-select: none; /* don't let native image-drag cancel a swipe */
   }
   .case-render img.is-loaded { opacity: 1; }
-  /* oplinx's laptop sits behind a black tabletop; faded from 70% that reads
-     as a dark block, so its fade starts at the device's base */
-  .case-render[data-case="oplinx"] img { --fade-from: 60%; --fade-to: 86%; }
-  /* agri pro and spotlight are cut-outs: their backdrops were removed from the
-     render (spotlight's cube with it), so the devices sit straight on the slide
-     colour and need no feathering. Their only fades, where the source crops the
-     keyboard and the base bar, are baked into the image */
-  .case-render[data-case="agripro"] img,
-  .case-render[data-case="spotlight"] img { -webkit-mask-image: none; mask-image: none; }
   .case-render:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 14px; }
 
   /* ── image loading state: shimmer skeleton + fade-in ── */
@@ -1119,44 +1099,15 @@
       radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
       linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
   }
-  /* lebanese spotlight: the render's lilac → deep violet, lilac behind the
-     laptop and violet behind the copy */
-  .b-spotlight {
-    background-image:
-      linear-gradient(90deg, #977bab 0%, #9174a6 10%, #865ba4 20%, #6d309c 30%, #611e97 40%, #5d11a1 50%, #4b0883 100%);
-  }
-  /* in rtl the columns swap: mirror it, so the lilac stays behind the
-     render and the violet behind the copy */
-  html[lang="ar"] .b-spotlight {
-    background-image:
-      linear-gradient(270deg, #977bab 0%, #9174a6 10%, #865ba4 20%, #6d309c 30%, #611e97 40%, #5d11a1 50%, #4b0883 100%);
-  }
-  /* ana arabia: deep teal → palm green, cream highlight */
-  .b-ana {
-    background-image:
-      radial-gradient(120% 120% at 50% 0%, rgba(217,195,163,0.20), transparent 54%),
-      linear-gradient(125deg, #0c2b28 0%, #14443c 52%, #1f6b58 100%);
-  }
-  /* agri pro services: the render's leaf green, darkening only at the
-     bottom, where the slider controls sit */
-  .b-agripro {
-    background-image:
-      linear-gradient(180deg, #98ba67 0%, #96b667 40%, #8aa565 70%, #5f7550 82%, #3a5234 92%, #2b442a 100%);
-  }
-  /* oplinx solutions: the render's navy deepening to royal blue, sampled
-     down its edges (the render spans 18–78% of the hero's height) */
-  .b-oplinx {
-    background-image:
-      linear-gradient(180deg, #011e3f 0%, #01254c 18%, #013063 36%, #013671 48%, #003a78 56%, #033f84 78%, #04448c 100%);
-  }
-  /* al-shamaa engineering: the render's navy → slate, sampled down its edges */
-  .b-shamaa {
-    background-image:
-      linear-gradient(180deg, #012646 0%, #0c3351 18%, #234661 48%, #3a5a70 78%, #45647a 100%);
-  }
-  /* the four render slides take no sheen and no drift: a highlight moving
-     over the background but not over the render would give its edge away */
-  .b-agripro, .b-oplinx, .b-spotlight, .b-shamaa { animation: none; background-size: 100% 100%; }
+  /* Each project slide is one flat colour from its own palette. The renders
+     are cut out of their backdrops, so nothing has to blend into a gradient,
+     and white copy clears 4.5:1 on every one of them (7.8 is the lowest). */
+  .b-agripro   { background-image: none; background-color: #3c5a34; }
+  .b-oplinx    { background-image: none; background-color: #00365f; }
+  .b-spotlight { background-image: none; background-color: #5a109c; }
+  .b-shamaa    { background-image: none; background-color: #0a2c4a; }
+  .b-ana       { background-image: none; background-color: #14443c; }
+  .b-agripro, .b-oplinx, .b-spotlight, .b-shamaa, .b-ana { animation: none; }
 
   /* light text + controls over the colored backgrounds */
   .hero.is-colored .hero-mark { display: none; }
@@ -1167,18 +1118,6 @@
   .hero.is-colored .case-info h2 { color: #fff; }
   .hero.is-colored .case-info .blurb { color: rgba(255,255,255,0.86); }
   .hero.is-colored .chip { color: #fff; background: rgba(255,255,255,0.18); }
-
-  /* agri pro's render sits on a light leaf green, so its slide reads in dark
-     ink rather than white: white copy would be 2:1 on it, this is 7:1 */
-  .hero.is-colored .slide-light .case-info .label,
-  .hero.is-colored .slide-light .case-info .label .num,
-  .hero.is-colored .slide-light .case-info h2 { color: #16260f; }
-  .hero.is-colored .slide-light .case-info .label::before { background: #16260f; }
-  .hero.is-colored .slide-light .case-info .blurb { color: rgba(22,38,15,0.86); }
-  .hero.is-colored .slide-light .chip { color: #16260f; background: rgba(22,38,15,0.10); }
-  .hero.is-colored .slide-light .btn-primary { background: #16260f; color: #fff; }
-  .hero.is-colored .slide-light .btn-primary:hover { background: #24401a; }
-  .hero.is-colored .slide-light .case-render:focus-visible { outline-color: #16260f; }
 
 
   /* the laptop sits on a colored backdrop, so it casts a deeper shadow here */
@@ -1724,6 +1663,17 @@
   .step-opt:hover span { border-color: var(--blue); }
   .step-opt input:checked + span { border-color: var(--blue); background: var(--white); box-shadow: inset 0 0 0 1px var(--blue); color: var(--blue); }
   .step-opt input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
+  /* the one optional tick on the last step */
+  .step-check {
+    display: flex; align-items: center; gap: 10px;
+    margin: 2px 0 4px; cursor: pointer;
+    font-size: 15px; color: var(--ink);
+  }
+  .step-check input {
+    width: 18px; height: 18px; flex: none; margin: 0; padding: 0;
+    accent-color: var(--blue); cursor: pointer;
+  }
+  .step-check input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
   .step-nav { display: flex; gap: 12px; margin-top: auto; }
   .step-nav .btn[hidden] { display: none; }
   html[dir="rtl"] .step-nav .btn svg { transform: scaleX(-1); }
@@ -2121,26 +2071,9 @@
        backdrop above the device and the pedestal below it. */
     .case-render { aspect-ratio: 16 / 11; }
     .case-render img { height: 100%; object-fit: cover; object-position: center 42%; }
-    /* stacked, agri pro's copy sits lower in the hero: keep the leaf green
-       down past it, so the dark floor only runs under the slider controls */
-    .b-agripro {
-      background-image:
-        radial-gradient(120% 120% at 15% 5%, rgba(255,255,255,0.10), transparent 52%),
-        linear-gradient(180deg, #98ba67 0%, #95b468 78%, #5f7550 88%, #2b442a 100%);
-    }
-    /* stacked, spotlight's copy runs the full width under the render, so the
-       lilac can't sit on one side: it glows behind the render at the top and
-       the copy gets the violet below */
-    .hero .b-spotlight,
-    html[lang="ar"] .hero .b-spotlight {
-      background-image:
-        radial-gradient(75% 26% at 38% 27%, rgba(151,123,171,0.92) 0%, rgba(134,91,164,0.55) 50%, rgba(109,48,156,0) 100%),
-        linear-gradient(180deg, #6d309c 0%, #5d11a1 42%, #4b0883 100%);
-    }
     /* the cut-outs have no backdrop to lose, so a crop would slice the device:
        they are shown whole inside the same box instead */
-    .case-render[data-case="agripro"] img,
-    .case-render[data-case="spotlight"] img { object-fit: contain; object-position: center; }
+    .case-render img { object-fit: contain; object-position: center; }
     .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
     .work-ctrls { margin-top: 40px; }
     /* services slider → single column, arrows drop to the bottom corners */
@@ -2520,7 +2453,7 @@
             </div>
 
             <!-- SLIDE 2: Agri Pro Services -->
-            <div class="work-slide work-case slide-light" role="group" aria-roledescription="slide" aria-label="2 of 6, Agri Pro Services">
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 6, Agri Pro Services">
               <button class="case-shot case-render" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
                 <picture>
                   <source srcset="cases/agripro/mockup-700.webp 700w, cases/agripro/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
@@ -2544,7 +2477,7 @@
               <button class="case-shot case-render" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
                 <picture>
                   <source srcset="cases/oplinx/mockup-700.webp 700w, cases/oplinx/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
-                  <img src="cases/oplinx/mockup.jpg" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
+                  <img src="cases/oplinx/mockup.png" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1200" height="864" loading="lazy" decoding="async" />
                 </picture>
               </button>
               <div class="case-info">
@@ -2608,7 +2541,7 @@
               <button class="case-shot case-render" data-case="shamaa" aria-haspopup="dialog" aria-label="open AL-Shamaa Engineering case study">
                 <picture>
                   <source srcset="cases/al-shamaa/mockup-700.webp 700w, cases/al-shamaa/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
-                  <img src="cases/al-shamaa/mockup.jpg" alt="AL-Shamaa Engineering bilingual landing page built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
+                  <img src="cases/al-shamaa/mockup.png" alt="AL-Shamaa Engineering bilingual landing page built by kaprera" width="1200" height="1076" loading="lazy" decoding="async" />
                 </picture>
               </button>
               <div class="case-info">
@@ -3078,7 +3011,7 @@
           <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
           <div class="step-progress">
             <span class="step-count">
-              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 4</span><span class="sr-only" data-en=" of 4" data-ar=" من 4"> of 4</span>
+              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 5</span><span class="sr-only" data-en=" of 5" data-ar=" من 5"> of 5</span>
             </span>
             <span class="step-bar" aria-hidden="true"><span id="stepBar"></span></span>
           </div>
@@ -3087,11 +3020,20 @@
             <div class="step-options">
               <label class="step-opt"><input type="radio" name="service" value="ui-ux" required /><span data-en="UI/UX design" data-ar="تصميم الواجهات وتجربة المستخدم">UI/UX design</span></label>
               <label class="step-opt"><input type="radio" name="service" value="website" required /><span data-en="A website" data-ar="موقع إلكتروني">A website</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="ecommerce" required /><span data-en="An online store (Shopify)" data-ar="متجر إلكتروني (Shopify)">An online store (Shopify)</span></label>
               <label class="step-opt"><input type="radio" name="service" value="web-app" required /><span data-en="A web app or platform" data-ar="تطبيق ويب أو منصة">A web app or platform</span></label>
               <label class="step-opt"><input type="radio" name="service" value="seo" required /><span data-en="SEO &amp; growth" data-ar="تحسين محركات البحث والنمو">SEO & growth</span></label>
             </div>
           </fieldset>
           <fieldset class="form-step" data-step="2" hidden>
+            <legend class="step-q" tabindex="-1" data-en="Which languages should it speak?" data-ar="بأي لغة يجب أن يتحدث؟">Which languages should it speak?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="language" value="en" required /><span data-en="English" data-ar="الإنجليزية">English</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="ar" required /><span data-en="Arabic" data-ar="العربية">Arabic</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="both" required /><span data-en="Both, English and Arabic" data-ar="كلتاهما، الإنجليزية والعربية">Both, English and Arabic</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="3" hidden>
             <legend class="step-q" tabindex="-1" data-en="When do you want to launch?" data-ar="متى تريد الإطلاق؟">When do you want to launch?</legend>
             <div class="step-options">
               <label class="step-opt"><input type="radio" name="timeline" value="asap" required /><span data-en="As soon as possible" data-ar="في أقرب وقت ممكن">As soon as possible</span></label>
@@ -3100,7 +3042,7 @@
               <label class="step-opt"><input type="radio" name="timeline" value="exploring" required /><span data-en="Just exploring" data-ar="أستكشف الخيارات فقط">Just exploring</span></label>
             </div>
           </fieldset>
-          <fieldset class="form-step" data-step="3" hidden>
+          <fieldset class="form-step" data-step="4" hidden>
             <legend class="step-q" tabindex="-1" data-en="What's your budget?" data-ar="ما ميزانيتك؟">What's your budget?</legend>
             <div class="step-options">
               <label class="step-opt"><input type="radio" name="budget" value="under-2k" required /><span data-en="Under $2,000" data-ar="أقل من 2,000$">Under $2,000</span></label>
@@ -3110,8 +3052,26 @@
               <label class="step-opt"><input type="radio" name="budget" value="unsure" required /><span data-en="Not sure yet" data-ar="لست متأكدًا بعد">Not sure yet</span></label>
             </div>
           </fieldset>
-          <fieldset class="form-step" data-step="4" hidden>
+          <fieldset class="form-step" data-step="5" hidden>
             <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">How can we reach you?</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="business" data-en="Business name" data-ar="اسم الشركة">Business name</label>
+                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" required />
+              </div>
+              <div class="field">
+                <label for="city" data-en="City and country" data-ar="المدينة والبلد">City and country</label>
+                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="website">
+                <span data-en="Your website now" data-ar="موقعك الحالي">Your website now</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <!-- text, not url: type="url" rejects "yoursite.com" for want of a scheme -->
+              <input type="text" id="website" name="website" inputmode="url" autocomplete="url" placeholder="yoursite.com — or leave blank" data-en-ph="yoursite.com — or leave blank" data-ar-ph="yoursite.com — أو اتركه فارغًا" />
+            </div>
             <div class="field-row">
               <div class="field">
                 <label for="name" data-en="Your name" data-ar="اسمك">Your name</label>
@@ -3198,6 +3158,13 @@
                 <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" />
               </div>
             </div>
+            <!-- the one thing that decides whether a Google Business Profile and
+                 local SEO are in scope. The address itself only matters later,
+                 at verification, so it is not asked for here -->
+            <label class="step-check">
+              <input type="checkbox" id="visits" name="visits" value="yes" />
+              <span data-en="Customers visit us at a shop or office" data-ar="يزورنا العملاء في متجر أو مكتب">Customers visit us at a shop or office</span>
+            </label>
           </fieldset>
           <div class="step-nav">
             <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">Back</span></button>
@@ -4448,6 +4415,7 @@
     service: {
       'ui-ux': 'the UI/UX design of a product',
       'website': 'a new website',
+      'ecommerce': 'an online store on Shopify',
       'web-app': 'a web app or platform',
       'seo': 'SEO and growing our traffic'
     },
@@ -4456,6 +4424,11 @@
       '1-3-months': "We're aiming to launch in the next one to three months",
       '3-plus-months': "We're planning to launch in three months or more",
       'exploring': "We're still exploring, so the timing is open"
+    },
+    language: {
+      'en': 'in English',
+      'ar': 'in Arabic',
+      'both': 'in both English and Arabic'
     },
     budget: {
       'under-2k': 'our budget is under $2,000',
@@ -4475,9 +4448,21 @@
     const reach = tel
       ? "You can reach me on " + els['phone-code'].value + ' ' + tel + " or at " + email + "."
       : "You can reach me at " + email + ".";
+    const business = els.business.value.trim();
+    const city = els.city.value.trim();
+    const site = els.website.value.trim();
+    const context = (business ? " from " + business : "") + (city ? ", based in " + city : "");
+    const siteLine = site
+      ? "Our website at the moment is " + site + ". "
+      : "We don't have a website yet. ";
+    const visitLine = els.visits && els.visits.checked
+      ? "Customers visit us at a shop or office. "
+      : "";
     const body = "Hi kaprera,\n\n" +
-      "My name is " + name + " and I'd like to work with you on " + phrase(f, 'service') + ". " +
+      "My name is " + name + context + ", and I'd like to work with you on " +
+      phrase(f, 'service') + " " + phrase(f, 'language') + ". " +
       phrase(f, 'timeline') + ", and " + phrase(f, 'budget') + ".\n\n" +
+      siteLine + visitLine + "\n\n" +
       reach + " I look forward to hearing from you.\n\n" +
       "Best regards,\n" + name;
     return "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" +
@@ -4498,10 +4483,14 @@
   const recapRows = (f) => {
     const L = currentLang === 'ar' ? 'ar' : 'en';
     const labels = {
-      service:  { en: 'Project',  ar: 'المشروع' },
-      timeline: { en: 'Timeline', ar: 'الجدول الزمني' },
-      budget:   { en: 'Budget',   ar: 'الميزانية' },
-      contact:  { en: 'Reply to', ar: 'الرد إلى' }
+      service:  { en: 'Project',   ar: 'المشروع' },
+      language: { en: 'Languages', ar: 'اللغات' },
+      timeline: { en: 'Timeline',  ar: 'الجدول الزمني' },
+      budget:   { en: 'Budget',    ar: 'الميزانية' },
+      business: { en: 'Business',  ar: 'الشركة' },
+      city:     { en: 'Based in',  ar: 'المقر' },
+      website:  { en: 'Website',   ar: 'الموقع' },
+      contact:  { en: 'Reply to',  ar: 'الرد إلى' }
     };
     const chosen = (name) => {
       const el = f.elements[name];
@@ -4513,8 +4502,12 @@
     const tel = f.elements.phone.value.trim();
     return [
       [labels.service[L],  chosen('service')],
+      [labels.language[L], chosen('language')],
       [labels.timeline[L], chosen('timeline')],
       [labels.budget[L],   chosen('budget')],
+      [labels.business[L], f.elements.business.value.trim()],
+      [labels.city[L],     f.elements.city.value.trim()],
+      [labels.website[L],  f.elements.website.value.trim()],
       [labels.contact[L],  f.elements.email.value.trim() +
         (tel ? ' · ' + f.elements['phone-code'].value + ' ' + tel : '')]
     ];

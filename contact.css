@@ -153,6 +153,17 @@ html[lang="ar"] #contact form label { font-family: 'Cairo', system-ui, sans-seri
 #contact .step-opt:hover span { border-color: var(--blue); }
 #contact .step-opt input:checked + span { border-color: var(--blue); background: var(--c-card); box-shadow: inset 0 0 0 1px var(--blue); color: var(--blue); }
 #contact .step-opt input:focus-visible + span { outline: 2px solid var(--blue); outline-offset: 2px; }
+/* the one optional tick on the last step */
+#contact .step-check {
+  display: flex; align-items: center; gap: 10px;
+  margin: 2px 0 4px; cursor: pointer;
+  font-size: 15px; color: var(--c-ink);
+}
+#contact .step-check input {
+  width: 18px; height: 18px; flex: none; margin: 0; padding: 0;
+  accent-color: #008cc1; cursor: pointer;
+}
+#contact .step-check input:focus-visible { outline: 2px solid #008cc1; outline-offset: 2px; }
 #contact .step-nav { display: flex; gap: 12px; margin-top: auto; }
 #contact .step-nav .btn[hidden] { display: none; }
 html[dir="rtl"] #contact .step-nav .btn svg { transform: scaleX(-1); }

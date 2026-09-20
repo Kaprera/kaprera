@@ -47,7 +47,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="/cases/case.css?v=7" />
-<link rel="stylesheet" href="/contact.css?v=1" />
+<link rel="stylesheet" href="/contact.css?v=2" />
 <script src="/cases/case.js?v=3" defer></script>
 <script type="application/ld+json">
 {
@@ -259,7 +259,7 @@
 </main>
 
 <!-- ───────────── CONTACT ───────────── -->
-  <section id="contact" aria-label="contact">
+    <section id="contact" aria-label="contact">
     <div class="wrap">
       <h2 class="title" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
 
@@ -269,7 +269,7 @@
           <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
           <div class="step-progress">
             <span class="step-count">
-              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 4</span><span class="sr-only" data-en=" of 4" data-ar=" من 4"> of 4</span>
+              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 5</span><span class="sr-only" data-en=" of 5" data-ar=" من 5"> of 5</span>
             </span>
             <span class="step-bar" aria-hidden="true"><span id="stepBar"></span></span>
           </div>
@@ -278,11 +278,20 @@
             <div class="step-options">
               <label class="step-opt"><input type="radio" name="service" value="ui-ux" required /><span data-en="UI/UX design" data-ar="تصميم الواجهات وتجربة المستخدم">UI/UX design</span></label>
               <label class="step-opt"><input type="radio" name="service" value="website" required /><span data-en="A website" data-ar="موقع إلكتروني">A website</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="ecommerce" required /><span data-en="An online store (Shopify)" data-ar="متجر إلكتروني (Shopify)">An online store (Shopify)</span></label>
               <label class="step-opt"><input type="radio" name="service" value="web-app" required /><span data-en="A web app or platform" data-ar="تطبيق ويب أو منصة">A web app or platform</span></label>
               <label class="step-opt"><input type="radio" name="service" value="seo" required /><span data-en="SEO &amp; growth" data-ar="تحسين محركات البحث والنمو">SEO & growth</span></label>
             </div>
           </fieldset>
           <fieldset class="form-step" data-step="2" hidden>
+            <legend class="step-q" tabindex="-1" data-en="Which languages should it speak?" data-ar="بأي لغة يجب أن يتحدث؟">Which languages should it speak?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="language" value="en" required /><span data-en="English" data-ar="الإنجليزية">English</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="ar" required /><span data-en="Arabic" data-ar="العربية">Arabic</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="both" required /><span data-en="Both, English and Arabic" data-ar="كلتاهما، الإنجليزية والعربية">Both, English and Arabic</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="3" hidden>
             <legend class="step-q" tabindex="-1" data-en="When do you want to launch?" data-ar="متى تريد الإطلاق؟">When do you want to launch?</legend>
             <div class="step-options">
               <label class="step-opt"><input type="radio" name="timeline" value="asap" required /><span data-en="As soon as possible" data-ar="في أقرب وقت ممكن">As soon as possible</span></label>
@@ -291,7 +300,7 @@
               <label class="step-opt"><input type="radio" name="timeline" value="exploring" required /><span data-en="Just exploring" data-ar="أستكشف الخيارات فقط">Just exploring</span></label>
             </div>
           </fieldset>
-          <fieldset class="form-step" data-step="3" hidden>
+          <fieldset class="form-step" data-step="4" hidden>
             <legend class="step-q" tabindex="-1" data-en="What's your budget?" data-ar="ما ميزانيتك؟">What's your budget?</legend>
             <div class="step-options">
               <label class="step-opt"><input type="radio" name="budget" value="under-2k" required /><span data-en="Under $2,000" data-ar="أقل من 2,000$">Under $2,000</span></label>
@@ -301,8 +310,26 @@
               <label class="step-opt"><input type="radio" name="budget" value="unsure" required /><span data-en="Not sure yet" data-ar="لست متأكدًا بعد">Not sure yet</span></label>
             </div>
           </fieldset>
-          <fieldset class="form-step" data-step="4" hidden>
+          <fieldset class="form-step" data-step="5" hidden>
             <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">How can we reach you?</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="business" data-en="Business name" data-ar="اسم الشركة">Business name</label>
+                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" required />
+              </div>
+              <div class="field">
+                <label for="city" data-en="City and country" data-ar="المدينة والبلد">City and country</label>
+                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="website">
+                <span data-en="Your website now" data-ar="موقعك الحالي">Your website now</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <!-- text, not url: type="url" rejects "yoursite.com" for want of a scheme -->
+              <input type="text" id="website" name="website" inputmode="url" autocomplete="url" placeholder="yoursite.com — or leave blank" data-en-ph="yoursite.com — or leave blank" data-ar-ph="yoursite.com — أو اتركه فارغًا" />
+            </div>
             <div class="field-row">
               <div class="field">
                 <label for="name" data-en="Your name" data-ar="اسمك">Your name</label>
@@ -389,6 +416,13 @@
                 <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" />
               </div>
             </div>
+            <!-- the one thing that decides whether a Google Business Profile and
+                 local SEO are in scope. The address itself only matters later,
+                 at verification, so it is not asked for here -->
+            <label class="step-check">
+              <input type="checkbox" id="visits" name="visits" value="yes" />
+              <span data-en="Customers visit us at a shop or office" data-ar="يزورنا العملاء في متجر أو مكتب">Customers visit us at a shop or office</span>
+            </label>
           </fieldset>
           <div class="step-nav">
             <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">Back</span></button>
@@ -478,6 +512,6 @@
   <div class="foot-mark" aria-hidden="true"></div>
 </footer>
 
-<script src="/contact.js?v=1" defer></script>
+<script src="/contact.js?v=2" defer></script>
 </body>
 </html>
