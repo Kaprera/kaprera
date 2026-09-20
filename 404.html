@@ -104,7 +104,7 @@
   .theme-toggle, .lang-toggle {
     display: inline-flex; align-items: center; gap: 2px;
     height: 40px; padding: 4px; border-radius: 999px;
-    border: 1px solid var(--hair); background: transparent;
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); background: transparent;
     cursor: pointer; flex-shrink: 0;
     font-family: 'Inter', system-ui, sans-serif;
     transition: border-color .25s, transform .25s var(--ease);
@@ -131,25 +131,50 @@
   html[lang="ar"] .keep-mono { font-family: 'JetBrains Mono', monospace; }
   html[lang="ar"] .back-link svg { transform: scaleX(-1); }
 
-  /* ── nav ── */
+  /* ── nav — a pill floating over the page, not a bar pinned to the edge ── */
   header.nav {
     position: fixed; inset: 0 0 auto 0; z-index: 60;
-    border-bottom: 1px solid transparent;
-    transition: border-color .3s, box-shadow .3s, padding .3s;
+    padding: 18px 20px 0;
+    transition: padding .3s var(--ease);
   }
-  header.nav::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    background: color-mix(in srgb, var(--white) 72%, transparent);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
-    transition: background-color .3s var(--ease);
-  }
-  header.nav.scrolled { border-bottom-color: var(--hair); box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
   .nav-inner {
+    position: relative;
     display: flex; align-items: center; justify-content: space-between;
-    height: 78px; transition: height .3s var(--ease);
+    width: 100%; max-width: var(--maxw); margin: 0 auto;
+    height: 64px; padding: 0 9px 0 24px;
+    border-radius: 999px;
+    /* the fill and the edge sit on the pill itself, and it carries no
+       backdrop-filter: a fixed bar with one behaves badly in Safari, which is
+       what turned this pill into a blue bar and then made it vanish on
+       scroll. Near-opaque instead of frosted, so it reads the same anywhere */
+    background: rgba(255,255,255,0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      0 0 0 1px rgba(10,10,10,0.08),
+      0 14px 32px -22px rgba(10,10,10,0.45);
+    transition: height .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease);
   }
-  header.nav.scrolled .nav-inner { height: 64px; }
+  html[lang="ar"] .nav-inner { padding: 0 24px 0 9px; }
+  html[data-theme="dark"] .nav-inner {
+    background: rgba(13,17,23,0.94);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 0 0 1px rgba(255,255,255,0.1),
+      0 16px 36px -24px rgba(0,0,0,0.7);
+  }
+  header.nav.scrolled { padding-top: 10px; }
+  header.nav.scrolled .nav-inner {
+    height: 58px; background: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      0 0 0 1px rgba(10,10,10,0.1),
+      0 18px 40px -24px rgba(10,10,10,0.55);
+  }
+  html[data-theme="dark"] header.nav.scrolled .nav-inner { background: #0d1117; }
+  /* the CTA sits 9px inside the pill on every edge, so the two rounded ends
+     stay concentric instead of the button crowding the right cap */
+  .nav-inner .btn { padding: 10px 20px; }
+
   .brand { display: inline-flex; align-items: baseline; gap: 6px; }
   .brand-logo {
     display: block; height: 30px; aspect-ratio: 640 / 140;

@@ -351,6 +351,11 @@
     display: inline-block;
   }
 
+  /* hidden means hidden: without this, any component rule that sets display
+     (.form-sent is display:flex) overrides the attribute — which is how the
+     "Thank you" confirmation ended up showing before anything was sent */
+  [hidden] { display: none !important; }
+
   .section { padding: 110px 0; border-top: 1px solid var(--hair); }
 
   /* ── tinted, alive section backgrounds ── */
@@ -470,7 +475,7 @@
     height: 40px;
     padding: 4px;
     border-radius: 999px;
-    border: 1px solid var(--hair);
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
     background: transparent;
     cursor: pointer;
     flex-shrink: 0;
@@ -500,7 +505,6 @@
   html[lang="ar"] body { font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
   html[lang="ar"] .mono,
   html[lang="ar"] .label,
-  html[lang="ar"] .eyebrow,
   html[lang="ar"] .industries .lbl,
   html[lang="ar"] .chip,
   html[lang="ar"] .foot-col .fc-h,
@@ -527,38 +531,49 @@
   html[lang="ar"] .slider .nav.next { right: auto; left: 12px; }
   html[lang="ar"] .slider .nav svg { transform: scaleX(-1); }  /* mirror chevrons to match flipped positions */
 
-  /* ── nav ── */
+  /* ── nav — a pill floating over the page, not a bar pinned to the edge ── */
   header.nav {
-    position: fixed;
-    inset: 0 0 auto 0;
-    z-index: 60;
-    border-bottom: 1px solid transparent;
-    transition: border-color .3s, box-shadow .3s, padding .3s;
-  }
-  /* background + blur live on a pseudo-element so the header itself doesn't
-     become a containing block for the fixed mobile-nav overlay */
-  header.nav::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: color-mix(in srgb, var(--white) 72%, transparent);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
-    transition: background-color .3s var(--ease);
-  }
-  header.nav.scrolled {
-    border-bottom-color: var(--hair);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    position: fixed; inset: 0 0 auto 0; z-index: 60;
+    padding: 18px 20px 0;
+    transition: padding .3s var(--ease);
   }
   .nav-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 78px;
-    transition: height .3s var(--ease);
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; max-width: var(--maxw); margin: 0 auto;
+    height: 64px; padding: 0 9px 0 24px;
+    border-radius: 999px;
+    /* the fill and the edge sit on the pill itself, and it carries no
+       backdrop-filter: a fixed bar with one behaves badly in Safari, which is
+       what turned this pill into a blue bar and then made it vanish on
+       scroll. Near-opaque instead of frosted, so it reads the same anywhere */
+    background: rgba(255,255,255,0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      0 0 0 1px rgba(10,10,10,0.08),
+      0 14px 32px -22px rgba(10,10,10,0.45);
+    transition: height .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease);
   }
-  header.nav.scrolled .nav-inner { height: 64px; }
+  html[lang="ar"] .nav-inner { padding: 0 24px 0 9px; }
+  html[data-theme="dark"] .nav-inner {
+    background: rgba(13,17,23,0.94);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 0 0 1px rgba(255,255,255,0.1),
+      0 16px 36px -24px rgba(0,0,0,0.7);
+  }
+  header.nav.scrolled { padding-top: 10px; }
+  header.nav.scrolled .nav-inner {
+    height: 58px; background: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      0 0 0 1px rgba(10,10,10,0.1),
+      0 18px 40px -24px rgba(10,10,10,0.55);
+  }
+  html[data-theme="dark"] header.nav.scrolled .nav-inner { background: #0d1117; }
+  /* the CTA sits 9px inside the pill on every edge, so the two rounded ends
+     stay concentric instead of the button crowding the right cap */
+  .nav-inner .btn { padding: 10px 20px; }
 
   .brand {
     display: inline-flex;
@@ -915,6 +930,45 @@
     background: rgba(0,0,0,0.30);
   }
 
+
+  /* ── designed renders ──
+     Four projects show the device render from their own mockup artwork in
+     place of the CSS laptop. There is no frame: each slide background is
+     matched to its render's backdrop (see the .b-* backgrounds below) and the
+     render's edges are feathered into it, so the device stands in the hero
+     rather than in a picture pasted onto it. The bottom fade is the longest:
+     it takes out the pedestals and tabletops the renders stand on. */
+  .case-render {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+  }
+  .case-render img {
+    display: block; width: 100%; height: auto;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 12%, #000 var(--fade-from, 70%), transparent var(--fade-to, 100%));
+    -webkit-mask-composite: source-in;
+            mask-image:
+      linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 12%, #000 var(--fade-from, 70%), transparent var(--fade-to, 100%));
+            mask-composite: intersect;
+    opacity: 0;
+    transition: opacity .5s var(--ease);
+    -webkit-user-drag: none; user-select: none; /* don't let native image-drag cancel a swipe */
+  }
+  .case-render img.is-loaded { opacity: 1; }
+  /* oplinx's laptop sits behind a black tabletop; faded from 70% that reads
+     as a dark block, so its fade starts at the device's base */
+  .case-render[data-case="oplinx"] img { --fade-from: 60%; --fade-to: 86%; }
+  /* agri pro and spotlight are cut-outs: their backdrops were removed from the
+     render (spotlight's cube with it), so the devices sit straight on the slide
+     colour and need no feathering. Their only fades, where the source crops the
+     keyboard and the base bar, are baked into the image */
+  .case-render[data-case="agripro"] img,
+  .case-render[data-case="spotlight"] img { -webkit-mask-image: none; mask-image: none; }
+  .case-render:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 14px; }
+
   /* ── image loading state: shimmer skeleton + fade-in ── */
   .mk-screen picture { display: contents; }
   .mk-screen img { position: relative; z-index: 1; opacity: 0; transition: opacity .5s var(--ease); }
@@ -952,6 +1006,7 @@
   @media (prefers-reduced-motion: reduce) {
     .mk-screen::before, .modal-hero.is-loading::before { animation: none; }
     .mk-screen img { transition: none; }
+    .case-render img { transition: none; }
   }
   .case-info .label {
     display: inline-flex; align-items: center; gap: 8px;
@@ -1064,17 +1119,17 @@
       radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
       linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
   }
-  /* bayader: navy → teal */
-  .b-bayader {
-    background-image:
-      radial-gradient(120% 120% at 12% 8%, rgba(255,255,255,0.18), transparent 52%),
-      linear-gradient(125deg, #0a2540 0%, #176d9c 52%, #1fb6b0 100%);
-  }
-  /* lebanese spotlight: indigo → cyan */
+  /* lebanese spotlight: the render's lilac → deep violet, lilac behind the
+     laptop and violet behind the copy */
   .b-spotlight {
     background-image:
-      radial-gradient(120% 120% at 85% 12%, rgba(255,255,255,0.18), transparent 52%),
-      linear-gradient(125deg, #36149c 0%, #4361ee 52%, #3fc7ef 100%);
+      linear-gradient(90deg, #977bab 0%, #9174a6 10%, #865ba4 20%, #6d309c 30%, #611e97 40%, #5d11a1 50%, #4b0883 100%);
+  }
+  /* in rtl the columns swap: mirror it, so the lilac stays behind the
+     render and the violet behind the copy */
+  html[lang="ar"] .b-spotlight {
+    background-image:
+      linear-gradient(270deg, #977bab 0%, #9174a6 10%, #865ba4 20%, #6d309c 30%, #611e97 40%, #5d11a1 50%, #4b0883 100%);
   }
   /* ana arabia: deep teal → palm green, cream highlight */
   .b-ana {
@@ -1082,55 +1137,49 @@
       radial-gradient(120% 120% at 50% 0%, rgba(217,195,163,0.20), transparent 54%),
       linear-gradient(125deg, #0c2b28 0%, #14443c 52%, #1f6b58 100%);
   }
-  /* agri pro services: forest → leaf green */
+  /* agri pro services: the render's leaf green, darkening only at the
+     bottom, where the slider controls sit */
   .b-agripro {
     background-image:
-      radial-gradient(120% 120% at 15% 5%, rgba(255,255,255,0.18), transparent 52%),
-      linear-gradient(125deg, #14432a 0%, #2f8f4e 52%, #6bbf59 100%);
+      linear-gradient(180deg, #98ba67 0%, #96b667 40%, #8aa565 70%, #5f7550 82%, #3a5234 92%, #2b442a 100%);
   }
-  /* war action research: graphite → amber */
-  .b-war {
-    background-image:
-      radial-gradient(120% 120% at 82% 6%, rgba(230,198,25,0.22), transparent 52%),
-      linear-gradient(125deg, #141414 0%, #33322b 52%, #7a6a1c 100%);
-  }
-  /* oplinx solutions: brand navy → brand orange */
+  /* oplinx solutions: the render's navy deepening to royal blue, sampled
+     down its edges (the render spans 18–78% of the hero's height) */
   .b-oplinx {
     background-image:
-      radial-gradient(120% 120% at 18% 4%, rgba(242,101,36,0.22), transparent 52%),
-      linear-gradient(125deg, #00365f 0%, #0d5385 52%, #b8501f 100%);
+      linear-gradient(180deg, #011e3f 0%, #01254c 18%, #013063 36%, #013671 48%, #003a78 56%, #033f84 78%, #04448c 100%);
   }
-
-  /* mr. ibrahim hussein: brand navy → brass gold */
-  .b-ihussein {
-    background-image:
-      radial-gradient(120% 120% at 16% 6%, rgba(199,160,46,0.24), transparent 52%),
-      linear-gradient(125deg, #16213f 0%, #2b3859 50%, #8a6d12 100%);
-  }
+  /* al-shamaa engineering: the render's navy → slate, sampled down its edges */
   .b-shamaa {
     background-image:
-      radial-gradient(120% 120% at 16% 6%, rgba(194,161,94,0.24), transparent 52%),
-      linear-gradient(125deg, #0b2136 0%, #143651 50%, #8a6f2e 100%);
+      linear-gradient(180deg, #012646 0%, #0c3351 18%, #234661 48%, #3a5a70 78%, #45647a 100%);
   }
+  /* the four render slides take no sheen and no drift: a highlight moving
+     over the background but not over the render would give its edge away */
+  .b-agripro, .b-oplinx, .b-spotlight, .b-shamaa { animation: none; background-size: 100% 100%; }
 
   /* light text + controls over the colored backgrounds */
   .hero.is-colored .hero-mark { display: none; }
   .hero.is-colored h1 { color: #fff; }
   .hero.is-colored .subline { color: rgba(255,255,255,0.86); }
-  .hero.is-colored .eyebrow {
-    color: rgba(255,255,255,0.92);
-    border-color: rgba(255,255,255,0.32);
-    background: rgba(255,255,255,0.06);
-  }
-  .hero.is-colored .eyebrow .dot {
-    background: #fff;
-    box-shadow: 0 0 0 4px rgba(255,255,255,0.22);
-  }
   .hero.is-colored .case-info .label { color: rgba(255,255,255,0.85); }
   .hero.is-colored .case-info .label .num { color: #fff; }
   .hero.is-colored .case-info h2 { color: #fff; }
   .hero.is-colored .case-info .blurb { color: rgba(255,255,255,0.86); }
   .hero.is-colored .chip { color: #fff; background: rgba(255,255,255,0.18); }
+
+  /* agri pro's render sits on a light leaf green, so its slide reads in dark
+     ink rather than white: white copy would be 2:1 on it, this is 7:1 */
+  .hero.is-colored .slide-light .case-info .label,
+  .hero.is-colored .slide-light .case-info .label .num,
+  .hero.is-colored .slide-light .case-info h2 { color: #16260f; }
+  .hero.is-colored .slide-light .case-info .label::before { background: #16260f; }
+  .hero.is-colored .slide-light .case-info .blurb { color: rgba(22,38,15,0.86); }
+  .hero.is-colored .slide-light .chip { color: #16260f; background: rgba(22,38,15,0.10); }
+  .hero.is-colored .slide-light .btn-primary { background: #16260f; color: #fff; }
+  .hero.is-colored .slide-light .btn-primary:hover { background: #24401a; }
+  .hero.is-colored .slide-light .case-render:focus-visible { outline-color: #16260f; }
+
 
   /* the laptop sits on a colored backdrop, so it casts a deeper shadow here */
   .hero.is-colored .mk-lid {
@@ -1753,13 +1802,32 @@
   .contact-item a.v { transition: color .2s; }
   .contact-item a.v:hover { color: var(--blue); }
 
-  /* ── footer ── */
-  footer {
-    border-top: 1px solid var(--hair);
-    padding: 56px 0 40px;
-    background: #f1f2f4;
+  /* ── contact, merged into the footer ──
+     The enquiry block sits on the footer's brand blue with no seam, so the page
+     closes on one coloured band: the question and the form, a hairline, then
+     the links. The form and the contact details keep their cards. */
+  #contact { background: var(--blue); border-top: 0; padding-bottom: 60px; }
+  #contact h2.title { color: #fff; }
+  footer { padding-top: 0; }
+  /* drawn inside the content box, so the rule lines up with the cards above
+     and the copyright rule below instead of running into the gutters */
+  footer > .wrap::before {
+    content: ""; display: block; height: 1px;
+    background: rgba(255,255,255,0.3); margin-bottom: 56px;
   }
-  html[data-theme="dark"] footer { background: #0a0d12; }
+
+  /* ── footer ──
+     A solid band in the brand blue, the same in both themes: it is the
+     identity colour, not a surface that follows the theme. Everything in here
+     is set in plain white — white on #008cc1 is 3.8:1, so nothing is dimmed
+     further. */
+  footer {
+    position: relative;
+    overflow: hidden;
+    padding: 64px 0 36px;
+    color: #fff;
+    background: var(--blue);
+  }
   .foot-top {
     display: flex;
     flex-wrap: wrap;
@@ -1767,24 +1835,27 @@
     gap: 30px;
     margin-bottom: 44px;
   }
-  .foot-tag { color: var(--muted); margin-top: 12px; max-width: 320px; }
+  /* the wordmark is always the light cut in here, whichever theme is on */
+  footer .brand-logo { background-image: url('/branding/logos/kaprera-wordmark-light.webp'); }
+  .foot-tag { color: rgba(255,255,255,0.92); margin-top: 12px; max-width: 320px; }
   .foot-cols { display: flex; gap: 64px; flex-wrap: wrap; }
   .foot-col .fc-h {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
-    color: var(--muted);
+    color: rgba(255,255,255,0.92);
     font-weight: 400;
+    padding-bottom: 10px;
     margin-bottom: 14px;
-
+    border-bottom: 1px solid rgba(255,255,255,0.32);
   }
   .foot-col a {
     display: block;
     font-size: 15px;
     margin-bottom: 10px;
-
-    transition: color .2s;
+    color: #fff;
+    transition: opacity .2s;
   }
-  .foot-col a:hover { color: var(--blue); }
+  .foot-col a:hover { opacity: .8; }
   .foot-col a.social-link { display: flex; align-items: center; gap: 9px; }
   .foot-col a.social-link svg { width: 16px; height: 16px; flex-shrink: 0; }
   .foot-bottom {
@@ -1793,10 +1864,23 @@
     flex-wrap: wrap;
     gap: 14px;
     padding-top: 26px;
-    border-top: 1px solid var(--hair);
+    border-top: 1px solid rgba(255,255,255,0.3);
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
-    color: var(--muted);
+    color: rgba(255,255,255,0.92);
+  }
+  .foot-bottom .accent { color: #fff; }
+
+  /* the sign-off: the wordmark whole and centred under the last rule. It
+     used to be oversized and clipped by the footer's bottom edge, which read
+     as a rendering fault rather than as a watermark. */
+  .foot-mark {
+    display: block;
+    margin: 40px auto 0;
+    width: min(300px, 52vw);
+    aspect-ratio: 640 / 140;
+    background: url('/branding/logos/kaprera-wordmark-light.webp') center / contain no-repeat;
+    opacity: .34;
   }
 
   /* ── modal ── */
@@ -2032,6 +2116,31 @@
     }
     .nav-panel .btn { width: 100%; margin-top: 14px; }
     .work-case { grid-template-columns: 1fr; gap: 24px; }
+    /* stacked, the square render would add ~140px to the hero; a landscape
+       crop keeps it to the laptop's old footprint. The trim comes off the
+       backdrop above the device and the pedestal below it. */
+    .case-render { aspect-ratio: 16 / 11; }
+    .case-render img { height: 100%; object-fit: cover; object-position: center 42%; }
+    /* stacked, agri pro's copy sits lower in the hero: keep the leaf green
+       down past it, so the dark floor only runs under the slider controls */
+    .b-agripro {
+      background-image:
+        radial-gradient(120% 120% at 15% 5%, rgba(255,255,255,0.10), transparent 52%),
+        linear-gradient(180deg, #98ba67 0%, #95b468 78%, #5f7550 88%, #2b442a 100%);
+    }
+    /* stacked, spotlight's copy runs the full width under the render, so the
+       lilac can't sit on one side: it glows behind the render at the top and
+       the copy gets the violet below */
+    .hero .b-spotlight,
+    html[lang="ar"] .hero .b-spotlight {
+      background-image:
+        radial-gradient(75% 26% at 38% 27%, rgba(151,123,171,0.92) 0%, rgba(134,91,164,0.55) 50%, rgba(109,48,156,0) 100%),
+        linear-gradient(180deg, #6d309c 0%, #5d11a1 42%, #4b0883 100%);
+    }
+    /* the cut-outs have no backdrop to lose, so a crop would slice the device:
+       they are shown whole inside the same box instead */
+    .case-render[data-case="agripro"] img,
+    .case-render[data-case="spotlight"] img { object-fit: contain; object-position: center; }
     .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
     .work-ctrls { margin-top: 40px; }
     /* services slider → single column, arrows drop to the bottom corners */
@@ -2159,55 +2268,100 @@
   html[lang="ar"] .faq-item > summary,
   html[lang="ar"] .faq-a { text-align: right; }
 
-  /* ── problem cards + process steps ── */
-  .pain-grid, .steps {
+  /* ── the problem: heading on one side, symptoms listed down the other ── */
+  .pain-split {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    margin-top: 40px;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(34px, 5vw, 76px);
+    align-items: start;
   }
-  .pain-card {
-    background: var(--white);
-    border: 1px solid var(--hair);
-    border-radius: 18px;
-    padding: 26px 24px;
-    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  /* the question stays in view while the symptoms scroll past it */
+  .pain-head { position: sticky; top: 118px; }
+  .pain-head .title, .pain-head .lede { max-width: 22ch; }
+  .pain-head .lede { max-width: 42ch; }
+  .pain-next { margin-top: 30px; }
+
+  .pain-list { display: flex; flex-direction: column; }
+  .pain-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+    padding: clamp(20px, 2.4vw, 28px) 0;
+    border-top: 1px solid var(--hair);
   }
-  .pain-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.08); }
-  .pain-card h3, .step h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
-  .pain-card p, .step p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+  .pain-row:first-child { border-top: 0; padding-top: 4px; }
   .pain-ic {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px; margin-bottom: 18px;
-    border-radius: 11px;
+    width: 44px; height: 44px; flex: none;
+    border-radius: 13px;
     background: var(--bg-soft);
+    border: 1px solid var(--hair);
     color: var(--blue);
+    transition: background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
   }
-  .pain-next { margin-top: 32px; }
-  .steps { list-style: none; padding: 0; }
-  .step { position: relative; padding-top: 22px; border-top: 2px solid var(--hair); }
+  .pain-row:hover .pain-ic {
+    background: color-mix(in srgb, var(--blue) 12%, transparent);
+    border-color: color-mix(in srgb, var(--blue) 40%, transparent);
+    transform: translateY(-2px);
+  }
+  .pain-row h3 {
+    font-size: clamp(17px, 1.5vw, 19px); font-weight: 700;
+    letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 8px;
+  }
+  .pain-row p { color: var(--muted); font-size: 15px; line-height: 1.65; max-width: 54ch; }
+  html[lang="ar"] .pain-row h3 { letter-spacing: 0; }
+
+  /* ── the process: four nodes on one rail, so the steps read in sequence ── */
+  .steps {
+    list-style: none; padding: 0; margin-top: 46px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 26px;
+  }
+  .step { position: relative; padding-top: 42px; }
+  /* the rail runs from this node to the next one, across the column gap */
   .step::before {
     content: "";
-    position: absolute; top: -2px; inset-inline-start: 0;
-    width: 40px; height: 2px;
-    background: var(--blue);
+    position: absolute; top: 9px; inset-inline-start: 8px;
+    width: calc(100% + 26px - 16px); height: 2px;
+    background: var(--hair);
+  }
+  .step:last-child::before { display: none; }
+  .step::after {
+    content: "";
+    position: absolute; top: 2px; inset-inline-start: 0;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--white); border: 2px solid var(--blue);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 12%, transparent);
   }
   .step-num {
-    display: block; margin-bottom: 12px;
+    display: block; margin-bottom: 10px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
     color: var(--blue-text);
   }
-  html[lang="ar"] .pain-card h3, html[lang="ar"] .step h3 { letter-spacing: 0; }
+  .step h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+  .step p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+  html[lang="ar"] .step h3 { letter-spacing: 0; }
+
   @media (max-width: 960px) {
-    .pain-grid, .steps { grid-template-columns: repeat(2, 1fr); }
+    .pain-split { grid-template-columns: 1fr; gap: 26px; }
+    .pain-head { position: static; }
+    .pain-head .title, .pain-head .lede { max-width: none; }
+    /* the rail turns vertical: four across would leave each step a column too
+       narrow to read */
+    .steps { grid-template-columns: 1fr; gap: 0; margin-top: 34px; }
+    .step { padding: 0 0 26px; padding-inline-start: 34px; }
+    .step:last-child { padding-bottom: 0; }
+    .step::before { top: 10px; inset-inline-start: 7px; width: 2px; height: 100%; }
+    .step:last-child::before { display: none; }
+    .step::after { top: 2px; }
   }
   @media (max-width: 560px) {
-    .pain-grid, .steps { grid-template-columns: 1fr; }
     .tst-track { grid-auto-columns: 86%; gap: 14px; }
+    .pain-row { grid-template-columns: 1fr; gap: 14px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .pain-card, .pain-card:hover { transition: none; transform: none; }
+    .pain-ic, .pain-row:hover .pain-ic { transition: none; transform: none; }
   }
 </style>
 <script>
@@ -2335,10 +2489,7 @@
       <span class="hero-bg b-agripro"></span>
       <span class="hero-bg b-oplinx"></span>
       <span class="hero-bg b-spotlight"></span>
-      <span class="hero-bg b-war"></span>
       <span class="hero-bg b-ana"></span>
-      <span class="hero-bg b-bayader"></span>
-      <span class="hero-bg b-ihussein"></span>
       <span class="hero-bg b-shamaa"></span>
     </div>
     <span class="hero-mark" aria-hidden="true"></span>
@@ -2349,8 +2500,8 @@
           <div class="work-track" id="workTrack">
 
             <!-- SLIDE 1: hero -->
-            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 9, intro">
-              <span class="eyebrow reveal"><span class="dot"></span> <span data-en="Digital agency · Beirut, Lebanon" data-ar="وكالة رقمية · بيروت، لبنان">Digital agency · Beirut, Lebanon</span></span>
+            <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 6, intro">
+              <div class="hero-spacer" aria-hidden="true"></div>
               <h1 class="reveal" id="heroTitle" data-en="Stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</h1>
               <p class="subline reveal" data-en="We design and build websites and brands that turn audiences into customers." data-ar="نصمّم ونطوّر مواقع وعلامات تجارية تحوّل الجمهور إلى عملاء.">We design and build websites and brands that turn audiences into customers.</p>
               <div class="hero-ctas reveal">
@@ -2369,18 +2520,12 @@
             </div>
 
             <!-- SLIDE 2: Agri Pro Services -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 9, Agri Pro Services">
-              <button class="case-shot" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
-                <span class="mk-lid">
-                  <span class="mk-notch" aria-hidden="true"></span>
-                  <span class="mk-screen">
-                    <picture>
-                      <source srcset="cases/agripro/image-480.webp 480w, cases/agripro/image-800.webp 800w, cases/agripro/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                      <img src="cases/agripro/image.jpg" alt="Agri Pro Services pest control operations platform built by kaprera" width="1600" height="941" loading="lazy" decoding="async" />
-                    </picture>
-                  </span>
-                </span>
-                <span class="mk-base" aria-hidden="true"></span>
+            <div class="work-slide work-case slide-light" role="group" aria-roledescription="slide" aria-label="2 of 6, Agri Pro Services">
+              <button class="case-shot case-render" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
+                <picture>
+                  <source srcset="cases/agripro/mockup-700.webp 700w, cases/agripro/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <img src="cases/agripro/mockup.png" alt="Agri Pro Services pest control operations platform built by kaprera" width="1200" height="1019" loading="lazy" decoding="async" />
+                </picture>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">02</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
@@ -2395,18 +2540,12 @@
             </div>
 
             <!-- SLIDE 3: Oplinx -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 9, Oplinx Solutions">
-              <button class="case-shot" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
-                <span class="mk-lid">
-                  <span class="mk-notch" aria-hidden="true"></span>
-                  <span class="mk-screen">
-                    <picture>
-                      <source srcset="cases/oplinx/image-480.webp 480w, cases/oplinx/image-800.webp 800w, cases/oplinx/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                      <img src="cases/oplinx/image.jpg" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1600" height="828" loading="lazy" decoding="async" />
-                    </picture>
-                  </span>
-                </span>
-                <span class="mk-base" aria-hidden="true"></span>
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 6, Oplinx Solutions">
+              <button class="case-shot case-render" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
+                <picture>
+                  <source srcset="cases/oplinx/mockup-700.webp 700w, cases/oplinx/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <img src="cases/oplinx/mockup.jpg" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
+                </picture>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">03</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
@@ -2421,18 +2560,12 @@
             </div>
 
             <!-- SLIDE 4: Lebanese Spotlight -->
-            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 9, Lebanese Spotlight">
-              <button class="case-shot" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
-                <span class="mk-lid">
-                  <span class="mk-notch" aria-hidden="true"></span>
-                  <span class="mk-screen">
-                    <picture>
-                      <source srcset="cases/lbspotlight/image-480.webp 480w, cases/lbspotlight/image-800.webp 800w, cases/lbspotlight/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                      <img src="cases/lbspotlight/image.jpg" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
-                    </picture>
-                  </span>
-                </span>
-                <span class="mk-base" aria-hidden="true"></span>
+            <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 6, Lebanese Spotlight">
+              <button class="case-shot case-render" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
+                <picture>
+                  <source srcset="cases/lbspotlight/mockup-700.webp 700w, cases/lbspotlight/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <img src="cases/lbspotlight/mockup.png" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="1200" height="704" loading="lazy" decoding="async" />
+                </picture>
               </button>
               <div class="case-info">
                 <span class="label"><span class="num">04</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
@@ -2446,34 +2579,8 @@
               </div>
             </div>
 
-            <!-- SLIDE 5: War Action Research -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 9, War Action Research">
-              <button class="case-shot" data-case="war" aria-haspopup="dialog" aria-label="open War Action Research case study">
-                <span class="mk-lid">
-                  <span class="mk-notch" aria-hidden="true"></span>
-                  <span class="mk-screen">
-                    <picture>
-                      <source srcset="cases/war/image-480.webp 480w, cases/war/image-800.webp 800w, cases/war/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                      <img src="cases/war/image.jpg" alt="War Action Research interactive research platform built by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
-                    </picture>
-                  </span>
-                </span>
-                <span class="mk-base" aria-hidden="true"></span>
-              </button>
-              <div class="case-info">
-                <span class="label"><span class="num">05</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
-                <h2>War Action Research</h2>
-                <p class="blurb" data-en="An interactive research platform with a clickable world map for global conflict research." data-ar="منصة أبحاث تفاعلية بخريطة عالمية قابلة للنقر لأبحاث النزاعات العالمية.">An interactive research platform with a clickable world map for global conflict research.</p>
-                <div class="chips">
-                  <span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span>
-                  <span class="chip" data-en="Web development" data-ar="تطوير ويب">Web development</span>
-                </div>
-                <a href="/cases/war/" class="btn btn-primary" data-case="war" aria-haspopup="dialog" data-en="View case study" data-ar="عرض دراسة الحالة">View case study</a>
-              </div>
-            </div>
-
-            <!-- SLIDE 6: Ana Arabia -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 9, Ana Arabia">
+            <!-- SLIDE 5: Ana Arabia -->
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 6, Ana Arabia">
               <button class="case-shot" data-case="ana" aria-haspopup="dialog" aria-label="open Ana Arabia case study">
                 <span class="mk-lid">
                   <span class="mk-notch" aria-hidden="true"></span>
@@ -2487,7 +2594,7 @@
                 <span class="mk-base" aria-hidden="true"></span>
               </button>
               <div class="case-info">
-                <span class="label"><span class="num">06</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <span class="label"><span class="num">05</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
                 <h2>Ana Arabia</h2>
                 <p class="blurb" data-en="An elegant, bilingual landing page for a Riyadh Season event." data-ar="صفحة هبوط أنيقة وثنائية اللغة لفعالية ضمن موسم الرياض.">An elegant, bilingual landing page for a Riyadh Season event.</p>
                 <div class="chips">
@@ -2497,72 +2604,15 @@
               </div>
             </div>
 
-            <!-- SLIDE 7: Bayader -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="7 of 9, Bayader Investments">
-              <button class="case-shot" data-case="bayader" aria-haspopup="dialog" aria-label="open Bayader Investments case study">
-                <span class="mk-lid">
-                  <span class="mk-notch" aria-hidden="true"></span>
-                  <span class="mk-screen">
-                    <picture>
-                      <source srcset="cases/bayader/image-480.webp 480w, cases/bayader/image-800.webp 800w, cases/bayader/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                      <img src="cases/bayader/image.jpg" alt="Bayader Investments website designed and developed by kaprera" width="1600" height="943" loading="lazy" decoding="async" />
-                    </picture>
-                  </span>
-                </span>
-                <span class="mk-base" aria-hidden="true"></span>
+            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 6, AL-Shamaa Engineering">
+              <button class="case-shot case-render" data-case="shamaa" aria-haspopup="dialog" aria-label="open AL-Shamaa Engineering case study">
+                <picture>
+                  <source srcset="cases/al-shamaa/mockup-700.webp 700w, cases/al-shamaa/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <img src="cases/al-shamaa/mockup.jpg" alt="AL-Shamaa Engineering bilingual landing page built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
+                </picture>
               </button>
               <div class="case-info">
-                <span class="label"><span class="num">07</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
-                <h2>Bayader Investments</h2>
-                <p class="blurb" data-en="A corporate website where each investment line gets its own page." data-ar="موقع مؤسسي يفرد لكل مجال استثماري صفحة خاصة به.">A corporate website where each investment line gets its own page.</p>
-                <div class="chips">
-                  <span class="chip" data-en="Web development" data-ar="تطوير ويب">Web development</span>
-                </div>
-                <a href="/cases/bayader/" class="btn btn-primary" data-case="bayader" aria-haspopup="dialog" data-en="View case study" data-ar="عرض دراسة الحالة">View case study</a>
-              </div>
-            </div>
-
-            <!-- SLIDE 8: Mr. Ibrahim Hussein -->
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="8 of 9, Mr. Ibrahim Hussein">
-              <button class="case-shot" data-case="ihussein" aria-haspopup="dialog" aria-label="open Mr. Ibrahim Hussein case study">
-                <span class="mk-lid">
-                  <span class="mk-notch" aria-hidden="true"></span>
-                  <span class="mk-screen">
-                    <picture>
-                      <source srcset="cases/ibrahim-hussein/image-480.webp 480w, cases/ibrahim-hussein/image-800.webp 800w, cases/ibrahim-hussein/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                      <img src="cases/ibrahim-hussein/image.jpg" alt="Mr. Ibrahim Hussein programming teaching platform built by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
-                    </picture>
-                  </span>
-                </span>
-                <span class="mk-base" aria-hidden="true"></span>
-              </button>
-              <div class="case-info">
-                <span class="label"><span class="num">08</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
-                <h2>Mr. Ibrahim Hussein</h2>
-                <p class="blurb" data-en="A teaching platform for a programming tutor, with every exercise in both C++ and Java." data-ar="منصة تعليمية لمدرّس برمجة، بكل تمرين متاح بلغتَي C++ وJava.">A teaching platform for a programming tutor, with every exercise in both C++ and Java.</p>
-                <div class="chips">
-                  <span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span>
-                  <span class="chip" data-en="Web app" data-ar="تطبيق ويب">Web app</span>
-                </div>
-                <a href="/cases/ibrahim-hussein/" class="btn btn-primary" data-case="ihussein" aria-haspopup="dialog" data-en="View case study" data-ar="عرض دراسة الحالة">View case study</a>
-              </div>
-            </div>
-
-            <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="9 of 9, AL-Shamaa Engineering">
-              <button class="case-shot" data-case="shamaa" aria-haspopup="dialog" aria-label="open AL-Shamaa Engineering case study">
-                <span class="mk-lid">
-                  <span class="mk-notch" aria-hidden="true"></span>
-                  <span class="mk-screen">
-                    <picture>
-                      <source srcset="cases/al-shamaa/image-480.webp 480w, cases/al-shamaa/image-800.webp 800w, cases/al-shamaa/image.webp 1600w" sizes="(max-width: 900px) 92vw, 550px" type="image/webp">
-                      <img src="cases/al-shamaa/image.jpg" alt="AL-Shamaa Engineering bilingual landing page built by kaprera" width="1600" height="942" loading="lazy" decoding="async" />
-                    </picture>
-                  </span>
-                </span>
-                <span class="mk-base" aria-hidden="true"></span>
-              </button>
-              <div class="case-info">
-                <span class="label"><span class="num">09</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
+                <span class="label"><span class="num">06</span> <span data-en="/ Our work" data-ar="/ أعمالنا">/ Our work</span></span>
                 <h2>AL-Shamaa Engineering</h2>
                 <p class="blurb" data-en="A bilingual landing page for an engineering consultancy, illustrated entirely in hand-drawn SVG." data-ar="صفحة هبوط ثنائية اللغة لشركة استشارات هندسية، برسوم SVG مرسومة يدوياً بالكامل.">A bilingual landing page for an engineering consultancy, illustrated entirely in hand-drawn SVG.</p>
                 <div class="chips">
@@ -2586,7 +2636,7 @@
           </button>
           <button type="button" class="work-play" id="workPlay" aria-label="pause slideshow" aria-pressed="false"></button>
           <div class="work-dots" id="workDots" role="tablist" aria-label="our work slides"></div>
-          <div class="work-count"><b id="workNow">01</b> / 09</div>
+          <div class="work-count"><b id="workNow">01</b> / 06</div>
         </div>
       </div>
     </div>
@@ -2595,35 +2645,50 @@
   <!-- ───────────── PROBLEM ───────────── -->
   <section class="section" id="problem">
     <div class="wrap">
+      <!-- the question on one side, the symptoms listed down the other: four
+           equal cards read as the same grid as the process steps below -->
+      <div class="pain-split">
+        <div class="pain-head">
       <span class="label reveal"><span class="num">02</span> <span data-en="/ Sound familiar?" data-ar="/ هل يبدو هذا مألوفًا؟">/ Sound familiar?</span></span>
       <h2 class="title reveal" data-en="Your website should be bringing you work." data-ar="موقعك يجب أن يجلب لك العمل.">Your website should be bringing you work.</h2>
       <p class="lede reveal" data-en="Most businesses that get in touch with us already have a website. The trouble is it isn&#x27;t doing much for them." data-ar="معظم الشركات التي تتواصل معنا لديها موقع بالفعل. المشكلة أنه لا يقدّم لها الكثير.">Most businesses that get in touch with us already have a website. The trouble is it isn't doing much for them.</p>
 
-      <div class="pain-grid reveal">
-        <article class="pain-card">
-          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
-          <h3 data-en="It looks fine, but nobody gets in touch." data-ar="يبدو جيدًا، لكن لا أحد يتواصل.">It looks fine, but nobody gets in touch.</h3>
-          <p data-en="People visit, scroll, and leave. The page never tells them what to do next, so they don&#x27;t do anything." data-ar="يزور الناس الموقع ويتصفّحونه ثم يغادرون. الصفحة لا تقول لهم ما الخطوة التالية، فلا يفعلون شيئًا.">People visit, scroll, and leave. The page never tells them what to do next, so they don't do anything.</p>
-        </article>
-        <article class="pain-card">
-          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><polyline points="12 9 12 13 14.5 15"/><line x1="10" y1="2" x2="14" y2="2"/></svg></span>
-          <h3 data-en="It&#x27;s slow on a phone." data-ar="بطيء على الهاتف.">It's slow on a phone.</h3>
-          <p data-en="Most of your visitors are on mobile data. When a page takes five seconds to load, a lot of them leave before it finishes." data-ar="معظم زوّارك يتصفّحون عبر بيانات الهاتف. حين تحتاج الصفحة خمس ثوانٍ لتفتح، يغادر كثيرون منهم قبل أن تكتمل.">Most of your visitors are on mobile data. When a page takes five seconds to load, a lot of them leave before it finishes.</p>
-        </article>
-        <article class="pain-card">
-          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
-          <h3 data-en="Google can&#x27;t find you." data-ar="Google لا يجدك.">Google can't find you.</h3>
-          <p data-en="Your competitors come up when customers search for what you sell. You&#x27;re on page three, or you don&#x27;t show up at all." data-ar="منافسوك يظهرون حين يبحث العملاء عمّا تبيعه، وأنت في الصفحة الثالثة أو لا تظهر أصلًا.">Your competitors come up when customers search for what you sell. You're on page three, or you don't show up at all.</p>
-        </article>
-        <article class="pain-card">
-          <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="21" x2="16" y2="21"/></svg></span>
-          <h3 data-en="It doesn&#x27;t look like your business anymore." data-ar="لم يعد يشبه شركتك.">It doesn't look like your business anymore.</h3>
-          <p data-en="The site was built for the company you were a few years ago. The business has grown since then and the site still looks the same." data-ar="بُني الموقع للشركة التي كنتها قبل سنوات. شركتك كبرت منذ ذلك الحين، والموقع بقي على حاله.">The site was built for the company you were a few years ago. The business has grown since then and the site still looks the same.</p>
-        </article>
-      </div>
 
       <div class="pain-next reveal">
         <a href="#services" class="btn btn-ghost"><span data-en="See how we fix it" data-ar="شاهد كيف نعالج ذلك">See how we fix it</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+        </div>
+
+        <div class="pain-list reveal">
+          <article class="pain-row">
+            <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
+            <div class="pain-txt">
+              <h3 data-en="It looks fine, but nobody gets in touch." data-ar="يبدو جيدًا، لكن لا أحد يتواصل.">It looks fine, but nobody gets in touch.</h3>
+              <p data-en="People visit, scroll, and leave. The page never tells them what to do next, so they don&#x27;t do anything." data-ar="يزور الناس الموقع ويتصفّحونه ثم يغادرون. الصفحة لا تقول لهم ما الخطوة التالية، فلا يفعلون شيئًا.">People visit, scroll, and leave. The page never tells them what to do next, so they don't do anything.</p>
+            </div>
+          </article>
+          <article class="pain-row">
+            <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><polyline points="12 9 12 13 14.5 15"/><line x1="10" y1="2" x2="14" y2="2"/></svg></span>
+            <div class="pain-txt">
+              <h3 data-en="It&#x27;s slow on a phone." data-ar="بطيء على الهاتف.">It's slow on a phone.</h3>
+              <p data-en="Most of your visitors are on mobile data. When a page takes five seconds to load, a lot of them leave before it finishes." data-ar="معظم زوّارك يتصفّحون عبر بيانات الهاتف. حين تحتاج الصفحة خمس ثوانٍ لتفتح، يغادر كثيرون منهم قبل أن تكتمل.">Most of your visitors are on mobile data. When a page takes five seconds to load, a lot of them leave before it finishes.</p>
+            </div>
+          </article>
+          <article class="pain-row">
+            <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+            <div class="pain-txt">
+              <h3 data-en="Google can&#x27;t find you." data-ar="Google لا يجدك.">Google can't find you.</h3>
+              <p data-en="Your competitors come up when customers search for what you sell. You&#x27;re on page three, or you don&#x27;t show up at all." data-ar="منافسوك يظهرون حين يبحث العملاء عمّا تبيعه، وأنت في الصفحة الثالثة أو لا تظهر أصلًا.">Your competitors come up when customers search for what you sell. You're on page three, or you don't show up at all.</p>
+            </div>
+          </article>
+          <article class="pain-row">
+            <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="21" x2="16" y2="21"/></svg></span>
+            <div class="pain-txt">
+              <h3 data-en="It doesn&#x27;t look like your business anymore." data-ar="لم يعد يشبه شركتك.">It doesn't look like your business anymore.</h3>
+              <p data-en="The site was built for the company you were a few years ago. The business has grown since then and the site still looks the same." data-ar="بُني الموقع للشركة التي كنتها قبل سنوات. شركتك كبرت منذ ذلك الحين، والموقع بقي على حاله.">The site was built for the company you were a few years ago. The business has grown since then and the site still looks the same.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -3005,7 +3070,6 @@
   <!-- ───────────── CONTACT ───────────── -->
   <section class="section" id="contact">
     <div class="wrap">
-      <span class="label reveal"><span class="num">07</span> <span data-en="/ Let's build something" data-ar="/ لنبنِ شيئًا معًا">/ Let's build something</span></span>
       <h2 class="title reveal" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
 
       <div class="contact-grid">
@@ -3222,6 +3286,7 @@
       <span data-en="Made in Lebanon ·" data-ar="صُنع في لبنان ·">Made in Lebanon ·</span> <span class="accent">&gt;_</span>
     </div>
   </div>
+  <div class="foot-mark" aria-hidden="true"></div>
 </footer>
 
 <!-- ───────────── MODAL ───────────── -->

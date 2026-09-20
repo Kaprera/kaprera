@@ -29,27 +29,46 @@ img{max-width:100%; height:auto; display:block}
 a{color:inherit}
 .wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
 
-/* ── nav (duplicated from the landing page) ── */
+/* ── nav — a pill floating over the page, not a bar pinned to the edge ── */
 .nav{
   position:sticky; top:0; z-index:60;
-  border-bottom:1px solid transparent;
-  transition:border-color .3s, box-shadow .3s;
+  padding:16px 20px 0;
+  transition:padding .3s var(--ease);
 }
-/* background + blur live on a pseudo-element so the header itself doesn't
-   become a containing block for the fixed mobile-nav overlay */
-.nav::before{
-  content:""; position:absolute; inset:0; z-index:-1;
-  background:color-mix(in srgb,var(--bg) 72%,transparent);
-  backdrop-filter:saturate(180%) blur(14px);
-  -webkit-backdrop-filter:saturate(180%) blur(14px);
-  transition:background-color .3s var(--ease);
-}
-.nav.scrolled{ border-bottom-color:var(--hair); box-shadow:0 4px 24px rgba(0,0,0,0.04); }
 .nav-inner{
+  position:relative;
   display:flex; align-items:center; justify-content:space-between;
-  height:78px; transition:height .3s var(--ease);
+  max-width:var(--wrap); margin:0 auto;
+  height:64px; padding:0 9px 0 24px;
+  border-radius:999px;
+  /* the fill and the edge sit on the pill itself, and it carries no
+     backdrop-filter: a fixed bar with one behaves badly in Safari, which is
+     what turned this pill into a blue bar and then made it vanish on scroll.
+     Near-opaque instead of frosted, so it reads the same over any section */
+  background:rgba(255,255,255,.96);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    0 0 0 1px rgba(10,10,10,.08),
+    0 14px 32px -22px rgba(10,10,10,.45);
+  transition:height .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease);
 }
-.nav.scrolled .nav-inner{ height:64px; }
+html[lang="ar"] .nav-inner{ padding:0 24px 0 9px; }
+html[data-theme="dark"] .nav-inner{
+  background:rgba(10,11,12,.94);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 0 1px rgba(255,255,255,.1),
+    0 16px 36px -24px rgba(0,0,0,.7);
+}
+.nav.scrolled{ padding-top:10px; }
+.nav.scrolled .nav-inner{
+  height:58px; background:#fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    0 0 0 1px rgba(10,10,10,.1),
+    0 18px 40px -24px rgba(10,10,10,.55);
+}
+html[data-theme="dark"] .nav.scrolled .nav-inner{ background:#0a0b0c; }
 .brand{display:inline-flex; align-items:baseline; gap:6px; text-decoration:none; flex-shrink:0}
 /* horizontal wordmark (transparent webp, swapped per theme) */
 .brand-logo{
@@ -98,7 +117,7 @@ body.no-scroll{ overflow:hidden; }
 /* ── segmented theme / language switches (mirror the home page) ── */
 .theme-toggle,.lang-toggle{
   display:inline-flex; align-items:center; gap:2px; height:40px; padding:4px;
-  border-radius:999px; border:1px solid var(--hair); background:transparent;
+  border-radius:999px; border:1px solid color-mix(in srgb,var(--ink) 14%,transparent); background:transparent;
   cursor:pointer; flex-shrink:0; font-family:var(--sans);
   transition:border-color .25s, transform .25s var(--ease);
 }
@@ -120,8 +139,6 @@ html[lang="ar"] .lang-toggle .seg.ar{background:var(--blue); color:#fff}
 /* only set vertical padding — the .wrap class supplies horizontal padding;
    a shorthand here would override it and zero the side gutters on mobile. */
 .hero{padding-top:32px; padding-bottom:8px}
-.eyebrow{font-family:var(--mono); font-size:13px; letter-spacing:.06em; color:var(--blue-ink); display:inline-flex; gap:.5em; align-items:center}
-.eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--blue)}
 h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; font-weight:800; margin:.35em 0 .2em}
 .lede{font-size:clamp(18px,2.3vw,22px); color:var(--muted); max-width:60ch; margin:0 0 22px}
 .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px}
@@ -145,7 +162,7 @@ h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; fo
 
 /* nav CTA — identical to the landing navbar's book-a-call (blue pill + sheen) */
 .nav-cta{
-  padding:13px 24px; font-size:15px; gap:8px; border-radius:999px;
+  padding:10px 22px; font-size:15px; gap:8px; border-radius:999px;
   background:var(--blue); color:#fff; white-space:nowrap;
   transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .2s;
 }
@@ -153,58 +170,12 @@ h1{font-size:clamp(34px,5.4vw,58px); line-height:1.05; letter-spacing:-.02em; fo
 .nav-cta svg{width:16px; height:16px}
 .nav-cta .cta-cal{display:none}
 
-/* ── hero wash · ported from the work index so the top of a case study and
-      the top of /work/ read as the same page family ──────────────────────
-   .hero is a .wrap here (not a full-bleed section as on the work index), so
-   the blob layer breaks out of the content column itself rather than relying
-   on a full-width parent. body gets overflow-x:clip — not hidden, which would
-   kill the sticky nav — so 100vw can never open a horizontal scrollbar. */
+/* nothing on these pages should open a horizontal scrollbar; clip, not
+   hidden, which would kill the sticky nav */
 body{overflow-x:clip}
-.hero{position:relative; isolation:isolate}
-.aurora{
-  position:absolute; top:-150px; left:calc(-50vw + 50%); width:100vw; height:660px;
-  overflow:hidden; z-index:-1; pointer-events:none;
-  /* the box has to clip the blobs so they can't widen the page; the mask keeps
-     that clip from showing up as a hard line above the content */
-  -webkit-mask-image:linear-gradient(to bottom,#000 0 46%,transparent 100%);
-          mask-image:linear-gradient(to bottom,#000 0 46%,transparent 100%);
-}
-.aurora i{
-  position:absolute; display:block; width:52vw; max-width:680px; aspect-ratio:1;
-  border-radius:50%; filter:blur(90px); opacity:.30;
-}
-/* weighted to the top and the outer edges, so the copy sits on quiet ground */
-.aurora .b1{background:#008cc1; left:-14%; top:-18%}
-.aurora .b2{background:#4cc9f0; left:30%; top:-42%; opacity:.22}
-.aurora .b3{background:#f26524; right:-12%; top:-14%; opacity:.15}
-html[data-theme="dark"] .aurora i{opacity:.26}
-html[data-theme="dark"] .aurora .b3{opacity:.15}
-@media (prefers-reduced-motion:no-preference){
-  .aurora i{will-change:transform}
-  .aurora .b1{animation:drift 24s var(--ease) infinite alternate}
-  .aurora .b2{animation:drift 30s var(--ease) infinite alternate-reverse}
-  .aurora .b3{animation:drift 27s var(--ease) infinite alternate}
-}
-@keyframes drift{
-  from{transform:translate3d(0,0,0) scale(1)}
-  to{transform:translate3d(5%,9%,0) scale(1.14)}
-}
 
-/* the headline resolves from ink into brand blue */
-.grad{
-  background:linear-gradient(102deg,var(--ink) 0%,var(--ink) 46%,#0079a8 72%,#00a6d6 96%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-/* mirrored so the fade still runs with the reading direction in Arabic */
-html[lang="ar"] .grad{
-  background-image:linear-gradient(258deg,var(--ink) 0%,var(--ink) 46%,#0079a8 72%,#00a6d6 96%);
-}
-@supports not ((-webkit-background-clip:text) or (background-clip:text)){
-  .grad{color:var(--ink)}
-}
-
-/* against the hero wash the default ghost button — a --hair border and no
-   hover at all — read as a borderless block of text */
+/* the default ghost button — a --hair border and no hover at all — read as
+   a borderless block of text at the top of the page */
 .hero .btn-ghost{
   color:var(--blue-ink);
   border-color:color-mix(in srgb,var(--blue) 45%,transparent);
@@ -290,9 +261,6 @@ html[data-theme="dark"] .m.poor .m-v{color:#ff8f86}
 .m-k .abbr{font-family:var(--mono); font-weight:500; font-size:12px; color:var(--muted); white-space:nowrap}
 .m-d{display:block; margin-top:6px; font-size:13px; line-height:1.5; color:var(--muted)}
 
-@media (prefers-reduced-motion:reduce){
-  .aurora i{animation:none}
-}
 
 /* ── more work ── */
 .more{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
@@ -310,30 +278,44 @@ html[data-theme="dark"] .m.poor .m-v{color:#ff8f86}
   .more-card:hover .more-thumb img{transform:none}
 }
 
-/* ── cta ── */
-.cta{text-align:center; padding:56px 0}
-.cta h2{margin-bottom:18px}
-.cta .actions{justify-content:center}
 
-/* ── footer (mirrors the home page) ── */
-footer{border-top:1px solid var(--hair); padding:56px 0 40px; margin-top:20px; background:#f1f2f4}
-html[data-theme="dark"] footer{background:#0a0d12}
+/* ── footer (mirrors the home page) ──
+   A solid band in the brand blue, the same in both themes: it is the identity
+   colour, not a surface that follows the theme. Everything in here is set in
+   plain white — white on #008cc1 is 3.8:1, so nothing is dimmed further. */
+footer{
+  position:relative; overflow:hidden; margin-top:20px;
+  padding:64px 0 36px; color:#fff;
+  background:var(--blue);
+}
 .foot-top{display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px; margin-bottom:44px}
 .foot-top .brand{display:inline-flex}
-.foot-tag{color:var(--muted); margin:12px 0 0; max-width:320px}
+/* the wordmark is always the light cut in here, whichever theme is on */
+footer .brand-logo{background-image:url('/branding/logos/kaprera-wordmark-light.webp')}
+.foot-tag{color:rgba(255,255,255,.92); margin:12px 0 0; max-width:320px}
 .foot-cols{display:flex; gap:64px; flex-wrap:wrap}
-.foot-col .fc-h{font-family:var(--mono); font-size:13px; color:var(--muted); font-weight:400; margin-bottom:14px;}
-.foot-col a{display:block; font-size:15px; margin-bottom:10px; text-decoration:none; color:var(--ink); transition:color .2s}
-.foot-col a:hover{color:var(--blue)}
+.foot-col .fc-h{font-family:var(--mono); font-size:13px; color:rgba(255,255,255,.92); font-weight:400;
+  padding-bottom:10px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,.32);}
+.foot-col a{display:block; font-size:15px; margin-bottom:10px; text-decoration:none; color:#fff; transition:opacity .2s}
+.foot-col a:hover{opacity:.8}
 .foot-col a.social-link{display:flex; align-items:center; gap:9px}
 .foot-col a.social-link svg{width:16px; height:16px; flex-shrink:0}
-.foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:26px; border-top:1px solid var(--hair); font-family:var(--mono); font-size:13px; color:var(--muted)}
-.foot-bottom .accent{color:var(--blue)}
+.foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:26px; border-top:1px solid rgba(255,255,255,.3); font-family:var(--mono); font-size:13px; color:rgba(255,255,255,.92)}
+.foot-bottom .accent{color:#fff}
+
+/* the sign-off: the wordmark whole and centred under the last rule. It used to
+   be oversized and clipped by the footer's bottom edge, which read as a
+   rendering fault rather than as a watermark. */
+.foot-mark{
+  display:block; margin:40px auto 0;
+  width:min(300px,52vw); aspect-ratio:640/140;
+  background:url('/branding/logos/kaprera-wordmark-light.webp') center / contain no-repeat;
+  opacity:.34;
+}
 
 /* ── arabic / rtl ── */
 html[lang="ar"] body{font-family:'Cairo',system-ui,-apple-system,sans-serif}
 html[lang="ar"] .crumb,
-html[lang="ar"] .eyebrow,
 html[lang="ar"] .chip,
 html[lang="ar"] .label,
 html[lang="ar"] .two-h,
@@ -346,15 +328,16 @@ html[lang="ar"] .mgroup-h,
 html[lang="ar"] .m-k,
 html[lang="ar"] .m-d,
 html[lang="ar"] .more-type,
-html[lang="ar"] .work-item .kind,
+html[lang="ar"] .case-row .idx,
+html[lang="ar"] .case-row .soon-note,
 html[lang="ar"] .foot-col .fc-h,
 html[lang="ar"] .foot-bottom,
 html[lang="ar"] .lang-toggle{font-family:'Cairo',system-ui,sans-serif; letter-spacing:0}
 /* flip directional arrows for rtl */
 html[lang="ar"] .btn svg,
-html[lang="ar"] .work-item .go svg{transform:scaleX(-1)}
+html[lang="ar"] .case-row .go svg{transform:scaleX(-1)}
 html[lang="ar"] .btn:hover svg{transform:scaleX(-1)}
-html[lang="ar"] .work-item:hover .go svg{transform:translateX(-3px) scaleX(-1)}
+html[lang="ar"] .case-row:hover .go svg{transform:translateX(-3px) scaleX(-1)}
 
 /* ── mobile nav: hamburger + centered card (mirrors the landing) ── */
 @media (max-width:860px){
