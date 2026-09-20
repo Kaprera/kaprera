@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+  /* apply saved/system theme + language before paint (no flash) */
+  (function () {
+    var saved; try { saved = localStorage.getItem('theme'); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    var lang; try { lang = localStorage.getItem('lang'); } catch (e) {} lang = lang || 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    window.loadArabicFont = function () {
+      if (document.getElementById('cairoFont')) return;
+      var l = document.createElement('link');
+      l.id = 'cairoFont'; l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap';
+      document.head.appendChild(l);
+    };
+    if (lang === 'ar') window.loadArabicFont();
+    /* gates the scroll-reveal styles: without JS the cards must stay visible */
+    document.documentElement.classList.add('js');
+  })();
+</script>
+<title>FAQ — pricing, timelines &amp; support | kaprera</title>
+<meta name="description" content="Answers to what we are asked most: what a website costs, how long it takes, what ongoing support covers, the SEO included in every build, and working in Arabic and English." />
+<link rel="canonical" href="https://kaprera.com/faq/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#008cc1" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-32.png" />
+<link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="kaprera" />
+<meta property="og:title" content="FAQ — pricing, timelines &amp; support | kaprera" />
+<meta property="og:description" content="What a website costs, how long it takes, what ongoing support covers, and the SEO in every build." />
+<meta property="og:url" content="https://kaprera.com/faq/" />
+<meta property="og:image" content="https://kaprera.com/branding/og-cover.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="FAQ — pricing, timelines &amp; support | kaprera" />
+<meta name="twitter:description" content="What a website costs, how long it takes, what ongoing support covers, and the SEO in every build." />
+<meta name="twitter:image" content="https://kaprera.com/branding/og-cover.png" />
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="/cases/case.css?v=7" />
+<link rel="stylesheet" href="/contact.css?v=2" />
+<script src="/cases/case.js?v=3" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kaprera.com/" },
+    { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://kaprera.com/faq/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much does a website cost?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Pricing depends on how many pages the site has, what it has to do, and what it has to connect to. After a short discovery call we send a fixed quote, and for a marketing site or a landing page we can usually give you the range before that call." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does it take to build a website?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A focused landing page usually takes one to two weeks and a multi-page marketing site three to six. A custom web app or platform takes longer than that, and how much longer depends on what it has to do. We set the timeline before the work starts and tell you where things stand as we go." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you work with clients outside Lebanon?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. We are based in Beirut and work remotely with clients across the GCC and the wider region. We have delivered projects for teams in Saudi Arabia, running the whole thing over calls, email and shared files." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer ongoing support?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, as a yearly plan. A year of support includes at least 4 UX audits, 8 security audits and 6 performance audits. After each one we fix what we find and send you a written note of what changed. Uptime monitoring runs continuously in between. Dependency updates, SSL renewals and hosting config are covered as well. We quote the plan after looking at the site, the same way we quote a build." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if the site goes down?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Monitoring checks the site around the clock and alerts us as soon as it stops responding, so we usually know before you do. We start on it during business hours, Beirut time, and tell you what broke and what we did about it. We would rather say that plainly than advertise an overnight rota we cannot staff." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you support a site you did not build?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, once we have been through it. Taking on someone else's codebase means finding out what is in it first, so we run a one-off onboarding audit, billed separately, covering the stack, the dependencies, the hosting and any security debt sitting in there. The yearly plan starts after that. If the audit turns up something we cannot maintain responsibly, we will say so rather than take the money." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the support plan renew automatically?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. It renews each year unless you cancel, and we email you before the renewal date so the charge is never a surprise. Cancel any time before that date and the plan ends when the paid year is up." }
+      },
+      {
+        "@type": "Question",
+        "name": "What SEO is included in every site you build?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Every build ships with the basics rather than charging for them separately. Compressed images, fonts and code so the pages load fast. Google Analytics and Search Console set up and verified, so you can see your traffic and see how Google reads the site. Internal links, so no page ends up orphaned. And link foundations at launch: the directory and profile listings a new site should have. For businesses with a physical location we set up or claim the Google Business Profile as well. Ongoing content and keyword work is a separate engagement." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you do SEO after the site is live?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Technical SEO, structured data and Core Web Vitals are part of the build rather than something bolted on later, and we take on ongoing SEO once the site is live. Search results move slowly, so most of the gain comes from that second part." }
+      },
+      {
+        "@type": "Question",
+        "name": "What technologies do you build with?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We build with Next.js, Nuxt, Node.js and Tailwind CSS, and sometimes with none of them. The stack is picked per project: a landing page does not need a framework, and a platform with user roles does." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you design in both Arabic and English?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. We build fully bilingual Arabic/English sites with proper right-to-left support, including the parts that usually get missed: Arabic type doesn't take letter-spacing or uppercasing, and figures need isolating so the layout doesn't reorder them." }
+      }
+    ]
+  }
+  </script>
+
+<style>
+  /* ── faq ───────────────────────────────────────────────────────────────
+     /cases/case.css carries the tokens, nav, footer and buttons, /contact.css
+     the enquiry band. Only the list is page-local, and it is the same list the
+     home page shows four of. */
+  .hero{ padding:22px 0 2px; }
+  .hero h1{ margin:0 0 12px; font-size:clamp(30px,4vw,44px); }
+  .hero .lede{ max-width:62ch; margin:0; }
+  .faq-wrap{ padding:10px 0 10px; }
+  .faq-list { max-width: 840px; margin-top: 10px; border-top: 1px solid var(--hair); }
+  .faq-item { border-bottom: 1px solid var(--hair); }
+  .faq-item > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 4px; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .faq-item > summary::-webkit-details-marker { display: none; }
+  .faq-item > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+  .faq-ic { flex: none; width: 22px; height: 22px; color: var(--blue); transition: transform 0.25s var(--ease); }
+  .faq-item[open] .faq-ic { transform: rotate(45deg); }
+  .faq-a { padding: 0 4px 24px; margin: 0; color: var(--muted); max-width: 72ch; line-height: 1.65; }
+  html[lang="ar"] .faq-item > summary,
+  html[lang="ar"] .faq-a { text-align: right; }
+  .faq-list{ margin-top:22px; max-width:900px; }
+  .faq-item > summary{ font-size:clamp(16px,1.6vw,18px); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
+
+    <nav class="nav-links" id="navLinks" aria-label="primary">
+      <div class="nav-panel" role="document">
+      <a href="/work/" class="link" data-en="Case Studies" data-ar="دراسات الحالة">Case Studies</a>
+      <a href="/#services" class="link" data-en="Services" data-ar="خدماتنا">Services</a>
+      <a href="/#testimonials" class="link" data-en="Testimonials" data-ar="آراء العملاء">Testimonials</a>
+      <a href="/#contact" class="link" data-en="Contact" data-ar="تواصل">Contact</a>
+      <div class="nav-utils">
+      <button class="lang-toggle" id="langToggle" type="button" role="switch" aria-checked="false" aria-label="switch language EN / ع">
+        <span class="seg en" aria-hidden="true">EN</span>
+        <span class="seg ar" aria-hidden="true">ع</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="toggle dark mode">
+        <span class="seg sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="seg moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+      </button>
+      </div>
+      <a class="btn btn-shine nav-cta" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" aria-label="book a call"><svg class="cta-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="cta-txt" data-en="Book a call" data-ar="احجز مكالمة">Book a call</span> <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="crumb" aria-label="breadcrumb">
+  <div class="wrap"><a href="/" data-en="Home" data-ar="الرئيسية">Home</a><span class="sep">/</span><span data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</span></div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1 data-en="Questions, answered." data-ar="أسئلة وأجوبة.">Questions, answered.</h1>
+      <p class="lede" data-en="What a website costs, how long it takes, what happens after launch, and how we work across Arabic and English." data-ar="كم يكلّف الموقع، وكم يستغرق، وماذا يحدث بعد الإطلاق، وكيف نعمل بالعربية والإنجليزية.">What a website costs, how long it takes, what happens after launch, and how we work across Arabic and English.</p>
+    </div>
+  </section>
+
+  <div class="wrap faq-wrap">
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary><span data-en="How much does a website cost?" data-ar="كم تبلغ تكلفة الموقع الإلكتروني؟">How much does a website cost?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Pricing depends on how many pages the site has, what it has to do, and what it has to connect to. After a short discovery call we send a fixed quote, and for a marketing site or a landing page we can usually give you the range before that call." data-ar="يعتمد السعر على عدد صفحات الموقع، وما يفترض أن يفعله، وما يحتاج إلى الاتصال به. بعد مكالمة تعريفية قصيرة نرسل عرض سعر ثابتًا، وفي حالة الموقع التسويقي أو صفحة الهبوط نستطيع عادةً إعطاءك النطاق قبل تلك المكالمة.">Pricing depends on how many pages the site has, what it has to do, and what it has to connect to. After a short discovery call we send a fixed quote, and for a marketing site or a landing page we can usually give you the range before that call.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="How long does it take to build a website?" data-ar="كم يستغرق بناء موقع إلكتروني؟">How long does it take to build a website?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="A focused landing page usually takes one to two weeks and a multi-page marketing site three to six. A custom web app or platform takes longer than that, and how much longer depends on what it has to do. We set the timeline before the work starts and tell you where things stand as we go." data-ar="تستغرق صفحة الهبوط المركّزة عادةً من أسبوع إلى أسبوعين، والموقع التسويقي متعدد الصفحات من ثلاثة إلى ستة أسابيع. أما تطبيق الويب أو المنصة المخصّصة فيستغرق وقتًا أطول، ومقدار ذلك يعتمد على ما يفترض أن تفعله. نحدّد الجدول الزمني قبل بدء العمل ونطلعك على موقع الأمور أولًا بأول.">A focused landing page usually takes one to two weeks and a multi-page marketing site three to six. A custom web app or platform takes longer than that, and how much longer depends on what it has to do. We set the timeline before the work starts and tell you where things stand as we go.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="Do you work with clients outside Lebanon?" data-ar="هل تعملون مع عملاء خارج لبنان؟">Do you work with clients outside Lebanon?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Yes. We are based in Beirut and work remotely with clients across the GCC and the wider region. We have delivered projects for teams in Saudi Arabia, running the whole thing over calls, email and shared files." data-ar="نعم. مقرّنا في بيروت ونعمل عن بُعد مع عملاء في دول الخليج والمنطقة الأوسع. أنجزنا مشاريع لفرق في السعودية، وأدرنا العمل كله عبر المكالمات والبريد الإلكتروني والملفات المشتركة.">Yes. We are based in Beirut and work remotely with clients across the GCC and the wider region. We have delivered projects for teams in Saudi Arabia, running the whole thing over calls, email and shared files.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="Do you offer ongoing support?" data-ar="هل تقدّمون دعمًا مستمرًا؟">Do you offer ongoing support?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Yes, as a yearly plan. A year of support includes at least 4 UX audits, 8 security audits and 6 performance audits. After each one we fix what we find and send you a written note of what changed. Uptime monitoring runs continuously in between. Dependency updates, SSL renewals and hosting config are covered as well. We quote the plan after looking at the site, the same way we quote a build." data-ar="نعم، ضمن خطة سنوية. تشمل سنة الدعم الواحدة 4 مراجعات لتجربة المستخدم و8 مراجعات أمنية و6 مراجعات للأداء على الأقل. بعد كل مراجعة نصلح ما نجده، ونرسل لك وصفًا مكتوبًا لما تغيّر. وتعمل مراقبة التشغيل باستمرار بين مراجعة وأخرى. كما تشمل الخطة تحديثات الاعتماديات وتجديد شهادات SSL وإعدادات الاستضافة. نحدّد سعر الخطة بعد الاطلاع على الموقع، تمامًا كما نحدّد سعر أي مشروع.">Yes, as a yearly plan. A year of support includes at least 4 UX audits, 8 security audits and 6 performance audits. After each one we fix what we find and send you a written note of what changed. Uptime monitoring runs continuously in between. Dependency updates, SSL renewals and hosting config are covered as well. We quote the plan after looking at the site, the same way we quote a build.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="What happens if the site goes down?" data-ar="ماذا يحدث إذا توقّف الموقع؟">What happens if the site goes down?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Monitoring checks the site around the clock and alerts us as soon as it stops responding, so we usually know before you do. We start on it during business hours, Beirut time, and tell you what broke and what we did about it. We would rather say that plainly than advertise an overnight rota we cannot staff." data-ar="تفحص المراقبة الموقع على مدار الساعة وتنبّهنا فور توقّفه عن الاستجابة، فنعرف بالأمر قبلك في العادة. نبدأ العمل عليه خلال ساعات الدوام بتوقيت بيروت، ونخبرك بما تعطّل وبما فعلناه حياله. ونفضّل قول ذلك بوضوح على الإعلان عن مناوبة ليلية لا نستطيع تغطيتها فعلًا.">Monitoring checks the site around the clock and alerts us as soon as it stops responding, so we usually know before you do. We start on it during business hours, Beirut time, and tell you what broke and what we did about it. We would rather say that plainly than advertise an overnight rota we cannot staff.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="Can you support a site you did not build?" data-ar="هل يمكنكم دعم موقع لم تبنوه؟">Can you support a site you did not build?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Yes, once we have been through it. Taking on someone else's codebase means finding out what is in it first, so we run a one-off onboarding audit, billed separately, covering the stack, the dependencies, the hosting and any security debt sitting in there. The yearly plan starts after that. If the audit turns up something we cannot maintain responsibly, we will say so rather than take the money." data-ar="نعم، بعد أن نطّلع عليه. تولّي شيفرة كتبها غيرنا يعني معرفة ما فيها أولًا، لذلك نُجري تدقيقًا تمهيديًا لمرة واحدة، يُحتسب على حدة، يشمل التقنيات المستخدمة والاعتماديات والاستضافة وما تراكم من ثغرات أمنية. وتبدأ الخطة السنوية بعده. وإذا أظهر التدقيق ما لا نستطيع صيانته على نحو مسؤول، نقول ذلك بدل أن نأخذ المال.">Yes, once we have been through it. Taking on someone else's codebase means finding out what is in it first, so we run a one-off onboarding audit, billed separately, covering the stack, the dependencies, the hosting and any security debt sitting in there. The yearly plan starts after that. If the audit turns up something we cannot maintain responsibly, we will say so rather than take the money.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="Does the support plan renew automatically?" data-ar="هل تتجدّد خطة الدعم تلقائيًا؟">Does the support plan renew automatically?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Yes. It renews each year unless you cancel, and we email you before the renewal date so the charge is never a surprise. Cancel any time before that date and the plan ends when the paid year is up." data-ar="نعم. تتجدّد كل سنة ما لم تلغِها، ونراسلك عبر البريد الإلكتروني قبل موعد التجديد كي لا يفاجئك أي مبلغ. ويمكنك الإلغاء في أي وقت قبل ذلك الموعد، فتنتهي الخطة بانتهاء السنة المدفوعة.">Yes. It renews each year unless you cancel, and we email you before the renewal date so the charge is never a surprise. Cancel any time before that date and the plan ends when the paid year is up.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="What SEO is included in every site you build?" data-ar="ما الذي يشمله تحسين محركات البحث في كل موقع تبنونه؟">What SEO is included in every site you build?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Every build ships with the basics rather than charging for them separately. Compressed images, fonts and code so the pages load fast. Google Analytics and Search Console set up and verified, so you can see your traffic and see how Google reads the site. Internal links, so no page ends up orphaned. And link foundations at launch: the directory and profile listings a new site should have. For businesses with a physical location we set up or claim the Google Business Profile as well. Ongoing content and keyword work is a separate engagement." data-ar="يُسلَّم كل موقع نبنيه مزوّدًا بالأساسيات دون رسوم إضافية. صور وخطوط وشيفرة مضغوطة كي تفتح الصفحات بسرعة. وإعداد Google Analytics وSearch Console والتحقق منهما، لترى حركة الزوار وكيف تقرأ Google موقعك. وروابط داخلية كي لا تبقى أي صفحة معزولة. وأساس أولي للروابط عند الإطلاق: إدراج الموقع في الأدلة والمنصات التي يُفترض أن يظهر فيها موقع جديد. أما الشركات التي لها مقرّ فعلي فننشئ لها ملف Google Business Profile أو نطالب بملكيته. ويبقى العمل المستمر على المحتوى والكلمات المفتاحية اتفاقًا منفصلًا.">Every build ships with the basics rather than charging for them separately. Compressed images, fonts and code so the pages load fast. Google Analytics and Search Console set up and verified, so you can see your traffic and see how Google reads the site. Internal links, so no page ends up orphaned. And link foundations at launch: the directory and profile listings a new site should have. For businesses with a physical location we set up or claim the Google Business Profile as well. Ongoing content and keyword work is a separate engagement.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="Do you do SEO after the site is live?" data-ar="هل تتولّون تحسين محركات البحث بعد إطلاق الموقع؟">Do you do SEO after the site is live?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Technical SEO, structured data and Core Web Vitals are part of the build rather than something bolted on later, and we take on ongoing SEO once the site is live. Search results move slowly, so most of the gain comes from that second part." data-ar="التحسين التقني لمحركات البحث والبيانات المنظّمة ومؤشرات Core Web Vitals جزء من البناء نفسه لا إضافة لاحقة، ونتولّى تحسين محركات البحث المستمر بعد إطلاق الموقع. نتائج البحث تتحرك ببطء، ولذلك يأتي معظم المكسب من هذا الجزء الثاني.">Technical SEO, structured data and Core Web Vitals are part of the build rather than something bolted on later, and we take on ongoing SEO once the site is live. Search results move slowly, so most of the gain comes from that second part.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="What technologies do you build with?" data-ar="ما التقنيات التي تبنون بها؟">What technologies do you build with?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="We build with Next.js, Nuxt, Node.js and Tailwind CSS, and sometimes with none of them. The stack is picked per project: a landing page does not need a framework, and a platform with user roles does." data-ar="نبني بـNext.js وNuxt وNode.js وTailwind CSS، وأحيانًا بلا أي منها. تُختار التقنيات لكل مشروع على حدة: صفحة الهبوط لا تحتاج إلى إطار عمل، والمنصة ذات صلاحيات المستخدمين تحتاج إليه.">We build with Next.js, Nuxt, Node.js and Tailwind CSS, and sometimes with none of them. The stack is picked per project: a landing page does not need a framework, and a platform with user roles does.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-en="Can you design in both Arabic and English?" data-ar="هل تصمّمون بالعربية والإنجليزية معًا؟">Can you design in both Arabic and English?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
+          <p class="faq-a" data-en="Yes. We build fully bilingual Arabic/English sites with proper right-to-left support, including the parts that usually get missed: Arabic type doesn't take letter-spacing or uppercasing, and figures need isolating so the layout doesn't reorder them." data-ar="نعم. نبني مواقع ثنائية اللغة بالكامل (عربي/إنجليزي) مع دعم صحيح للكتابة من اليمين إلى اليسار، بما في ذلك التفاصيل التي تُغفَل عادة: الخط العربي لا يقبل تباعد الأحرف ولا الأحرف الكبيرة، والأرقام تحتاج إلى عزل كي لا يعيد التخطيط ترتيبها.">Yes. We build fully bilingual Arabic/English sites with proper right-to-left support, including the parts that usually get missed: Arabic type doesn't take letter-spacing or uppercasing, and figures need isolating so the layout doesn't reorder them.</p>
+        </details>
+      </div>
+  </div>
+</main>
+
+<!-- ───────────── CONTACT ───────────── -->
+      <section id="contact" aria-label="contact">
+    <div class="wrap">
+      <h2 class="title" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
+
+      <div class="contact-grid">
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card step-form" novalidate>
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <div class="step-progress">
+            <span class="step-count">
+              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 5</span><span class="sr-only" data-en=" of 5" data-ar=" من 5"> of 5</span>
+            </span>
+            <span class="step-bar" aria-hidden="true"><span id="stepBar"></span></span>
+          </div>
+          <fieldset class="form-step" data-step="1">
+            <legend class="step-q" tabindex="-1" data-en="What do you need?" data-ar="ما الذي تحتاج إليه؟">What do you need?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="service" value="ui-ux" required /><span data-en="UI/UX design" data-ar="تصميم الواجهات وتجربة المستخدم">UI/UX design</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="website" required /><span data-en="A website" data-ar="موقع إلكتروني">A website</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="ecommerce" required /><span data-en="An online store (Shopify)" data-ar="متجر إلكتروني (Shopify)">An online store (Shopify)</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="web-app" required /><span data-en="A web app or platform" data-ar="تطبيق ويب أو منصة">A web app or platform</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="seo" required /><span data-en="SEO &amp; growth" data-ar="تحسين محركات البحث والنمو">SEO & growth</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="2" hidden>
+            <legend class="step-q" tabindex="-1" data-en="Which languages should it speak?" data-ar="بأي لغة يجب أن يتحدث؟">Which languages should it speak?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="language" value="en" required /><span data-en="English" data-ar="الإنجليزية">English</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="ar" required /><span data-en="Arabic" data-ar="العربية">Arabic</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="both" required /><span data-en="Both, English and Arabic" data-ar="كلتاهما، الإنجليزية والعربية">Both, English and Arabic</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="3" hidden>
+            <legend class="step-q" tabindex="-1" data-en="When do you want to launch?" data-ar="متى تريد الإطلاق؟">When do you want to launch?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="timeline" value="asap" required /><span data-en="As soon as possible" data-ar="في أقرب وقت ممكن">As soon as possible</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="1-3-months" required /><span data-en="In 1–3 months" data-ar="خلال شهر إلى ثلاثة أشهر">In 1–3 months</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="3-plus-months" required /><span data-en="In 3 months or more" data-ar="بعد ثلاثة أشهر أو أكثر">In 3 months or more</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="exploring" required /><span data-en="Just exploring" data-ar="أستكشف الخيارات فقط">Just exploring</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="4" hidden>
+            <legend class="step-q" tabindex="-1" data-en="What's your budget?" data-ar="ما ميزانيتك؟">What's your budget?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="budget" value="under-2k" required /><span data-en="Under $2,000" data-ar="أقل من 2,000$">Under $2,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="2k-5k" required /><span data-en="$2,000–$5,000" data-ar="2,000$ – 5,000$">$2,000–$5,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="5k-15k" required /><span data-en="$5,000–$15,000" data-ar="5,000$ – 15,000$">$5,000–$15,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="15k-plus" required /><span data-en="$15,000+" data-ar="أكثر من 15,000$">$15,000+</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="unsure" required /><span data-en="Not sure yet" data-ar="لست متأكدًا بعد">Not sure yet</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="5" hidden>
+            <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">How can we reach you?</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="business" data-en="Business name" data-ar="اسم الشركة">Business name</label>
+                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" required />
+              </div>
+              <div class="field">
+                <label for="city" data-en="City and country" data-ar="المدينة والبلد">City and country</label>
+                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="website">
+                <span data-en="Your website now" data-ar="موقعك الحالي">Your website now</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <!-- text, not url: type="url" rejects "yoursite.com" for want of a scheme -->
+              <input type="text" id="website" name="website" inputmode="url" autocomplete="url" placeholder="yoursite.com — or leave blank" data-en-ph="yoursite.com — or leave blank" data-ar-ph="yoursite.com — أو اتركه فارغًا" />
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="name" data-en="Your name" data-ar="اسمك">Your name</label>
+                <input type="text" id="name" name="name" autocomplete="name" placeholder="Your name" data-en-ph="Your name" data-ar-ph="اسمك" required />
+              </div>
+              <div class="field">
+                <label for="email" data-en="Business email" data-ar="بريد العمل الإلكتروني">Business email</label>
+                <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="phone">
+                <span data-en="Phone number" data-ar="رقم الهاتف">Phone number</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <div class="phone-input">
+                <select id="phoneCode" name="phone-code" autocomplete="tel-country-code" aria-label="Country code">
+                    <option value="+971">AE +971</option>
+                    <option value="+43">AT +43</option>
+                    <option value="+61">AU +61</option>
+                    <option value="+32">BE +32</option>
+                    <option value="+973">BH +973</option>
+                    <option value="+55">BR +55</option>
+                    <option value="+1">CA +1</option>
+                    <option value="+41">CH +41</option>
+                    <option value="+86">CN +86</option>
+                    <option value="+357">CY +357</option>
+                    <option value="+420">CZ +420</option>
+                    <option value="+49">DE +49</option>
+                    <option value="+253">DJ +253</option>
+                    <option value="+45">DK +45</option>
+                    <option value="+213">DZ +213</option>
+                    <option value="+20">EG +20</option>
+                    <option value="+34">ES +34</option>
+                    <option value="+358">FI +358</option>
+                    <option value="+33">FR +33</option>
+                    <option value="+44">GB +44</option>
+                    <option value="+30">GR +30</option>
+                    <option value="+852">HK +852</option>
+                    <option value="+353">IE +353</option>
+                    <option value="+972">IL +972</option>
+                    <option value="+91">IN +91</option>
+                    <option value="+964">IQ +964</option>
+                    <option value="+39">IT +39</option>
+                    <option value="+962">JO +962</option>
+                    <option value="+81">JP +81</option>
+                    <option value="+254">KE +254</option>
+                    <option value="+269">KM +269</option>
+                    <option value="+82">KR +82</option>
+                    <option value="+965">KW +965</option>
+                    <option value="+961" selected>LB +961</option>
+                    <option value="+218">LY +218</option>
+                    <option value="+212">MA +212</option>
+                    <option value="+222">MR +222</option>
+                    <option value="+356">MT +356</option>
+                    <option value="+52">MX +52</option>
+                    <option value="+60">MY +60</option>
+                    <option value="+234">NG +234</option>
+                    <option value="+31">NL +31</option>
+                    <option value="+47">NO +47</option>
+                    <option value="+64">NZ +64</option>
+                    <option value="+968">OM +968</option>
+                    <option value="+63">PH +63</option>
+                    <option value="+48">PL +48</option>
+                    <option value="+970">PS +970</option>
+                    <option value="+351">PT +351</option>
+                    <option value="+974">QA +974</option>
+                    <option value="+40">RO +40</option>
+                    <option value="+7">RU +7</option>
+                    <option value="+966">SA +966</option>
+                    <option value="+249">SD +249</option>
+                    <option value="+46">SE +46</option>
+                    <option value="+65">SG +65</option>
+                    <option value="+252">SO +252</option>
+                    <option value="+963">SY +963</option>
+                    <option value="+66">TH +66</option>
+                    <option value="+216">TN +216</option>
+                    <option value="+90">TR +90</option>
+                    <option value="+380">UA +380</option>
+                    <option value="+1">US +1</option>
+                    <option value="+967">YE +967</option>
+                    <option value="+27">ZA +27</option>
+                </select>
+                <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" />
+              </div>
+            </div>
+            <!-- the one thing that decides whether a Google Business Profile and
+                 local SEO are in scope. The address itself only matters later,
+                 at verification, so it is not asked for here -->
+            <label class="step-check">
+              <input type="checkbox" id="physical" name="physical" value="yes" />
+              <span data-en="I have a physical location" data-ar="لديّ موقع فعلي">I have a physical location</span>
+            </label>
+          </fieldset>
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">Back</span></button>
+            <button type="submit" class="btn btn-primary btn-shine"><span data-en="Next" data-ar="التالي">Next</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+          <!-- submit failed: say so, keep the answers, and offer an explicit way out -->
+          <div class="form-error" id="formError" hidden>
+            <p class="form-error-msg" data-en="We couldn't reach our server, so nothing has been sent yet." data-ar="تعذّر الوصول إلى الخادم، ولم يُرسل شيء بعد.">We couldn't reach our server, so nothing has been sent yet.</p>
+            <div class="form-error-acts">
+              <button type="button" class="btn btn-primary" id="formRetry"><span data-en="Try again" data-ar="حاول مرة أخرى">Try again</span></button>
+              <a class="form-error-mail" id="formErrorMail" href="mailto:info@kaprera.com" data-en="Send it as an email instead" data-ar="أرسلها عبر البريد الإلكتروني بدلًا من ذلك">Send it as an email instead</a>
+            </div>
+          </div>
+        </form>
+
+        <!-- outside the form on purpose: the form is hidden on success, and a live
+             region inside a hidden subtree is never announced -->
+        <p class="form-status sr-only" id="formStatus" role="status" aria-live="polite"></p>
+
+        <!-- the confirmation stays on screen instead of a button label that clears itself -->
+        <div class="contact-card form-sent" id="formSent" hidden>
+          <span class="form-sent-tick" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <h3 data-en="Thank you — your enquiry is on its way." data-ar="شكرًا لك — طلبك في طريقه إلينا.">Thank you — your enquiry is on its way.</h3>
+          <p data-en="We read every message and reply within one business day, Beirut time. If it's urgent, WhatsApp us and we'll pick it up faster." data-ar="نقرأ كل رسالة ونردّ خلال يوم عمل واحد بتوقيت بيروت. وإذا كان الأمر عاجلًا، راسلنا على واتساب وسنتابعه أسرع.">We read every message and reply within one business day, Beirut time. If it's urgent, WhatsApp us and we'll pick it up faster.</p>
+          <dl class="form-sent-recap" id="formSentRecap"></dl>
+          <button type="button" class="btn btn-ghost" id="formAgain"><span data-en="Send another enquiry" data-ar="إرسال طلب آخر">Send another enquiry</span></button>
+        </div>
+
+        <aside class="contact-card contact-aside">
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span></div>
+            <a class="v" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" data-en="Schedule a meeting →" data-ar="حدّد موعدًا ←">Schedule a meeting →</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span data-en="Email" data-ar="البريد الإلكتروني">Email</span></div>
+            <a class="v" href="mailto:info@kaprera.com" target="_blank" rel="noopener">info@kaprera.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span></div>
+            <a class="v" href="https://wa.me/9613816405" target="_blank" rel="noopener" data-en="Chat with us →" data-ar="تحدّث معنا ←">Chat with us →</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-en="Location" data-ar="الموقع">Location</span></div>
+            <div class="v" data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="/" class="brand" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
+        <p class="foot-tag" data-en="Stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <div class="fc-h" data-en="Explore" data-ar="استكشف">Explore</div>
+          <a href="/work/" data-en="Case Studies" data-ar="دراسات الحالة">Case Studies</a>
+          <a href="/#services" data-en="Services" data-ar="خدماتنا">Services</a>
+          <a href="/#testimonials" data-en="Testimonials" data-ar="آراء العملاء">Testimonials</a>
+          <a href="/faq/" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
+          <a href="/#contact" data-en="Contact" data-ar="تواصل">Contact</a>
+          <a href="/careers" data-en="Careers" data-ar="وظائف">Careers</a>
+        </div>
+        <div class="foot-col">
+          <div class="fc-h" data-en="Legal" data-ar="قانوني">Legal</div>
+          <a href="/privacy-policy" data-en="Privacy policy" data-ar="سياسة الخصوصية">Privacy policy</a>
+        </div>
+        <div class="foot-col">
+          <div class="fc-h" data-en="Social" data-ar="تواصل اجتماعي">Social</div>
+          <a class="social-link" href="https://www.linkedin.com/company/kaprera/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.25 8.25h4.5V24h-4.5V8.25Zm7.25 0h4.31v2.15h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.5v-6.9c0-1.64-.03-3.75-2.29-3.75-2.29 0-2.64 1.79-2.64 3.63V24h-4.5V8.25Z"/></svg><span data-en="LinkedIn" data-ar="لينكدإن">LinkedIn</span></a>
+          <a class="social-link" href="https://www.instagram.com/kaprera_agency/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span data-en="Instagram" data-ar="إنستغرام">Instagram</span></a>
+          <a class="social-link" href="https://wa.me/9613816405" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-en="© 2026 kaprera. All rights reserved." data-ar="© 2026 كابريرا. جميع الحقوق محفوظة.">© 2026 kaprera. All rights reserved.</span>
+      <span><span data-en="Made in Lebanon ·" data-ar="صُنع في لبنان ·">Made in Lebanon ·</span> <span class="accent">&gt;_</span></span>
+    </div>
+  </div>
+  <div class="foot-mark" aria-hidden="true"></div>
+</footer>
+
+<script>
+/* ── work index · filtering + scroll reveal ──────────────────────────────
+   Shared behaviour (theme, language, nav) lives in /cases/case.js; this only
+   drives the two things unique to this page. */
+(function () {
+  var grid = document.getElementById('workGrid');
+  var bar  = document.getElementById('workFilters');
+  if (!grid || !bar) return;
+
+  var items  = Array.prototype.slice.call(grid.querySelectorAll('.case-row'));
+  var btns   = Array.prototype.slice.call(bar.querySelectorAll('.fbtn'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --i staggers the reveal transition; it counts visible rows, so a filtered
+     view cascades from its own first row rather than leaving gaps in the delay.
+     The same count drives .flip: the shot has to keep alternating sides even
+     when a filter has taken the rows in between out of the page. */
+  var restagger = function () {
+    var n = 0;
+    items.forEach(function (el) {
+      if (el.hidden) return;
+      el.style.setProperty('--i', n);
+      el.classList.toggle('flip', n % 2 === 1);
+      n++;
+    });
+  };
+
+  /* alternation and stagger are set once up front, then again on every filter */
+  restagger();
+
+  /* ── reveal on scroll ── */
+  var io = null;
+  if (!reduce && 'IntersectionObserver' in window) {
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    /* no observer (or the visitor asked for less motion): show everything now */
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ── filter ── */
+  var setFilter = function (cat) {
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cat === cat)); });
+
+    items.forEach(function (el) {
+      /* Agri Pro is both a system and a landing page, so data-cat holds a
+         space-separated list rather than a single value */
+      var show = cat === 'all' || (' ' + el.dataset.cat + ' ').indexOf(' ' + cat + ' ') > -1;
+      el.hidden = !show;
+      if (show && io) el.classList.remove('in');
+    });
+    restagger();
+
+    if (io) {
+      /* two frames: let the removal paint so the re-added class animates */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          items.forEach(function (el) {
+            if (!el.hidden) { el.classList.add('in'); io.unobserve(el); }
+          });
+        });
+      });
+    }
+  };
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { setFilter(b.dataset.cat); });
+  });
+})();
+</script>
+
+<script src="/contact.js?v=3" defer></script>
+</body>
+</html>
