@@ -638,15 +638,42 @@
     border: none;
     cursor: pointer;
     padding: 8px;
+    -webkit-tap-highlight-color: transparent;  /* the ring below replaces the grey flash */
   }
   .menu-btn span {
     width: 24px; height: 2px;
     background: var(--ink);
-    transition: transform .3s var(--ease), opacity .2s;
+    border-radius: 2px;
+    transition: transform .3s var(--ease), opacity .2s, background-color .3s var(--ease);
   }
   .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .menu-btn.open span:nth-child(2) { opacity: 0; }
   .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* two-phase morph: the outer bars meet in the middle first, then cross into
+     the X — and unwind in reverse on close. it needs translate/rotate as their
+     own properties, so engines without them keep the single-step version above. */
+  @supports (rotate: 45deg) {
+    .menu-btn span {
+      /* closing: uncross, then slide back apart */
+      transition: rotate .2s var(--ease),
+                  translate .2s var(--ease) .16s,
+                  scale .16s var(--ease) .2s,
+                  opacity .16s linear .22s,
+                  background-color .3s var(--ease);
+    }
+    .menu-btn.open span {
+      /* opening: slide together, then cross with a small overshoot */
+      transition: translate .18s var(--ease),
+                  rotate .24s cubic-bezier(.6,-0.28,.3,1.35) .15s,
+                  scale .16s var(--ease),
+                  opacity .14s linear,
+                  background-color .3s var(--ease);
+    }
+    .menu-btn.open span:nth-child(1) { transform: none; translate: 0 7px; rotate: 45deg; }
+    .menu-btn.open span:nth-child(2) { scale: .2 1; }
+    .menu-btn.open span:nth-child(3) { transform: none; translate: 0 -7px; rotate: -45deg; }
+  }
 
   /* ── hero ── */
   .hero { padding: 150px 0 56px; position: relative; overflow: hidden; }
@@ -2061,8 +2088,28 @@
   @media (max-width: 860px) {
     .section { padding: 80px 0; }
     .hero { padding: 138px 0 50px; }
-    .menu-btn { display: flex; position: relative; z-index: 101; }
+    .menu-btn {
+      display: flex; position: relative; z-index: 101;
+      transition: transform .2s var(--ease);
+    }
     .menu-btn.open span { background: #fff; }  /* X stays visible over the dark scrim */
+    /* tap feedback: the icon dips under the finger and a soft brand ring blooms */
+    .menu-btn::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 46px; height: 46px;
+      margin: -23px 0 0 -23px;
+      border-radius: 50%;
+      background: rgba(0,140,193,0.2);
+      opacity: 0;
+      transform: scale(.35);
+      pointer-events: none;
+      transition: opacity .4s var(--ease), transform .4s var(--ease);
+    }
+    .menu-btn:active { transform: scale(.88); }
+    .menu-btn:active::before { opacity: 1; transform: scale(1); transition-duration: .14s; }
+    .menu-btn.open::before { background: rgba(255,255,255,0.22); }  /* visible on the scrim */
     /* nav becomes a dimmed backdrop holding a centered card (like the case modal) */
     .nav-links {
       position: fixed;
@@ -2106,6 +2153,29 @@
       transition: transform .35s var(--ease);
     }
     .nav-links.open .nav-panel { transform: translateY(0) scale(1); }
+    /* the panel's rows arrive one after another, just behind the card itself.
+       translate (not transform) so the CTA keeps its own hover transform. */
+    .nav-panel > * {
+      opacity: 0;
+      translate: 0 12px;
+      transition: opacity .25s var(--ease), translate .25s var(--ease);
+    }
+    .nav-links.open .nav-panel > * { opacity: 1; translate: 0 0; }
+    .nav-links.open .nav-panel > *:nth-child(1) { transition-delay: .10s; }
+    .nav-links.open .nav-panel > *:nth-child(2) { transition-delay: .15s; }
+    .nav-links.open .nav-panel > *:nth-child(3) { transition-delay: .20s; }
+    .nav-links.open .nav-panel > *:nth-child(4) { transition-delay: .25s; }
+    .nav-links.open .nav-panel > *:nth-child(5) { transition-delay: .30s; }
+    .nav-links.open .nav-panel > *:nth-child(6) { transition-delay: .35s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .menu-btn, .menu-btn span, .menu-btn::before, .nav-panel > * {
+        transition-duration: .01ms;
+        transition-delay: 0s;
+      }
+      .menu-btn:active { transform: none; }
+      .menu-btn:active::before { opacity: 0; }
+    }
     .nav-panel a.link {
       font-size: 18px; font-weight: 500; padding: 16px 2px;
       border-bottom: 1px solid var(--hair);
