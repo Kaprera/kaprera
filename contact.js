@@ -66,6 +66,7 @@
     service: {
       'ui-ux': 'the UI/UX design of a product',
       'website': 'a new website',
+      'ecommerce': 'an online store on Shopify',
       'web-app': 'a web app or platform',
       'seo': 'SEO and growing our traffic'
     },
@@ -74,6 +75,11 @@
       '1-3-months': "We're aiming to launch in the next one to three months",
       '3-plus-months': "We're planning to launch in three months or more",
       'exploring': "We're still exploring, so the timing is open"
+    },
+    language: {
+      'en': 'in English',
+      'ar': 'in Arabic',
+      'both': 'in both English and Arabic'
     },
     budget: {
       'under-2k': 'our budget is under $2,000',
@@ -93,9 +99,21 @@
     const reach = tel
       ? "You can reach me on " + els['phone-code'].value + ' ' + tel + " or at " + email + "."
       : "You can reach me at " + email + ".";
+    const business = els.business.value.trim();
+    const city = els.city.value.trim();
+    const site = els.website.value.trim();
+    const context = (business ? " from " + business : "") + (city ? ", based in " + city : "");
+    const siteLine = site
+      ? "Our website at the moment is " + site + ". "
+      : "We don't have a website yet. ";
+    const visitLine = els.visits && els.visits.checked
+      ? "Customers visit us at a shop or office. "
+      : "";
     const body = "Hi kaprera,\n\n" +
-      "My name is " + name + " and I'd like to work with you on " + phrase(f, 'service') + ". " +
+      "My name is " + name + context + ", and I'd like to work with you on " +
+      phrase(f, 'service') + " " + phrase(f, 'language') + ". " +
       phrase(f, 'timeline') + ", and " + phrase(f, 'budget') + ".\n\n" +
+      siteLine + visitLine + "\n\n" +
       reach + " I look forward to hearing from you.\n\n" +
       "Best regards,\n" + name;
     return "mailto:info@kaprera.com?subject=New%20project%20enquiry%20from%20" +
@@ -116,10 +134,14 @@
   const recapRows = (f) => {
     const L = lang() === 'ar' ? 'ar' : 'en';
     const labels = {
-      service:  { en: 'Project',  ar: 'المشروع' },
-      timeline: { en: 'Timeline', ar: 'الجدول الزمني' },
-      budget:   { en: 'Budget',   ar: 'الميزانية' },
-      contact:  { en: 'Reply to', ar: 'الرد إلى' }
+      service:  { en: 'Project',   ar: 'المشروع' },
+      language: { en: 'Languages', ar: 'اللغات' },
+      timeline: { en: 'Timeline',  ar: 'الجدول الزمني' },
+      budget:   { en: 'Budget',    ar: 'الميزانية' },
+      business: { en: 'Business',  ar: 'الشركة' },
+      city:     { en: 'Based in',  ar: 'المقر' },
+      website:  { en: 'Website',   ar: 'الموقع' },
+      contact:  { en: 'Reply to',  ar: 'الرد إلى' }
     };
     const chosen = (name) => {
       const el = f.elements[name];
@@ -131,8 +153,12 @@
     const tel = f.elements.phone.value.trim();
     return [
       [labels.service[L],  chosen('service')],
+      [labels.language[L], chosen('language')],
       [labels.timeline[L], chosen('timeline')],
       [labels.budget[L],   chosen('budget')],
+      [labels.business[L], f.elements.business.value.trim()],
+      [labels.city[L],     f.elements.city.value.trim()],
+      [labels.website[L],  f.elements.website.value.trim()],
       [labels.contact[L],  f.elements.email.value.trim() +
         (tel ? ' · ' + f.elements['phone-code'].value + ' ' + tel : '')]
     ];
