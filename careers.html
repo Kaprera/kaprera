@@ -88,7 +88,7 @@
   .theme-toggle, .lang-toggle {
     display: inline-flex; align-items: center; gap: 2px;
     height: 40px; padding: 4px; border-radius: 999px;
-    border: 1px solid var(--hair); background: transparent;
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); background: transparent;
     cursor: pointer; flex-shrink: 0;
     font-family: 'Inter', system-ui, sans-serif;
     transition: border-color .25s, transform .25s var(--ease);
@@ -119,25 +119,50 @@
   html[lang="ar"] .back-link svg { transform: scaleX(-1); }
   html[lang="ar"] .role-card .apply svg { transform: scaleX(-1); }
 
-  /* ── nav ── */
+  /* ── nav — a pill floating over the page, not a bar pinned to the edge ── */
   header.nav {
     position: fixed; inset: 0 0 auto 0; z-index: 60;
-    border-bottom: 1px solid transparent;
-    transition: border-color .3s, box-shadow .3s, padding .3s;
+    padding: 18px 20px 0;
+    transition: padding .3s var(--ease);
   }
-  header.nav::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    background: color-mix(in srgb, var(--white) 72%, transparent);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
-    transition: background-color .3s var(--ease);
-  }
-  header.nav.scrolled { border-bottom-color: var(--hair); box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
   .nav-inner {
+    position: relative;
     display: flex; align-items: center; justify-content: space-between;
-    height: 78px; transition: height .3s var(--ease);
+    width: 100%; max-width: var(--maxw); margin: 0 auto;
+    height: 64px; padding: 0 9px 0 24px;
+    border-radius: 999px;
+    /* the fill and the edge sit on the pill itself, and it carries no
+       backdrop-filter: a fixed bar with one behaves badly in Safari, which is
+       what turned this pill into a blue bar and then made it vanish on
+       scroll. Near-opaque instead of frosted, so it reads the same anywhere */
+    background: rgba(255,255,255,0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      0 0 0 1px rgba(10,10,10,0.08),
+      0 14px 32px -22px rgba(10,10,10,0.45);
+    transition: height .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease);
   }
-  header.nav.scrolled .nav-inner { height: 64px; }
+  html[lang="ar"] .nav-inner { padding: 0 24px 0 9px; }
+  html[data-theme="dark"] .nav-inner {
+    background: rgba(13,17,23,0.94);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 0 0 1px rgba(255,255,255,0.1),
+      0 16px 36px -24px rgba(0,0,0,0.7);
+  }
+  header.nav.scrolled { padding-top: 10px; }
+  header.nav.scrolled .nav-inner {
+    height: 58px; background: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      0 0 0 1px rgba(10,10,10,0.1),
+      0 18px 40px -24px rgba(10,10,10,0.55);
+  }
+  html[data-theme="dark"] header.nav.scrolled .nav-inner { background: #0d1117; }
+  /* the CTA sits 9px inside the pill on every edge, so the two rounded ends
+     stay concentric instead of the button crowding the right cap */
+  .nav-inner .btn { padding: 10px 20px; }
+
   .brand {
     display: inline-flex; align-items: baseline; gap: 6px;
     font-weight: 800; font-size: 21px; letter-spacing: -0.02em;
@@ -234,22 +259,71 @@
   }
   .role-card .apply:hover { text-decoration: underline; }
 
-  /* ── footer ── */
-  footer { border-top: 1px solid var(--hair); padding: 56px 0 40px; background: #f1f2f4; }
-  html[data-theme="dark"] footer { background: #0a0d12; }
-  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; margin-bottom: 44px; }
-  .foot-tag { color: var(--muted); margin-top: 12px; max-width: 320px; }
+  /* ── footer ──
+     A solid band in the brand blue, the same in both themes: it is the
+     identity colour, not a surface that follows the theme. Everything in here
+     is set in plain white — white on #008cc1 is 3.8:1, so nothing is dimmed
+     further. */
+  footer {
+    position: relative;
+    overflow: hidden;
+    padding: 64px 0 36px;
+    color: #fff;
+    background: var(--blue);
+  }
+  .foot-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 44px;
+  }
+  /* the wordmark is always the light cut in here, whichever theme is on */
+  footer .brand-logo { background-image: url('/branding/logos/kaprera-wordmark-light.webp'); }
+  .foot-tag { color: rgba(255,255,255,0.92); margin-top: 12px; max-width: 320px; }
   .foot-cols { display: flex; gap: 64px; flex-wrap: wrap; }
   .foot-col .fc-h {
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);
-    font-weight: 400; margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 400;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.32);
   }
-  .foot-col a { display: block; font-size: 15px; margin-bottom: 10px; transition: color .2s; }
-  .foot-col a:hover { color: var(--blue); }
+  .foot-col a {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #fff;
+    transition: opacity .2s;
+  }
+  .foot-col a:hover { opacity: .8; }
+  .foot-col a.social-link { display: flex; align-items: center; gap: 9px; }
+  .foot-col a.social-link svg { width: 16px; height: 16px; flex-shrink: 0; }
   .foot-bottom {
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px;
-    padding-top: 26px; border-top: 1px solid var(--hair);
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: rgba(255,255,255,0.92);
+  }
+  .foot-bottom .accent { color: #fff; }
+
+  /* the sign-off: the wordmark whole and centred under the last rule. It
+     used to be oversized and clipped by the footer's bottom edge, which read
+     as a rendering fault rather than as a watermark. */
+  .foot-mark {
+    display: block;
+    margin: 40px auto 0;
+    width: min(300px, 52vw);
+    aspect-ratio: 640 / 140;
+    background: url('/branding/logos/kaprera-wordmark-light.webp') center / contain no-repeat;
+    opacity: .34;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -268,6 +342,7 @@
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   })();
 </script>
+<link rel="stylesheet" href="/contact.css?v=1" />
 </head>
 <body>
 
@@ -337,6 +412,189 @@
 </main>
 
 <!-- ───────────── FOOTER ───────────── -->
+<!-- ───────────── CONTACT ───────────── -->
+  <section id="contact" aria-label="contact">
+    <div class="wrap">
+      <h2 class="title" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
+
+      <div class="contact-grid">
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card step-form" novalidate>
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <div class="step-progress">
+            <span class="step-count">
+              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 4</span><span class="sr-only" data-en=" of 4" data-ar=" من 4"> of 4</span>
+            </span>
+            <span class="step-bar" aria-hidden="true"><span id="stepBar"></span></span>
+          </div>
+          <fieldset class="form-step" data-step="1">
+            <legend class="step-q" tabindex="-1" data-en="What do you need?" data-ar="ما الذي تحتاج إليه؟">What do you need?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="service" value="ui-ux" required /><span data-en="UI/UX design" data-ar="تصميم الواجهات وتجربة المستخدم">UI/UX design</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="website" required /><span data-en="A website" data-ar="موقع إلكتروني">A website</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="web-app" required /><span data-en="A web app or platform" data-ar="تطبيق ويب أو منصة">A web app or platform</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="seo" required /><span data-en="SEO &amp; growth" data-ar="تحسين محركات البحث والنمو">SEO & growth</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="2" hidden>
+            <legend class="step-q" tabindex="-1" data-en="When do you want to launch?" data-ar="متى تريد الإطلاق؟">When do you want to launch?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="timeline" value="asap" required /><span data-en="As soon as possible" data-ar="في أقرب وقت ممكن">As soon as possible</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="1-3-months" required /><span data-en="In 1–3 months" data-ar="خلال شهر إلى ثلاثة أشهر">In 1–3 months</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="3-plus-months" required /><span data-en="In 3 months or more" data-ar="بعد ثلاثة أشهر أو أكثر">In 3 months or more</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="exploring" required /><span data-en="Just exploring" data-ar="أستكشف الخيارات فقط">Just exploring</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="3" hidden>
+            <legend class="step-q" tabindex="-1" data-en="What's your budget?" data-ar="ما ميزانيتك؟">What's your budget?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="budget" value="under-2k" required /><span data-en="Under $2,000" data-ar="أقل من 2,000$">Under $2,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="2k-5k" required /><span data-en="$2,000–$5,000" data-ar="2,000$ – 5,000$">$2,000–$5,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="5k-15k" required /><span data-en="$5,000–$15,000" data-ar="5,000$ – 15,000$">$5,000–$15,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="15k-plus" required /><span data-en="$15,000+" data-ar="أكثر من 15,000$">$15,000+</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="unsure" required /><span data-en="Not sure yet" data-ar="لست متأكدًا بعد">Not sure yet</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="4" hidden>
+            <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">How can we reach you?</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="name" data-en="Your name" data-ar="اسمك">Your name</label>
+                <input type="text" id="name" name="name" autocomplete="name" placeholder="Your name" data-en-ph="Your name" data-ar-ph="اسمك" required />
+              </div>
+              <div class="field">
+                <label for="email" data-en="Email" data-ar="البريد الإلكتروني">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="phone">
+                <span data-en="Phone number" data-ar="رقم الهاتف">Phone number</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <div class="phone-input">
+                <select id="phoneCode" name="phone-code" autocomplete="tel-country-code" aria-label="Country code">
+                    <option value="+971">AE +971</option>
+                    <option value="+43">AT +43</option>
+                    <option value="+61">AU +61</option>
+                    <option value="+32">BE +32</option>
+                    <option value="+973">BH +973</option>
+                    <option value="+55">BR +55</option>
+                    <option value="+1">CA +1</option>
+                    <option value="+41">CH +41</option>
+                    <option value="+86">CN +86</option>
+                    <option value="+357">CY +357</option>
+                    <option value="+420">CZ +420</option>
+                    <option value="+49">DE +49</option>
+                    <option value="+253">DJ +253</option>
+                    <option value="+45">DK +45</option>
+                    <option value="+213">DZ +213</option>
+                    <option value="+20">EG +20</option>
+                    <option value="+34">ES +34</option>
+                    <option value="+358">FI +358</option>
+                    <option value="+33">FR +33</option>
+                    <option value="+44">GB +44</option>
+                    <option value="+30">GR +30</option>
+                    <option value="+852">HK +852</option>
+                    <option value="+353">IE +353</option>
+                    <option value="+972">IL +972</option>
+                    <option value="+91">IN +91</option>
+                    <option value="+964">IQ +964</option>
+                    <option value="+39">IT +39</option>
+                    <option value="+962">JO +962</option>
+                    <option value="+81">JP +81</option>
+                    <option value="+254">KE +254</option>
+                    <option value="+269">KM +269</option>
+                    <option value="+82">KR +82</option>
+                    <option value="+965">KW +965</option>
+                    <option value="+961" selected>LB +961</option>
+                    <option value="+218">LY +218</option>
+                    <option value="+212">MA +212</option>
+                    <option value="+222">MR +222</option>
+                    <option value="+356">MT +356</option>
+                    <option value="+52">MX +52</option>
+                    <option value="+60">MY +60</option>
+                    <option value="+234">NG +234</option>
+                    <option value="+31">NL +31</option>
+                    <option value="+47">NO +47</option>
+                    <option value="+64">NZ +64</option>
+                    <option value="+968">OM +968</option>
+                    <option value="+63">PH +63</option>
+                    <option value="+48">PL +48</option>
+                    <option value="+970">PS +970</option>
+                    <option value="+351">PT +351</option>
+                    <option value="+974">QA +974</option>
+                    <option value="+40">RO +40</option>
+                    <option value="+7">RU +7</option>
+                    <option value="+966">SA +966</option>
+                    <option value="+249">SD +249</option>
+                    <option value="+46">SE +46</option>
+                    <option value="+65">SG +65</option>
+                    <option value="+252">SO +252</option>
+                    <option value="+963">SY +963</option>
+                    <option value="+66">TH +66</option>
+                    <option value="+216">TN +216</option>
+                    <option value="+90">TR +90</option>
+                    <option value="+380">UA +380</option>
+                    <option value="+1">US +1</option>
+                    <option value="+967">YE +967</option>
+                    <option value="+27">ZA +27</option>
+                </select>
+                <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" />
+              </div>
+            </div>
+          </fieldset>
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">Back</span></button>
+            <button type="submit" class="btn btn-primary btn-shine"><span data-en="Next" data-ar="التالي">Next</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+          <!-- submit failed: say so, keep the answers, and offer an explicit way out -->
+          <div class="form-error" id="formError" hidden>
+            <p class="form-error-msg" data-en="We couldn't reach our server, so nothing has been sent yet." data-ar="تعذّر الوصول إلى الخادم، ولم يُرسل شيء بعد.">We couldn't reach our server, so nothing has been sent yet.</p>
+            <div class="form-error-acts">
+              <button type="button" class="btn btn-primary" id="formRetry"><span data-en="Try again" data-ar="حاول مرة أخرى">Try again</span></button>
+              <a class="form-error-mail" id="formErrorMail" href="mailto:info@kaprera.com" data-en="Send it as an email instead" data-ar="أرسلها عبر البريد الإلكتروني بدلًا من ذلك">Send it as an email instead</a>
+            </div>
+          </div>
+        </form>
+
+        <!-- outside the form on purpose: the form is hidden on success, and a live
+             region inside a hidden subtree is never announced -->
+        <p class="form-status sr-only" id="formStatus" role="status" aria-live="polite"></p>
+
+        <!-- the confirmation stays on screen instead of a button label that clears itself -->
+        <div class="contact-card form-sent" id="formSent" hidden>
+          <span class="form-sent-tick" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <h3 data-en="Thank you — your enquiry is on its way." data-ar="شكرًا لك — طلبك في طريقه إلينا.">Thank you — your enquiry is on its way.</h3>
+          <p data-en="We read every message and reply within one business day, Beirut time. If it's urgent, WhatsApp us and we'll pick it up faster." data-ar="نقرأ كل رسالة ونردّ خلال يوم عمل واحد بتوقيت بيروت. وإذا كان الأمر عاجلًا، راسلنا على واتساب وسنتابعه أسرع.">We read every message and reply within one business day, Beirut time. If it's urgent, WhatsApp us and we'll pick it up faster.</p>
+          <dl class="form-sent-recap" id="formSentRecap"></dl>
+          <button type="button" class="btn btn-ghost" id="formAgain"><span data-en="Send another enquiry" data-ar="إرسال طلب آخر">Send another enquiry</span></button>
+        </div>
+
+        <aside class="contact-card contact-aside">
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span></div>
+            <a class="v" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" data-en="Schedule a meeting →" data-ar="حدّد موعدًا ←">Schedule a meeting →</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span data-en="Email" data-ar="البريد الإلكتروني">Email</span></div>
+            <a class="v" href="mailto:info@kaprera.com" target="_blank" rel="noopener">info@kaprera.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span></div>
+            <a class="v" href="https://wa.me/9613816405" target="_blank" rel="noopener" data-en="Chat with us →" data-ar="تحدّث معنا ←">Chat with us →</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-en="Location" data-ar="الموقع">Location</span></div>
+            <div class="v" data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
 <footer id="footer">
   <div class="wrap">
     <div class="foot-top">
@@ -370,6 +628,7 @@
       <span data-en="Made in Lebanon ·" data-ar="صُنع في لبنان ·">Made in Lebanon ·</span> <span class="accent">&gt;_</span>
     </div>
   </div>
+  <div class="foot-mark" aria-hidden="true"></div>
 </footer>
 
 <script>
@@ -444,5 +703,6 @@
   }
 </script>
 <script src="/cookies.js" defer></script>
+<script src="/contact.js?v=1" defer></script>
 </body>
 </html>
