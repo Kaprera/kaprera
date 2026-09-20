@@ -2115,6 +2115,11 @@
       margin-top: 20px;
     }
     .nav-panel .btn { width: 100%; margin-top: 14px; }
+    /* slide 1 (hero) on phones: the copy wraps over many short lines, so it
+       needs looser leading and bigger gaps between title, subline and CTAs */
+    .hero h1 { line-height: 1.14; margin-bottom: 30px; }
+    .hero .subline { line-height: 1.72; margin-bottom: 64px; }
+    .hero-ctas { gap: 16px; }
     .work-case { grid-template-columns: 1fr; gap: 24px; }
     /* stacked, the square render would add ~140px to the hero; a landscape
        crop keeps it to the laptop's old footprint. The trim comes off the
