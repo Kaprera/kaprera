@@ -106,8 +106,8 @@
     const siteLine = site
       ? "Our website at the moment is " + site + ". "
       : "We don't have a website yet. ";
-    const visitLine = els.visits && els.visits.checked
-      ? "Customers visit us at a shop or office. "
+    const visitLine = els.physical && els.physical.checked
+      ? "We have a physical location customers can visit. "
       : "";
     const body = "Hi kaprera,\n\n" +
       "My name is " + name + context + ", and I'd like to work with you on " +
