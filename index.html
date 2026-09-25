@@ -2365,6 +2365,8 @@
     if (lang === 'ar') window.loadArabicFont();
   })();
 </script>
+<link rel="stylesheet" href="/motion.css?v=1" />
+<script src="/motion.js?v=1" defer></script>
 </head>
 <body>
 
@@ -2459,7 +2461,7 @@
       <span class="hero-bg b-ana"></span>
       <span class="hero-bg b-shamaa"></span>
     </div>
-    <span class="hero-mark" aria-hidden="true"></span>
+    <span class="hero-mark" aria-hidden="true" data-m-parallax="-0.15"></span>
     <div class="wrap">
       <!-- ── our work slider: slide 1 = hero, slides 2+ = case studies ── -->
       <div class="work-slider" id="work" data-work-slider>
@@ -2475,7 +2477,7 @@
                 <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 <button type="button" class="btn btn-ghost" id="seeWork" data-en="See our work" data-ar="شاهد أعمالنا">See our work</button>
               </div>
-              <div class="hero-pattern" aria-hidden="true">
+              <div class="hero-pattern" aria-hidden="true" data-m-parallax="-0.08">
                 <i class="hp-tick"></i>
                 <i class="hp-mark"></i>
                 <i class="hp-dot"></i>
@@ -2617,7 +2619,7 @@
       <div class="pain-split">
         <div class="pain-head">
       <span class="label reveal"><span class="num">02</span> <span data-en="/ Sound familiar?" data-ar="/ هل يبدو هذا مألوفًا؟">/ Sound familiar?</span></span>
-      <h2 class="title reveal" data-en="Your website should be bringing you work." data-ar="موقعك يجب أن يجلب لك العمل.">Your website should be bringing you work.</h2>
+      <h2 class="title" data-m="mask" data-en="Your website should be bringing you work." data-ar="موقعك يجب أن يجلب لك العمل.">Your website should be bringing you work.</h2>
       <p class="lede reveal" data-en="Most businesses that get in touch with us already have a website. The trouble is it isn&#x27;t doing much for them." data-ar="معظم الشركات التي تتواصل معنا لديها موقع بالفعل. المشكلة أنه لا يقدّم لها الكثير.">Most businesses that get in touch with us already have a website. The trouble is it isn't doing much for them.</p>
 
 
@@ -2626,7 +2628,7 @@
       </div>
         </div>
 
-        <div class="pain-list reveal">
+        <div class="pain-list" data-m-stagger="end">
           <article class="pain-row">
             <span class="pain-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
             <div class="pain-txt">
@@ -2664,7 +2666,7 @@
   <section class="section" id="services">
     <div class="wrap">
       <span class="label reveal"><span class="num">03</span> <span data-en="/ What we do" data-ar="/ ماذا نقدّم">/ What we do</span></span>
-      <h2 class="title reveal" data-en="Design, Development, SEO." data-ar="تصميم وتطوير وتحسين لمحركات البحث.">Design, Development, SEO.</h2>
+      <h2 class="title" data-m="mask" data-en="Design, Development, SEO." data-ar="تصميم وتطوير وتحسين لمحركات البحث.">Design, Development, SEO.</h2>
       <p class="lede reveal" data-en="We design the interface, build the site, and do the SEO that gets it found. Most often all three on the same project, so there's no handoff to lose things in." data-ar="نصمّم الواجهة، ونبني الموقع، ونتولّى تحسين محركات البحث الذي يجعله يظهر. غالبًا الثلاثة في المشروع نفسه، فلا تسليم بين فرق تضيع فيه التفاصيل.">We design the interface, build the site, and do the SEO that gets it found. Most often all three on the same project, so there's no handoff to lose things in.</p>
 
       <!-- ── service slider: 3 disciplines, each its own full panel ── -->
@@ -2793,10 +2795,10 @@
   <section class="section" id="process">
     <div class="wrap">
       <span class="label reveal"><span class="num">04</span> <span data-en="/ How we work" data-ar="/ كيف نعمل">/ How we work</span></span>
-      <h2 class="title reveal" data-en="From the first call to launch day." data-ar="من أول مكالمة حتى يوم الإطلاق.">From the first call to launch day.</h2>
+      <h2 class="title" data-m="mask" data-en="From the first call to launch day." data-ar="من أول مكالمة حتى يوم الإطلاق.">From the first call to launch day.</h2>
       <p class="lede reveal" data-en="There are four steps, and at each one you know what we&#x27;re working on and what comes next." data-ar="أربع خطوات، وفي كل منها تعرف ما نعمل عليه وما الذي يليه.">There are four steps, and at each one you know what we're working on and what comes next.</p>
 
-      <ol class="steps reveal" role="list">
+      <ol class="steps" data-m-stagger="up" role="list">
         <li class="step">
           <span class="step-num" aria-hidden="true">01</span>
           <h3 data-en="Discovery call" data-ar="مكالمة تعارف">Discovery call</h3>
@@ -2825,9 +2827,9 @@
   <section class="section" id="testimonials">
     <div class="wrap">
       <span class="label reveal"><span class="num">05</span> <span data-en="/ What clients say" data-ar="/ ماذا يقول عملاؤنا">/ What clients say</span></span>
-      <h2 class="title reveal" data-en="Trusted by teams across Lebanon." data-ar="موثوق به من فرق في جميع أنحاء لبنان.">Trusted by teams across Lebanon.</h2>
+      <h2 class="title" data-m="mask" data-en="Trusted by teams across Lebanon." data-ar="موثوق به من فرق في جميع أنحاء لبنان.">Trusted by teams across Lebanon.</h2>
 
-      <div class="industries reveal">
+      <div class="industries" data-m-stagger="fade">
         <span class="lbl" data-en="Industries we serve" data-ar="القطاعات التي نخدمها">Industries we serve</span>
         <span class="pill" data-en="ICT & Technology" data-ar="تقنية المعلومات والاتصالات">ICT &amp; Technology</span><span class="sep">·</span>
         <span class="pill" data-en="Education" data-ar="التعليم">Education</span><span class="sep">·</span>
@@ -2840,8 +2842,8 @@
       </div>
 
       <!-- ── reviews: one <figure class="tst-card"> per client; add as many as needed ── -->
-      <div class="tst-rail reveal">
-        <div class="tst-track" id="tstTrack" tabindex="0" role="region" aria-label="client reviews">
+      <div class="tst-rail">
+        <div class="tst-track" id="tstTrack" data-m-stagger="scale" tabindex="0" role="region" aria-label="client reviews">
           <figure class="tst-card">
             <div class="tst-stars" role="img" aria-label="5 out of 5">★★★★★</div>
             <blockquote class="tst-quote" data-en="Kaprera built a website that perfectly represents our organization and makes it easy for people to discover and engage with our initiatives, with a smooth, reliable structure that supports our growing community." data-ar="بنت kaprera موقعًا يمثّل منظمتنا تمثيلًا مثاليًا ويسهّل على الناس اكتشاف مبادراتنا والتفاعل معها، ببنية سلسة وموثوقة تدعم مجتمعنا المتنامي.">Kaprera built a website that perfectly represents our organization and makes it easy for people to discover and engage with our initiatives, with a smooth, reliable structure that supports our growing community.</blockquote>
@@ -2920,9 +2922,9 @@
     <section class="section" id="faq">
     <div class="wrap">
       <span class="label reveal"><span class="num">06</span> <span data-en="/ Questions" data-ar="/ الأسئلة">/ Questions</span></span>
-      <h2 class="title reveal" data-en="Questions, answered." data-ar="أسئلة وأجوبة.">Questions, answered.</h2>
+      <h2 class="title" data-m="mask" data-en="Questions, answered." data-ar="أسئلة وأجوبة.">Questions, answered.</h2>
 
-      <div class="faq-list reveal">
+      <div class="faq-list" data-m-stagger="up">
         <details class="faq-item">
           <summary><span data-en="How much does a website cost?" data-ar="كم تبلغ تكلفة الموقع الإلكتروني؟">How much does a website cost?</span><svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
           <p class="faq-a" data-en="Pricing depends on how many pages the site has, what it has to do, and what it has to connect to. After a short discovery call we send a fixed quote, and for a marketing site or a landing page we can usually give you the range before that call." data-ar="يعتمد السعر على عدد صفحات الموقع، وما يفترض أن يفعله، وما يحتاج إلى الاتصال به. بعد مكالمة تعريفية قصيرة نرسل عرض سعر ثابتًا، وفي حالة الموقع التسويقي أو صفحة الهبوط نستطيع عادةً إعطاءك النطاق قبل تلك المكالمة.">Pricing depends on how many pages the site has, what it has to do, and what it has to connect to. After a short discovery call we send a fixed quote, and for a marketing site or a landing page we can usually give you the range before that call.</p>
@@ -2949,7 +2951,7 @@
   <!-- ───────────── CONTACT ───────────── -->
   <section class="section" id="contact">
     <div class="wrap">
-      <h2 class="title reveal" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
+      <h2 class="title" data-m="mask" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
 
       <div class="contact-grid">
         <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card step-form reveal" novalidate>
