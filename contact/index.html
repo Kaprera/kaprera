@@ -83,6 +83,14 @@
      the enquiry band. Here the band is the page: it sits in <main> and its
      title is the h1. The same band stays above the footer on every other page. */
   #contact .title{ font-size:clamp(34px,4.6vw,52px); }
+  /* the whole page is the band: blue from the top edge (html too, so
+     overscroll doesn't flash white), with the breadcrumb in white on it and
+     the band's top padding cut to the gap the breadcrumb already gives */
+  html, body{ background:#008cc1; }
+  .crumb, .crumb a, .crumb span{ color:#fff; }
+  .crumb a:hover{ color:#fff; text-decoration:underline; text-underline-offset:3px; }
+  .crumb .sep{ opacity:.6; }
+  #contact{ padding-top:clamp(28px,4vw,48px); }
   /* contact.css joins the band to the footer with #contact + footer, but here
      </main> sits between them, so the same seamless join is repeated for it */
   main:has(> #contact:last-child) + footer { padding-top: 0 !important; margin-top: 0 !important; border-top: 0 !important; }
