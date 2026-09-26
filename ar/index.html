@@ -2332,42 +2332,6 @@
   @media (prefers-reduced-motion: reduce) {
     .pain-ic, .pain-row:hover .pain-ic { transition: none; transform: none; }
   }
-
-  /* ── clients strip: white logo silhouettes on brand blue, looping slowly.
-        Two identical sets, so sliding the track by half its width loops
-        seamlessly; the second set is aria-hidden. Under reduced motion only
-        the first set shows, wrapped and centred. ── */
-  .clients { background: var(--blue); padding: 46px 0 50px; overflow: hidden; }
-  .clients-lbl {
-    display: block; text-align: center; margin-bottom: 26px;
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .04em;
-    color: #fff;
-  }
-  .clients-viewport {
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  }
-  .clients-track { display: flex; width: max-content; direction: ltr; animation: clientsLoop 38s linear infinite; }
-  html[dir="rtl"] .clients-track { animation-direction: reverse; }
-  .clients-viewport:hover .clients-track { animation-play-state: paused; }
-  .clients-set {
-    display: flex; align-items: center; gap: 72px; padding-inline-end: 72px;
-    list-style: none; margin: 0; padding-inline-start: 0;
-  }
-  .clients-set img { display: block; height: var(--h); width: auto; max-width: none; }
-  @keyframes clientsLoop { to { transform: translateX(-50%); } }
-  @media (max-width: 860px) {
-    .clients { padding: 36px 0 40px; }
-    .clients-set { gap: 48px; padding-inline-end: 48px; }
-    .clients-set img { height: calc(var(--h) * .8); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .clients-viewport { -webkit-mask-image: none; mask-image: none; }
-    .clients-track { width: auto; animation: none; justify-content: center; }
-    .clients-set { flex-wrap: wrap; justify-content: center; gap: 32px 48px; padding: 0 24px; }
-    .clients-set[aria-hidden="true"] { display: none; }
-  }
 </style>
 <script>
   // apply saved/system theme before paint to avoid flash
@@ -2860,35 +2824,6 @@
           <p data-en="We launch the site, then test its speed and SEO again once it&#x27;s live. If you want us to keep looking after it, there&#x27;s a yearly support plan." data-ar="نطلق الموقع، ثم نعيد قياس سرعته وتحسينه لمحركات البحث بعد النشر. وإن أردت أن نواصل الاعتناء به، لدينا خطة دعم سنوية.">نطلق الموقع، ثم نعيد قياس سرعته وتحسينه لمحركات البحث بعد النشر. وإن أردت أن نواصل الاعتناء به، لدينا خطة دعم سنوية.</p>
         </li>
       </ol>
-    </div>
-  </section>
-
-  <!-- ───────────── CLIENTS ───────────── -->
-  <section class="clients" aria-labelledby="clientsLbl">
-    <span class="clients-lbl" id="clientsLbl" data-en="Our clients" data-ar="عملاؤنا">عملاؤنا</span>
-    <div class="clients-viewport">
-      <div class="clients-track">
-        <ul class="clients-set" role="list">
-            <li><img src="/branding/clients/agripro.png" alt="Agri Pro Services logo" width="65" height="62" style="--h:62px" decoding="async" /></li>
-            <li><img src="/branding/clients/oplinx.png" alt="Oplinx Solutions logo" width="124" height="39" style="--h:39px" decoding="async" /></li>
-            <li><img src="/branding/clients/lbspotlight.png" alt="Lebanese Spotlight logo" width="125" height="38" style="--h:38px" decoding="async" /></li>
-            <li><img src="/branding/clients/bayader.png" alt="Bayader Investments logo" width="145" height="34" style="--h:34px" decoding="async" /></li>
-            <li><img src="/branding/clients/al-shamaa.png" alt="AL-Shamaa Engineering logo" width="68" height="62" style="--h:62px" decoding="async" /></li>
-            <li><img src="/branding/clients/takkoush.png" alt="Takkoush Flowers logo" width="119" height="40" style="--h:40px" decoding="async" /></li>
-            <li><img src="/branding/clients/ana-arabia.png" alt="Ana Arabia logo" width="66" height="62" style="--h:62px" decoding="async" /></li>
-            <li><img src="/branding/clients/war.png" alt="War Action Research logo" width="62" height="62" style="--h:62px" decoding="async" /></li>
-        </ul>
-        <ul class="clients-set" aria-hidden="true">
-            <li><img src="/branding/clients/agripro.png" alt="" width="65" height="62" style="--h:62px" decoding="async" /></li>
-            <li><img src="/branding/clients/oplinx.png" alt="" width="124" height="39" style="--h:39px" decoding="async" /></li>
-            <li><img src="/branding/clients/lbspotlight.png" alt="" width="125" height="38" style="--h:38px" decoding="async" /></li>
-            <li><img src="/branding/clients/bayader.png" alt="" width="145" height="34" style="--h:34px" decoding="async" /></li>
-            <li><img src="/branding/clients/al-shamaa.png" alt="" width="68" height="62" style="--h:62px" decoding="async" /></li>
-            <li><img src="/branding/clients/takkoush.png" alt="" width="119" height="40" style="--h:40px" decoding="async" /></li>
-            <li><img src="/branding/clients/ana-arabia.png" alt="" width="66" height="62" style="--h:62px" decoding="async" /></li>
-            <li><img src="/branding/clients/war.png" alt="" width="62" height="62" style="--h:62px" decoding="async" /></li>
-        </ul>
-      </div>
     </div>
   </section>
 
