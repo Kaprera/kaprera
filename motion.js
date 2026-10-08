@@ -130,8 +130,13 @@
     ticking = false;
     var vh = window.innerHeight;
 
-    parallax.forEach(function (el) {
-      var r = el.getBoundingClientRect();
+    /* measure everything before writing anything, so layout runs once */
+    var rects = parallax.map(function (el) { return el.getBoundingClientRect(); });
+    var max = progress ? document.documentElement.scrollHeight - vh : 0;
+    var rr = railSteps.length > 1 ? rail.getBoundingClientRect() : null;
+
+    parallax.forEach(function (el, i) {
+      var r = rects[i];
       if (r.bottom < -200 || r.top > vh + 200) return;
       var f = parseFloat(el.getAttribute('data-m-parallax')) || 0.12;
       var off = (r.top + r.height / 2 - vh / 2) * f;
@@ -141,14 +146,12 @@
     });
 
     if (progress) {
-      var max = document.documentElement.scrollHeight - vh;
       progress.style.setProperty('--m-p', max > 0 ? clamp(window.scrollY / max, 0, 1).toFixed(4) : 0);
     }
 
-    if (railSteps.length > 1) {
+    if (rr) {
       /* the rail fills between 75% and 40% of the viewport height, split
          evenly across the segments between the step nodes */
-      var rr = rail.getBoundingClientRect();
       var p = clamp((vh * 0.75 - rr.top) / (rr.height + vh * 0.35), 0, 1);
       var segs = railSteps.length - 1;
       railSteps.forEach(function (s, i) {
@@ -162,7 +165,9 @@
   if (parallax.length || progress || railSteps.length) {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
-    update();
+    /* the first measure waits for layout rather than forcing one mid-load */
+    if ('ResizeObserver' in window) new ResizeObserver(update).observe(root);
+    else update();
   }
 
   /* ── pointer effects: mouse and trackpad only ── */
