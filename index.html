@@ -2365,7 +2365,9 @@
     if (lang === 'ar') window.loadArabicFont();
   })();
 </script>
-<link rel="stylesheet" href="/motion.css?v=1" />
+<!-- motion.css only styles things below the hero, so it loads without blocking the first paint -->
+<link rel="stylesheet" href="/motion.css?v=1" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="/motion.css?v=1" /></noscript>
 <script src="/motion.js?v=1" defer></script>
 </head>
 <body>
@@ -2492,7 +2494,7 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="2 of 6, Agri Pro Services">
               <button class="case-shot case-render" data-case="agripro" aria-haspopup="dialog" aria-label="open Agri Pro Services case study">
                 <picture>
-                  <source srcset="cases/agripro/mockup-700.webp 700w, cases/agripro/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <source srcset="cases/agripro/mockup-560.webp 560w, cases/agripro/mockup-700.webp 700w, cases/agripro/mockup.webp 1200w" sizes="(max-width: 860px) 75vw, 520px" type="image/webp">
                   <img src="cases/agripro/mockup.png" alt="Agri Pro Services pest control operations platform built by kaprera" width="1200" height="1019" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -2512,7 +2514,7 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="3 of 6, Oplinx Solutions">
               <button class="case-shot case-render" data-case="oplinx" aria-haspopup="dialog" aria-label="open Oplinx Solutions case study">
                 <picture>
-                  <source srcset="cases/oplinx/mockup-700.webp 700w, cases/oplinx/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <source srcset="cases/oplinx/mockup-560.webp 560w, cases/oplinx/mockup-700.webp 700w, cases/oplinx/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
                   <img src="cases/oplinx/mockup.jpg" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -2532,7 +2534,7 @@
             <div class="work-slide work-case contain" role="group" aria-roledescription="slide" aria-label="4 of 6, Lebanese Spotlight">
               <button class="case-shot case-render" data-case="spotlight" aria-haspopup="dialog" aria-label="open Lebanese Spotlight case study">
                 <picture>
-                  <source srcset="cases/lbspotlight/mockup-700.webp 700w, cases/lbspotlight/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <source srcset="cases/lbspotlight/mockup-560.webp 560w, cases/lbspotlight/mockup-700.webp 700w, cases/lbspotlight/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
                   <img src="cases/lbspotlight/mockup.png" alt="Lebanese Spotlight volunteer management platform built by kaprera" width="1200" height="704" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -2576,7 +2578,7 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 6, AL-Shamaa Engineering">
               <button class="case-shot case-render" data-case="shamaa" aria-haspopup="dialog" aria-label="open AL-Shamaa Engineering case study">
                 <picture>
-                  <source srcset="cases/al-shamaa/mockup-700.webp 700w, cases/al-shamaa/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
+                  <source srcset="cases/al-shamaa/mockup-560.webp 560w, cases/al-shamaa/mockup-700.webp 700w, cases/al-shamaa/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
                   <img src="cases/al-shamaa/mockup.jpg" alt="AL-Shamaa Engineering bilingual landing page built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
                 </picture>
               </button>
@@ -4093,14 +4095,16 @@
     const sign = () => getComputedStyle(track).direction === 'rtl' ? -1 : 1;
 
     const update = () => {
-      const max = track.scrollWidth - track.clientWidth;
+      // measure everything before writing anything, so layout runs once
+      const full = track.scrollWidth, view = track.clientWidth, max = full - view;
+      const pos = Math.min(Math.abs(track.scrollLeft), max);
+      const one = step();
       nav.hidden = max <= 1;
       if (nav.hidden) return;
-      const pos = Math.min(Math.abs(track.scrollLeft), max);
-      bar.style.width = (track.clientWidth / track.scrollWidth * 100) + '%';
-      bar.style.insetInlineStart = (pos / track.scrollWidth * 100) + '%';
-      const perView = Math.max(1, Math.round(track.clientWidth / step()));
-      nowEl.textContent = pad2(pos >= max - 2 ? cards.length : Math.min(cards.length, Math.round(pos / step()) + perView));
+      bar.style.width = (view / full * 100) + '%';
+      bar.style.insetInlineStart = (pos / full * 100) + '%';
+      const perView = Math.max(1, Math.round(view / one));
+      nowEl.textContent = pad2(pos >= max - 2 ? cards.length : Math.min(cards.length, Math.round(pos / one) + perView));
       prev.disabled = pos <= 2;
       next.disabled = pos >= max - 2;
     };
@@ -4109,10 +4113,12 @@
     prev.addEventListener('click', () => go(-1));
     next.addEventListener('click', () => go(1));
     track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    // reports once layout is ready and again on every resize, so the first
+    // measure never forces a layout while the page is still loading
+    let laidOut = false;
+    new ResizeObserver(() => { laidOut = true; update(); }).observe(track);
     // the Arabic toggle flips direction, which resets the scroll position
-    new MutationObserver(update).observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
-    update();
+    new MutationObserver(() => { if (laidOut) update(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
   })();
 
   // ── nav links: if the target section is already on screen, flash it
@@ -4134,7 +4140,9 @@
   // ── nav: scroll condense ──
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
-  onScroll();
+  // the first check waits for layout rather than forcing one mid-load
+  const navReady = new ResizeObserver(() => { navReady.disconnect(); onScroll(); });
+  navReady.observe(nav);
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // ── keep Tab inside the open dialog ──
