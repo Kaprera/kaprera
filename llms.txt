@@ -238,6 +238,9 @@ Give every page one clear next step and send each enquiry straight to your Whats
 **How long does a website take?**  
 A landing page takes 1 to 2 weeks and a multi-page website 3 to 6 weeks.
 
+**What does every landing page come with?**  
+Every landing page ships set up and checked before launch: Google Business Profile, basic SEO (titles, structured data, sitemap; Lighthouse SEO 100), Google Analytics (GA4) with enquiries tracked, Lighthouse Performance 90+, Accessibility (A11Y, WCAG) 90+ and Best practices 100, Core Web Vitals within Google's targets (FCP under 1.8 s, LCP under 2.5 s, TBT under 200 ms, CLS under 0.1, INP under 200 ms), HTML compressed with GZIP/Brotli, preloaded fonts, zero W3C HTML and CSS errors, minimal third-party origins, security headers (HTTPS, CSP, HSTS) and delivery from a global CDN.
+
 **Can website enquiries go to WhatsApp?**  
 Yes. Quote and contact forms can send each new enquiry straight to your WhatsApp, or into your system as a new lead.
 
