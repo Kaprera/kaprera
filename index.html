@@ -1161,23 +1161,40 @@
       linear-gradient(180deg, #012646 0%, #0c3351 18%, #234661 48%, #3a5a70 78%, #45647a 100%);
   }
   .b-agripro, .b-oplinx, .b-spotlight, .b-shamaa, .b-takkoush, .b-wafica { animation: none; }
-  /* landing-page standards: what every landing page ships with */
-  .lp-std { margin-top: 72px; }
-  .lp-std-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 32px; margin-bottom: 28px; }
-  .lp-std-head h3 { font-size: clamp(26px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; margin: 0; max-width: 18ch; }
-  .lp-std-head p { color: var(--muted); font-size: 16px; max-width: 44ch; margin: 0; }
-  .lp-grp { margin-top: 22px; }
-  .lp-grp h4 { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-text); margin: 0 0 10px; }
-  .lp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
-  .lp-grid { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 10px; }
-  .lp-card { border: 1px solid var(--hair); border-radius: var(--radius); background: var(--bg-soft); padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
-  .lp-card b { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--blue-text); line-height: 1.2; }
-  .lp-card span { font-size: 15px; font-weight: 600; color: var(--ink); }
-  .lp-card small { font-size: 13px; color: var(--muted); }
-  html[lang="ar"] .lp-grp h4 { font-family: 'Cairo', system-ui, sans-serif; letter-spacing: 0; text-transform: none; font-size: 14px; }
-  html[lang="ar"] .lp-card b { letter-spacing: 0; direction: ltr; text-align: right; }
-  @media (max-width: 1000px) { .lp-row { grid-template-columns: 1fr; } .lp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (max-width: 600px) { .lp-std { margin-top: 48px; } .lp-grid { grid-template-columns: 1fr 1fr; } .lp-card { padding: 14px; } .lp-row { grid-template-columns: 1fr; } .lp-card b { font-size: 20px; } }
+  /* landing-page standards: what every landing page ships with (spec sheet) */
+  .lp-std { margin-top: 96px; }
+  .lp-std-head { max-width: 640px; margin-bottom: 32px; }
+  .lp-std-head h3 { font-size: clamp(28px, 3.2vw, 40px); line-height: 1.12; letter-spacing: -0.025em; margin: 0; }
+  .lp-std-head p { color: var(--muted); font-size: 17px; line-height: 1.55; margin: 14px 0 0; }
+  .lp-sheet { border: 1px solid var(--hair); border-radius: 20px; overflow: hidden; background: var(--white); }
+  .lp-grp { display: grid; grid-template-columns: 260px minmax(0, 1fr); }
+  .lp-grp + .lp-grp { border-top: 1px solid var(--hair); }
+  .lp-gh { padding: 26px 28px; background: var(--bg-soft); border-inline-end: 1px solid var(--hair); }
+  .lp-gh .n { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: var(--blue-text); letter-spacing: .06em; }
+  .lp-gh h4 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin: 8px 0 6px; color: var(--ink); }
+  .lp-gh p { font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0; }
+  .lp-items { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); }
+  .lp-it { background: var(--white); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 28px; min-height: 84px; }
+  .lp-it:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .lp-n { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .lp-n span { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .lp-n small { font-size: 13px; color: var(--muted); }
+  .lp-v { flex: 0 0 auto; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--blue-text); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .lp-ok { display: block; }
+  .lp-ok circle { fill: var(--blue); }
+  .lp-ok polyline { fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  html[lang="ar"] .lp-gh .n { letter-spacing: 0; }
+  html[lang="ar"] .lp-v { letter-spacing: 0; direction: ltr; }
+  @media (max-width: 900px) {
+    .lp-grp { grid-template-columns: 1fr; }
+    .lp-gh { border-inline-end: 0; border-bottom: 1px solid var(--hair); padding: 20px 22px; }
+  }
+  @media (max-width: 600px) {
+    .lp-std { margin-top: 64px; }
+    .lp-items { grid-template-columns: 1fr; }
+    .lp-it { padding: 16px 20px; min-height: 0; }
+    .lp-v { font-size: 19px; }
+  }
 
   /* dashed-curve labels that name each device in the system + landing renders */
   .anno { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
@@ -2524,7 +2541,7 @@
             <div class="work-slide" role="group" aria-roledescription="slide" aria-label="1 of 7, intro">
               <div class="hero-spacer" aria-hidden="true"></div>
               <h1 class="reveal" id="heroTitle" data-en="Your business outgrew Excel." data-ar="شركتك كبرت على الإكسل.">Your business outgrew Excel.</h1>
-              <p class="subline reveal" data-en="We build custom systems that replace spreadsheets, WhatsApp orders and paperwork, built around how your team already works. First version in 1 week, full system in 3." data-ar="نبني أنظمة مخصّصة تحلّ محلّ الجداول وطلبات واتساب والأوراق، مبنية حول طريقة عمل فريقك الحالية. نسخة أولى خلال أسبوع، ونظام كامل خلال 3 أسابيع.">We build custom systems that replace spreadsheets, WhatsApp orders and paperwork, built around how your team already works. First version in 1 week, full system in 3.</p>
+              <p class="subline reveal" data-en="We build custom systems that replace spreadsheets and WhatsApp orders and automate the busywork, built around how your team works. First version in 1 week, full system in 3." data-ar="نبني أنظمة مخصّصة تحلّ محلّ الجداول وطلبات واتساب وتؤتمت العمل المتكرّر، مبنية حول طريقة عمل فريقك. نسخة أولى خلال أسبوع، ونظام كامل خلال 3 أسابيع.">We build custom systems that replace spreadsheets and WhatsApp orders and automate the busywork, built around how your team works. First version in 1 week, full system in 3.</p>
               <div class="hero-ctas reveal">
                 <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 <button type="button" class="btn btn-ghost" id="seeWork" data-en="See our work" data-ar="شاهد أعمالنا">See our work</button>
@@ -2862,44 +2879,44 @@
           <h3 data-en="Every landing page comes with" data-ar="كل صفحة هبوط تأتي مع">Every landing page comes with</h3>
           <p data-en="High scores built in, checked before launch with Google Lighthouse, PageSpeed Insights and the W3C validators." data-ar="درجات عالية مدمجة، نتحقّق منها قبل الإطلاق عبر Google Lighthouse و PageSpeed Insights ومدقّقات W3C.">High scores built in, checked before launch with Google Lighthouse, PageSpeed Insights and the W3C validators.</p>
         </div>
-        <div class="lp-row">
-        <div class="lp-grp">
-          <h4 data-en="Found & measured" data-ar="الظهور والقياس">Found & measured</h4>
-          <div class="lp-grid" style="--n:3">
-            <div class="lp-card"><b>✓</b><span data-en="Business profile" data-ar="الملف التجاري">Business profile</span><small data-en="Google Business Profile" data-ar="Google Business Profile">Google Business Profile</small></div>
-            <div class="lp-card"><b>100</b><span data-en="Basic SEO" data-ar="سيو أساسي">Basic SEO</span><small data-en="Titles, schema, sitemap" data-ar="العناوين والبيانات المنظّمة وخريطة الموقع">Titles, schema, sitemap</small></div>
-            <div class="lp-card"><b>GA4</b><span data-en="Google Analytics" data-ar="Google Analytics">Google Analytics</span><small data-en="Enquiries tracked" data-ar="تتبّع الطلبات">Enquiries tracked</small></div>
+        <div class="lp-sheet">
+          <div class="lp-grp">
+            <div class="lp-gh"><span class="n">01</span><h4 data-en="Found &amp; measured" data-ar="الظهور والقياس">Found &amp; measured</h4><p data-en="Ready for Google and tracked from day one." data-ar="جاهزة لـ Google ومُتابَعة من اليوم الأول.">Ready for Google and tracked from day one.</p></div>
+            <div class="lp-items">
+              <div class="lp-it"><span class="lp-n"><span data-en="Business profile" data-ar="الملف التجاري">Business profile</span><small data-en="Google Business Profile" data-ar="Google Business Profile">Google Business Profile</small></span><span class="lp-v" role="img" aria-label="included"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg></span></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Basic SEO" data-ar="سيو أساسي">Basic SEO</span><small data-en="Titles, schema, sitemap" data-ar="العناوين والبيانات المنظّمة وخريطة الموقع">Titles, schema, sitemap</small></span><b class="lp-v">100</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Google Analytics" data-ar="Google Analytics">Google Analytics</span><small data-en="Enquiries tracked" data-ar="تتبّع الطلبات">Enquiries tracked</small></span><b class="lp-v">GA4</b></div>
+            </div>
           </div>
-        </div>
-        <div class="lp-grp">
-          <h4 data-en="Google Lighthouse" data-ar="Google Lighthouse">Google Lighthouse</h4>
-          <div class="lp-grid" style="--n:3">
-            <div class="lp-card"><b>90+</b><span data-en="Performance" data-ar="الأداء">Performance</span><small data-en="Speed score" data-ar="درجة السرعة">Speed score</small></div>
-            <div class="lp-card"><b>90+</b><span data-en="Accessibility" data-ar="سهولة الوصول">Accessibility</span><small data-en="A11Y · WCAG" data-ar="A11Y · WCAG">A11Y · WCAG</small></div>
-            <div class="lp-card"><b>100</b><span data-en="Best practices" data-ar="أفضل الممارسات">Best practices</span><small data-en="BP score" data-ar="BP">BP score</small></div>
+          <div class="lp-grp">
+            <div class="lp-gh"><span class="n">02</span><h4 data-en="Google Lighthouse" data-ar="Google Lighthouse">Google Lighthouse</h4><p data-en="Scored out of 100." data-ar="درجات من 100.">Scored out of 100.</p></div>
+            <div class="lp-items">
+              <div class="lp-it"><span class="lp-n"><span data-en="Performance" data-ar="الأداء">Performance</span><small data-en="Speed score" data-ar="درجة السرعة">Speed score</small></span><b class="lp-v">90+</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Accessibility" data-ar="سهولة الوصول">Accessibility</span><small data-en="A11Y · WCAG" data-ar="A11Y · WCAG">A11Y · WCAG</small></span><b class="lp-v">90+</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Best practices" data-ar="أفضل الممارسات">Best practices</span><small data-en="BP score" data-ar="BP">BP score</small></span><b class="lp-v">100</b></div>
+            </div>
           </div>
-        </div>
-        </div>
-        <div class="lp-grp">
-          <h4 data-en="Core Web Vitals" data-ar="مؤشرات Core Web Vitals">Core Web Vitals</h4>
-          <div class="lp-grid" style="--n:5">
-            <div class="lp-card"><b>&lt; 1.8 s</b><span data-en="First contentful paint" data-ar="أول ظهور للمحتوى">First contentful paint</span><small data-en="FCP" data-ar="FCP">FCP</small></div>
-            <div class="lp-card"><b>&lt; 2.5 s</b><span data-en="Largest contentful paint" data-ar="ظهور المحتوى الأكبر">Largest contentful paint</span><small data-en="LCP" data-ar="LCP">LCP</small></div>
-            <div class="lp-card"><b>&lt; 200 ms</b><span data-en="Total blocking time" data-ar="إجمالي وقت الحظر">Total blocking time</span><small data-en="TBT" data-ar="TBT">TBT</small></div>
-            <div class="lp-card"><b>&lt; 0.1</b><span data-en="Cumulative layout shift" data-ar="ثبات التخطيط">Cumulative layout shift</span><small data-en="CLS" data-ar="CLS">CLS</small></div>
-            <div class="lp-card"><b>&lt; 200 ms</b><span data-en="Interaction to next paint" data-ar="سرعة الاستجابة للنقر">Interaction to next paint</span><small data-en="INP" data-ar="INP">INP</small></div>
+          <div class="lp-grp">
+            <div class="lp-gh"><span class="n">03</span><h4 data-en="Core Web Vitals" data-ar="Core Web Vitals">Core Web Vitals</h4><p data-en="Google’s targets for speed and stability." data-ar="معايير Google للسرعة والثبات.">Google’s targets for speed and stability.</p></div>
+            <div class="lp-items">
+              <div class="lp-it"><span class="lp-n"><span data-en="First contentful paint" data-ar="أول ظهور للمحتوى">First contentful paint</span><small data-en="FCP" data-ar="FCP">FCP</small></span><b class="lp-v">&lt; 1.8 s</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Largest contentful paint" data-ar="ظهور المحتوى الأكبر">Largest contentful paint</span><small data-en="LCP" data-ar="LCP">LCP</small></span><b class="lp-v">&lt; 2.5 s</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Total blocking time" data-ar="إجمالي وقت الحظر">Total blocking time</span><small data-en="TBT" data-ar="TBT">TBT</small></span><b class="lp-v">&lt; 200 ms</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Cumulative layout shift" data-ar="ثبات التخطيط">Cumulative layout shift</span><small data-en="CLS" data-ar="CLS">CLS</small></span><b class="lp-v">&lt; 0.1</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Interaction to next paint" data-ar="سرعة الاستجابة للنقر">Interaction to next paint</span><small data-en="INP" data-ar="INP">INP</small></span><b class="lp-v">&lt; 200 ms</b></div>
+            </div>
           </div>
-        </div>
-        <div class="lp-grp">
-          <h4 data-en="Clean code & delivery" data-ar="شيفرة نظيفة وتسليم سريع">Clean code & delivery</h4>
-          <div class="lp-grid" style="--n:7">
-            <div class="lp-card"><b>GZIP / BR</b><span data-en="HTML, compressed" data-ar="HTML مضغوط">HTML, compressed</span><small data-en="Light on mobile data" data-ar="خفيف على بيانات الهاتف">Light on mobile data</small></div>
-            <div class="lp-card"><b>✓</b><span data-en="Font preload" data-ar="تحميل الخطوط مسبقًا">Font preload</span><small data-en="No flash of fallback text" data-ar="بلا وميض في النص">No flash of fallback text</small></div>
-            <div class="lp-card"><b>0</b><span data-en="W3C HTML errors" data-ar="أخطاء W3C في HTML">W3C HTML errors</span><small data-en="Official validator" data-ar="المدقّق الرسمي">Official validator</small></div>
-            <div class="lp-card"><b>0</b><span data-en="W3C CSS errors" data-ar="أخطاء W3C في CSS">W3C CSS errors</span><small data-en="Official validator" data-ar="المدقّق الرسمي">Official validator</small></div>
-            <div class="lp-card"><b data-en="Minimal" data-ar="الحد الأدنى">Minimal</b><span data-en="Third-party origins" data-ar="مصادر خارجية">Third-party origins</span><small data-en="Only what you need" data-ar="الضروري فقط">Only what you need</small></div>
-            <div class="lp-card"><b>A</b><span data-en="Security headers" data-ar="ترويسات الأمان">Security headers</span><small data-en="HTTPS, CSP, HSTS" data-ar="HTTPS و CSP و HSTS">HTTPS, CSP, HSTS</small></div>
-            <div class="lp-card"><b>CDN</b><span data-en="Global CDN" data-ar="شبكة CDN عالمية">Global CDN</span><small data-en="Fast from anywhere" data-ar="سريعة من أي مكان">Fast from anywhere</small></div>
+          <div class="lp-grp">
+            <div class="lp-gh"><span class="n">04</span><h4 data-en="Clean code &amp; delivery" data-ar="شيفرة نظيفة وتسليم سريع">Clean code &amp; delivery</h4><p data-en="Standards-clean, light and secure." data-ar="شيفرة مطابقة للمعايير، خفيفة وآمنة.">Standards-clean, light and secure.</p></div>
+            <div class="lp-items">
+              <div class="lp-it"><span class="lp-n"><span data-en="HTML, compressed" data-ar="HTML مضغوط">HTML, compressed</span><small data-en="Light on mobile data" data-ar="خفيف على بيانات الهاتف">Light on mobile data</small></span><b class="lp-v">GZIP / BR</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Font preload" data-ar="تحميل الخطوط مسبقًا">Font preload</span><small data-en="No flash of fallback text" data-ar="بلا وميض في النص">No flash of fallback text</small></span><span class="lp-v" role="img" aria-label="included"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg></span></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="W3C HTML errors" data-ar="أخطاء W3C في HTML">W3C HTML errors</span><small data-en="Official validator" data-ar="المدقّق الرسمي">Official validator</small></span><b class="lp-v">0</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="W3C CSS errors" data-ar="أخطاء W3C في CSS">W3C CSS errors</span><small data-en="Official validator" data-ar="المدقّق الرسمي">Official validator</small></span><b class="lp-v">0</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Third-party origins" data-ar="مصادر خارجية">Third-party origins</span><small data-en="Only what you need" data-ar="الضروري فقط">Only what you need</small></span><b class="lp-v" data-en="Minimal" data-ar="الحد الأدنى">Minimal</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Security headers" data-ar="ترويسات الأمان">Security headers</span><small data-en="HTTPS, CSP, HSTS" data-ar="HTTPS و CSP و HSTS">HTTPS, CSP, HSTS</small></span><b class="lp-v">A</b></div>
+              <div class="lp-it"><span class="lp-n"><span data-en="Global CDN" data-ar="شبكة CDN عالمية">Global CDN</span><small data-en="Fast from anywhere" data-ar="سريعة من أي مكان">Fast from anywhere</small></span><b class="lp-v">CDN</b></div>
+            </div>
           </div>
         </div>
       </div>
