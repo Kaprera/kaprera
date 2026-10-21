@@ -18,7 +18,7 @@
 - Pricing: fixed quote after a short discovery call, before any work starts
 - Languages: Arabic and English, with full right-to-left support
 - Contact: WhatsApp/phone +961 3 816 405 · info@kaprera.com · https://kaprera.com
-- Instagram: https://www.instagram.com/kaprera_agency/ · LinkedIn: https://www.linkedin.com/company/kaprera/
+- Instagram: https://www.instagram.com/kaprera_agency/ · LinkedIn: https://www.linkedin.com/company/kaprera/ · Clutch: https://clutch.co/profile/kaprera-0
 
 ## Pages
 
@@ -273,6 +273,9 @@ The basics are: fast pages, Google Analytics and Search Console set up, structur
 
 **Can you help my business show up on Google in Lebanon?**  
 Yes. Local SEO for Lebanon: Google Business Profile, local pages (for example Beirut, Saida or Jezzine), structured data and pages built around what your customers search for.
+
+**Do you build online stores?**  
+Yes, we can set up Shopify online stores.
 
 **What technologies does kaprera use?**  
 We pick the stack per project: Next.js, Nuxt, Node.js and Tailwind CSS for systems and web apps, and plain HTML for simple pages that do not need a framework.
