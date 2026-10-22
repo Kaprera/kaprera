@@ -82,6 +82,8 @@
   "sameAs": [
     "https://www.linkedin.com/company/kaprera/",
     "https://www.instagram.com/kaprera_agency/",
+    "https://x.com/kaprera_agency",
+    "https://www.threads.com/@kaprera_agency",
     "https://clutch.co/profile/kaprera-0",
     "https://wa.me/9613816405"
   ],
@@ -1174,34 +1176,66 @@
   .lp-std-head { max-width: 640px; margin-bottom: 32px; }
   .lp-std-head h3 { font-size: clamp(28px, 3.2vw, 40px); line-height: 1.12; letter-spacing: -0.025em; margin: 0; }
   .lp-std-head p { color: var(--muted); font-size: 17px; line-height: 1.55; margin: 14px 0 0; }
-  .lp-sheet { border: 1px solid var(--hair); border-radius: 20px; overflow: hidden; background: var(--white); }
-  .lp-grp { display: grid; grid-template-columns: 260px minmax(0, 1fr); }
-  .lp-grp + .lp-grp { border-top: 1px solid var(--hair); }
-  .lp-gh { padding: 26px 28px; background: var(--bg-soft); border-inline-end: 1px solid var(--hair); }
+  .lp-sheet { display: grid; gap: 16px; }
+  .lp-card { display: grid; grid-template-columns: 240px minmax(0, 1fr); border: 1px solid var(--hair); border-radius: 20px; background: var(--white); overflow: hidden; }
+  .lp-gh { padding: 28px; border-inline-end: 1px solid var(--hair); background: var(--bg-soft); }
   .lp-gh .n { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: var(--blue-text); letter-spacing: .06em; }
   .lp-gh h4 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin: 8px 0 6px; color: var(--ink); }
   .lp-gh p { font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0; }
-  .lp-items { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); }
-  .lp-it { background: var(--white); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 28px; min-height: 84px; }
-  .lp-it:last-child:nth-child(odd) { grid-column: 1 / -1; }
-  .lp-n { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .lp-n span { font-size: 16px; font-weight: 600; color: var(--ink); }
-  .lp-n small { font-size: 13px; color: var(--muted); }
-  .lp-v { flex: 0 0 auto; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--blue-text); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .lp-ok { display: block; }
+  .lp-body { list-style: none; margin: 0; padding: 28px; display: grid; gap: 20px; }
+  /* 01 lighthouse: four score rings */
+  .lp-rings { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lp-score { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+  .lp-dial { position: relative; width: 104px; height: 104px; margin-bottom: 12px; }
+  .lp-dial svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); }
+  .lp-dial circle { fill: none; stroke-width: 7; }
+  .lp-dial .track { stroke: var(--hair); }
+  .lp-dial .arc { stroke: var(--blue); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--p)); transition: stroke-dashoffset 1.4s var(--ease) .2s; }
+  html.js .lp-std:not(.in) .lp-dial .arc { stroke-dashoffset: 100; }
+  .lp-dial b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .lp-score span { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .lp-score small { font-size: 13px; color: var(--muted); }
+  /* 02 core web vitals: one tile per metric */
+  .lp-vitals { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .lp-vital { display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 14px; background: var(--bg-soft); border: 1px solid var(--hair); }
+  .lp-vital abbr { text-decoration: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .06em; color: var(--blue-text); }
+  .lp-vital b { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .lp-vital span { font-size: 13px; line-height: 1.4; color: var(--muted); }
+  /* 03 built in: checklist */
+  .lp-checks { grid-template-columns: 1fr 1fr; gap: 0 40px; padding-block: 12px; }
+  .lp-check { display: flex; align-items: center; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--hair); }
+  .lp-check:nth-last-child(-n+2) { border-bottom: 0; }
+  .lp-ok { flex: none; display: block; }
   .lp-ok circle { fill: var(--blue); }
   .lp-ok polyline { fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-  html[lang="ar"] .lp-gh .n { letter-spacing: 0; }
-  html[lang="ar"] .lp-v { letter-spacing: 0; direction: ltr; }
+  .lp-n { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+  .lp-n span { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .lp-n small { font-size: 13px; color: var(--muted); }
+  .lp-v { flex: none; font-size: 13px; font-weight: 700; color: var(--blue-text); background: color-mix(in srgb, var(--blue) 10%, transparent); border-radius: 999px; padding: 5px 11px; white-space: nowrap; }
+  html[lang="ar"] .lp-gh .n, html[lang="ar"] .lp-vital abbr { letter-spacing: 0; }
+  html[lang="ar"] .lp-vital b, html[lang="ar"] .lp-dial b { letter-spacing: 0; direction: ltr; }
+  @media (prefers-reduced-motion: reduce) {
+    .lp-dial .arc { transition: none; }
+    html.js .lp-std:not(.in) .lp-dial .arc { stroke-dashoffset: calc(100 - var(--p)); }
+  }
+  @media (max-width: 1100px) {
+    .lp-vitals { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
   @media (max-width: 900px) {
-    .lp-grp { grid-template-columns: 1fr; }
+    .lp-card { grid-template-columns: 1fr; }
     .lp-gh { border-inline-end: 0; border-bottom: 1px solid var(--hair); padding: 20px 22px; }
+    .lp-body { padding: 22px; }
   }
   @media (max-width: 600px) {
     .lp-std { margin-top: 64px; }
-    .lp-items { grid-template-columns: 1fr; }
-    .lp-it { padding: 16px 20px; min-height: 0; }
-    .lp-v { font-size: 19px; }
+    .lp-rings { grid-template-columns: 1fr 1fr; gap: 28px 12px; }
+    .lp-dial { width: 88px; height: 88px; }
+    .lp-dial b { font-size: 22px; }
+    .lp-vitals { grid-template-columns: 1fr 1fr; }
+    .lp-vital:last-child { grid-column: 1 / -1; }
+    .lp-vital b { font-size: 21px; }
+    .lp-checks { grid-template-columns: 1fr; padding-block: 6px; }
+    .lp-check:nth-last-child(2) { border-bottom: 1px solid var(--hair); }
   }
 
   /* dashed-curve labels that name each device in the system + landing renders */
@@ -2289,8 +2323,14 @@
     font: 500 clamp(12px, 1.9vh, 16px)/1 'Inter', system-ui, sans-serif;
     letter-spacing: 0.04em;
     color: rgba(255, 255, 255, 0.9);
+    /* the full tagline can wrap on narrow phones */
+    max-width: calc(100vw - 32px);
+    text-align: center;
+    line-height: 1.4;
     animation: plTagIn 600ms var(--ease) 800ms forwards;
   }
+  /* Cairo for Arabic, and no tracking so the letters stay joined */
+  html[lang="ar"] .pl-tag { font-family: 'Cairo', system-ui, sans-serif; letter-spacing: 0; }
   @keyframes plMarkIn {
     from { opacity: 0; transform: translateX(-48px); }
     to   { opacity: 1; transform: translateX(0); }
@@ -2460,7 +2500,7 @@
         </picture>
       </div>
     </div>
-    <div class="pl-tag">design, build, grow.</div>
+    <div class="pl-tag">أنظمة أعمال مخصّصة مبنية حول طريقة عملك.</div>
   </div>
 </div>
 <script>
@@ -2887,43 +2927,37 @@
           <p data-en="High scores built in, checked before launch with Google Lighthouse, PageSpeed Insights and the W3C validators." data-ar="درجات عالية مدمجة، نتحقّق منها قبل الإطلاق عبر Google Lighthouse و PageSpeed Insights ومدقّقات W3C.">درجات عالية مدمجة، نتحقّق منها قبل الإطلاق عبر Google Lighthouse و PageSpeed Insights ومدقّقات W3C.</p>
         </div>
         <div class="lp-sheet">
-          <div class="lp-grp">
-            <div class="lp-gh"><span class="n">01</span><h4 data-en="Found &amp; measured" data-ar="الظهور والقياس">الظهور والقياس</h4><p data-en="Ready for Google and tracked from day one." data-ar="جاهزة لـ Google ومُتابَعة من اليوم الأول.">جاهزة لـ Google ومُتابَعة من اليوم الأول.</p></div>
-            <div class="lp-items">
-              <div class="lp-it"><span class="lp-n"><span data-en="Business profile" data-ar="الملف التجاري">الملف التجاري</span><small data-en="Google Business Profile" data-ar="Google Business Profile">Google Business Profile</small></span><span class="lp-v" role="img" aria-label="included"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg></span></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Basic SEO" data-ar="سيو أساسي">سيو أساسي</span><small data-en="Titles, schema, sitemap" data-ar="العناوين والبيانات المنظّمة وخريطة الموقع">العناوين والبيانات المنظّمة وخريطة الموقع</small></span><b class="lp-v">100</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Google Analytics" data-ar="Google Analytics">Google Analytics</span><small data-en="Enquiries tracked" data-ar="تتبّع الطلبات">تتبّع الطلبات</small></span><b class="lp-v">GA4</b></div>
-            </div>
+          <div class="lp-card">
+            <div class="lp-gh"><span class="n">01</span><h4 data-en="Google Lighthouse" data-ar="Google Lighthouse">Google Lighthouse</h4><p data-en="Scored out of 100." data-ar="درجات من 100.">درجات من 100.</p></div>
+            <ul class="lp-body lp-rings">
+              <li class="lp-score"><span class="lp-dial" style="--p:90"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52" pathLength="100"/><circle class="arc" cx="60" cy="60" r="52" pathLength="100"/></svg><b>90+</b></span><span data-en="Performance" data-ar="الأداء">الأداء</span><small data-en="Speed score" data-ar="درجة السرعة">درجة السرعة</small></li>
+              <li class="lp-score"><span class="lp-dial" style="--p:90"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52" pathLength="100"/><circle class="arc" cx="60" cy="60" r="52" pathLength="100"/></svg><b>90+</b></span><span data-en="Accessibility" data-ar="سهولة الوصول">سهولة الوصول</span><small data-en="A11Y · WCAG" data-ar="A11Y · WCAG">A11Y · WCAG</small></li>
+              <li class="lp-score"><span class="lp-dial" style="--p:100"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52" pathLength="100"/><circle class="arc" cx="60" cy="60" r="52" pathLength="100"/></svg><b>100</b></span><span data-en="Best practices" data-ar="أفضل الممارسات">أفضل الممارسات</span><small data-en="BP score" data-ar="BP">BP</small></li>
+              <li class="lp-score"><span class="lp-dial" style="--p:100"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52" pathLength="100"/><circle class="arc" cx="60" cy="60" r="52" pathLength="100"/></svg><b>100</b></span><span data-en="Basic SEO" data-ar="سيو أساسي">سيو أساسي</span><small data-en="Titles, schema, sitemap" data-ar="العناوين والبيانات المنظّمة وخريطة الموقع">العناوين والبيانات المنظّمة وخريطة الموقع</small></li>
+            </ul>
           </div>
-          <div class="lp-grp">
-            <div class="lp-gh"><span class="n">02</span><h4 data-en="Google Lighthouse" data-ar="Google Lighthouse">Google Lighthouse</h4><p data-en="Scored out of 100." data-ar="درجات من 100.">درجات من 100.</p></div>
-            <div class="lp-items">
-              <div class="lp-it"><span class="lp-n"><span data-en="Performance" data-ar="الأداء">الأداء</span><small data-en="Speed score" data-ar="درجة السرعة">درجة السرعة</small></span><b class="lp-v">90+</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Accessibility" data-ar="سهولة الوصول">سهولة الوصول</span><small data-en="A11Y · WCAG" data-ar="A11Y · WCAG">A11Y · WCAG</small></span><b class="lp-v">90+</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Best practices" data-ar="أفضل الممارسات">أفضل الممارسات</span><small data-en="BP score" data-ar="BP">BP</small></span><b class="lp-v">100</b></div>
-            </div>
+          <div class="lp-card">
+            <div class="lp-gh"><span class="n">02</span><h4 data-en="Core Web Vitals" data-ar="Core Web Vitals">Core Web Vitals</h4><p data-en="Google’s targets for speed and stability." data-ar="معايير Google للسرعة والثبات.">معايير Google للسرعة والثبات.</p></div>
+            <ul class="lp-body lp-vitals">
+              <li class="lp-vital"><abbr>FCP</abbr><b>&lt; 1.8 s</b><span data-en="First contentful paint" data-ar="أول ظهور للمحتوى">أول ظهور للمحتوى</span></li>
+              <li class="lp-vital"><abbr>LCP</abbr><b>&lt; 2.5 s</b><span data-en="Largest contentful paint" data-ar="ظهور المحتوى الأكبر">ظهور المحتوى الأكبر</span></li>
+              <li class="lp-vital"><abbr>TBT</abbr><b>&lt; 200 ms</b><span data-en="Total blocking time" data-ar="إجمالي وقت الحظر">إجمالي وقت الحظر</span></li>
+              <li class="lp-vital"><abbr>CLS</abbr><b>&lt; 0.1</b><span data-en="Cumulative layout shift" data-ar="ثبات التخطيط">ثبات التخطيط</span></li>
+              <li class="lp-vital"><abbr>INP</abbr><b>&lt; 200 ms</b><span data-en="Interaction to next paint" data-ar="سرعة الاستجابة للنقر">سرعة الاستجابة للنقر</span></li>
+            </ul>
           </div>
-          <div class="lp-grp">
-            <div class="lp-gh"><span class="n">03</span><h4 data-en="Core Web Vitals" data-ar="Core Web Vitals">Core Web Vitals</h4><p data-en="Google’s targets for speed and stability." data-ar="معايير Google للسرعة والثبات.">معايير Google للسرعة والثبات.</p></div>
-            <div class="lp-items">
-              <div class="lp-it"><span class="lp-n"><span data-en="First contentful paint" data-ar="أول ظهور للمحتوى">أول ظهور للمحتوى</span><small data-en="FCP" data-ar="FCP">FCP</small></span><b class="lp-v">&lt; 1.8 s</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Largest contentful paint" data-ar="ظهور المحتوى الأكبر">ظهور المحتوى الأكبر</span><small data-en="LCP" data-ar="LCP">LCP</small></span><b class="lp-v">&lt; 2.5 s</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Total blocking time" data-ar="إجمالي وقت الحظر">إجمالي وقت الحظر</span><small data-en="TBT" data-ar="TBT">TBT</small></span><b class="lp-v">&lt; 200 ms</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Cumulative layout shift" data-ar="ثبات التخطيط">ثبات التخطيط</span><small data-en="CLS" data-ar="CLS">CLS</small></span><b class="lp-v">&lt; 0.1</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Interaction to next paint" data-ar="سرعة الاستجابة للنقر">سرعة الاستجابة للنقر</span><small data-en="INP" data-ar="INP">INP</small></span><b class="lp-v">&lt; 200 ms</b></div>
-            </div>
-          </div>
-          <div class="lp-grp">
-            <div class="lp-gh"><span class="n">04</span><h4 data-en="Clean code &amp; delivery" data-ar="شيفرة نظيفة وتسليم سريع">شيفرة نظيفة وتسليم سريع</h4><p data-en="Standards-clean, light and secure." data-ar="شيفرة مطابقة للمعايير، خفيفة وآمنة.">شيفرة مطابقة للمعايير، خفيفة وآمنة.</p></div>
-            <div class="lp-items">
-              <div class="lp-it"><span class="lp-n"><span data-en="HTML, compressed" data-ar="HTML مضغوط">HTML مضغوط</span><small data-en="Light on mobile data" data-ar="خفيف على بيانات الهاتف">خفيف على بيانات الهاتف</small></span><b class="lp-v">GZIP / BR</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Font preload" data-ar="تحميل الخطوط مسبقًا">تحميل الخطوط مسبقًا</span><small data-en="No flash of fallback text" data-ar="بلا وميض في النص">بلا وميض في النص</small></span><span class="lp-v" role="img" aria-label="included"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg></span></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="W3C HTML errors" data-ar="أخطاء W3C في HTML">أخطاء W3C في HTML</span><small data-en="Official validator" data-ar="المدقّق الرسمي">المدقّق الرسمي</small></span><b class="lp-v">0</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="W3C CSS errors" data-ar="أخطاء W3C في CSS">أخطاء W3C في CSS</span><small data-en="Official validator" data-ar="المدقّق الرسمي">المدقّق الرسمي</small></span><b class="lp-v">0</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Third-party origins" data-ar="مصادر خارجية">مصادر خارجية</span><small data-en="Only what you need" data-ar="الضروري فقط">الضروري فقط</small></span><b class="lp-v" data-en="Minimal" data-ar="الحد الأدنى">الحد الأدنى</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Security headers" data-ar="ترويسات الأمان">ترويسات الأمان</span><small data-en="HTTPS, CSP, HSTS" data-ar="HTTPS و CSP و HSTS">HTTPS و CSP و HSTS</small></span><b class="lp-v">A</b></div>
-              <div class="lp-it"><span class="lp-n"><span data-en="Global CDN" data-ar="شبكة CDN عالمية">شبكة CDN عالمية</span><small data-en="Fast from anywhere" data-ar="سريعة من أي مكان">سريعة من أي مكان</small></span><b class="lp-v">CDN</b></div>
-            </div>
+          <div class="lp-card">
+            <div class="lp-gh"><span class="n">03</span><h4 data-en="Built in" data-ar="مدمج في كل صفحة">مدمج في كل صفحة</h4><p data-en="Found by Google, tracked from day one, light and secure." data-ar="يجدها Google، ومُتابَعة من اليوم الأول، خفيفة وآمنة.">يجدها Google، ومُتابَعة من اليوم الأول، خفيفة وآمنة.</p></div>
+            <ul class="lp-body lp-checks">
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="Business profile" data-ar="الملف التجاري">الملف التجاري</span><small data-en="Google Business Profile" data-ar="Google Business Profile">Google Business Profile</small></span></li>
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="Google Analytics" data-ar="Google Analytics">Google Analytics</span><small data-en="Enquiries tracked" data-ar="تتبّع الطلبات">تتبّع الطلبات</small></span><b class="lp-v">GA4</b></li>
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="HTML, compressed" data-ar="HTML مضغوط">HTML مضغوط</span><small data-en="Light on mobile data" data-ar="خفيف على بيانات الهاتف">خفيف على بيانات الهاتف</small></span><b class="lp-v">GZIP / BR</b></li>
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="Font preload" data-ar="تحميل الخطوط مسبقًا">تحميل الخطوط مسبقًا</span><small data-en="No flash of fallback text" data-ar="بلا وميض في النص">بلا وميض في النص</small></span></li>
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="W3C HTML &amp; CSS" data-ar="HTML و CSS حسب W3C">HTML و CSS حسب W3C</span><small data-en="Official validators" data-ar="المدقّقات الرسمية">المدقّقات الرسمية</small></span><b class="lp-v" data-en="0 errors" data-ar="0 أخطاء">0 أخطاء</b></li>
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="Security headers" data-ar="ترويسات الأمان">ترويسات الأمان</span><small data-en="HTTPS, CSP, HSTS" data-ar="HTTPS و CSP و HSTS">HTTPS و CSP و HSTS</small></span><b class="lp-v">A</b></li>
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="Third-party origins" data-ar="مصادر خارجية">مصادر خارجية</span><small data-en="Only what you need" data-ar="الضروري فقط">الضروري فقط</small></span><b class="lp-v" data-en="Minimal" data-ar="الحد الأدنى">الحد الأدنى</b></li>
+              <li class="lp-check"><svg class="lp-ok" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><polyline points="7 12.5 10.5 16 17 9"/></svg><span class="lp-n"><span data-en="Global CDN" data-ar="شبكة CDN عالمية">شبكة CDN عالمية</span><small data-en="Fast from anywhere" data-ar="سريعة من أي مكان">سريعة من أي مكان</small></span></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -3342,6 +3376,9 @@
           <div class="fc-h" data-en="Social" data-ar="تواصل اجتماعي">تواصل اجتماعي</div>
           <a class="social-link" href="https://www.linkedin.com/company/kaprera/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.25 8.25h4.5V24h-4.5V8.25Zm7.25 0h4.31v2.15h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.5v-6.9c0-1.64-.03-3.75-2.29-3.75-2.29 0-2.64 1.79-2.64 3.63V24h-4.5V8.25Z"/></svg><span data-en="LinkedIn" data-ar="لينكدإن">لينكدإن</span></a>
           <a class="social-link" href="https://www.instagram.com/kaprera_agency/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span data-en="Instagram" data-ar="إنستغرام">إنستغرام</span></a>
+          <a class="social-link" href="https://www.facebook.com/share/1MnMbT8nhp/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.23 2.69.23v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07Z"/></svg><span data-en="Facebook" data-ar="فيسبوك">فيسبوك</span></a>
+          <a class="social-link" href="https://www.threads.com/@kaprera_agency" target="_blank" rel="noopener" aria-label="Threads"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.19 24h-.01c-3.58-.02-6.33-1.2-8.18-3.51C2.35 18.44 1.5 15.59 1.47 12.01v-.02c.03-3.58.88-6.43 2.53-8.48C5.85 1.2 8.6.02 12.18 0h.01c2.75.02 5.04.73 6.83 2.1 1.68 1.29 2.86 3.13 3.51 5.47l-2.04.57c-1.1-3.96-3.9-5.98-8.3-6.02-2.91.02-5.11.94-6.54 2.72C4.31 6.5 3.62 8.91 3.59 12c.03 3.09.72 5.5 2.06 7.16 1.43 1.78 3.63 2.7 6.54 2.72 2.62-.02 4.36-.63 5.8-2.05 1.65-1.61 1.62-3.59 1.09-4.8-.31-.71-.87-1.3-1.63-1.75-.19 1.35-.62 2.45-1.28 3.27-.89 1.1-2.14 1.7-3.73 1.79-1.2.07-2.36-.22-3.26-.8-1.06-.69-1.69-1.74-1.75-2.96-.07-1.19.41-2.29 1.33-3.08.88-.76 2.12-1.21 3.58-1.29a13.85 13.85 0 0 1 3.02.14c-.13-.74-.38-1.33-.75-1.76-.51-.59-1.31-.88-2.36-.89h-.03c-.84 0-1.99.23-2.72 1.32L7.73 7.85c.98-1.45 2.57-2.26 4.48-2.26h.04c3.2.02 5.1 1.98 5.29 5.39l.32.14c1.49.7 2.58 1.76 3.15 3.07.8 1.82.87 4.79-1.55 7.16-1.85 1.81-4.09 2.63-7.27 2.65Zm1-11.69c-.24 0-.49.01-.74.02-1.84.1-2.98.95-2.92 2.14.07 1.26 1.45 1.84 2.78 1.77 1.23-.07 2.82-.54 3.09-3.71a10.5 10.5 0 0 0-2.21-.22Z"/></svg><span data-en="Threads" data-ar="ثريدز">ثريدز</span></a>
+          <a class="social-link" href="https://x.com/kaprera_agency" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z"/></svg><span data-en="X" data-ar="إكس">إكس</span></a>
           <a class="social-link" href="https://wa.me/9613816405" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="WhatsApp" data-ar="واتساب">واتساب</span></a>
         </div>
       </div>
