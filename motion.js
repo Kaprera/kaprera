@@ -9,6 +9,12 @@
    under prefers-reduced-motion, so the page is complete without this file. */
 (function () {
   var root = document.documentElement;
+
+  /* current page in the primary nav; a state, so it applies under reduced motion too */
+  [].slice.call(document.querySelectorAll('.nav-links a.link')).forEach(function (a) {
+    if (!a.hash && a.pathname === location.pathname) a.setAttribute('aria-current', 'page');
+  });
+
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (reduce.matches || !('IntersectionObserver' in window)) return;
   root.classList.add('motion');
@@ -170,9 +176,6 @@
     else update();
   }
 
-  /* ── pointer effects: mouse and trackpad only ── */
-  if (!finePointer) return;
-
   /* each effect eases toward a target in rAF rather than through a CSS
      transition, so the element's own transition list is left untouched */
   var spring = function (el, prop, fmt) {
@@ -186,6 +189,50 @@
     };
     return function (x, y) { to[0] = x; to[1] = y; if (!raf) raf = requestAnimationFrame(loop); };
   };
+  /* ── pressed: anything clickable sinks slightly under the pointer and
+     springs back on release. Delegated, so late-built controls (slider
+     dots, form steps) get it too; deeper for small controls, shallower
+     for big cards so they don't look like they're collapsing ── */
+  /* [selector, depth in %]; the nearest pressable ancestor wins, so a
+     button inside a card presses the button, not the card */
+  var PRESS = [
+    ['.case-shot, .more-card, .role-card, .case-row, .tst-card, .contact-card, .svc-panel', 1.5],
+    ['.btn, .nav-cta, .svc-cta, .fbtn, .step-opt, summary', 3.5],
+    ['button, [role="button"], .theme-toggle, .lang-toggle, .menu-btn, .social-link, .brand', 7]
+  ];
+  var presses = new WeakMap(), held = null;
+  var pressTarget = function (node) {
+    for (var el = node; el && el.nodeType === 1; el = el.parentElement) {
+      for (var i = 0; i < PRESS.length; i++) {
+        if (!el.matches(PRESS[i][0])) continue;
+        return el.disabled || el.getAttribute('aria-disabled') === 'true' ? null : [el, PRESS[i][1]];
+      }
+    }
+    return null;
+  };
+  var release = function () {
+    if (held) presses.get(held)(0, 0);
+    held = null;
+  };
+  document.addEventListener('pointerdown', function (e) {
+    if (e.button) return;
+    var hit = pressTarget(e.target);
+    if (!hit) return;
+    var el = hit[0];
+    if (!presses.has(el)) presses.set(el, spring(el, 'scale', function (x) { return (1 - x / 100).toFixed(4); }));
+    held = el;
+    presses.get(el)(hit[1], 0);
+  }, { passive: true });
+  ['pointerup', 'pointercancel', 'dragstart', 'blur'].forEach(function (t) {
+    (t === 'blur' ? window : document).addEventListener(t, release, { passive: true });
+  });
+  document.addEventListener('pointerout', function (e) {
+    if (held && e.target === held && !held.contains(e.relatedTarget)) release();
+  }, { passive: true });
+
+  /* ── pointer effects: mouse and trackpad only ── */
+  if (!finePointer) return;
+
   var track = function (el, set, k) {
     el.addEventListener('pointermove', function (e) {
       var r = el.getBoundingClientRect();
