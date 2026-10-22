@@ -19,6 +19,41 @@
   if (reduce.matches || !('IntersectionObserver' in window)) return;
   root.classList.add('motion');
 
+  /* ── theme + language switches run inside a view transition: dark/light
+     spreads as a circle from the toggle, EN/AR blurs across. Every page
+     wires its own toggle handlers, so rather than touch each one the click
+     is caught here, held, and replayed as the transition's update. The
+     handlers are synchronous, so the DOM is final when the replay returns.
+     /ar/'s language toggle navigates away instead, and the page-to-page
+     transition in motion.css covers that. */
+  if (document.startViewTransition && !/^\/ar\//.test(location.pathname)) {
+    var replaying = false;
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest && e.target.closest('.theme-toggle, .lang-toggle');
+      if (!el || replaying || el.disabled) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      var theme = el.classList.contains('theme-toggle');
+      var r = el.getBoundingClientRect();
+      var x = r.left + r.width / 2, y = r.top + r.height / 2;
+      root.style.setProperty('--m-vt-x', x + 'px');
+      root.style.setProperty('--m-vt-y', y + 'px');
+      root.style.setProperty('--m-vt-r', Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 'px');
+      /* m-switching stops colour transitions, so the new snapshot is
+         taken in the finished theme rather than a third of the way there */
+      root.classList.add('m-switching', theme ? 'm-vt-theme' : 'm-vt-lang');
+      var vt = document.startViewTransition(function () {
+        replaying = true;
+        try { el.click(); } finally { replaying = false; }
+        /* give a just-requested Arabic font a moment so the snapshot isn't fallback type */
+        if (!theme && document.fonts) {
+          return Promise.race([document.fonts.ready, new Promise(function (ok) { setTimeout(ok, 300); })]);
+        }
+      });
+      vt.finished.finally(function () { root.classList.remove('m-switching', 'm-vt-theme', 'm-vt-lang'); });
+    }, true);
+  }
+
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var $$ = function (sel, ctx) { return [].slice.call((ctx || document).querySelectorAll(sel)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
