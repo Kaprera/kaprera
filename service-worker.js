@@ -1,13 +1,13 @@
 /* kaprera service worker — offline shell + smart caching */
-const VERSION = 'kaprera-v9';
+const VERSION = 'kaprera-v10';
 const PRECACHE = [
   '/',
   '/privacy-policy',
   '/careers',
   '/site.webmanifest',
   '/cookies.js',
-  '/branding/logos/icon-192.png',
-  '/branding/logos/favicon-512.png',
+  '/branding/logos/icon-rounded-192.png',
+  '/branding/logos/icon-rounded-512.png',
   '/branding/logos/kaprera-icon-mark.webp',
   '/branding/logos/kaprera-wordmark-dark.webp',
   '/branding/logos/kaprera-wordmark-light.webp'
