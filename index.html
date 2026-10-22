@@ -715,7 +715,7 @@
      (which would force a reflow) is needed to lock the height */
   /* reserves the final height; user-select keeps it out of a copied headline */
   .hero h1 .type-ghost { visibility: hidden; user-select: none; -webkit-user-select: none; }
-  .hero h1 .type-live { position: absolute; inset: 0; }
+  .hero h1 .type-live { position: absolute; inset: 0; white-space: pre-line; }
   .hero h1.type-done .type-ghost { display: none; }
   .hero h1.type-done .type-live { position: static; }
   .hero h1 .caret {
@@ -1277,54 +1277,131 @@
     color: #fff; border-color: #fff; background: rgba(255,255,255,0.14);
   }
 
-  /* ── intro slide: vertical kaprera-mark pattern on the right ── */
-  .hero-pattern {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    inset-inline-end: 5%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+  /* ── intro slide: the spreadsheet a business outgrew, and the system that
+     replaced it. A faded sheet tilts behind a clean orders card; one order
+     walks pending → in progress → delivered and a toast confirms it, on a
+     slow 9s loop. Decorative only (aria-hidden); hidden on narrow screens. */
+  .hero-art {
+    position: absolute; top: 0; bottom: 0;
+    inset-inline-end: 3%;
+    width: clamp(300px, 31vw, 430px);
+    display: grid; place-items: center;
     pointer-events: none;
-    animation: heroPatFloat 12s ease-in-out infinite;
   }
-  .hero-pattern i { display: block; }
-  .hero-pattern .hp-mark {
-    width: clamp(84px, 9.5vw, 124px);
-    aspect-ratio: 913 / 793;
-    /* the icon-mark asset is white-on-transparent, so opacity alone tints it */
-    background: url('branding/logos/kaprera-icon-mark.webp') center / contain no-repeat;
+  .ha-stage { position: relative; width: 100%; animation: heroPatFloat 12s ease-in-out infinite; }
+  .ha-sheet {
+    position: absolute; inset: -9% 16% 16% -6%;
+    border-radius: 16px;
+    background:
+      linear-gradient(rgba(255,255,255,0.20), rgba(255,255,255,0.20)) 0 0 / 100% 30px no-repeat,
+      repeating-linear-gradient(to right, transparent 0 69px, rgba(255,255,255,0.20) 69px 70px),
+      repeating-linear-gradient(to bottom, transparent 0 29px, rgba(255,255,255,0.20) 29px 30px),
+      rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.26);
+    rotate: -7deg;
+    -webkit-mask: linear-gradient(135deg, #000 30%, transparent 92%);
+            mask: linear-gradient(135deg, #000 30%, transparent 92%);
   }
-  .hero-pattern .hp-mark.flip { transform: rotate(180deg); }
-  .hero-pattern .hp-mark:nth-child(2) { opacity: 0.16; }
-  .hero-pattern .hp-mark:nth-child(4) { opacity: 0.30; }
-  .hero-pattern .hp-mark:nth-child(6) { opacity: 0.48; }
-  .hero-pattern .hp-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: #fff;
+  html[dir="rtl"] .ha-sheet { inset: -9% -6% 16% 16%; rotate: 7deg;
+    -webkit-mask: linear-gradient(225deg, #000 30%, transparent 92%); mask: linear-gradient(225deg, #000 30%, transparent 92%); }
+  .ha-app {
+    position: relative;
+    display: grid; gap: 16px;
+    padding: 20px;
+    background: #fff; color: #0a0a0a;
+    border-radius: 20px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 40px 80px -30px rgba(4,30,60,0.55), 0 0 0 1px rgba(4,30,60,0.06);
   }
-  .hero-pattern .hp-dot:nth-child(3) { opacity: 0.22; }
-  .hero-pattern .hp-dot:nth-child(5) { opacity: 0.38; }
-  .hero-pattern .hp-tick {
-    width: 2px; height: 26px;
-    border-radius: 1px;
-    background: #fff;
-    opacity: 0.35;
+  .ha-head { display: flex; align-items: center; gap: 10px; }
+  .ha-logo { width: 28px; height: 28px; border-radius: 8px; background: #008cc1 url('branding/logos/kaprera-icon-mark.webp') center / 60% no-repeat; flex: none; }
+  .ha-title { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+  .ha-live {
+    margin-inline-start: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; font-weight: 600; color: #0079a8;
+    background: #e8f5fb; border-radius: 999px; padding: 4px 10px 4px 8px;
   }
-  @keyframes heroPatFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-14px); }
+  .ha-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #008cc1; animation: haPulse 2.4s ease-in-out infinite; }
+  .ha-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ha-kpi { padding: 12px 14px; border-radius: 14px; background: #f5f8fa; display: grid; gap: 2px; }
+  .ha-kpi span { font-size: 11.5px; color: #5b5b5b; }
+  .ha-kpi b { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .ha-kpi b small { font-size: 12px; font-weight: 600; color: #0079a8; margin-inline-start: 4px; }
+  .ha-chart { display: flex; align-items: flex-end; gap: 8px; height: 64px; padding: 0 2px; border-bottom: 1px solid #edf0f2; }
+  .ha-chart i {
+    flex: 1; height: var(--h); border-radius: 5px 5px 2px 2px;
+    background: linear-gradient(to top, #bfe3f2, #8fd0ea);
+    transform-origin: 50% 100%;
+    animation: haRise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i) * 90ms + 300ms);
+  }
+  .ha-chart i:last-child { background: linear-gradient(to top, #008cc1, #2fb0e0); animation: haRise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both 900ms, haGrow 9s ease-in-out infinite 2s; }
+  .ha-rows { display: grid; gap: 8px; }
+  .ha-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; }
+  .ha-row.is-live { animation: haRowGlow 9s ease-in-out infinite; }
+  .ha-ava { width: 26px; height: 26px; border-radius: 50%; background: #e3eef4; flex: none; }
+  .ha-row:nth-child(2) .ha-ava { background: #d5ecf6; }
+  .ha-row:nth-child(3) .ha-ava { background: #eceff1; }
+  .ha-line { display: grid; gap: 5px; flex: 1; }
+  .ha-line i { display: block; height: 7px; border-radius: 4px; background: #e9edf0; }
+  .ha-line i:first-child { width: 72%; background: #dde3e7; }
+  .ha-line i:last-child { width: 44%; }
+  .ha-pill {
+    display: grid; font-size: 11px; font-weight: 600; white-space: nowrap;
+    border-radius: 999px; padding: 4px 10px;
+  }
+  .ha-pill > span { grid-area: 1 / 1; text-align: center; }
+  .ha-pill.done { background: #008cc1; color: #fff; }
+  .ha-pill.wait { background: #eef1f3; color: #5b5b5b; }
+  /* the live order: three stacked labels take turns while the pill recolours */
+  .ha-pill.cycle { animation: haPillBg 9s ease-in-out infinite; }
+  .ha-pill.cycle > span { opacity: 0; }
+  .ha-pill.cycle > span:nth-child(1) { animation: haS1 9s ease-in-out infinite; }
+  .ha-pill.cycle > span:nth-child(2) { animation: haS2 9s ease-in-out infinite; }
+  .ha-pill.cycle > span:nth-child(3) { animation: haS3 9s ease-in-out infinite; }
+  .ha-toast {
+    position: absolute; bottom: -22px; inset-inline-start: -38px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px 10px 10px;
+    background: #fff; color: #0a0a0a; border-radius: 14px;
+    box-shadow: 0 22px 44px -18px rgba(4,30,60,0.55), 0 0 0 1px rgba(4,30,60,0.06);
+    animation: haToast 9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  html[dir="rtl"] .ha-toast { padding: 10px 10px 10px 16px; }
+  .ha-check { width: 28px; height: 28px; border-radius: 50%; background: #008cc1; display: grid; place-items: center; flex: none; }
+  .ha-check svg { width: 14px; height: 14px; }
+  .ha-txt b { display: block; font-size: 13px; font-weight: 700; }
+  .ha-txt span { display: block; font-size: 11.5px; color: #5b5b5b; }
+
+  @keyframes heroPatFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes haPulse { 50% { opacity: .35; } }
+  @keyframes haRise { from { transform: scaleY(0); } }
+  @keyframes haGrow { 0%, 60% { height: var(--h); } 72%, 96% { height: 100%; } 100% { height: var(--h); } }
+  @keyframes haS1 { 0%, 28% { opacity: 1; } 33%, 100% { opacity: 0; } }
+  @keyframes haS2 { 0%, 30% { opacity: 0; } 35%, 61% { opacity: 1; } 66%, 100% { opacity: 0; } }
+  @keyframes haS3 { 0%, 63% { opacity: 0; } 68%, 95% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes haPillBg {
+    0%, 28%  { background: #eef1f3; color: #5b5b5b; }
+    35%, 61% { background: #e1f2fa; color: #0079a8; }
+    68%, 95% { background: #008cc1; color: #fff; }
+    100%     { background: #eef1f3; color: #5b5b5b; }
+  }
+  @keyframes haRowGlow { 0%, 62%, 100% { background: transparent; } 70%, 92% { background: #f2f9fc; } }
+  @keyframes haToast {
+    0%, 66% { opacity: 0; translate: 0 14px; scale: .96; }
+    71%, 92% { opacity: 1; translate: 0 0; scale: 1; }
+    97%, 100% { opacity: 0; translate: 0 -6px; scale: .98; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero-pattern { animation: none; }
+    .ha-stage, .ha-chart i, .ha-live::before, .ha-row.is-live, .ha-pill.cycle, .ha-pill.cycle > span { animation: none; }
+    /* hold the story's last frame: delivered, with its toast */
+    .ha-pill.cycle { background: #008cc1; color: #fff; }
+    .ha-pill.cycle > span:nth-child(3) { opacity: 1; }
+    .ha-toast { animation: none; }
   }
-  @media (max-width: 960px) {
-    .hero-pattern { display: none; }
-  }
+  /* narrower screens: the tilted sheet would slide behind the headline, so only the card stays */
+  @media (max-width: 1100px) { .hero-art { inset-inline-end: 2%; width: 280px; } .ha-sheet { display: none; } .ha-toast { inset-inline-start: -24px; } }
+  @media (max-width: 960px) { .hero-art { display: none; } }
 
   /* slider controls */
   .hero.is-colored .work-ctrls { border-top-color: rgba(255,255,255,0.28); }
@@ -2604,14 +2681,33 @@
                 <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 <button type="button" class="btn btn-ghost" id="seeWork" data-en="See our work" data-ar="شاهد أعمالنا">See our work</button>
               </div>
-              <div class="hero-pattern" aria-hidden="true" data-m-parallax="-0.08">
-                <i class="hp-tick"></i>
-                <i class="hp-mark"></i>
-                <i class="hp-dot"></i>
-                <i class="hp-mark flip"></i>
-                <i class="hp-dot"></i>
-                <i class="hp-mark"></i>
-                <i class="hp-tick"></i>
+              <div class="hero-art" aria-hidden="true" data-m-parallax="-0.08">
+                <div class="ha-stage">
+                  <div class="ha-sheet"></div>
+                  <div class="ha-app">
+                    <div class="ha-head">
+                      <span class="ha-logo"></span>
+                      <span class="ha-title" data-en="Orders" data-ar="الطلبات">Orders</span>
+                      <span class="ha-live" data-en="Live" data-ar="مباشر">Live</span>
+                    </div>
+                    <div class="ha-kpis">
+                      <div class="ha-kpi"><span data-en="Today" data-ar="اليوم">Today</span><b>48 <small>+12%</small></b></div>
+                      <div class="ha-kpi"><span data-en="On time" data-ar="في الموعد">On time</span><b>96%</b></div>
+                    </div>
+                    <div class="ha-chart">
+                      <i style="--h:38%;--i:0"></i><i style="--h:52%;--i:1"></i><i style="--h:44%;--i:2"></i><i style="--h:63%;--i:3"></i><i style="--h:57%;--i:4"></i><i style="--h:74%;--i:5"></i><i style="--h:82%;--i:6"></i>
+                    </div>
+                    <div class="ha-rows">
+                      <div class="ha-row is-live"><span class="ha-ava"></span><span class="ha-line"><i></i><i></i></span><span class="ha-pill cycle"><span data-en="Pending" data-ar="قيد الانتظار">Pending</span><span data-en="In progress" data-ar="قيد التنفيذ">In progress</span><span data-en="Delivered" data-ar="تم التسليم">Delivered</span></span></div>
+                      <div class="ha-row"><span class="ha-ava"></span><span class="ha-line"><i></i><i></i></span><span class="ha-pill done" data-en="Delivered" data-ar="تم التسليم">Delivered</span></div>
+                      <div class="ha-row"><span class="ha-ava"></span><span class="ha-line"><i></i><i></i></span><span class="ha-pill wait" data-en="Pending" data-ar="قيد الانتظار">Pending</span></div>
+                    </div>
+                  </div>
+                  <div class="ha-toast">
+                    <span class="ha-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17 19 7.5"/></svg></span>
+                    <span class="ha-txt"><b data-en="Order delivered" data-ar="تم تسليم الطلب">Order delivered</b><span data-en="just now" data-ar="الآن">just now</span></span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -2766,7 +2862,7 @@
 
 
       <div class="pain-next reveal">
-        <a href="#services" class="btn btn-ghost"><span data-en="See how we fix it" data-ar="شاهد كيف نعالج ذلك">See how we fix it</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="#services" class="btn btn-primary btn-shine"><span data-en="See how we fix it" data-ar="شاهد كيف نعالج ذلك">See how we fix it</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
         </div>
 
@@ -3892,6 +3988,28 @@
     // hold the keystrokes until the preloader clears; this fn re-runs on unlock
     if (!heroTypingUnlocked) return;
     const typed = heroTitle.querySelector('.typed');
+    // type along the finished headline's own line breaks: otherwise a half-typed
+    // word still fits on the line above, runs out toward the hero art, then jumps
+    // down once it's too long. The ghost is already laid out, so this is one read
+    const ghostText = heroTitle.querySelector('.type-ghost').firstChild;
+    let shown = text;
+    if (ghostText) {
+      const r = document.createRange();
+      const starts = [];
+      let top = null;
+      for (let k = 0; k < text.length; k++) {
+        r.setStart(ghostText, k); r.setEnd(ghostText, k + 1);
+        const box = r.getBoundingClientRect();
+        if (!box.height || text[k] === ' ') continue;
+        if (top !== null && box.top > top + box.height / 2) starts.push(k);
+        top = box.top;
+      }
+      // a newline replaces the space each wrapped line started after
+      for (let k = starts.length - 1; k >= 0; k--) {
+        const at = starts[k];
+        shown = shown.slice(0, at).replace(/ $/, '') + '\n' + shown.slice(at);
+      }
+    }
     // the headline is the page's value proposition, so it has to finish while the
     // hero slide is still on screen — roughly 2s for a 50-character line
     const delayFor = (ch) => {
@@ -3903,10 +4021,12 @@
     let i = 0;
     const step = () => {
       i++;
-      typed.textContent = text.slice(0, i);
-      if (i < text.length) {
-        typeTimer = setTimeout(step, delayFor(text[i - 1]));
+      typed.textContent = shown.slice(0, i);
+      if (i < shown.length) {
+        typeTimer = setTimeout(step, delayFor(shown[i - 1]));
       } else {
+        // back to the plain string, so it rewraps normally if the window resizes
+        typed.textContent = text;
         heroTitle.classList.add('type-done');
       }
     };
