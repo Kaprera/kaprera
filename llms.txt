@@ -10,7 +10,7 @@
 - Type: software agency (software company), not a marketing or digital agency
 - Location: Beirut, Lebanon (works remotely with clients in Lebanon, Saudi Arabia, the UAE and the GCC)
 - Founder: Ibrahim Hussein (Founder), who leads every project from the first call to launch
-- Clients include: Agri Pro Services, Lebanese Spotlight, Takkoush Flowers, Wafica Design, Bayader Investments, Oplinx Solutions, AL-Shamaa Engineering
+- Clients include: Agri Pro Services, Lebanese Spotlight, Takkoush Flowers, Wafica Design, Oplinx Solutions, AL-Shamaa Engineering
 - Reviews: five 5-star client reviews on kaprera.com
 - Services: custom business systems (replace Excel, WhatsApp orders and paperwork), business process automation, order and stock management, CRM, dashboards and automatic reports, MVP development for startups, web apps, websites and landing pages, SEO
 - Does NOT build: native mobile apps (iOS/Android). Systems are web-based and work on any phone in the browser.
@@ -28,7 +28,6 @@
 - [Work](https://kaprera.com/work/): case studies with measured results
 - [Agri Pro Services](https://kaprera.com/cases/agripro/): operations platform for a pest control company
 - [Lebanese Spotlight](https://kaprera.com/cases/lbspotlight/): volunteer management platform, 60% faster onboarding
-- [Bayader Investments](https://kaprera.com/cases/bayader/): corporate website, 55% faster load speed
 - Takkoush Flowers: order and delivery system for a flower shop in Beirut (replaced a shared spreadsheet)
 - Wafica Design: events management system with events, expenses and payroll (replaced an Excel file)
 - [Contact](https://kaprera.com/contact/)
@@ -283,7 +282,7 @@ We pick the stack per project: Next.js, Nuxt, Node.js and Tailwind CSS for syste
 ### Work & results
 
 **What has kaprera built?**  
-Custom systems such as the Agri Pro Services operations system (plus its landing page), the Lebanese Spotlight volunteer system (plus its website), the Takkoush Flowers order and delivery system and the Wafica Design events management system, plus websites for Bayader Investments, Oplinx Solutions and AL-Shamaa Engineering.
+Custom systems such as the Agri Pro Services operations system (plus its landing page), the Lebanese Spotlight volunteer system (plus its website), the Takkoush Flowers order and delivery system and the Wafica Design events management system, plus websites for Oplinx Solutions and AL-Shamaa Engineering.
 
 **What did kaprera build for Agri Pro Services?**  
 A role-based operations platform for a pest control company in Lebanon: a live dashboard, a deal pipeline with quotes, visit scheduling, and field and inspection reports filed from the phone that land straight on the admin dashboard. We also built their bilingual website.
@@ -296,9 +295,6 @@ An order and operations system for their Hamra branch that replaced a shared spr
 
 **What did kaprera build for Wafica Design?**  
 A management system for an events decoration company (weddings, engagements, baby showers, rentals) that replaced their Excel finance file: events with their own expenses and profit, customers, team attendance and payroll, and reports.
-
-**What did kaprera build for Bayader Investments?**  
-A corporate website for an investment firm in Saudi Arabia, with a page for each investment line, a news section the team updates itself and one route for investor enquiries. Results: 55% faster load speed, 48% more engagement and 32% more SEO visibility.
 
 **Has kaprera worked with NGOs?**  
 Yes, for example the Lebanese Spotlight volunteer platform and the War Action Research interactive research platform.
