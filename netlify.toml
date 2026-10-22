@@ -46,6 +46,18 @@
   to = "/maintenance.html"
   status = 200
 
+# Retired case studies send old links and search results to the work page.
+
+[[redirects]]
+  from = "/cases/bayader"
+  to = "/work/"
+  status = 301
+
+[[redirects]]
+  from = "/cases/bayader/*"
+  to = "/work/"
+  status = 301
+
 # ── security headers ─────────────────────────────────────────────────
 # Static site, HTTPS-only on Netlify. The pages use inline styles and
 # scripts by design, so script-src/style-src carry 'unsafe-inline' —

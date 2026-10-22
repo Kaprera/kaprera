@@ -231,7 +231,7 @@
   /* [selector, depth in %]; the nearest pressable ancestor wins, so a
      button inside a card presses the button, not the card */
   var PRESS = [
-    ['.case-shot, .more-card, .role-card, .case-row, .tst-card, .contact-card, .svc-panel', 1.5],
+    ['.case-shot, .more-card, .role-card, .case-row, .contact-card, .svc-panel', 1.5],
     ['.btn, .nav-cta, .svc-cta, .fbtn, .step-opt, summary', 3.5],
     ['button, [role="button"], .theme-toggle, .lang-toggle, .menu-btn, .social-link, .brand', 7]
   ];

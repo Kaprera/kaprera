@@ -15,10 +15,6 @@
       <image:title>War Action Research interactive research platform by kaprera</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://kaprera.com/cases/bayader/image.jpg</image:loc>
-      <image:title>Bayader Investments website by kaprera</image:title>
-    </image:image>
-    <image:image>
       <image:loc>https://kaprera.com/cases/lbspotlight/image.jpg</image:loc>
       <image:title>Lebanese Spotlight volunteer platform by kaprera</image:title>
     </image:image>
@@ -70,7 +66,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://kaprera.com/cases/bayader/image.jpg</image:loc>
+      <image:loc>https://kaprera.com/cases/war/image.jpg</image:loc>
       <image:title>kaprera selected work and case studies</image:title>
     </image:image>
   </url>
@@ -82,16 +78,6 @@
     <image:image>
       <image:loc>https://kaprera.com/cases/war/image.jpg</image:loc>
       <image:title>War Action Research interactive research platform by kaprera</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kaprera.com/cases/bayader/</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kaprera.com/cases/bayader/image.jpg</image:loc>
-      <image:title>Bayader Investments corporate website by kaprera</image:title>
     </image:image>
   </url>
   <url>
