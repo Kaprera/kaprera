@@ -121,3 +121,85 @@ html.motion .shot img[data-m-parallax] { scale: 1.08; }
   .faq-item .faq-a { transition: none; opacity: 1; translate: none; }
   .m-link { transition: none; }
 }
+
+/* ── interaction states ──────────────────────────────────────────────────
+   Hover lives with each component; this adds what was missing everywhere:
+   current page, focus arrival, pressed, busy, disabled and field validity.
+   The pressed scale itself is sprung from motion.js (it uses `scale`, so it
+   composes with hover lifts on `transform`); here it only loses the grey
+   tap flash. */
+a, button, summary, label, [role="button"] { -webkit-tap-highlight-color: transparent; }
+
+/* current page in the primary nav reads like a held hover */
+.nav-links a.link[aria-current="page"] { color: var(--blue); }
+.nav-links a.link[aria-current="page"]::after { width: 100%; }
+
+/* focus: the ring settles in from a little further out rather than blinking on */
+@keyframes m-ring { from { outline-offset: 7px; outline-color: transparent; } }
+:is(a, button, summary, input, select, textarea, [role="button"], [tabindex="0"]):focus-visible {
+  animation: m-ring .3s var(--m-ease);
+}
+
+/* disabled: never hovers, never presses */
+button:disabled, [aria-disabled="true"] { cursor: not-allowed; }
+.btn:disabled, .btn[aria-disabled="true"] { box-shadow: none; }
+
+/* busy: a submit button is only disabled while the form is sending, so it
+   shows a spinner after its label until the request settles */
+@keyframes m-spin { to { rotate: 360deg; } }
+form button[type="submit"]:disabled { cursor: progress; }
+form button[type="submit"]:disabled > svg { display: none; }
+form button[type="submit"]:disabled > span::after {
+  content: ""; display: inline-block; vertical-align: -2px;
+  width: 13px; height: 13px; margin-inline-start: 9px;
+  border: 2px solid currentColor; border-inline-end-color: transparent; border-radius: 50%;
+  animation: m-spin .7s linear infinite;
+}
+
+/* fields: hover hints, invalid shows only once the visitor has touched it */
+form input:not([type="checkbox"]):not([type="radio"]):hover:not(:focus),
+form select:hover:not(:focus), form textarea:hover:not(:focus) {
+  border-color: color-mix(in srgb, var(--blue, #008cc1) 45%, var(--hair, #ddd));
+}
+form input:user-invalid, form select:user-invalid, form textarea:user-invalid {
+  border-color: var(--err-ink, #8d2f2f);
+  background-color: color-mix(in srgb, var(--err-ink, #8d2f2f) 5%, transparent);
+}
+@keyframes m-nudge { 25% { translate: -4px 0; } 50% { translate: 3px 0; } 75% { translate: -2px 0; } }
+form input:user-invalid:focus, form select:user-invalid:focus { animation: m-nudge .32s var(--m-ease); }
+
+/* checkbox / radio ticks spring in */
+input[type="checkbox"], input[type="radio"] { transition: scale .2s var(--m-ease); }
+input[type="checkbox"]:checked, input[type="radio"]:checked { animation: m-pop .28s var(--m-ease); }
+@keyframes m-pop { 40% { scale: 1.18; } }
+
+/* FAQ questions answer to the pointer before they're opened */
+.faq-item > summary { transition: color .2s; }
+.faq-item > summary:hover, .faq-item[open] > summary { color: var(--blue); }
+.faq-item > summary:hover .faq-ic { scale: 1.15; }
+.faq-ic { transition: transform .25s var(--m-ease), scale .25s var(--m-ease); }
+
+/* footer links slide a touch toward where they lead */
+.foot-col a { transition: opacity .2s, translate .25s var(--m-ease); }
+.foot-col a:hover { translate: 3px 0; }
+html[dir="rtl"] .foot-col a:hover { translate: -3px 0; }
+
+/* ── page-to-page: same-origin navigations cross-fade where the browser
+      supports it (Chrome, Edge, Safari 18.2+); the header stays put ── */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  header.nav { view-transition-name: m-nav; }
+  ::view-transition-old(root) { animation: m-page-out .22s var(--m-ease) both; }
+  ::view-transition-new(root) { animation: m-page-in .45s var(--m-ease) both; }
+  @keyframes m-page-out { to { opacity: 0; translate: 0 -8px; } }
+  @keyframes m-page-in { from { opacity: 0; translate: 0 14px; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(a, button, summary, input, select, textarea, [role="button"], [tabindex="0"]):focus-visible,
+  form input:user-invalid:focus, form select:user-invalid:focus,
+  input[type="checkbox"]:checked, input[type="radio"]:checked { animation: none; }
+  form button[type="submit"]:disabled > span::after { animation-duration: 2s; }
+  .foot-col a:hover, html[dir="rtl"] .foot-col a:hover { translate: none; }
+  .faq-item > summary:hover .faq-ic { scale: none; }
+}
