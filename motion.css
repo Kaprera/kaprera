@@ -203,3 +203,25 @@ html[dir="rtl"] .foot-col a:hover { translate: -3px 0; }
   .foot-col a:hover, html[dir="rtl"] .foot-col a:hover { translate: none; }
   .faq-item > summary:hover .faq-ic { scale: none; }
 }
+
+/* ── theme + language switches (motion.js wraps them in a view transition) ── */
+html.m-switching, html.m-switching *, html.m-switching *::before, html.m-switching *::after { transition: none !important; }
+/* the whole page, header included, moves as one picture during a switch */
+html.m-vt-theme header.nav, html.m-vt-lang header.nav { view-transition-name: none; }
+
+/* dark/light: the new theme spreads out from the toggle */
+html.m-vt-theme::view-transition-old(root) { animation: none; }
+html.m-vt-theme::view-transition-new(root) { animation: m-theme-in .65s var(--m-ease) both; }
+@keyframes m-theme-in {
+  from { clip-path: circle(0 at var(--m-vt-x) var(--m-vt-y)); }
+  to { clip-path: circle(var(--m-vt-r) at var(--m-vt-x) var(--m-vt-y)); }
+}
+
+/* EN/AR: the old copy drifts back toward where it started reading, the new
+   one settles in from its own reading side */
+html.m-vt-lang::view-transition-old(root) { animation: m-lang-out .3s var(--m-ease) both; }
+html.m-vt-lang::view-transition-new(root) { animation: m-lang-in .5s var(--m-ease) .08s both; }
+@keyframes m-lang-out { to { opacity: 0; filter: blur(6px); translate: calc(var(--m-lang-shift, -18px) * -1) 0; } }
+@keyframes m-lang-in { from { opacity: 0; filter: blur(6px); translate: var(--m-lang-shift, -18px) 0; } }
+/* --m-lang-shift points at the new language's reading start: right for Arabic */
+html.m-vt-lang[dir="rtl"] { --m-lang-shift: 18px; }
