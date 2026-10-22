@@ -32,7 +32,7 @@
       "purpose": "maskable"
     },
     {
-      "src": "/branding/logos/apple-touch-icon.png",
+      "src": "/branding/logos/apple-touch-icon-rounded.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
