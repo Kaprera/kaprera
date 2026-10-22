@@ -715,7 +715,7 @@
      (which would force a reflow) is needed to lock the height */
   /* reserves the final height; user-select keeps it out of a copied headline */
   .hero h1 .type-ghost { visibility: hidden; user-select: none; -webkit-user-select: none; }
-  .hero h1 .type-live { position: absolute; inset: 0; }
+  .hero h1 .type-live { position: absolute; inset: 0; white-space: pre-line; }
   .hero h1.type-done .type-ghost { display: none; }
   .hero h1.type-done .type-live { position: static; }
   .hero h1 .caret {
@@ -1290,7 +1290,7 @@
   }
   .ha-stage { position: relative; width: 100%; animation: heroPatFloat 12s ease-in-out infinite; }
   .ha-sheet {
-    position: absolute; inset: -9% 14% 16% -14%;
+    position: absolute; inset: -9% 16% 16% -6%;
     border-radius: 16px;
     background:
       linear-gradient(rgba(255,255,255,0.20), rgba(255,255,255,0.20)) 0 0 / 100% 30px no-repeat,
@@ -1302,7 +1302,7 @@
     -webkit-mask: linear-gradient(135deg, #000 30%, transparent 92%);
             mask: linear-gradient(135deg, #000 30%, transparent 92%);
   }
-  html[dir="rtl"] .ha-sheet { inset: -9% -14% 16% 14%; rotate: 7deg;
+  html[dir="rtl"] .ha-sheet { inset: -9% -6% 16% 16%; rotate: 7deg;
     -webkit-mask: linear-gradient(225deg, #000 30%, transparent 92%); mask: linear-gradient(225deg, #000 30%, transparent 92%); }
   .ha-app {
     position: relative;
@@ -3986,6 +3986,28 @@
     // hold the keystrokes until the preloader clears; this fn re-runs on unlock
     if (!heroTypingUnlocked) return;
     const typed = heroTitle.querySelector('.typed');
+    // type along the finished headline's own line breaks: otherwise a half-typed
+    // word still fits on the line above, runs out toward the hero art, then jumps
+    // down once it's too long. The ghost is already laid out, so this is one read
+    const ghostText = heroTitle.querySelector('.type-ghost').firstChild;
+    let shown = text;
+    if (ghostText) {
+      const r = document.createRange();
+      const starts = [];
+      let top = null;
+      for (let k = 0; k < text.length; k++) {
+        r.setStart(ghostText, k); r.setEnd(ghostText, k + 1);
+        const box = r.getBoundingClientRect();
+        if (!box.height || text[k] === ' ') continue;
+        if (top !== null && box.top > top + box.height / 2) starts.push(k);
+        top = box.top;
+      }
+      // a newline replaces the space each wrapped line started after
+      for (let k = starts.length - 1; k >= 0; k--) {
+        const at = starts[k];
+        shown = shown.slice(0, at).replace(/ $/, '') + '\n' + shown.slice(at);
+      }
+    }
     // the headline is the page's value proposition, so it has to finish while the
     // hero slide is still on screen — roughly 2s for a 50-character line
     const delayFor = (ch) => {
@@ -3997,10 +4019,12 @@
     let i = 0;
     const step = () => {
       i++;
-      typed.textContent = text.slice(0, i);
-      if (i < text.length) {
-        typeTimer = setTimeout(step, delayFor(text[i - 1]));
+      typed.textContent = shown.slice(0, i);
+      if (i < shown.length) {
+        typeTimer = setTimeout(step, delayFor(shown[i - 1]));
       } else {
+        // back to the plain string, so it rewraps normally if the window resizes
+        typed.textContent = text;
         heroTitle.classList.add('type-done');
       }
     };
