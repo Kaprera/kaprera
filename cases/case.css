@@ -93,6 +93,9 @@ html[data-theme="dark"] .brand-logo{ background-image:url('/branding/logos/kapre
 }
 .nav-links a.link:hover{ color:var(--blue); }
 .nav-links a.link:hover::after{ width:100%; }
+/* you are here: the page itself, or Case Studies on a case page */
+.nav-links a.link[aria-current]{ color:var(--blue-text, var(--blue)); }
+.nav-links a.link[aria-current]::after{ width:100%; }
 
 /* hamburger — mobile only */
 .menu-btn{
@@ -300,8 +303,15 @@ footer .brand-logo{background-image:url('/branding/logos/kaprera-wordmark-light.
 .foot-col a:hover{opacity:.8}
 .foot-col a.social-link{display:flex; align-items:center; gap:9px}
 .foot-col a.social-link svg{width:16px; height:16px; flex-shrink:0}
-.foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:26px; border-top:1px solid rgba(255,255,255,.3); font-family:var(--mono); font-size:13px; color:rgba(255,255,255,.92)}
+.foot-bottom{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:26px; border-top:1px solid rgba(255,255,255,.3); font-family:var(--mono); font-size:13px; color:rgba(255,255,255,.92)}
 .foot-bottom .accent{color:#fff}
+.foot-theme{display:inline-flex; align-items:center; gap:10px}
+.foot-theme .theme-toggle{border-color:rgba(255,255,255,.45)}
+.foot-theme .theme-toggle:hover{border-color:#fff}
+.foot-theme .theme-toggle .seg{color:rgba(255,255,255,.85)}
+/* on the blue footer the active half is white, not blue-on-blue */
+html:not([data-theme="dark"]) .foot-theme .theme-toggle .seg.sun,
+html[data-theme="dark"] .foot-theme .theme-toggle .seg.moon{background:#fff; color:var(--blue-dark, #0079a8)}
 
 /* the sign-off: the wordmark whole and centred under the last rule. It used to
    be oversized and clipped by the footer's bottom edge, which read as a
