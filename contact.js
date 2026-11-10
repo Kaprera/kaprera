@@ -41,12 +41,59 @@
     stepNum.textContent = i + 1;
     stepBar.style.width = ((i + 1) / steps.length * 100) + '%';
     backBtn.hidden = i === 0;
-    if (isLastStep()) setSubmitLabel('Send', 'إرسال');
+    if (isLastStep()) { setSubmitLabel('Send', 'إرسال'); renderReview(); }
     else setSubmitLabel('Next', 'التالي');
     if (focus) {
       const q = steps[i].querySelector(isLastStep() ? 'input' : '.step-q');
       q.focus({ preventScroll: true });
     }
+  };
+  // forward goes to the next unanswered question, or straight to the last step:
+  // after a "Change" from the review, one new answer brings the visitor back
+  const nextStep = () => {
+    const n = steps.findIndex((s, k) => k > stepIndex &&
+      s.querySelector('input[type="radio"]') && !s.querySelector('input[type="radio"]:checked'));
+    return n === -1 ? steps.length - 1 : n;
+  };
+  // the last step lists the earlier answers with a "Change" beside each. An
+  // answer picked by a stray click moves the form on at once, so this is the
+  // one place a slip can be seen before it is sent
+  const REVIEW = [
+    [0, 'service',  'Project',   'المشروع'],
+    [1, 'language', 'Languages', 'اللغات'],
+    [2, 'timeline', 'Launch',    'الإطلاق'],
+    [3, 'budget',   'Budget',    'الميزانية']
+  ];
+  const renderReview = () => {
+    const last = steps[steps.length - 1];
+    let box = last.querySelector(':scope > .step-review');
+    if (!box) {
+      box = document.createElement('dl');
+      box.className = 'step-review';
+      last.querySelector('.step-q').after(box);
+    }
+    box.textContent = '';
+    REVIEW.forEach(([k, name, en, arText]) => {
+      const r = contactForm.querySelector('input[name="' + name + '"]:checked');
+      const span = r && r.parentElement.querySelector('span');
+      if (!span) return;
+      const row = document.createElement('div');
+      const dt = document.createElement('dt');
+      const dd = document.createElement('dd');
+      const edit = document.createElement('button');
+      dt.append(bi(en, arText));
+      dd.append(bi(span.getAttribute('data-en') || span.textContent, span.getAttribute('data-ar') || span.textContent));
+      edit.type = 'button';
+      edit.className = 'review-edit';
+      const what = bi(' ' + en.toLowerCase(), ' ' + arText);
+      what.className = 'sr-only';
+      edit.append(bi('Change', 'تغيير'), what);
+      edit.addEventListener('click', () => showStep(k));
+      dd.append(edit);
+      row.append(dt, dd);
+      box.append(row);
+    });
+    box.hidden = !box.children.length;
   };
   // say what is wrong under the field itself, in the page's language, instead
   // of the browser's own bubble ("Please match the requested format.")
@@ -120,6 +167,9 @@
       const v = el.value.trim();
       if (v !== el.value) el.value = v;
     }
+    // "+961 3 123 456" sent with Enter never blurs the field, so mend it here
+    // too, before the digits-only pattern rejects the "+"
+    if (el.type === 'tel') phoneCode(el);
     shapeEmail(el);
   };
   const bi = (en, arText) => {
@@ -176,9 +226,9 @@
     const fixed = best || dom;
     return fixed !== typed ? user + '@' + fixed : null;
   };
-  const emailHint = (el) => {
+  const emailHint = (el, atSend) => {
     const s = suggestEmail(el.value.trim());
-    if (!s) { clearHint(el); return; }
+    if (!s) { clearHint(el); return false; }
     const h = hintFor(el);
     h.textContent = '';
     const fix = document.createElement('button');
@@ -188,6 +238,40 @@
     fix.textContent = s;
     fix.addEventListener('click', () => { el.value = s; clearHint(el); checkField(el); el.focus(); });
     h.append(bi('Did you mean ', 'هل تقصد '), fix, bi('?', '؟'));
+    if (atSend) h.append(bi(' If yours is right, press Send again.', ' إذا كان بريدك صحيحًا، اضغط إرسال مرة أخرى.'));
+    h.hidden = false;
+    return true;
+  };
+  // the suggestion above appears on blur, but clicking Send blurs and sends in
+  // one move, so a likely typo would go out unseen. Hold the first Send for a
+  // suspect address; a second Send with the same address goes through
+  let emailAsked = '';
+  const emailNeedsLook = (el) => {
+    const v = el.value.trim();
+    if (!v || v === emailAsked || !suggestEmail(v)) return false;
+    emailAsked = v;
+    emailHint(el, true);
+    el.focus();
+    return true;
+  };
+
+  // the website box: an email pasted in, or words with no address, are slips
+  // worth a word; it stays optional, so this only hints and never blocks
+  const websiteHint = (el) => {
+    const v = el.value.trim();
+    clearHint(el);
+    if (!v || /^@/.test(v)) return;           // an "@handle" is a fair answer
+    let en = '', arText = '';
+    if (EMAIL_RE.test(v)) {
+      en = 'That looks like an email address. This box is for your website, e.g. yoursite.com.';
+      arText = 'يبدو هذا عنوان بريد إلكتروني. هذا الحقل لموقعك، مثل yoursite.com.';
+    } else if (/\s/.test(v) || !/\.[a-z]{2,}(?:[/:?#]|$)/i.test(v.replace(/^https?:\/\//i, ''))) {
+      en = 'Check the address, e.g. yoursite.com, or leave it blank.';
+      arText = 'تحقّق من العنوان، مثل yoursite.com، أو اتركه فارغًا.';
+    }
+    if (!en) return;
+    const h = hintFor(el);
+    h.append(bi(en, arText));
     h.hidden = false;
   };
 
@@ -215,9 +299,10 @@
   contactForm.addEventListener('focusout', (e) => {
     if (e.target.type === 'email') emailHint(e.target);
     if (e.target.type === 'tel') phoneCode(e.target);
+    if (e.target.name === 'website') websiteHint(e.target);
   });
   contactForm.addEventListener('input', (e) => {
-    if (e.target.type === 'email' || e.target.type === 'tel') clearHint(e.target);
+    if (e.target.type === 'email' || e.target.type === 'tel' || e.target.name === 'website') clearHint(e.target);
   });
 
   // Enter in a field of the last step goes to the next empty required field
@@ -259,7 +344,7 @@
   contactForm.addEventListener('click', (e) => {
     const opt = e.target.closest('.step-opt input');
     if (!opt || e.detail === 0) return;
-    setTimeout(() => { if (steps[stepIndex].contains(opt)) showStep(stepIndex + 1); }, 180);
+    setTimeout(() => { if (steps[stepIndex].contains(opt)) showStep(nextStep()); }, 180);
   });
   // each answer as it reads inside the enquiry email
   const emailPhrases = {
@@ -448,7 +533,11 @@
     e.preventDefault();
     const f = e.target;
     if (!stepValid()) return;
-    if (!isLastStep()) { showStep(stepIndex + 1); return; }
+    if (!isLastStep()) { showStep(nextStep()); return; }
+    if (emailNeedsLook(f.elements.email)) {
+      say('Check your email address, then press Send again.', 'تحقّق من بريدك الإلكتروني، ثم اضغط إرسال مرة أخرى.');
+      return;
+    }
     postForm(f);
   });
 

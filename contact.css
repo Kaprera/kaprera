@@ -113,6 +113,20 @@ text-decoration: underline; text-underline-offset: 2px;
 /* inline, per-field validation messages */
 #contact .field-err { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--err-ink, #8d2f2f); }
 #contact .form-step > .field-err { margin: -6px 0 14px; }
+#contact .step-review {
+  margin: 0 0 18px; padding: 12px 16px;
+  border: 1px solid var(--hair); border-radius: 12px;
+  display: grid; gap: 6px; font-size: 14px;
+}
+#contact .step-review > div { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+#contact .step-review dt { flex: 0 0 84px; color: var(--muted); }
+#contact .step-review dd { flex: 1 1 0; min-width: 0; margin: 0; color: var(--ink); font-weight: 600; }
+#contact .step-review .review-edit {
+  appearance: none; -webkit-appearance: none; border: 0; background: none;
+  margin-inline-start: 8px; padding: 2px 0; font: inherit; font-weight: 500;
+  color: var(--blue-text, #006d97); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+}
+#contact .step-review .review-edit:focus-visible { outline: 2px solid var(--blue, #008cc1); outline-offset: 2px; border-radius: 3px; }
 #contact form [aria-invalid="true"] { border-color: var(--err-ink, #8d2f2f); }
 /* the confirmation replaces the form and stays put */
 #contact .form-sent { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
