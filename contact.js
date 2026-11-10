@@ -48,12 +48,74 @@
       q.focus({ preventScroll: true });
     }
   };
+  // say what is wrong under the field itself, in the page's language, instead
+  // of the browser's own bubble ("Please match the requested format.")
+  const fieldMsg = (el) => {
+    if (el.type === 'radio') return ['Pick one to continue.', 'اختر إجابة للمتابعة.'];
+    if (el.validity.valueMissing) {
+      if (el.name === 'name') return ['Enter your name so we know who to reply to.', 'أدخل اسمك لنعرف لمن نردّ.'];
+      if (el.name === 'email') return ['Enter your email so we can reply.', 'أدخل بريدك الإلكتروني لنتمكّن من الرد.'];
+      return ['This field is required.', 'هذا الحقل مطلوب.'];
+    }
+    if (el.type === 'email') return ['Check the email address, e.g. you@company.com.', 'تحقّق من البريد الإلكتروني، مثل you@company.com.'];
+    if (el.type === 'tel') return ['Use 6 to 20 digits, spaces or dashes, e.g. 03 123 456.', 'استخدم من 6 إلى 20 رقمًا أو مسافة أو شرطة، مثل 03 123 456.'];
+    return ['Check this field.', 'تحقّق من هذا الحقل.'];
+  };
+  const setErr = (el, on) => {
+    const host = el.type === 'radio' ? el.closest('.form-step') : el.closest('.field');
+    if (!host) return;
+    let p = host.querySelector(':scope > .field-err');
+    if (!p) {
+      p = document.createElement('p');
+      p.className = 'field-err';
+      p.id = 'err-' + el.name;
+      p.hidden = true;
+      host.appendChild(p);
+    }
+    const group = el.type === 'radio' ? [...contactForm.querySelectorAll('input[name="' + el.name + '"]')] : [el];
+    if (on) {
+      const [en, arText] = fieldMsg(el);
+      p.setAttribute('data-en', en);
+      p.setAttribute('data-ar', arText);
+      p.textContent = lang() === 'ar' ? arText : en;
+      p.hidden = false;
+      group.forEach(g => { g.setAttribute('aria-invalid', 'true'); g.setAttribute('aria-describedby', p.id); });
+    } else {
+      p.hidden = true;
+      group.forEach(g => { g.removeAttribute('aria-invalid'); g.removeAttribute('aria-describedby'); });
+    }
+  };
+  const checkField = (el) => { const ok = el.checkValidity(); setErr(el, !ok); return ok; };
   const stepValid = () => {
-    const invalid = [...steps[stepIndex].querySelectorAll('input, select')].find(el => !el.checkValidity());
-    if (invalid) { invalid.reportValidity(); return false; }
+    const seen = new Set();
+    let first = null;
+    steps[stepIndex].querySelectorAll('input, select').forEach(el => {
+      if (el.type === 'radio') { if (seen.has(el.name)) return; seen.add(el.name); }
+      if (!checkField(el) && !first) first = el;
+    });
+    if (first) { first.focus(); return false; }
     return true;
   };
+  // check a field as the visitor leaves it (only once they've typed something,
+  // so tabbing past doesn't nag), and clear the message the moment it's fixed
+  contactForm.addEventListener('focusout', (e) => {
+    if (e.target.matches('.field input') && e.target.value.trim()) checkField(e.target);
+  });
+  contactForm.addEventListener('input', (e) => {
+    if (e.target.getAttribute('aria-invalid') === 'true' && e.target.checkValidity()) setErr(e.target, false);
+  });
   backBtn.addEventListener('click', () => showStep(stepIndex - 1));
+  // the languages question reads differently when the job is search, not a build
+  const langQ = contactForm.querySelector('[data-step="2"] .step-q');
+  contactForm.addEventListener('change', (e) => {
+    if (e.target.name !== 'service' || !langQ) return;
+    const [en, arText] = e.target.value === 'seo'
+      ? ['Which languages do your customers search in?', 'بأي لغة يبحث عملاؤك؟']
+      : ['Which languages should it speak?', 'بأي لغة يجب أن يتحدث؟'];
+    langQ.setAttribute('data-en', en);
+    langQ.setAttribute('data-ar', arText);
+    langQ.textContent = lang() === 'ar' ? arText : en;
+  });
   // a pointer click on an answer moves straight on; keyboard users confirm
   // with Enter or the Next button so arrow keys can still move between answers
   contactForm.addEventListener('click', (e) => {
@@ -64,10 +126,9 @@
   // each answer as it reads inside the enquiry email
   const emailPhrases = {
     service: {
-      'ui-ux': 'the UI/UX design of a product',
+      'custom-system': 'a custom system to replace our spreadsheets and WhatsApp orders',
       'website': 'a new website',
       'ecommerce': 'an online store on Shopify',
-      'web-app': 'a web app or platform',
       'seo': 'SEO and growing our traffic'
     },
     timeline: {

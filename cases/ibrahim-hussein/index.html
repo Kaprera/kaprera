@@ -282,10 +282,9 @@
           <fieldset class="form-step" data-step="1">
             <legend class="step-q" tabindex="-1" data-en="What do you need?" data-ar="ما الذي تحتاج إليه؟">What do you need?</legend>
             <div class="step-options">
-              <label class="step-opt"><input type="radio" name="service" value="ui-ux" required /><span data-en="UI/UX design" data-ar="تصميم الواجهات وتجربة المستخدم">UI/UX design</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="custom-system" required /><span data-en="A custom system or web app (replace Excel or WhatsApp)" data-ar="نظام مخصّص أو تطبيق ويب (بديل الإكسل أو واتساب)">A custom system or web app (replace Excel or WhatsApp)</span></label>
               <label class="step-opt"><input type="radio" name="service" value="website" required /><span data-en="A website" data-ar="موقع إلكتروني">A website</span></label>
               <label class="step-opt"><input type="radio" name="service" value="ecommerce" required /><span data-en="An online store (Shopify)" data-ar="متجر إلكتروني (Shopify)">An online store (Shopify)</span></label>
-              <label class="step-opt"><input type="radio" name="service" value="web-app" required /><span data-en="A web app or platform" data-ar="تطبيق ويب أو منصة">A web app or platform</span></label>
               <label class="step-opt"><input type="radio" name="service" value="seo" required /><span data-en="SEO &amp; growth" data-ar="تحسين محركات البحث والنمو">SEO & growth</span></label>
             </div>
           </fieldset>
@@ -320,12 +319,12 @@
             <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">How can we reach you?</legend>
             <div class="field-row">
               <div class="field">
-                <label for="business" data-en="Business name" data-ar="اسم الشركة">Business name</label>
-                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" required />
+                <label for="business"><span data-en="Business name" data-ar="اسم الشركة">Business name</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
+                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" />
               </div>
               <div class="field">
-                <label for="city" data-en="City and country" data-ar="المدينة والبلد">City and country</label>
-                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" required />
+                <label for="city"><span data-en="City and country" data-ar="المدينة والبلد">City and country</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
+                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" />
               </div>
             </div>
             <div class="field">
