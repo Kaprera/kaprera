@@ -792,23 +792,18 @@
     padding: 10px;
   }
   .slider .slide.active { opacity: 1; }
-  .slider .dots {
+  /* "2 / 5" instead of dots: a number says where you are and how many are left */
+  .slider .count {
     position: absolute;
     z-index: 2;
-    left: 0; right: 0; bottom: 12px;
-    display: flex;
-    justify-content: center;
-    gap: 7px;
+    left: 50%; bottom: 12px; transform: translateX(-50%);
+    padding: 3px 10px; border-radius: 999px;
+    background: rgba(0,0,0,0.55); color: #fff;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    direction: ltr; unicode-bidi: isolate;
     pointer-events: none;
   }
-  .slider .dots i {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-    transition: background .3s, width .3s;
-  }
-  .slider .dots i.active { background: #fff; width: 18px; border-radius: 4px; }
+  .slider .count b { font-weight: 700; }
   .slider .nav {
     position: absolute;
     z-index: 3;
@@ -1073,53 +1068,23 @@
   .work-arrow:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
   .work-arrow:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
   html[lang="ar"] .work-arrow svg { transform: scaleX(-1); }   /* mirror prev/next chevrons for rtl */
-  /* dots are real buttons: keyboard-reachable, with a 24px target (WCAG 2.5.8)
-     supplied by ::before so the visible dot can stay small */
-  .work-dots { display: flex; gap: 16px; align-items: center; }
-  .work-dots button {
-    appearance: none; -webkit-appearance: none; padding: 0; border: 0;
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--hair); cursor: pointer;
-    transition: background .3s, width .3s;
-    position: relative;
+  /* back is a plain arrow; forward is labelled with what comes next, so the
+     visitor knows where the click goes without decoding dots or a timer */
+  .work-next {
+    flex: 0 1 auto; min-width: 0;
+    height: 46px; padding: 0 14px 0 20px; border-radius: 999px;
+    border: 1px solid var(--hair); background: var(--white);
+    color: var(--ink); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 15px; font-weight: 600;
+    transition: border-color .25s, color .25s, transform .2s, background-color .25s;
   }
-  .work-dots button::before {
-    content: ""; position: absolute;
-    left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 24px; height: 24px;
-  }
-  .work-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
-  /* active dot becomes a track; a blue fill "loads" over the autoplay interval */
-  .work-dots button.active { width: 26px; border-radius: 4px; background: var(--hair); }
-  .work-dots button.active::after {
-    content: ""; position: absolute; inset: 0; border-radius: inherit;
-    background: var(--blue); transform-origin: left; transform: scaleX(0);
-  }
-  html[lang="ar"] .work-dots button.active::after { transform-origin: right; }
-  .work-dots button.active.fill::after { animation: workFill var(--work-auto, 7000ms) linear forwards; }
-  .work-dots.paused button.active::after { animation-play-state: paused; }
-  @keyframes workFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  /* pause / play control for the showcase */
-  .work-play {
-    appearance: none; -webkit-appearance: none;
-    flex: 0 0 auto;
-    width: 34px; height: 34px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    border: 1px solid var(--hair); background: var(--white); color: var(--ink);
-    cursor: pointer; margin-inline-end: 4px;
-    transition: border-color .25s, color .25s, background-color .25s;
-  }
-  .work-play:hover { border-color: var(--blue); color: var(--blue); }
-  .work-play:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) {
-    .work-dots button.active { background: var(--hair); }
-    .work-dots button.active::after { display: none; }
-  }
-  @media (max-width: 720px) {
-    /* nine dots at a 24px pitch do not fit beside the arrows, so they wrap to
-       their own row rather than shrinking the controls */
-    .work-dots { order: 4; flex: 1 0 100%; justify-content: center; margin-top: 6px; }
-  }
+  html[lang="ar"] .work-next { padding: 0 20px 0 14px; }
+  .work-next span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .work-next svg { flex: 0 0 auto; }
+  .work-next:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+  .work-next:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  html[lang="ar"] .work-next svg { transform: scaleX(-1); }
   .work-count {
     margin-inline-start: auto;
     font-family: 'JetBrains Mono', monospace;
@@ -1414,18 +1379,6 @@
 
   /* slider controls */
   .hero.is-colored .work-ctrls { border-top-color: rgba(255,255,255,0.28); }
-  .hero.is-colored .work-dots button { background: rgba(255,255,255,0.42); }
-  .hero.is-colored .work-dots button.active { background: rgba(255,255,255,0.32); }
-  .hero.is-colored .work-dots button.active::after { background: #fff; }
-  .hero.is-colored .work-dots button:focus-visible { outline-color: #fff; }
-  .hero.is-colored .work-play {
-    background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.34); color: #fff;
-  }
-  .hero.is-colored .work-play:hover { background: rgba(255,255,255,0.22); border-color: #fff; color: #fff; }
-  .hero.is-colored .work-play:focus-visible { outline-color: #fff; }
-  @media (prefers-reduced-motion: reduce) {
-    .hero.is-colored .work-dots button.active { background: #fff; }
-  }
   .hero.is-colored .work-count { color: rgba(255,255,255,0.8); }
   .hero.is-colored .work-count b { color: #fff; }
 
@@ -1613,51 +1566,25 @@
   html[lang="ar"] .svc-arrow.prev:hover svg { transform: scaleX(-1) translateX(-3px); }
   html[lang="ar"] .svc-arrow.next:hover svg { transform: scaleX(-1) translateX(3px); }
 
-  /* control row below the stage */
-  .svc-ctrls {
-    display: flex; align-items: center; justify-content: center;
-    gap: 18px; margin-top: 28px;
+  /* control row below the stage: one labelled tab per service, so the
+     visitor sees every option by name instead of decoding dots */
+  .svc-tabs {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 8px; margin-top: 28px;
   }
-  /* dots are real buttons; ::before supplies a 24px target (WCAG 2.5.8). Keep gap + dot width >= 24px so targets do not overlap */
-  .svc-dots { display: flex; gap: 16px; align-items: center; }
-  .svc-dots button {
-    appearance: none; -webkit-appearance: none; padding: 0; border: 0;
-    width: 9px; height: 9px; border-radius: 50%;
-    background: var(--hair); cursor: pointer;
-    transition: width .35s var(--ease), background-color .3s var(--ease), border-radius .35s var(--ease);
-    position: relative;
-  }
-  .svc-dots button::before {
-    content: ""; position: absolute;
-    left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 24px; height: 24px;
-  }
-  .svc-dots button:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
-  /* active dot becomes a track; a blue fill "loads" over the autoplay interval, then slides */
-  .svc-dots button.active { width: 34px; border-radius: 5px; background: var(--hair); }
-  .svc-dots button.active::after {
-    content: ""; position: absolute; inset: 0; border-radius: inherit;
-    background: var(--svc-fill, var(--blue)); transform-origin: left; transform: scaleX(0);
-  }
-  html[lang="ar"] .svc-dots button.active::after { transform-origin: right; }
-  .svc-dots button.active.fill::after { animation: workFill var(--svc-auto, 9000ms) linear forwards; }
-  .svc-dots.paused button.active::after { animation-play-state: paused; }
-  .svc-play {
+  .svc-tabs button {
     appearance: none; -webkit-appearance: none;
-    width: 34px; height: 34px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.14);
-    color: #fff; cursor: pointer;
-    transition: background-color .25s, border-color .25s;
+    min-height: 44px; padding: 0 18px; border-radius: 999px;
+    border: 1px solid var(--hair); background: var(--white); color: var(--ink);
+    font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: background-color .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease);
   }
-  .svc-play:hover { background: rgba(255,255,255,0.26); border-color: #fff; }
-  .svc-play:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-  @media (prefers-reduced-motion: reduce) {
-    .svc-dots button.active { background: var(--svc-fill, var(--blue)); }
-    .svc-dots button.active::after { display: none; }
+  .svc-tabs button:hover { border-color: var(--svc-fill, var(--blue)); color: var(--svc-fill, var(--blue)); }
+  .svc-tabs button.active,
+  .svc-tabs button.active:hover {
+    background: var(--svc-fill, var(--blue)); border-color: var(--svc-fill, var(--blue)); color: #fff;
   }
-  .svc-count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); }
-  .svc-count b { color: var(--ink); font-weight: 700; }
+  .svc-tabs button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
   /* ── testimonials: a wall of reviews in two rows drifting opposite ways ──
      Without JS, or under reduced motion, the figures are a plain grid. JS
@@ -1865,6 +1792,20 @@
   /* inline, per-field validation messages */
   .field-err { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--err-ink, #8d2f2f); }
   .form-step > .field-err { margin: -6px 0 14px; }
+  .step-review {
+    margin: 0 0 18px; padding: 12px 16px;
+    border: 1px solid var(--hair); border-radius: 12px;
+    display: grid; gap: 6px; font-size: 14px;
+  }
+  .step-review > div { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .step-review dt { flex: 0 0 84px; color: var(--muted); }
+  .step-review dd { flex: 1 1 0; min-width: 0; margin: 0; color: var(--ink); font-weight: 600; }
+  .step-review .review-edit {
+    appearance: none; -webkit-appearance: none; border: 0; background: none;
+    margin-inline-start: 8px; padding: 2px 0; font: inherit; font-weight: 500;
+    color: var(--blue-text, #006d97); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+  }
+  .step-review .review-edit:focus-visible { outline: 2px solid var(--blue, #008cc1); outline-offset: 2px; border-radius: 3px; }
   form [aria-invalid="true"] { border-color: var(--err-ink, #8d2f2f); }
   .form-error-mail { font-size: 14px; font-weight: 600; color: var(--blue-text); text-decoration: underline; }
   /* the confirmation replaces the form and stays put */
@@ -2863,12 +2804,8 @@
           <button type="button" class="work-arrow prev" id="workPrev" aria-label="previous slide">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
-          <button type="button" class="work-arrow next" id="workNext" aria-label="next slide">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button type="button" class="work-play" id="workPlay" aria-label="pause slideshow" aria-pressed="false"></button>
-          <div class="work-dots" id="workDots" role="tablist" aria-label="our work slides"></div>
-          <div class="work-count"><b id="workNow">01</b> / 07</div>
+          <button type="button" class="work-next" id="workNext"><span id="workNextLabel" data-en="Next: Agri Pro Services" data-ar="التالي: Agri Pro Services">Next: Agri Pro Services</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+          <div class="work-count" aria-hidden="true"><b id="workNow">01</b> / 07</div>
         </div>
       </div>
     </div>
@@ -3045,10 +2982,10 @@
           </button>
         </div>
 
-        <div class="svc-ctrls">
-          <button type="button" class="svc-play" id="svcPlay" aria-label="pause services slideshow" aria-pressed="false"></button>
-          <div class="svc-dots" id="svcDots" role="tablist" aria-label="services"></div>
-          <div class="svc-count"><b id="svcNow">01</b> / 03</div>
+        <div class="svc-tabs" id="svcTabs" role="tablist" aria-label="services">
+          <button type="button" role="tab" aria-selected="true" data-en="Custom systems" data-ar="أنظمة مخصّصة">Custom systems</button>
+          <button type="button" role="tab" aria-selected="false" data-en="Websites &amp; landing pages" data-ar="مواقع وصفحات هبوط">Websites &amp; landing pages</button>
+          <button type="button" role="tab" aria-selected="false" data-en="SEO" data-ar="تحسين محركات البحث">SEO</button>
         </div>
       </div>
 
@@ -4107,40 +4044,33 @@
 
   langToggle.addEventListener('click', () => applyLang(currentLang === 'ar' ? 'en' : 'ar'));
 
-  // ── reusable slider (arrows + dots + auto-advance) ──
-  function initSlider(root, autoMs) {
+  // ── reusable slider (arrows + counter) ──
+  // case-study shots sit beside reading copy, so they never rotate on their
+  // own: the visitor steps through them with the arrows
+  function initSlider(root) {
     const slides = [...root.querySelectorAll('.slide')];
     if (slides.length < 2) return null;
-    const dots = [...root.querySelectorAll('.dots i')];
+    const now = root.querySelector('.count b');
     let i = Math.max(0, slides.findIndex(s => s.classList.contains('active')));
-    let timer = null;
     const show = (n) => {
-      slides[i].classList.remove('active'); dots[i]?.classList.remove('active');
+      slides[i].classList.remove('active');
       i = (n + slides.length) % slides.length;
-      slides[i].classList.add('active'); dots[i]?.classList.add('active');
+      slides[i].classList.add('active');
+      if (now) now.textContent = i + 1;
     };
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-    // case-study shots sit behind reading copy: never rotate them under reduced
-    // motion, and hold while the pointer is over the gallery
-    const start = () => { stop(); if (autoMs && !reduce) timer = setInterval(() => show(i + 1), autoMs); };
-    root.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') stop(); });
-    root.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') start(); });
     root.querySelectorAll('.nav').forEach(btn => {
       const go = (e) => {
         e.stopPropagation(); e.preventDefault();
         show(i + (btn.classList.contains('next') ? 1 : -1));
-        start();
       };
       btn.addEventListener('click', go);
       btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(e); });
     });
-    start();
-    return { stop };
+    return { stop() {} };
   }
 
   // card thumb sliders
-  document.querySelectorAll('[data-slider]').forEach(s => initSlider(s, 4000));
+  document.querySelectorAll('[data-slider]').forEach(s => initSlider(s));
 
   // ── pointer-follow spotlight (services + testimonials cards) ──
   document.querySelectorAll('[data-svc], [data-tst]').forEach(card => {
@@ -4159,49 +4089,19 @@
     const track = document.getElementById('workTrack');
     if (!track) return;
     const slides = [...track.children];
-    const dotsWrap = document.getElementById('workDots');
     const nowEl = document.getElementById('workNow');
+    const nextLabel = document.getElementById('workNextLabel');
     const bgs = [...document.querySelectorAll('.hero-bgs .hero-bg')];
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // slide 1 is the headline and the main CTA, so the showcase only moves when
-    // the visitor moves it (arrows, dots, swipe, "See our work") or presses play
-    let i = 0, timer = null, paused = true, seenFirst = false;
+    // no autoplay: slide 1 is the headline and the main CTA, so the showcase
+    // only moves when the visitor moves it (arrows, swipe, "See our work")
+    let i = 0;
+    // the project name after the comma in "2 of 7, Agri Pro Services"
+    const nameOf = (s) => (s.getAttribute('aria-label') || '').split(', ').slice(1).join(', ');
 
-    slides.forEach((_, idx) => {
-      const d = document.createElement('button');
-      d.type = 'button';
-      d.setAttribute('role', 'tab');
-      d.setAttribute('aria-label', 'go to slide ' + (idx + 1));
-      d.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
-      if (idx === 0) d.classList.add('active');
-      d.addEventListener('click', () => { go(idx); rest(); });
-      dotsWrap.appendChild(d);
-    });
-    const dots = [...dotsWrap.children];
-
-    const AUTO = 7000;
-    // slide 1 carries the headline, which types itself in; hold it long enough
-    // to be read before the showcase moves on
-    const FIRST_AUTO = 11000;
-    // restart the "loading" fill on the active dot so it tracks the autoplay timer
-    const paintFill = () => {
-      dots.forEach(d => d.classList.remove('fill'));
-      const a = dots[i];
-      if (!a || reduce) return;
-      a.style.setProperty('--work-auto', AUTO + 'ms');
-      // double rAF restarts the animation without forcing a synchronous reflow;
-      // re-check the dot is still active in case of rapid navigation
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        if (dots[i] === a) a.classList.add('fill');
-      }));
-    };
     const go = (n) => {
       i = (n + slides.length) % slides.length;
       track.style.transform = 'translateX(' + (-i * 100) + '%)'; // track forced LTR in CSS
-      dots.forEach((d, idx) => {
-        d.classList.toggle('active', idx === i);
-        d.setAttribute('aria-selected', idx === i ? 'true' : 'false');
-      });
       bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
       // off-screen slides must not hold focus stops or be read out
       slides.forEach((s, idx) => {
@@ -4209,48 +4109,23 @@
         else { s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
       });
       if (nowEl) nowEl.textContent = String(i + 1).padStart(2, '0');
-      leftMs = 0;                          // a new slide owes a full interval
-      paintFill();
-    };
-    // pausing keeps the slide's remaining time: a pause a second before the
-    // slide turns should not hand back a whole fresh interval on play. runStart
-    // and runMs describe the run in flight, leftMs is what was owed when it
-    // stopped, and the css fill freezes rather than restarting, so the dot picks
-    // up where it stopped too
-    let runStart = 0, runMs = 0, leftMs = 0;
-    const arm = (ms) => {
-      runStart = Date.now();
-      runMs = ms;
-      timer = setTimeout(function tick() {
-        seenFirst = true;
-        go(i + 1);          // a new slide: go() repaints the fill and clears leftMs
-        arm(AUTO);
-      }, ms);
-    };
-    const stop = () => {
-      if (timer) {
-        clearTimeout(timer); timer = null;
-        leftMs = Math.max(0, runMs - (Date.now() - runStart));
+      // name the destination on the forward button; data-en/data-ar keep it
+      // right when the visitor flips the language toggle
+      if (nextLabel) {
+        const last = i === slides.length - 1;
+        const name = nameOf(slides[i + 1] || slides[0]);
+        const en = last ? 'Back to start' : 'Next: ' + name;
+        const ar = last ? 'العودة إلى البداية' : 'التالي: ' + name;
+        nextLabel.setAttribute('data-en', en);
+        nextLabel.setAttribute('data-ar', ar);
+        nextLabel.textContent = currentLang === 'ar' ? ar : en;
       }
-      dotsWrap.classList.add('paused');   // freeze the fill where it stands
     };
-    const start = () => {
-      stop();
-      // never auto-advance for people who asked for reduced motion, or once the
-      // visitor has explicitly paused
-      if (reduce || paused) return;
-      dotsWrap.classList.remove('paused');
-      if (leftMs > 0) { arm(leftMs); return; }   // resume: the fill carries on
-      paintFill();                               // fresh slide: fill from zero
-      arm((i === 0 && !seenFirst) ? FIRST_AUTO : AUTO);
-    };
-    // a manual move starts the slide over, so nothing is owed from the last one
-    const rest = () => { stop(); leftMs = 0; start(); };
 
-    document.getElementById('workPrev').addEventListener('click', () => { go(i - 1); rest(); });
-    document.getElementById('workNext').addEventListener('click', () => { go(i + 1); rest(); });
+    document.getElementById('workPrev').addEventListener('click', () => go(i - 1));
+    document.getElementById('workNext').addEventListener('click', () => go(i + 1));
     const seeWork = document.getElementById('seeWork');
-    if (seeWork) seeWork.addEventListener('click', () => { go(1); rest(); }); // jump to first case
+    if (seeWork) seeWork.addEventListener('click', () => go(1)); // jump to first case
 
     // "work" links: keep the page pinned at the very top (no anchor nudge)
     // and just slide the showcase to the first case study
@@ -4258,21 +4133,15 @@
       a.addEventListener('click', (e) => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-        go(1); rest();
+        go(1);
       })
     );
 
-    // once playing, hold while keyboard focus is inside the slider (hover is handled below)
-    const slider = track.closest('.work-slider');
-    slider.addEventListener('focusin', stop);
-    slider.addEventListener('focusout', (e) => {
-      if (!slider.contains(e.relatedTarget)) start();
-    });
-
     // keyboard arrows when slider region has focus
+    const slider = track.closest('.work-slider');
     slider.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft')  { go(i - 1); rest(); }
-      if (e.key === 'ArrowRight') { go(i + 1); rest(); }
+      if (e.key === 'ArrowLeft')  go(i - 1);
+      if (e.key === 'ArrowRight') go(i + 1);
     });
 
     // touch swipe (left/right); track is forced LTR so index mapping is stable.
@@ -4281,48 +4150,14 @@
     let sx = 0, sdx = 0, swiping = false;
     const swipeEnd = () => {
       if (swiping && Math.abs(sdx) > 40) { go(sdx < 0 ? i + 1 : i - 1); }
-      swiping = false; start();
+      swiping = false;
     };
-    track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sdx = 0; swiping = true; stop(); }, { passive: true });
+    track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sdx = 0; swiping = true; }, { passive: true });
     track.addEventListener('touchmove', (e) => { if (swiping) sdx = e.touches[0].clientX - sx; }, { passive: true });
     track.addEventListener('touchend', swipeEnd);
     track.addEventListener('touchcancel', swipeEnd);
 
-    // ── pause / play: WCAG 2.2.2 needs a way to stop content that moves on its own ──
-    const playBtn = document.getElementById('workPlay');
-    if (playBtn) {
-      const PAUSE_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
-      const PLAY_SVG  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
-      const paintPlay = () => {
-        const showPlay = paused || reduce;
-        playBtn.innerHTML = showPlay ? PLAY_SVG : PAUSE_SVG;
-        playBtn.setAttribute('aria-label', showPlay ? 'play slideshow' : 'pause slideshow');
-        playBtn.setAttribute('aria-pressed', String(showPlay));
-      };
-      playBtn.addEventListener('click', () => {
-        paused = !paused;
-        if (paused) stop(); else start();
-        paintPlay();
-      });
-      // reduced motion means it never starts, so the control opens in "play"
-      if (reduce) paused = true;
-      paintPlay();
-    }
-
-    // hovering to read a slide should not race the timer
-    const sliderEl = track.closest('.work-slider');
-    sliderEl.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') stop(); });
-    sliderEl.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') start(); });
-
     go(0);
-    // hold the timer until the preloader is gone, so the headline gets its full
-    // dwell instead of racing a clock that started at page load
-    if (document.getElementById('preloader')) {
-      document.addEventListener('kaprera:loaded', start, { once: true });
-      setTimeout(() => { if (!timer) start(); }, 3000); // safety net
-    } else {
-      start();
-    }
   })();
 
   // ── services slider (full-panel, colour-morphing) ──
@@ -4332,129 +4167,53 @@
     const track = document.getElementById('svcTrack');
     const panels = [...track.children];
     const bgs = [...slider.querySelectorAll('.svc-bg')];
-    const dotsWrap = document.getElementById('svcDots');
-    const nowEl = document.getElementById('svcNow');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // each panel is a paragraph of reading, so it waits for the visitor
-    let i = 0, timer = null, paused = true;
-    // these panels carry a paragraph of copy each, so 4s was less than a read
-    const AUTO = 9000;
-    // mid-tone of each service's background gradient, so the playing dot matches the panel
+    const tabsWrap = document.getElementById('svcTabs');
+    const tabs = [...tabsWrap.children];
+    let i = 0;
+    // mid-tone of each service's background gradient, so the active tab matches the panel
     const FILL = ['#008cc1', '#4a37c9', '#0c9b86'];
 
-    panels.forEach((_, idx) => {
-      const d = document.createElement('button');
-      d.type = 'button';
-      d.setAttribute('role', 'tab');
-      d.setAttribute('aria-label', 'go to service ' + (idx + 1));
-      d.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
-      d.addEventListener('click', () => { go(idx); rest(); });
-      dotsWrap.appendChild(d);
-    });
-    const dots = [...dotsWrap.children];
-
-    // restart the "loading" fill on the active dot so it tracks the autoplay timer
-    const paintFill = () => {
-      dots.forEach(d => d.classList.remove('fill'));
-      const a = dots[i];
-      if (!a || reduce) return;
-      a.style.setProperty('--svc-auto', AUTO + 'ms');
-      // double rAF restarts the animation without forcing a synchronous reflow;
-      // re-check the dot is still active in case of rapid navigation
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        if (dots[i] === a) a.classList.add('fill');
-      }));
-    };
     const go = (n) => {
       i = (n + panels.length) % panels.length;
       track.style.transform = 'translateX(' + (-i * 100) + '%)';
       panels.forEach((p, idx) => p.classList.toggle('is-active', idx === i));
       bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
-      dots.forEach((d, idx) => {
-        d.classList.toggle('active', idx === i);
-        d.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+      // roving tabindex: Tab lands on the active tab, arrow keys move between them
+      tabs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === i);
+        t.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+        t.tabIndex = idx === i ? 0 : -1;
       });
       // off-screen panels keep their links out of the tab order
       panels.forEach((p, idx) => {
         if (idx === i) { p.removeAttribute('inert'); p.removeAttribute('aria-hidden'); }
         else { p.setAttribute('inert', ''); p.setAttribute('aria-hidden', 'true'); }
       });
-      dotsWrap.style.setProperty('--svc-fill', FILL[i] || FILL[0]);
-      if (nowEl) nowEl.textContent = String(i + 1).padStart(2, '0');
-      leftMs = 0;                           // a new panel owes a full interval
-      paintFill();
+      tabsWrap.style.setProperty('--svc-fill', FILL[i] || FILL[0]);
     };
-    // as on the work slider: a pause keeps what is left of this panel's time and
-    // the css fill freezes rather than restarting, so play picks up mid-panel
-    let runStart = 0, runMs = 0, leftMs = 0;
-    const arm = (ms) => {
-      runStart = Date.now();
-      runMs = ms;
-      timer = setTimeout(function tick() {
-        go(i + 1);          // go() repaints the fill and clears leftMs
-        arm(AUTO);
-      }, ms);
-    };
-    const stop = () => {
-      if (timer) {
-        clearTimeout(timer); timer = null;
-        leftMs = Math.max(0, runMs - (Date.now() - runStart));
-      }
-      dotsWrap.classList.add('paused');     // freeze the fill where it stands
-    };
-    const start = () => {
-      stop();                       // also freezes the dot fill while not playing
-      if (reduce || paused) return;
-      dotsWrap.classList.remove('paused');
-      if (leftMs > 0) { arm(leftMs); return; }   // resume: the fill carries on
-      paintFill();                               // fresh panel: fill from zero
-      arm(AUTO);
-    };
-    const rest = () => { stop(); leftMs = 0; start(); };
 
-    document.getElementById('svcPrev').addEventListener('click', () => { go(i - 1); rest(); });
-    document.getElementById('svcNext').addEventListener('click', () => { go(i + 1); rest(); });
-
-    // once playing, hold while keyboard focus is inside and resume on blur
-    slider.addEventListener('focusin', stop);
-    slider.addEventListener('focusout', (e) => { if (!slider.contains(e.relatedTarget)) start(); });
-    // resume autoplay shortly after a manual swipe/tap ends
-    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+    // no autoplay: each panel is a paragraph of reading, so the visitor sets the pace
+    tabs.forEach((t, idx) => t.addEventListener('click', () => go(idx)));
+    document.getElementById('svcPrev').addEventListener('click', () => go(i - 1));
+    document.getElementById('svcNext').addEventListener('click', () => go(i + 1));
     slider.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft')  { go(i - 1); rest(); }
-      if (e.key === 'ArrowRight') { go(i + 1); rest(); }
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      go(e.key === 'ArrowLeft' ? i - 1 : i + 1);
+      if (tabs.includes(document.activeElement)) tabs[i].focus();
+    });
+    tabsWrap.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      go(e.key === 'ArrowLeft' ? i - 1 : i + 1);
+      tabs[i].focus();
     });
 
     // touch swipe
     let sx = 0, sdx = 0, swiping = false;
-    track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sdx = 0; swiping = true; stop(); }, { passive: true });
+    track.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sdx = 0; swiping = true; }, { passive: true });
     track.addEventListener('touchmove', (e) => { if (swiping) sdx = e.touches[0].clientX - sx; }, { passive: true });
-    track.addEventListener('touchend', () => { if (swiping && Math.abs(sdx) > 50) go(sdx < 0 ? i + 1 : i - 1); swiping = false; start(); });
+    track.addEventListener('touchend', () => { if (swiping && Math.abs(sdx) > 50) go(sdx < 0 ? i + 1 : i - 1); swiping = false; });
 
-    // ── pause / play ──
-    const playBtn = document.getElementById('svcPlay');
-    if (playBtn) {
-      const PAUSE_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
-      const PLAY_SVG  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
-      const paintPlay = () => {
-        const showPlay = paused || reduce;
-        playBtn.innerHTML = showPlay ? PLAY_SVG : PAUSE_SVG;
-        playBtn.setAttribute('aria-label', showPlay ? 'play services slideshow' : 'pause services slideshow');
-        playBtn.setAttribute('aria-pressed', String(showPlay));
-      };
-      playBtn.addEventListener('click', () => {
-        paused = !paused;
-        if (paused) stop(); else start();
-        paintPlay();
-      });
-      if (reduce) paused = true;
-      paintPlay();
-    }
-    // hovering to read a panel should not race the timer
-    slider.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') stop(); });
-    slider.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') start(); });
-
-    go(0); start();
+    go(0);
   })();
 
   // ── logo avatars: clear the loading pulse once the image arrives ──
@@ -4679,7 +4438,7 @@
       (imgs.length > 1
         ? '<button type="button" class="nav prev" aria-label="previous image">' + prevSvg + '</button>' +
           '<button type="button" class="nav next" aria-label="next image">' + nextSvg + '</button>' +
-          '<span class="dots">' + imgs.map((_, idx) => '<i class="' + (idx === 0 ? 'active' : '') + '"></i>').join('') + '</span>'
+          '<span class="count" aria-live="polite"><b>1</b> / ' + imgs.length + '</span>'
         : '');
 
     // show shimmer until the visible image has decoded
@@ -4697,7 +4456,7 @@
     }
 
     if (modalSlider) { modalSlider.stop(); modalSlider = null; }
-    modalSlider = initSlider(hero, 4000);
+    modalSlider = initSlider(hero);
     document.getElementById('modalTitle').textContent = c.name;
     const url = document.getElementById('modalUrl');
     if (c.url) { url.textContent = c.url; url.href = c.href; url.hidden = false; }
@@ -4837,12 +4596,59 @@
     stepNum.textContent = i + 1;
     stepBar.style.width = ((i + 1) / steps.length * 100) + '%';
     backBtn.hidden = i === 0;
-    if (isLastStep()) setSubmitLabel('Send', 'إرسال');
+    if (isLastStep()) { setSubmitLabel('Send', 'إرسال'); renderReview(); }
     else setSubmitLabel('Next', 'التالي');
     if (focus) {
       const q = steps[i].querySelector(isLastStep() ? 'input' : '.step-q');
       q.focus({ preventScroll: true });
     }
+  };
+  // forward goes to the next unanswered question, or straight to the last step:
+  // after a "Change" from the review, one new answer brings the visitor back
+  const nextStep = () => {
+    const n = steps.findIndex((s, k) => k > stepIndex &&
+      s.querySelector('input[type="radio"]') && !s.querySelector('input[type="radio"]:checked'));
+    return n === -1 ? steps.length - 1 : n;
+  };
+  // the last step lists the earlier answers with a "Change" beside each. An
+  // answer picked by a stray click moves the form on at once, so this is the
+  // one place a slip can be seen before it is sent
+  const REVIEW = [
+    [0, 'service',  'Project',   'المشروع'],
+    [1, 'language', 'Languages', 'اللغات'],
+    [2, 'timeline', 'Launch',    'الإطلاق'],
+    [3, 'budget',   'Budget',    'الميزانية']
+  ];
+  const renderReview = () => {
+    const last = steps[steps.length - 1];
+    let box = last.querySelector(':scope > .step-review');
+    if (!box) {
+      box = document.createElement('dl');
+      box.className = 'step-review';
+      last.querySelector('.step-q').after(box);
+    }
+    box.textContent = '';
+    REVIEW.forEach(([k, name, en, arText]) => {
+      const r = contactForm.querySelector('input[name="' + name + '"]:checked');
+      const span = r && r.parentElement.querySelector('span');
+      if (!span) return;
+      const row = document.createElement('div');
+      const dt = document.createElement('dt');
+      const dd = document.createElement('dd');
+      const edit = document.createElement('button');
+      dt.append(bi(en, arText));
+      dd.append(bi(span.getAttribute('data-en') || span.textContent, span.getAttribute('data-ar') || span.textContent));
+      edit.type = 'button';
+      edit.className = 'review-edit';
+      const what = bi(' ' + en.toLowerCase(), ' ' + arText);
+      what.className = 'sr-only';
+      edit.append(bi('Change', 'تغيير'), what);
+      edit.addEventListener('click', () => showStep(k));
+      dd.append(edit);
+      row.append(dt, dd);
+      box.append(row);
+    });
+    box.hidden = !box.children.length;
   };
   // say what is wrong under the field itself, in the page's language, instead
   // of the browser's own bubble ("Please match the requested format.")
@@ -4916,6 +4722,9 @@
       const v = el.value.trim();
       if (v !== el.value) el.value = v;
     }
+    // "+961 3 123 456" sent with Enter never blurs the field, so mend it here
+    // too, before the digits-only pattern rejects the "+"
+    if (el.type === 'tel') phoneCode(el);
     shapeEmail(el);
   };
   const bi = (en, arText) => {
@@ -4972,9 +4781,9 @@
     const fixed = best || dom;
     return fixed !== typed ? user + '@' + fixed : null;
   };
-  const emailHint = (el) => {
+  const emailHint = (el, atSend) => {
     const s = suggestEmail(el.value.trim());
-    if (!s) { clearHint(el); return; }
+    if (!s) { clearHint(el); return false; }
     const h = hintFor(el);
     h.textContent = '';
     const fix = document.createElement('button');
@@ -4984,6 +4793,40 @@
     fix.textContent = s;
     fix.addEventListener('click', () => { el.value = s; clearHint(el); checkField(el); el.focus(); });
     h.append(bi('Did you mean ', 'هل تقصد '), fix, bi('?', '؟'));
+    if (atSend) h.append(bi(' If yours is right, press Send again.', ' إذا كان بريدك صحيحًا، اضغط إرسال مرة أخرى.'));
+    h.hidden = false;
+    return true;
+  };
+  // the suggestion above appears on blur, but clicking Send blurs and sends in
+  // one move, so a likely typo would go out unseen. Hold the first Send for a
+  // suspect address; a second Send with the same address goes through
+  let emailAsked = '';
+  const emailNeedsLook = (el) => {
+    const v = el.value.trim();
+    if (!v || v === emailAsked || !suggestEmail(v)) return false;
+    emailAsked = v;
+    emailHint(el, true);
+    el.focus();
+    return true;
+  };
+
+  // the website box: an email pasted in, or words with no address, are slips
+  // worth a word; it stays optional, so this only hints and never blocks
+  const websiteHint = (el) => {
+    const v = el.value.trim();
+    clearHint(el);
+    if (!v || /^@/.test(v)) return;           // an "@handle" is a fair answer
+    let en = '', arText = '';
+    if (EMAIL_RE.test(v)) {
+      en = 'That looks like an email address. This box is for your website, e.g. yoursite.com.';
+      arText = 'يبدو هذا عنوان بريد إلكتروني. هذا الحقل لموقعك، مثل yoursite.com.';
+    } else if (/\s/.test(v) || !/\.[a-z]{2,}(?:[/:?#]|$)/i.test(v.replace(/^https?:\/\//i, ''))) {
+      en = 'Check the address, e.g. yoursite.com, or leave it blank.';
+      arText = 'تحقّق من العنوان، مثل yoursite.com، أو اتركه فارغًا.';
+    }
+    if (!en) return;
+    const h = hintFor(el);
+    h.append(bi(en, arText));
     h.hidden = false;
   };
 
@@ -5011,9 +4854,10 @@
   contactForm.addEventListener('focusout', (e) => {
     if (e.target.type === 'email') emailHint(e.target);
     if (e.target.type === 'tel') phoneCode(e.target);
+    if (e.target.name === 'website') websiteHint(e.target);
   });
   contactForm.addEventListener('input', (e) => {
-    if (e.target.type === 'email' || e.target.type === 'tel') clearHint(e.target);
+    if (e.target.type === 'email' || e.target.type === 'tel' || e.target.name === 'website') clearHint(e.target);
   });
 
   // Enter in a field of the last step goes to the next empty required field
@@ -5055,7 +4899,7 @@
   contactForm.addEventListener('click', (e) => {
     const opt = e.target.closest('.step-opt input');
     if (!opt || e.detail === 0) return;
-    setTimeout(() => { if (steps[stepIndex].contains(opt)) showStep(stepIndex + 1); }, 180);
+    setTimeout(() => { if (steps[stepIndex].contains(opt)) showStep(nextStep()); }, 180);
   });
   // each answer as it reads inside the enquiry email
   const emailPhrases = {
@@ -5244,7 +5088,11 @@
     e.preventDefault();
     const f = e.target;
     if (!stepValid()) return;
-    if (!isLastStep()) { showStep(stepIndex + 1); return; }
+    if (!isLastStep()) { showStep(nextStep()); return; }
+    if (emailNeedsLook(f.elements.email)) {
+      say('Check your email address, then press Send again.', 'تحقّق من بريدك الإلكتروني، ثم اضغط إرسال مرة أخرى.');
+      return;
+    }
     postForm(f);
   });
 
