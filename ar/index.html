@@ -1075,7 +1075,7 @@
   html[lang="ar"] .work-arrow svg { transform: scaleX(-1); }   /* mirror prev/next chevrons for rtl */
   /* dots are real buttons: keyboard-reachable, with a 24px target (WCAG 2.5.8)
      supplied by ::before so the visible dot can stay small */
-  .work-dots { display: flex; gap: 36px; align-items: center; }
+  .work-dots { display: flex; gap: 16px; align-items: center; }
   .work-dots button {
     appearance: none; -webkit-appearance: none; padding: 0; border: 0;
     width: 8px; height: 8px; border-radius: 50%;
@@ -1086,7 +1086,7 @@
   .work-dots button::before {
     content: ""; position: absolute;
     left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 44px; height: 44px;
+    width: 24px; height: 24px;
   }
   .work-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
   /* active dot becomes a track; a blue fill "loads" over the autoplay interval */
@@ -1618,8 +1618,8 @@
     display: flex; align-items: center; justify-content: center;
     gap: 18px; margin-top: 28px;
   }
-  /* dots are real buttons; ::before supplies a 24px target (WCAG 2.5.8) */
-  .svc-dots { display: flex; gap: 35px; align-items: center; }
+  /* dots are real buttons; ::before supplies a 24px target (WCAG 2.5.8). Keep gap + dot width >= 24px so targets do not overlap */
+  .svc-dots { display: flex; gap: 16px; align-items: center; }
   .svc-dots button {
     appearance: none; -webkit-appearance: none; padding: 0; border: 0;
     width: 9px; height: 9px; border-radius: 50%;
@@ -1630,7 +1630,7 @@
   .svc-dots button::before {
     content: ""; position: absolute;
     left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 44px; height: 44px;
+    width: 24px; height: 24px;
   }
   .svc-dots button:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
   /* active dot becomes a track; a blue fill "loads" over the autoplay interval, then slides */
