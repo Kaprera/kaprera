@@ -35,6 +35,14 @@
       <image:title>Mr. Ibrahim Hussein programming teaching platform by kaprera</image:title>
     </image:image>
     <image:image>
+      <image:loc>https://kaprera.com/cases/takkoush/image.jpg</image:loc>
+      <image:title>Takkoush Flowers order and operations system by kaprera</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/wafica/image.jpg</image:loc>
+      <image:title>Wafica Design events management system by kaprera</image:title>
+    </image:image>
+    <image:image>
       <image:loc>https://kaprera.com/cases/al-shamaa/image.jpg</image:loc>
       <image:title>AL-Shamaa Engineering bilingual landing page by kaprera</image:title>
     </image:image>
@@ -98,6 +106,26 @@
     <image:image>
       <image:loc>https://kaprera.com/cases/ana-arabia/image.jpg</image:loc>
       <image:title>Ana Arabia bilingual event landing page by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/takkoush/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/takkoush/image.jpg</image:loc>
+      <image:title>Takkoush Flowers order and operations system by kaprera</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kaprera.com/cases/wafica/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kaprera.com/cases/wafica/image.jpg</image:loc>
+      <image:title>Wafica Design events management system by kaprera</image:title>
     </image:image>
   </url>
   <url>

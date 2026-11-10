@@ -46,7 +46,7 @@
 <meta name="twitter:image" content="https://kaprera.com/branding/og-cover.png" />
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="/cases/case.css?v=8" />
+<link rel="stylesheet" href="/cases/case.css?v=9" />
 <link rel="stylesheet" href="/contact.css?v=2" />
 <script src="/cases/case.js?v=3" defer></script>
 
@@ -76,6 +76,30 @@
         "position": 1,
         "item": {
           "@type": "CreativeWork",
+          "name": "Takkoush Flowers",
+          "url": "https://kaprera.com/cases/takkoush/",
+          "image": "https://kaprera.com/cases/takkoush/image.jpg",
+          "creator": { "@type": "Organization", "name": "kaprera" },
+          "about": "Custom order and operations system for a flower shop, replacing a shared spreadsheet."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "CreativeWork",
+          "name": "Wafica Design",
+          "url": "https://kaprera.com/cases/wafica/",
+          "image": "https://kaprera.com/cases/wafica/image.jpg",
+          "creator": { "@type": "Organization", "name": "kaprera" },
+          "about": "Custom events management system with expenses, customers, team attendance and payroll, replacing an Excel file."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "CreativeWork",
           "name": "Lebanese Spotlight",
           "url": "https://kaprera.com/cases/lbspotlight/",
           "image": "https://kaprera.com/cases/lbspotlight/image.jpg",
@@ -85,7 +109,7 @@
       },
       {
         "@type": "ListItem",
-        "position": 2,
+        "position": 4,
         "item": {
           "@type": "CreativeWork",
           "name": "Agri Pro Services",
@@ -97,7 +121,7 @@
       },
       {
         "@type": "ListItem",
-        "position": 3,
+        "position": 5,
         "item": {
           "@type": "CreativeWork",
           "name": "Oplinx Solutions",
@@ -109,7 +133,7 @@
       },
       {
         "@type": "ListItem",
-        "position": 4,
+        "position": 6,
         "item": {
           "@type": "CreativeWork",
           "name": "Ana Arabia",
@@ -121,7 +145,7 @@
       },
       {
         "@type": "ListItem",
-        "position": 5,
+        "position": 7,
         "item": {
           "@type": "CreativeWork",
           "name": "War Action Research",
@@ -133,7 +157,7 @@
       },
       {
         "@type": "ListItem",
-        "position": 6,
+        "position": 8,
         "item": {
           "@type": "CreativeWork",
           "name": "Mr. Ibrahim Hussein",
@@ -145,7 +169,7 @@
       },
       {
         "@type": "ListItem",
-        "position": 7,
+        "position": 9,
         "item": {
           "@type": "CreativeWork",
           "name": "AL-Shamaa Engineering",
@@ -234,6 +258,8 @@
      stacking two shots on the same edge */
   .case-row.flip .c-shot{ order:-1; }
 
+  .c-tak    { --a-deep:#1c1813; --a-mid:#4a3a28; --a-vivid:#d98fa0; --a-ink:#8a4a5a; --a-ink-dark:#e3a6b4; }
+  .c-waf    { --a-deep:#2a2217; --a-mid:#5a4630; --a-vivid:#c9a46a; --a-ink:#7a5c26; --a-ink-dark:#d4b27a; }
   .c-lbs    { --a-deep:#0a2540; --a-mid:#008cc1; --a-vivid:#4cc9f0; --a-ink:#0a6f97; --a-ink-dark:#4bb6df; }
   .c-agri   { --a-deep:#14432a; --a-mid:#2f8f4e; --a-vivid:#6bbf59; --a-ink:#166b3a; --a-ink-dark:#6bbf59; }
   .c-oplinx { --a-deep:#00365f; --a-mid:#004885; --a-vivid:#f26524; --a-ink:#9a4b00; --a-ink-dark:#ff8b52; }
@@ -517,8 +543,8 @@
     <h1 data-en="Case studies." data-ar="دراسات الحالة.">Case studies.</h1>
 
     <div class="toolbar" id="workFilters" role="group" aria-label="filter case studies by type">
-      <button class="fbtn" type="button" data-cat="all" aria-pressed="true" aria-controls="workGrid"><span data-en="Everything" data-ar="الكل">Everything</span> <i class="n">9</i></button>
-      <button class="fbtn" type="button" data-cat="system" aria-pressed="false" aria-controls="workGrid"><span data-en="Systems" data-ar="أنظمة">Systems</span> <i class="n">2</i></button>
+      <button class="fbtn" type="button" data-cat="all" aria-pressed="true" aria-controls="workGrid"><span data-en="Everything" data-ar="الكل">Everything</span> <i class="n">11</i></button>
+      <button class="fbtn" type="button" data-cat="system" aria-pressed="false" aria-controls="workGrid"><span data-en="Systems" data-ar="أنظمة">Systems</span> <i class="n">4</i></button>
       <button class="fbtn" type="button" data-cat="website" aria-pressed="false" aria-controls="workGrid"><span data-en="Websites" data-ar="مواقع">Websites</span> <i class="n">2</i></button>
       <button class="fbtn" type="button" data-cat="landing" aria-pressed="false" aria-controls="workGrid"><span data-en="Landing pages" data-ar="صفحات هبوط">Landing pages</span> <i class="n">4</i></button>
       <button class="fbtn" type="button" data-cat="ecommerce" aria-pressed="false" aria-controls="workGrid"><span data-en="E-commerce" data-ar="متاجر إلكترونية">E-commerce</span> <i class="n">2</i></button>
@@ -529,9 +555,39 @@
   <div class="wrap">
     <section class="blk">
       <div class="cases" id="workGrid" aria-live="polite">
+        <a class="case-row rev c-tak" data-cat="system" href="/cases/takkoush/">
+          <div class="c-text">
+            <div class="meta"><span class="idx" aria-hidden="true">01</span><div class="chips"><span class="chip" data-en="System" data-ar="نظام">System</span><span class="chip" data-en="Desktop &amp; mobile" data-ar="كمبيوتر وهاتف">Desktop &amp; mobile</span></div></div>
+            <h2>Takkoush Flowers</h2>
+            <p class="blurb" data-en="One system for a flower shop: orders, instalment payments, deliveries, customers and reports, replacing a shared spreadsheet." data-ar="نظام واحد لمحل زهور: الطلبات والدفعات بالتقسيط والتوصيل والعملاء والتقارير، بدل جدول مشترك.">One system for a flower shop: orders, instalment payments, deliveries, customers and reports, replacing a shared spreadsheet.</p>
+            <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+          <div class="c-shot">
+            <picture>
+              <source srcset="/cases/takkoush/image-480.webp 480w, /cases/takkoush/image-800.webp 800w, /cases/takkoush/image.webp 1600w" sizes="(max-width: 860px) 92vw, 48vw" type="image/webp" />
+              <img src="/cases/takkoush/image.jpg" width="1600" height="900" alt="Takkoush Flowers order and operations system built by kaprera" decoding="async" />
+            </picture>
+          </div>
+        </a>
+
+        <a class="case-row rev c-waf" data-cat="system" href="/cases/wafica/">
+          <div class="c-text">
+            <div class="meta"><span class="idx" aria-hidden="true">02</span><div class="chips"><span class="chip" data-en="System" data-ar="نظام">System</span><span class="chip" data-en="Events &amp; payroll" data-ar="المناسبات والرواتب">Events &amp; payroll</span></div></div>
+            <h2>Wafica Design</h2>
+            <p class="blurb" data-en="A management system for an events decoration company: events, expenses, customers, team and payroll, replacing an Excel file." data-ar="نظام إدارة لشركة تزيين مناسبات: المناسبات والمصاريف والعملاء والفريق والرواتب، بدل ملف إكسل.">A management system for an events decoration company: events, expenses, customers, team and payroll, replacing an Excel file.</p>
+            <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+          <div class="c-shot">
+            <picture>
+              <source srcset="/cases/wafica/image-480.webp 480w, /cases/wafica/image-800.webp 800w, /cases/wafica/image.webp 1600w" sizes="(max-width: 860px) 92vw, 48vw" type="image/webp" />
+              <img src="/cases/wafica/image.jpg" width="1600" height="900" alt="Wafica Design events management system built by kaprera" decoding="async" />
+            </picture>
+          </div>
+        </a>
+
         <a class="case-row rev c-lbs" data-cat="system" href="/cases/lbspotlight/">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">01</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="System" data-ar="نظام">System</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">03</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="System" data-ar="نظام">System</span></div></div>
             <h2>Lebanese Spotlight</h2>
             <p class="blurb" data-en="A full UI/UX with integrated backend workflow tools for volunteer onboarding and program management." data-ar="تصميم واجهات متكامل مع أدوات سير عمل في الخلفية لضمّ المتطوعين وإدارة البرامج.">A full UI/UX with integrated backend workflow tools for volunteer onboarding and program management.</p>
             <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -539,14 +595,14 @@
           <div class="c-shot">
             <picture>
               <source srcset="/cases/lbspotlight/image-480.webp 480w, /cases/lbspotlight/image-800.webp 800w, /cases/lbspotlight/image.webp 1600w" sizes="(max-width: 860px) 92vw, 48vw" type="image/webp" />
-              <img src="/cases/lbspotlight/image.jpg" width="1600" height="942" alt="Lebanese Spotlight volunteer management platform designed and built by kaprera" decoding="async" />
+              <img src="/cases/lbspotlight/image.jpg" width="1600" height="942" alt="Lebanese Spotlight volunteer management platform designed and built by kaprera" loading="lazy" decoding="async" />
             </picture>
           </div>
         </a>
 
         <a class="case-row rev c-agri" data-cat="system landing" href="/cases/agripro/">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">02</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="System" data-ar="نظام">System</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">04</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="System" data-ar="نظام">System</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
             <h2>Agri Pro Services</h2>
             <p class="blurb" data-en="A custom, role-based operations platform: live dashboard, client and deal pipelines, and field reporting." data-ar="منصة عمليات مخصّصة قائمة على الأدوار: لوحة تحكم حيّة، ومسارات للعملاء والصفقات، وتقارير ميدانية.">A custom, role-based operations platform: live dashboard, client and deal pipelines, and field reporting.</p>
             <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -561,7 +617,7 @@
 
         <a class="case-row rev c-oplinx" data-cat="landing" href="/cases/oplinx/">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">03</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">05</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
             <h2>Oplinx Solutions</h2>
             <p class="blurb" data-en="A bilingual English/Arabic consultancy website with a full right-to-left layout switch, self-contained and fast on any connection." data-ar="موقع استشارات ثنائي اللغة (إنجليزي/عربي) مع تبديل كامل لاتجاه الصفحة، مكتفٍ ذاتياً وسريع على أي اتصال.">A bilingual English/Arabic consultancy website with a full right-to-left layout switch, self-contained and fast on any connection.</p>
             <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -576,7 +632,7 @@
 
         <a class="case-row rev c-ana" data-cat="landing" href="/cases/ana-arabia/">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">04</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">06</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
             <h2>Ana Arabia</h2>
             <p class="blurb" data-en="A fast, responsive landing page for Riyadh Season, with a cinematic hero and a layout that mirrors between Arabic and English." data-ar="صفحة هبوط سريعة ومتجاوبة بواجهة سينمائية ودعم سلس للاتجاهين ضمن موسم الرياض.">A fast, responsive landing page for Riyadh Season, with a cinematic hero and a layout that mirrors between Arabic and English.</p>
             <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -591,7 +647,7 @@
 
         <a class="case-row rev c-war" data-cat="website" href="/cases/war/">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">05</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Website" data-ar="موقع إلكتروني">Website</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">07</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Website" data-ar="موقع إلكتروني">Website</span></div></div>
             <h2>War Action Research</h2>
             <p class="blurb" data-en="An interactive research platform built around a clickable world map that surfaces research on global conflict and its impact on women, children and youth." data-ar="منصة أبحاث تفاعلية ترتكز على خريطة عالمية قابلة للنقر تعرض الأبحاث حول النزاعات العالمية وأثرها على النساء والأطفال والشباب.">An interactive research platform built around a clickable world map that surfaces research on global conflict and its impact on women, children and youth.</p>
             <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -606,7 +662,7 @@
 
         <a class="case-row rev c-ih" data-cat="website" href="/cases/ibrahim-hussein/">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">06</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Website" data-ar="موقع إلكتروني">Website</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">08</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Website" data-ar="موقع إلكتروني">Website</span></div></div>
             <h2>Mr. Ibrahim Hussein</h2>
             <p class="blurb" data-en="A teaching platform for a programming tutor: published courses, every exercise in both C++ and Java, and a scored evaluation test." data-ar="منصة تعليمية لمدرّس برمجة: مساقات منشورة، وكل تمرين بلغتَي C++ وJava، واختبار تقييم بدرجات.">A teaching platform for a programming tutor: published courses, every exercise in both C++ and Java, and a scored evaluation test.</p>
             <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -621,7 +677,7 @@
 
         <a class="case-row rev c-shamaa" data-cat="landing" href="/cases/al-shamaa/">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">07</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">09</span><div class="chips"><span class="chip" data-en="UI/UX" data-ar="تصميم واجهات">UI/UX</span><span class="chip" data-en="Landing page" data-ar="صفحة هبوط">Landing page</span></div></div>
             <h2>AL-Shamaa Engineering</h2>
             <p class="blurb" data-en="A bilingual English/Arabic landing page for an engineering consultancy that does reinforcement detailing, BIM and structural design, illustrated entirely in hand-drawn SVG." data-ar="صفحة هبوط ثنائية اللغة (إنجليزي/عربي) لشركة استشارات هندسية متخصّصة بتفصيل حديد التسليح ونمذجة BIM والتصميم الإنشائي، برسوم SVG مرسومة يدوياً بالكامل.">A bilingual English/Arabic landing page for an engineering consultancy that does reinforcement detailing, BIM and structural design, illustrated entirely in hand-drawn SVG.</p>
             <span class="go"><span data-en="Read case study" data-ar="اقرأ دراسة الحالة">Read case study</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
@@ -636,7 +692,7 @@
 
         <div class="case-row rev soon c-mono" data-cat="ecommerce">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">08</span><span class="tag-soon" data-en="Coming soon" data-ar="قريباً">Coming soon</span><div class="chips"><span class="chip" data-en="E-commerce" data-ar="متجر إلكتروني">E-commerce</span><span class="chip">Shopify</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">10</span><span class="tag-soon" data-en="Coming soon" data-ar="قريباً">Coming soon</span><div class="chips"><span class="chip" data-en="E-commerce" data-ar="متجر إلكتروني">E-commerce</span><span class="chip">Shopify</span></div></div>
             <h2>Mono Collector</h2>
             <p class="blurb" data-en="A Shopify storefront in build, with the catalogue, the product pages and the checkout journey designed as one piece." data-ar="متجر Shopify قيد الإنشاء، والكتالوج وصفحات المنتجات ورحلة الدفع مصمّمة كوحدة واحدة.">A Shopify storefront in build, with the catalogue, the product pages and the checkout journey designed as one piece.</p>
             <span class="soon-note" data-en="Case study to follow at launch" data-ar="دراسة الحالة عند الإطلاق">Case study to follow at launch</span>
@@ -646,7 +702,7 @@
 
         <div class="case-row rev soon c-vyne" data-cat="ecommerce">
           <div class="c-text">
-            <div class="meta"><span class="idx" aria-hidden="true">09</span><span class="tag-soon" data-en="Coming soon" data-ar="قريباً">Coming soon</span><div class="chips"><span class="chip" data-en="E-commerce" data-ar="متجر إلكتروني">E-commerce</span><span class="chip">Shopify</span></div></div>
+            <div class="meta"><span class="idx" aria-hidden="true">11</span><span class="tag-soon" data-en="Coming soon" data-ar="قريباً">Coming soon</span><div class="chips"><span class="chip" data-en="E-commerce" data-ar="متجر إلكتروني">E-commerce</span><span class="chip">Shopify</span></div></div>
             <h2>Vyné Flowers</h2>
             <p class="blurb" data-en="A flower delivery store on Shopify: a 257-product catalogue with size, colour and gift add-on variants, built for senders abroad ordering into Lebanon." data-ar="متجر Shopify لتوصيل الزهور: كتالوج من 257 منتجاً بخيارات الحجم واللون وإضافات الهدايا، مبني لمن يطلبون من الخارج للتوصيل داخل لبنان.">A flower delivery store on Shopify: a 257-product catalogue with size, colour and gift add-on variants, built for senders abroad ordering into Lebanon.</p>
             <span class="soon-note" data-en="Case study to follow at launch" data-ar="دراسة الحالة عند الإطلاق">Case study to follow at launch</span>
@@ -748,29 +804,11 @@
             <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">How can we reach you?</legend>
             <div class="field-row">
               <div class="field">
-                <label for="business"><span data-en="Business name" data-ar="اسم الشركة">Business name</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
-                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" />
-              </div>
-              <div class="field">
-                <label for="city"><span data-en="City and country" data-ar="المدينة والبلد">City and country</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
-                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" />
-              </div>
-            </div>
-            <div class="field">
-              <label for="website">
-                <span data-en="Your website now" data-ar="موقعك الحالي">Your website now</span>
-                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
-              </label>
-              <!-- text, not url: type="url" rejects "yoursite.com" for want of a scheme -->
-              <input type="text" id="website" name="website" inputmode="url" autocomplete="url" placeholder="yoursite.com — or leave blank" data-en-ph="yoursite.com — or leave blank" data-ar-ph="yoursite.com — أو اتركه فارغًا" />
-            </div>
-            <div class="field-row">
-              <div class="field">
                 <label for="name" data-en="Your name" data-ar="اسمك">Your name</label>
                 <input type="text" id="name" name="name" autocomplete="name" placeholder="Your name" data-en-ph="Your name" data-ar-ph="اسمك" required />
               </div>
               <div class="field">
-                <label for="email" data-en="Business email" data-ar="بريد العمل الإلكتروني">Business email</label>
+                <label for="email" data-en="Email" data-ar="البريد الإلكتروني">Email</label>
                 <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
               </div>
             </div>
@@ -850,6 +888,24 @@
                 <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" />
               </div>
             </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="business"><span data-en="Business name" data-ar="اسم الشركة">Business name</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
+                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" />
+              </div>
+              <div class="field">
+                <label for="city"><span data-en="City and country" data-ar="المدينة والبلد">City and country</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
+                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="website">
+                <span data-en="Your website now" data-ar="موقعك الحالي">Your website now</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <!-- text, not url: type="url" rejects "yoursite.com" for want of a scheme -->
+              <input type="text" id="website" name="website" inputmode="url" autocomplete="url" placeholder="yoursite.com — or leave blank" data-en-ph="yoursite.com — or leave blank" data-ar-ph="yoursite.com — أو اتركه فارغًا" />
+            </div>
             <!-- the one thing that decides whether a Google Business Profile and
                  local SEO are in scope. The address itself only matters later,
                  at verification, so it is not asked for here -->
@@ -894,7 +950,7 @@
           </div>
           <div class="contact-item">
             <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span data-en="Email" data-ar="البريد الإلكتروني">Email</span></div>
-            <a class="v" href="mailto:info@kaprera.com" target="_blank" rel="noopener">info@kaprera.com</a>
+            <a class="v" href="mailto:info@kaprera.com">info@kaprera.com</a>
           </div>
           <div class="contact-item">
             <div class="k"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span></div>
@@ -914,7 +970,7 @@
     <div class="foot-top">
       <div>
         <a href="/" class="brand" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
-        <p class="foot-tag" data-en="Stronger digital presence for startups & scaleups." data-ar="حضور رقمي أقوى للشركات الناشئة والمتنامية.">stronger digital presence for startups &amp; scaleups.</p>
+        <p class="foot-tag" data-en="Custom business systems built around how you work." data-ar="أنظمة أعمال مخصّصة مبنية حول طريقة عملك.">Custom business systems built around how you work.</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
