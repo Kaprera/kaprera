@@ -103,6 +103,10 @@ html[lang="ar"] #contact form label { font-family: 'Cairo', system-ui, sans-seri
 #contact .form-error-msg { margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: var(--err-ink, #8d2f2f); }
 #contact .form-error-acts { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 #contact .form-error-mail { font-size: 14px; font-weight: 600; color: var(--c-blue-text); text-decoration: underline; }
+/* inline, per-field validation messages */
+#contact .field-err { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--err-ink, #8d2f2f); }
+#contact .form-step > .field-err { margin: -6px 0 14px; }
+#contact form [aria-invalid="true"] { border-color: var(--err-ink, #8d2f2f); }
 /* the confirmation replaces the form and stays put */
 #contact .form-sent { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
 #contact .form-sent:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
