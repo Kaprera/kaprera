@@ -1855,6 +1855,13 @@
   }
   .form-error-msg { margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: var(--err-ink, #8d2f2f); }
   .form-error-acts { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .field-hint { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .field-hint .hint-fix {
+    font: inherit; font-weight: 600; color: var(--blue-text);
+    background: none; border: 0; padding: 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 2px;
+  }
+  .field-hint .hint-fix:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 3px; }
   /* inline, per-field validation messages */
   .field-err { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--err-ink, #8d2f2f); }
   .form-step > .field-err { margin: -6px 0 14px; }
@@ -4870,7 +4877,7 @@
       group.forEach(g => { g.removeAttribute('aria-invalid'); g.removeAttribute('aria-describedby'); });
     }
   };
-  const checkField = (el) => { const ok = el.checkValidity(); setErr(el, !ok); return ok; };
+  const checkField = (el) => { refine(el); const ok = el.checkValidity(); setErr(el, !ok); return ok; };
   const stepValid = () => {
     const seen = new Set();
     let first = null;
@@ -4887,8 +4894,146 @@
     if (e.target.matches('.field input') && e.target.value.trim()) checkField(e.target);
   });
   contactForm.addEventListener('input', (e) => {
+    shapeEmail(e.target);
     if (e.target.getAttribute('aria-invalid') === 'true' && e.target.checkValidity()) setErr(e.target, false);
   });
+
+  // ── error prevention: stop the mistakes that cost a reply before they need
+  //    an error message ──
+  // an email needs a real domain: "you@company" passes the browser's own check
+  // but can never be answered
+  const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-z]{2,}$/i;
+  const shapeEmail = (el) => {
+    if (el.type === 'email') el.setCustomValidity(!el.value || EMAIL_RE.test(el.value.trim()) ? '' : 'domain');
+  };
+  // trim before checking, so an answer of only spaces counts as empty
+  const refine = (el) => {
+    if (el.type === 'text' || el.type === 'email' || el.type === 'tel') {
+      const v = el.value.trim();
+      if (v !== el.value) el.value = v;
+    }
+    shapeEmail(el);
+  };
+  const bi = (en, arText) => {
+    const s = document.createElement('span');
+    s.setAttribute('data-en', en);
+    s.setAttribute('data-ar', arText);
+    s.textContent = currentLang === 'ar' ? arText : en;
+    return s;
+  };
+  // a quiet hint under a field: a suggestion, never a blocker
+  const hintFor = (el) => {
+    const host = el.closest('.field');
+    let h = host.querySelector(':scope > .field-hint');
+    if (!h) {
+      h = document.createElement('p');
+      h.className = 'field-hint';
+      h.setAttribute('aria-live', 'polite');
+      h.hidden = true;
+      host.insertBefore(h, host.querySelector(':scope > .field-err'));
+    }
+    return h;
+  };
+  const clearHint = (el) => {
+    const h = el.closest('.field') && el.closest('.field').querySelector(':scope > .field-hint');
+    if (h) { h.textContent = ''; h.hidden = true; }
+  };
+
+  // "gmail.con", "hotmial.com": offer the likely address, one tap to accept
+  const MAIL_DOMAINS = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'icloud.com', 'protonmail.com'];
+  // real providers that sit one letter away from the list above: never "correct" these
+  const REAL_DOMAINS = ['mail.com', 'email.com', 'ymail.com', 'gmx.com', 'live.com', 'me.com', 'mac.com', 'msn.com', 'aol.com', 'proton.me', 'pm.me', 'zoho.com', 'yandex.com', 'hotmail.fr', 'yahoo.fr', 'outlook.fr'];
+  const TLD_FIX = { con: 'com', cmo: 'com', comm: 'com', ocm: 'com', vom: 'com', xom: 'com', cpm: 'com', coom: 'com', nte: 'net', nett: 'net', ogr: 'org', orgg: 'org' };
+  const editDist = (a, b) => {
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) d[0][j] = j;
+    for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) {
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      // two swapped letters ("gmial") are one slip, not two
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+    return d[a.length][b.length];
+  };
+  const suggestEmail = (v) => {
+    const at = v.lastIndexOf('@');
+    if (at < 1) return null;
+    const user = v.slice(0, at), typed = v.slice(at + 1).toLowerCase();
+    if (REAL_DOMAINS.includes(typed)) return null;
+    // mend the ending first ("x.con" → "x.com"), then look for a near-miss provider
+    const dot = typed.lastIndexOf('.');
+    const tld = dot > 0 ? TLD_FIX[typed.slice(dot + 1)] : null;
+    const dom = tld ? typed.slice(0, dot + 1) + tld : typed;
+    let best = null, bestD = 3;
+    MAIL_DOMAINS.forEach(c => { const dd = editDist(dom, c); if (dd < bestD) { bestD = dd; best = c; } });
+    const fixed = best || dom;
+    return fixed !== typed ? user + '@' + fixed : null;
+  };
+  const emailHint = (el) => {
+    const s = suggestEmail(el.value.trim());
+    if (!s) { clearHint(el); return; }
+    const h = hintFor(el);
+    h.textContent = '';
+    const fix = document.createElement('button');
+    fix.type = 'button';
+    fix.className = 'hint-fix';
+    fix.dir = 'ltr';
+    fix.textContent = s;
+    fix.addEventListener('click', () => { el.value = s; clearHint(el); checkField(el); el.focus(); });
+    h.append(bi('Did you mean ', 'هل تقصد '), fix, bi('?', '؟'));
+    h.hidden = false;
+  };
+
+  // "+961 3 123 456" typed into the number: move the code into the code box,
+  // so it doesn't end up in the number twice
+  const codeSel = contactForm.querySelector('select[name="phone-code"]');
+  const phoneCode = (el) => {
+    if (!codeSel) return;
+    const m = el.value.trim().match(/^(?:\+|00)\s*(\d[\d\s\-()]*)$/);
+    if (!m) return;
+    const digits = m[1].replace(/\D/g, '');
+    const code = [...new Set([...codeSel.options].map(o => o.value))]
+      .filter(c => digits.startsWith(c.slice(1)))
+      .sort((a, b) => b.length - a.length)[0];
+    if (!code) return;
+    const opt = [...codeSel.options].find(o => o.value === code && (code !== '+1' || /^US/.test(o.text))) ||
+                [...codeSel.options].find(o => o.value === code);
+    opt.selected = true;
+    el.value = digits.slice(code.length - 1);
+    const h = hintFor(el);
+    h.textContent = '';
+    h.append(bi('Moved ' + code + ' to the country code.', 'نقلنا ' + code + ' إلى رمز البلد.'));
+    h.hidden = false;
+  };
+  contactForm.addEventListener('focusout', (e) => {
+    if (e.target.type === 'email') emailHint(e.target);
+    if (e.target.type === 'tel') phoneCode(e.target);
+  });
+  contactForm.addEventListener('input', (e) => {
+    if (e.target.type === 'email' || e.target.type === 'tel') clearHint(e.target);
+  });
+
+  // Enter in a field of the last step goes to the next empty required field
+  // rather than trying to send and flashing errors at fields not reached yet;
+  // once those are filled, Enter sends as usual
+  contactForm.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' || !isLastStep() || !e.target.matches('.field input')) return;
+    const need = [...steps[stepIndex].querySelectorAll('.field input[required]')].find(i => i !== e.target && !i.value.trim());
+    if (need) { e.preventDefault(); need.focus(); }
+  });
+
+  // keep the answers through a reload or a trip to another page (this tab only,
+  // cleared once the enquiry is sent)
+  const DRAFT = 'kaprera-enquiry-draft';
+  const saveDraft = () => {
+    try {
+      const d = {};
+      new FormData(contactForm).forEach((v, k) => { if (k !== 'form-name' && k !== 'bot-field') d[k] = v; });
+      sessionStorage.setItem(DRAFT, JSON.stringify(d));
+    } catch (err) {}
+  };
+  const clearDraft = () => { try { sessionStorage.removeItem(DRAFT); } catch (err) {} };
+  contactForm.addEventListener('input', saveDraft);
+  contactForm.addEventListener('change', saveDraft);
   backBtn.addEventListener('click', () => showStep(stepIndex - 1));
   // the languages question reads differently when the job is search, not a build
   const langQ = contactForm.querySelector('[data-step="2"] .step-q');
@@ -5023,6 +5168,7 @@
         recap.appendChild(row);
       });
     }
+    clearDraft();
     contactForm.hidden = true;
     formSent.hidden = false;
     formSent.classList.add('in');   // .reveal starts transparent; it never scrolled into view while hidden
@@ -5062,6 +5208,7 @@
   if (formRetry) formRetry.addEventListener('click', () => postForm(contactForm));
   if (formAgain) formAgain.addEventListener('click', () => {
     contactForm.reset();
+    clearDraft();
     formSent.hidden = true;
     contactForm.hidden = false;
     formError.hidden = true;
@@ -5070,6 +5217,24 @@
     say('', '');
     showStep(0);
   });
+
+  // pick up a draft from earlier in this tab, at the first unanswered question
+  (function restoreDraft() {
+    let d = null;
+    try { d = JSON.parse(sessionStorage.getItem(DRAFT) || 'null'); } catch (err) {}
+    if (!d || typeof d !== 'object') return;
+    Object.keys(d).forEach((k) => {
+      contactForm.querySelectorAll('[name="' + k.replace(/"/g, '') + '"]').forEach((el) => {
+        if (el.type === 'radio' || el.type === 'checkbox') {
+          if (el.value === d[k]) { el.checked = true; el.dispatchEvent(new Event('change', { bubbles: true })); }
+        } else {
+          el.value = d[k];
+        }
+      });
+    });
+    const open = steps.findIndex(s => s.querySelector('input[type="radio"]') && !s.querySelector('input[type="radio"]:checked'));
+    showStep(open === -1 ? steps.length - 1 : open, false);
+  })();
 
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
