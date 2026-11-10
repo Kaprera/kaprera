@@ -2057,6 +2057,7 @@
   .foot-col a.social-link svg { width: 16px; height: 16px; flex-shrink: 0; }
   .foot-bottom {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 14px;
@@ -2067,6 +2068,13 @@
     color: rgba(255,255,255,0.92);
   }
   .foot-bottom .accent { color: #fff; }
+  .foot-theme { display: inline-flex; align-items: center; gap: 10px; }
+  .foot-theme .theme-toggle{border-color:rgba(255,255,255,.45)}
+  .foot-theme .theme-toggle:hover{border-color:#fff}
+  .foot-theme .theme-toggle .seg{color:rgba(255,255,255,.85)}
+  /* on the blue footer the active half is white, not blue-on-blue */
+  html:not([data-theme="dark"]) .foot-theme .theme-toggle .seg.sun,
+  html[data-theme="dark"] .foot-theme .theme-toggle .seg.moon{background:#fff; color:var(--blue-dark, #0079a8)}
 
   /* the sign-off: the wordmark whole and centred under the last rule. It
      used to be oversized and clipped by the footer's bottom edge, which read
@@ -2273,7 +2281,7 @@
       opacity: 0;
       pointer-events: none;
       /* visibility (not opacity alone) is what takes the links out of the tab
-         order — without it all 7 controls stay focusable behind a closed menu */
+         order — without it every control stays focusable behind a closed menu */
       visibility: hidden;
       transition: opacity .3s var(--ease), visibility 0s linear .3s;
     }
@@ -2642,19 +2650,14 @@
 
     <nav class="nav-links" id="navLinks" aria-label="primary">
       <div class="nav-panel" role="document">
-      <a href="#work" class="link" data-en="Case Studies" data-ar="دراسات الحالة">دراسات الحالة</a>
+      <a href="/work/" class="link" data-en="Case Studies" data-ar="دراسات الحالة">دراسات الحالة</a>
       <a href="#services" class="link" data-en="Services" data-ar="خدماتنا">خدماتنا</a>
-      <a href="#testimonials" class="link" data-en="Testimonials" data-ar="آراء العملاء">آراء العملاء</a>
       <a href="#faq" class="link" data-en="FAQ" data-ar="الأسئلة الشائعة">الأسئلة الشائعة</a>
       <a href="#contact" class="link" data-en="Contact" data-ar="تواصل">تواصل</a>
       <div class="nav-utils">
       <button class="lang-toggle" id="langToggle" type="button" role="switch" aria-checked="false" aria-label="switch language EN ع">
         <span class="seg en" aria-hidden="true">EN</span>
         <span class="seg ar" aria-hidden="true">ع</span>
-      </button>
-      <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="dark mode">
-        <span class="seg sun" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
-        <span class="seg moon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
       </button>
       </div>
       <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Book a call" data-ar="احجز مكالمة">احجز مكالمة</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -3507,7 +3510,11 @@
     </div>
     <div class="foot-bottom">
       <span data-en="© 2026 kaprera. All rights reserved." data-ar="© 2026 كابريرا. جميع الحقوق محفوظة.">© 2026 كابريرا. جميع الحقوق محفوظة.</span>
-      <span data-en="Made in Lebanon ·" data-ar="صُنع في لبنان ·">صُنع في لبنان ·</span> <span class="accent">&gt;_</span>
+      <span><span data-en="Made in Lebanon ·" data-ar="صُنع في لبنان ·">صُنع في لبنان ·</span> <span class="accent">&gt;_</span></span>
+      <span class="foot-theme"><span data-en="Dark mode" data-ar="الوضع الداكن">الوضع الداكن</span> <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="dark mode">
+        <span class="seg sun" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="seg moon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+      </button></span>
     </div>
   </div>
   <div class="foot-mark" aria-hidden="true"></div>
