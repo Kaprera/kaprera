@@ -5,14 +5,14 @@
 
   var T = {
     en: {
-      msg: 'We use cookies to enhance your experience and analyse site traffic. See our',
+      msg: 'We use cookies to improve the site and analyse traffic. See our',
       policy: 'privacy policy',
       tail: '.',
       accept: 'accept all',
       decline: 'necessary only'
     },
     ar: {
-      msg: 'نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل حركة الموقع. اطّلع على',
+      msg: 'نستخدم ملفات تعريف الارتباط لتحسين الموقع وتحليل الزيارات. اطّلع على',
       policy: 'سياسة الخصوصية',
       tail: '.',
       accept: 'قبول الكل',
@@ -21,29 +21,30 @@
   };
 
   var css =
-    '.ck-bar{position:fixed;z-index:80;inset-inline:16px;bottom:16px;max-width:540px;' +
+    '.ck-bar{position:fixed;z-index:80;inset-inline:12px;bottom:12px;max-width:380px;' +
     'margin-inline:auto;background:var(--white,#fff);color:var(--ink,#0a0a0a);' +
     'border:1px solid var(--hair,#e6e6e6);border-radius:var(--radius,14px);' +
-    'box-shadow:0 16px 50px rgba(0,0,0,.16);padding:18px 20px;display:flex;' +
-    'flex-direction:column;gap:14px;font-family:Inter,system-ui,sans-serif;' +
+    'box-shadow:0 12px 36px rgba(0,0,0,.14);padding:12px 14px;display:flex;' +
+    'flex-direction:column;gap:10px;font-family:Inter,system-ui,sans-serif;' +
     'transform:translateY(160%);opacity:0;transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .4s ease}' +
     '.ck-bar.ck-show{transform:translateY(0);opacity:1}' +
     '.ck-bar.ck-hide{transform:translateY(160%);opacity:0}' +
-    '.ck-text{margin:0;font-size:14px;line-height:1.6;color:var(--muted,#5b5b5b)}' +
+    '.ck-text{margin:0;font-size:13px;line-height:1.5;color:var(--muted,#5b5b5b)}' +
     '.ck-link{color:var(--blue-text,#0079a8);font-weight:600;text-decoration:none}' +
     '.ck-link:hover{text-decoration:underline}' +
     '.ck-actions{display:flex;gap:10px;justify-content:flex-end}' +
     'html[dir="rtl"] .ck-actions{justify-content:flex-start}' +
-    '.ck-btn{font:inherit;font-weight:600;font-size:14px;padding:9px 22px;border-radius:999px;' +
+    '.ck-btn{font:inherit;font-weight:600;font-size:13px;padding:0 18px;min-height:44px;border-radius:999px;' +
     'cursor:pointer;border:1px solid transparent;text-transform:lowercase;' +
     'transition:background .2s,color .2s,border-color .2s,transform .2s}' +
     '.ck-btn:hover{transform:translateY(-1px)}' +
-    '.ck-accept{background:var(--blue-dark,#0079a8);color:#fff}' +
-    '.ck-accept:hover{background:#00719c}' +
-    '.ck-decline{background:transparent;color:var(--ink,#0a0a0a);border-color:var(--hair,#e6e6e6)}' +
-    '.ck-decline:hover{border-color:var(--blue,#008cc1);color:var(--blue-text,#0079a8)}' +
+    /* both choices carry the same weight, so neither is the "default" */
+    '.ck-accept,.ck-decline{background:transparent;color:var(--ink,#0a0a0a);border-color:var(--hair,#e6e6e6)}' +
+    '.ck-accept:hover,.ck-decline:hover{border-color:var(--blue,#008cc1);color:var(--blue-text,#0079a8)}' +
+    /* wide screens: a corner card, clear of the hero's slider controls */
+    '@media(min-width:720px){.ck-bar{inset-inline:auto 16px;bottom:16px;margin:0;width:360px}}' +
     'html[lang="ar"] .ck-bar{font-family:Cairo,system-ui,sans-serif}' +
-    '@media(max-width:480px){.ck-actions .ck-btn{flex:1}}' +
+    '.ck-actions .ck-btn{flex:1}' +
     '@media(prefers-reduced-motion:reduce){.ck-bar{transform:none;transition:opacity .3s ease}.ck-bar.ck-hide{transform:none}}';
 
   function init() {
