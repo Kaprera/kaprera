@@ -1393,11 +1393,12 @@
   .hero.is-colored .work-count { color: rgba(255,255,255,0.8); }
   .hero.is-colored .work-count b { color: #fff; }
 
-  /* ── services: one colored panel per service, stacked, so every service
-     is in view without clicking through a carousel ── */
+  /* ── services: a bento. Custom systems (the lead service) runs full width;
+     websites and SEO sit side by side under it. All three stay in view. ── */
   .svc-slider { position: relative; margin-top: 30px; }
-  .svc-track { display: grid; gap: 20px; }
+  .svc-track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 
+  /* compact card: one column, the button closes the card */
   .svc-panel {
     position: relative;
     isolation: isolate;
@@ -1405,12 +1406,13 @@
     border-radius: 28px;
     box-shadow: 0 50px 100px -45px rgba(0,0,0,0.55);
     color: #fff;
-    padding: clamp(34px, 4vw, 56px) clamp(28px, 5vw, 64px);
-    display: grid;
-    grid-template-columns: 1.12fr 0.88fr;
-    gap: clamp(28px, 5vw, 64px);
-    align-items: center;
+    padding: clamp(28px, 3.4vw, 44px);
+    display: flex;
+    flex-direction: column;
   }
+  .svc-panel .svc-col { display: contents; }
+  .svc-panel .svc-col > * { position: relative; z-index: 2; }
+  .svc-panel .svc-cta { order: 1; margin-top: auto; align-self: flex-start; }
   /* soft light from the top corner, shade from the bottom one */
   .svc-panel::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
@@ -1422,15 +1424,14 @@
   .svc-panel.s2 { background: linear-gradient(135deg, #211a63 0%, #4a37c9 52%, #8064ff 100%); }
   .svc-panel.s3 { background: linear-gradient(135deg, #064a44 0%, #0c9b86 52%, #2fd6ae 100%); }
   html[lang="ar"] .svc-panel { direction: rtl; text-align: right; }
-  .svc-col { position: relative; z-index: 2; }
 
   /* giant ghost numeral */
   .svc-figure {
     position: absolute; z-index: 0;
-    inset-inline-end: clamp(18px, 5vw, 60px);
+    inset-inline-end: clamp(18px, 4vw, 44px);
     bottom: -8%;
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 500; font-size: clamp(170px, 30vw, 400px);
+    font-weight: 500; font-size: clamp(150px, 18vw, 250px);
     line-height: 1;
     color: rgba(255,255,255,0.10);
     pointer-events: none; user-select: none;
@@ -1452,21 +1453,21 @@
   }
   /* big, clear service name: the primary title */
   .svc-headline {
-    font-size: clamp(40px, 5.8vw, 74px);
     font-weight: 800;
     letter-spacing: -0.035em;
-    line-height: 0.98;
-
-    margin-bottom: 16px;
+    line-height: 1;
+    margin-bottom: 14px;
     text-shadow: 0 14px 40px rgba(0,0,0,0.18);
   }
+  .svc-panel .svc-headline { font-size: clamp(32px, 3.4vw, 46px); }
+  html[lang="ar"] .svc-panel .svc-headline { font-size: clamp(30px, 3vw, 42px); }
   .svc-statement {
     font-size: clamp(15px, 1.5vw, 18px);
     line-height: 1.55;
     color: rgba(255,255,255,0.88);
     max-width: 38ch;
-    margin-bottom: 28px;
   }
+  .svc-panel .svc-statement { margin-bottom: 22px; }
   .svc-cta {
     display: inline-flex; align-items: center; gap: 10px;
     background: #fff; color: #0a0a0a;
@@ -1480,26 +1481,48 @@
   html[lang="ar"] .svc-cta svg { transform: scaleX(-1); }
   html[lang="ar"] .svc-cta:hover svg { transform: scaleX(-1) translateX(4px); }
 
-  /* right column: glass visual + deliverables */
+  /* glass box with the detail, then the deliverables */
   .svc-visual {
     position: relative;
     border-radius: 22px;
-    padding: 32px;
     background: rgba(255,255,255,0.10);
     border: 1px solid rgba(255,255,255,0.20);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    margin-bottom: 22px;
   }
+  .svc-panel .svc-visual { padding: 20px 22px; margin-bottom: 18px; }
+  /* the eyebrow already carries the icon on compact cards */
   .svc-bigicon {
+    display: none;
     width: 80px; height: 80px; border-radius: 20px;
-    display: grid; place-items: center;
+    place-items: center;
     background: rgba(255,255,255,0.18);
     border: 1px solid rgba(255,255,255,0.24);
     color: #fff; margin-bottom: 22px;
   }
   .svc-detail { font-size: 15.5px; line-height: 1.62; color: rgba(255,255,255,0.92); }
   .svc-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+  .svc-panel .svc-chips { margin-bottom: 28px; }
+
+  /* featured: custom systems spans the row, copy left, detail right */
+  @media (min-width: 861px) {
+    .svc-panel.s1 {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: clamp(28px, 5vw, 64px);
+      align-items: center;
+      padding: clamp(34px, 4vw, 56px) clamp(28px, 5vw, 64px);
+    }
+    .svc-panel.s1 .svc-col { display: block; position: relative; z-index: 2; }
+    .svc-panel.s1 .svc-headline { font-size: clamp(40px, 5.8vw, 74px); line-height: 0.98; margin-bottom: 16px; }
+    html[lang="ar"] .svc-panel.s1 .svc-headline { font-size: clamp(34px, 4.2vw, 56px); line-height: 1.15; }
+    .svc-panel.s1 .svc-statement { margin-bottom: 28px; }
+    .svc-panel.s1 .svc-visual { padding: 32px; margin-bottom: 22px; }
+    .svc-panel.s1 .svc-bigicon { display: grid; }
+    .svc-panel.s1 .svc-chips { margin-bottom: 0; }
+    .svc-panel.s1 .svc-figure { inset-inline-end: clamp(18px, 5vw, 60px); font-size: clamp(170px, 30vw, 400px); }
+  }
   .svc-chips span {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px; color: #fff;
@@ -2221,22 +2244,18 @@
     .case-render[data-case="shamaa"] img { object-fit: cover; object-position: center 42%; }
     .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
     .work-ctrls { margin-top: 20px; }
-    /* services → single column */
-    .svc-panel {
-      grid-template-columns: 1fr;
-      gap: 20px;
-      padding: 28px 20px;
-    }
+    /* services → one column of compact cards */
+    .svc-track { grid-template-columns: 1fr; }
+    .svc-panel { padding: 28px 20px; }
     .svc-eyebrow { margin-bottom: 10px; }
     .svc-eyebrow .ic { width: 36px; height: 36px; border-radius: 10px; }
-    .svc-headline { font-size: 36px; margin-bottom: 10px; }
-    .svc-statement { margin-bottom: 16px; }
+    .svc-panel .svc-headline { font-size: 36px; margin-bottom: 10px; }
+    .svc-panel .svc-statement { margin-bottom: 16px; max-width: none; }
     .svc-cta { padding: 12px 20px; }
-    .svc-visual { padding: 16px; margin-bottom: 12px; }
-    .svc-bigicon { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 10px; }
+    .svc-panel .svc-visual { padding: 16px; margin-bottom: 12px; }
+    .svc-panel .svc-chips { margin-bottom: 20px; }
     .svc-detail { font-size: 14px; }
     .svc-figure { font-size: clamp(150px, 46vw, 280px); bottom: auto; top: -4%; opacity: .9; }
-    .svc-statement { max-width: none; }
     .tst-cta { margin-top: 32px; }
     .contact-grid { grid-template-columns: 1fr; gap: 20px; }
     .field-row { grid-template-columns: 1fr; gap: 0; }
@@ -2805,7 +2824,7 @@
       <h2 class="title" data-m="mask" data-en="Systems, websites, SEO." data-ar="أنظمة، مواقع، وتحسين محركات البحث.">Systems, websites, SEO.</h2>
       <p class="lede reveal" data-en="We build the system that runs your operations and the website that brings you clients. One team for both, so nothing gets lost between them." data-ar="نبني النظام الذي يدير عملياتك، والموقع الذي يجلب لك العملاء. فريق واحد للاثنين، فلا يضيع شيء بينهما.">We build the system that runs your operations and the website that brings you clients. One team for both, so nothing gets lost between them.</p>
 
-      <!-- ── services: 3 disciplines, each its own colored panel, all in view ── -->
+      <!-- ── services: bento, custom systems featured, websites + SEO side by side ── -->
       <div class="svc-slider" id="svcSlider">
         <div class="svc-track" id="svcTrack">
 
