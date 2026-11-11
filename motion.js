@@ -15,6 +15,22 @@
     if (!a.hash && a.pathname === location.pathname) a.setAttribute('aria-current', 'page');
   });
 
+  /* ── the nav's theme switch is a second handle on the footer one: each
+     page wires #themeToggle itself (state, storage), so a nav click is
+     passed on to it, and the nav switch's aria-checked follows the theme ── */
+  document.addEventListener('click', function (e) {
+    var nav = e.target.closest && e.target.closest('.nav-theme');
+    var main = document.getElementById('themeToggle');
+    if (nav && main && nav !== main) main.click();
+  });
+  var syncNavTheme = function () {
+    var dark = String(root.getAttribute('data-theme') === 'dark');
+    [].forEach.call(document.querySelectorAll('.nav-theme'), function (b) { b.setAttribute('aria-checked', dark); });
+  };
+  new MutationObserver(syncNavTheme).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', syncNavTheme);
+  else syncNavTheme();
+
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (reduce.matches || !('IntersectionObserver' in window)) return;
   root.classList.add('motion');

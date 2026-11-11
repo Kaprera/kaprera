@@ -225,3 +225,9 @@ html.m-vt-lang::view-transition-new(root) { animation: m-lang-in .5s var(--m-eas
 @keyframes m-lang-in { from { opacity: 0; filter: blur(6px); translate: var(--m-lang-shift, -18px) 0; } }
 /* --m-lang-shift points at the new language's reading start: right for Arabic */
 html.m-vt-lang[dir="rtl"] { --m-lang-shift: 18px; }
+
+/* ── the nav's theme switch: just above the menu breakpoint the full nav
+   has no room for it, so it steps out there; the footer switch remains ── */
+@media (min-width: 861px) and (max-width: 960px) {
+  .nav-theme { display: none; }
+}
