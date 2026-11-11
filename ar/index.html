@@ -975,7 +975,7 @@
   /* ── designed renders ──
      Four projects show the device render from their own mockup artwork in
      place of the CSS laptop. Each render is cut out of its backdrop, so it
-     sits straight on the slide's flat colour with nothing to blend into. */
+     sits straight on the work band's navy with nothing to blend into. */
   .case-render {
     position: relative;
     width: 100%;
@@ -1125,25 +1125,17 @@
       radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
       linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
   }
-  /* Each project slide is one flat colour from its own palette. The renders
-     are cut out of their backdrops, so nothing has to blend into a gradient,
-     and white copy clears 4.5:1 on every one of them (7.8 is the lowest). */
-  .b-agripro   { background-image: none; background-color: #3c5a34; }
-  .b-spotlight { background-image: none; background-color: #5a109c; }
-  .b-takkoush  { background-image: none; background-color: #1c1813; }
-  .b-wafica    { background-image: none; background-color: #2a2217; }
-  /* oplinx solutions: the render keeps its own backdrop, so the slide carries
-     the same navy → royal blue, sampled down the render's edges */
-  .b-oplinx {
+  /* the work band: one kaprera navy behind every project, with a soft blue
+     glow, so the frame stays ours and the client colour lives in the renders.
+     White copy is 15:1 on the navy. The two feathered renders (oplinx,
+     al-shamaa) carry navy backdrops of their own, so their edges melt in. */
+  .b-work {
     background-image:
-      linear-gradient(180deg, #011e3f 0%, #01254c 18%, #013063 36%, #013671 48%, #003a78 56%, #033f84 78%, #04448c 100%);
+      radial-gradient(70% 90% at 88% 6%, rgba(0,140,193,0.34), transparent 60%),
+      radial-gradient(60% 80% at 0% 100%, rgba(0,194,216,0.10), transparent 62%),
+      linear-gradient(160deg, #071a2e 0%, #0a2540 55%, #0b2c4d 100%);
+    animation: none;
   }
-  /* al-shamaa engineering: likewise, the render's navy → slate down its edges */
-  .b-shamaa {
-    background-image:
-      linear-gradient(180deg, #012646 0%, #0c3351 18%, #234661 48%, #3a5a70 78%, #45647a 100%);
-  }
-  .b-agripro, .b-oplinx, .b-spotlight, .b-shamaa, .b-takkoush, .b-wafica { animation: none; }
   /* landing-page standards: what every landing page ships with (spec sheet) */
   .lp-std { margin-top: 96px; }
   .lp-std-head { max-width: 640px; margin-bottom: 32px; }
@@ -2630,12 +2622,7 @@
        slides the headline and the main call to action off screen -->
   <section class="hero work-band is-colored" id="work" aria-label="أعمالنا">
     <div class="hero-bgs" aria-hidden="true">
-      <span class="hero-bg b-agripro active"></span>
-      <span class="hero-bg b-takkoush"></span>
-      <span class="hero-bg b-wafica"></span>
-      <span class="hero-bg b-spotlight"></span>
-      <span class="hero-bg b-oplinx"></span>
-      <span class="hero-bg b-shamaa"></span>
+      <span class="hero-bg b-work active"></span>
     </div>
     <div class="wrap">
       <div class="work-slider" data-work-slider>
@@ -4039,7 +4026,6 @@
     const slides = [...track.children];
     const nowEl = document.getElementById('workNow');
     const nextLabel = document.getElementById('workNextLabel');
-    const bgs = [...document.querySelectorAll('.work-band .hero-bg')];
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // no autoplay: the showcase only moves when the visitor moves it (arrows, swipe)
     let i = 0;
@@ -4049,7 +4035,6 @@
     const go = (n) => {
       i = (n + slides.length) % slides.length;
       track.style.transform = 'translateX(' + (-i * 100) + '%)'; // track forced LTR in CSS
-      bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
       // off-screen slides must not hold focus stops or be read out
       slides.forEach((s, idx) => {
         if (idx === i) { s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
