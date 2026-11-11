@@ -1393,10 +1393,9 @@
   .hero.is-colored .work-count { color: rgba(255,255,255,0.8); }
   .hero.is-colored .work-count b { color: #fff; }
 
-  /* ── services: a bento. Custom systems (the lead service) runs full width;
-     websites and SEO sit side by side under it. All three stay in view. ── */
+  /* ── services: compact colored cards, one per service, all in view ── */
   .svc-slider { position: relative; margin-top: 30px; }
-  .svc-track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .svc-track { display: grid; grid-template-columns: 1fr; gap: 20px; }
 
   /* compact card: one column, the button closes the card */
   .svc-panel {
@@ -1504,25 +1503,32 @@
   .svc-chips { display: flex; flex-wrap: wrap; gap: 9px; }
   .svc-panel .svc-chips { margin-bottom: 28px; }
 
-  /* featured: custom systems spans the row, copy left, detail right */
-  @media (min-width: 861px) {
-    .svc-panel.s1 {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
-      gap: clamp(28px, 5vw, 64px);
-      align-items: center;
-      padding: clamp(34px, 4vw, 56px) clamp(28px, 5vw, 64px);
-    }
-    .svc-panel.s1 .svc-col { display: block; position: relative; z-index: 2; }
-    .svc-panel.s1 .svc-headline { font-size: clamp(40px, 5.8vw, 74px); line-height: 0.98; margin-bottom: 16px; }
-    html[lang="ar"] .svc-panel.s1 .svc-headline { font-size: clamp(34px, 4.2vw, 56px); line-height: 1.15; }
-    .svc-panel.s1 .svc-statement { margin-bottom: 28px; }
-    .svc-panel.s1 .svc-visual { padding: 32px; margin-bottom: 22px; }
-    .svc-panel.s1 .svc-bigicon { display: grid; }
-    .svc-panel.s1 .svc-chips { margin-bottom: 0; }
-    .svc-panel.s1 .svc-figure { inset-inline-end: clamp(18px, 5vw, 60px); font-size: clamp(170px, 30vw, 400px); }
+  /* sticky split: the intro and a service index stay pinned on the left
+     while the three cards scroll by on the right (desktop). #services clips
+     instead of hiding overflow, or nothing inside it could pin. */
+  #services { overflow: clip; }
+  .svc-index { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 4px; }
+  .svc-index a {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 0; border-top: 1px solid var(--hair);
+    font-weight: 700; font-size: 17px; color: var(--ink);
+    transition: color .3s var(--ease), gap .3s var(--ease);
   }
+  .svc-index li:last-child a { border-bottom: 1px solid var(--hair); }
+  .svc-index a:hover { color: var(--blue-text); gap: 18px; }
+  .svc-index .num { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12.5px; color: var(--muted); }
+  .svc-index .dot { width: 12px; height: 12px; border-radius: 4px; flex: none; }
+  .svc-index .d1 { background: linear-gradient(135deg, #073f63, #21bbdd); }
+  .svc-index .d2 { background: linear-gradient(135deg, #211a63, #8064ff); }
+  .svc-index .d3 { background: linear-gradient(135deg, #064a44, #2fd6ae); }
+  .svc-panel { scroll-margin-top: 110px; }
+  @media (min-width: 1024px) {
+    .svc-split { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(40px, 5vw, 72px); align-items: start; }
+    .svc-intro { position: sticky; top: 120px; }
+    .svc-split .svc-slider { margin-top: 0; }
+    .svc-split .svc-track { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 1023px) { .svc-index { display: none; } }
   .svc-chips span {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px; color: #fff;
@@ -2821,103 +2827,112 @@
   <!-- ───────────── SERVICES ───────────── -->
   <section class="section" id="services">
     <div class="wrap">
-      <span class="label reveal"><span data-en="/ What we do" data-ar="/ ماذا نقدّم">/ ماذا نقدّم</span></span>
-      <h2 class="title" data-m="mask" data-en="Systems, websites, SEO." data-ar="أنظمة، مواقع، وتحسين محركات البحث.">أنظمة، مواقع، وتحسين محركات البحث.</h2>
-      <p class="lede reveal" data-en="We build the system that runs your operations and the website that brings you clients. One team for both, so nothing gets lost between them." data-ar="نبني النظام الذي يدير عملياتك، والموقع الذي يجلب لك العملاء. فريق واحد للاثنين، فلا يضيع شيء بينهما.">نبني النظام الذي يدير عملياتك، والموقع الذي يجلب لك العملاء. فريق واحد للاثنين، فلا يضيع شيء بينهما.</p>
+      <div class="svc-split">
+        <div class="svc-intro">
+          <span class="label reveal"><span data-en="/ What we do" data-ar="/ ماذا نقدّم">/ ماذا نقدّم</span></span>
+          <h2 class="title" data-m="mask" data-en="Systems, websites, SEO." data-ar="أنظمة، مواقع، وتحسين محركات البحث.">أنظمة، مواقع، وتحسين محركات البحث.</h2>
+          <p class="lede reveal" data-en="We build the system that runs your operations and the website that brings you clients. One team for both, so nothing gets lost between them." data-ar="نبني النظام الذي يدير عملياتك، والموقع الذي يجلب لك العملاء. فريق واحد للاثنين، فلا يضيع شيء بينهما.">نبني النظام الذي يدير عملياتك، والموقع الذي يجلب لك العملاء. فريق واحد للاثنين، فلا يضيع شيء بينهما.</p>
+          <ol class="svc-index">
+            <li><a href="#svc-systems"><span class="dot d1" aria-hidden="true"></span><span class="num" aria-hidden="true">01</span><span data-en="Custom systems" data-ar="أنظمة مخصّصة">أنظمة مخصّصة</span></a></li>
+            <li><a href="#svc-websites"><span class="dot d2" aria-hidden="true"></span><span class="num" aria-hidden="true">02</span><span data-en="Websites &amp; landing pages" data-ar="مواقع وصفحات هبوط">مواقع وصفحات هبوط</span></a></li>
+            <li><a href="#svc-seo"><span class="dot d3" aria-hidden="true"></span><span class="num" aria-hidden="true">03</span><span data-en="SEO" data-ar="تحسين محركات البحث">تحسين محركات البحث</span></a></li>
+          </ol>
+        </div>
 
-      <!-- ── services: bento, custom systems featured, websites + SEO side by side ── -->
-      <div class="svc-slider" id="svcSlider">
-        <div class="svc-track" id="svcTrack">
+        <!-- ── services: sticky intro + index on the left, cards scroll on the right ── -->
+        <div class="svc-slider" id="svcSlider">
+          <div class="svc-track" id="svcTrack">
 
-          <!-- PANEL 01: Custom systems -->
-          <article class="svc-panel s1 reveal">
-            <span class="svc-figure" aria-hidden="true">01</span>
-            <div class="svc-col">
-              <span class="svc-eyebrow" data-anim style="--ad:.05s">
-                <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
-                <span data-en="01 / 03" data-ar="٠١ / ٠٣">٠١ / ٠٣</span>
-              </span>
-              <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="Custom systems" data-ar="أنظمة مخصّصة">أنظمة مخصّصة</h3>
-              <p class="svc-statement" data-anim style="--ad:.20s" data-en="One system that automates your orders, stock, clients and reports, built around how your team already works." data-ar="نظام واحد يؤتمت الطلبات والمخزون والعملاء والتقارير، مبني حول طريقة عمل فريقك الحالية.">نظام واحد يؤتمت الطلبات والمخزون والعملاء والتقارير، مبني حول طريقة عمل فريقك الحالية.</p>
-              <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="svc-cta" data-anim style="--ad:.26s">
-                <span data-en="Book a call" data-ar="احجز مكالمة">احجز مكالمة</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-            </div>
-            <div class="svc-col">
-              <div class="svc-visual" data-anim style="--ad:.22s">
-                <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-                <p class="svc-detail" data-en="Live dashboards, order and stock tracking and automatic reports, ready in 3 weeks with your real data." data-ar="لوحات تحكّم مباشرة، ومتابعة للطلبات والمخزون، وتقارير تلقائية، جاهزة خلال 3 أسابيع ببياناتك الحقيقية.">لوحات تحكّم مباشرة، ومتابعة للطلبات والمخزون، وتقارير تلقائية، جاهزة خلال 3 أسابيع ببياناتك الحقيقية.</p>
+            <!-- PANEL 01: Custom systems -->
+            <article class="svc-panel s1 reveal" id="svc-systems">
+              <span class="svc-figure" aria-hidden="true">01</span>
+              <div class="svc-col">
+                <span class="svc-eyebrow" data-anim style="--ad:.05s">
+                  <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+                  <span data-en="01 / 03" data-ar="٠١ / ٠٣">٠١ / ٠٣</span>
+                </span>
+                <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="Custom systems" data-ar="أنظمة مخصّصة">أنظمة مخصّصة</h3>
+                <p class="svc-statement" data-anim style="--ad:.20s" data-en="One system that automates your orders, stock, clients and reports, built around how your team already works." data-ar="نظام واحد يؤتمت الطلبات والمخزون والعملاء والتقارير، مبني حول طريقة عمل فريقك الحالية.">نظام واحد يؤتمت الطلبات والمخزون والعملاء والتقارير، مبني حول طريقة عمل فريقك الحالية.</p>
+                <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="svc-cta" data-anim style="--ad:.26s">
+                  <span data-en="Book a call" data-ar="احجز مكالمة">احجز مكالمة</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
               </div>
-              <div class="svc-chips" data-anim style="--ad:.30s">
-                <span data-en="Replace Excel" data-ar="بديل الإكسل">بديل الإكسل</span>
-                <span data-en="Order management" data-ar="إدارة الطلبات">إدارة الطلبات</span>
-                <span data-en="Dashboards" data-ar="لوحات تحكّم">لوحات تحكّم</span>
-                <span data-en="Business automation" data-ar="أتمتة الأعمال">أتمتة الأعمال</span>
-                <span data-en="Automatic reports" data-ar="تقارير تلقائية">تقارير تلقائية</span>
+              <div class="svc-col">
+                <div class="svc-visual" data-anim style="--ad:.22s">
+                  <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+                  <p class="svc-detail" data-en="Live dashboards, order and stock tracking and automatic reports, ready in 3 weeks with your real data." data-ar="لوحات تحكّم مباشرة، ومتابعة للطلبات والمخزون، وتقارير تلقائية، جاهزة خلال 3 أسابيع ببياناتك الحقيقية.">لوحات تحكّم مباشرة، ومتابعة للطلبات والمخزون، وتقارير تلقائية، جاهزة خلال 3 أسابيع ببياناتك الحقيقية.</p>
+                </div>
+                <div class="svc-chips" data-anim style="--ad:.30s">
+                  <span data-en="Replace Excel" data-ar="بديل الإكسل">بديل الإكسل</span>
+                  <span data-en="Order management" data-ar="إدارة الطلبات">إدارة الطلبات</span>
+                  <span data-en="Dashboards" data-ar="لوحات تحكّم">لوحات تحكّم</span>
+                  <span data-en="Business automation" data-ar="أتمتة الأعمال">أتمتة الأعمال</span>
+                  <span data-en="Automatic reports" data-ar="تقارير تلقائية">تقارير تلقائية</span>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- PANEL 02: Websites and landing pages -->
-          <article class="svc-panel s2 reveal">
-            <span class="svc-figure" aria-hidden="true">02</span>
-            <div class="svc-col">
-              <span class="svc-eyebrow" data-anim style="--ad:.05s">
-                <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-                <span data-en="02 / 03" data-ar="٠٢ / ٠٣">٠٢ / ٠٣</span>
-              </span>
-              <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="Websites &amp; landing pages" data-ar="مواقع وصفحات هبوط">مواقع وصفحات هبوط</h3>
-              <p class="svc-statement" data-anim style="--ad:.20s" data-en="Websites and landing pages that turn visits into enquiries, sent straight to your WhatsApp." data-ar="مواقع وصفحات هبوط تحوّل الزيارات إلى طلبات، تصلك مباشرة على واتساب.">مواقع وصفحات هبوط تحوّل الزيارات إلى طلبات، تصلك مباشرة على واتساب.</p>
-              <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="svc-cta" data-anim style="--ad:.26s">
-                <span data-en="Book a call" data-ar="احجز مكالمة">احجز مكالمة</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-            </div>
-            <div class="svc-col">
-              <div class="svc-visual" data-anim style="--ad:.22s">
-                <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-                <p class="svc-detail" data-en="Bilingual, fast on weak connections, with every enquiry sent to your WhatsApp or your system." data-ar="بالعربية والإنجليزية، سريعة على الاتصال الضعيف، وكل طلب يصلك على واتساب أو إلى نظامك.">بالعربية والإنجليزية، سريعة على الاتصال الضعيف، وكل طلب يصلك على واتساب أو إلى نظامك.</p>
+            <!-- PANEL 02: Websites and landing pages -->
+            <article class="svc-panel s2 reveal" id="svc-websites">
+              <span class="svc-figure" aria-hidden="true">02</span>
+              <div class="svc-col">
+                <span class="svc-eyebrow" data-anim style="--ad:.05s">
+                  <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+                  <span data-en="02 / 03" data-ar="٠٢ / ٠٣">٠٢ / ٠٣</span>
+                </span>
+                <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="Websites &amp; landing pages" data-ar="مواقع وصفحات هبوط">مواقع وصفحات هبوط</h3>
+                <p class="svc-statement" data-anim style="--ad:.20s" data-en="Websites and landing pages that turn visits into enquiries, sent straight to your WhatsApp." data-ar="مواقع وصفحات هبوط تحوّل الزيارات إلى طلبات، تصلك مباشرة على واتساب.">مواقع وصفحات هبوط تحوّل الزيارات إلى طلبات، تصلك مباشرة على واتساب.</p>
+                <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="svc-cta" data-anim style="--ad:.26s">
+                  <span data-en="Book a call" data-ar="احجز مكالمة">احجز مكالمة</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
               </div>
-              <div class="svc-chips" data-anim style="--ad:.30s">
-                <span data-en="Arabic &amp; English" data-ar="عربي وإنجليزي">عربي وإنجليزي</span>
-                <span data-en="Landing pages" data-ar="صفحات هبوط">صفحات هبوط</span>
-                <span data-en="Lead forms" data-ar="نماذج طلب">نماذج طلب</span>
-                <span data-en="Fast on any connection" data-ar="سريعة على أي اتصال">سريعة على أي اتصال</span>
-                <span data-en="Online stores (Shopify)" data-ar="متاجر إلكترونية (Shopify)">متاجر إلكترونية (Shopify)</span>
+              <div class="svc-col">
+                <div class="svc-visual" data-anim style="--ad:.22s">
+                  <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                  <p class="svc-detail" data-en="Bilingual, fast on weak connections, with every enquiry sent to your WhatsApp or your system." data-ar="بالعربية والإنجليزية، سريعة على الاتصال الضعيف، وكل طلب يصلك على واتساب أو إلى نظامك.">بالعربية والإنجليزية، سريعة على الاتصال الضعيف، وكل طلب يصلك على واتساب أو إلى نظامك.</p>
+                </div>
+                <div class="svc-chips" data-anim style="--ad:.30s">
+                  <span data-en="Arabic &amp; English" data-ar="عربي وإنجليزي">عربي وإنجليزي</span>
+                  <span data-en="Landing pages" data-ar="صفحات هبوط">صفحات هبوط</span>
+                  <span data-en="Lead forms" data-ar="نماذج طلب">نماذج طلب</span>
+                  <span data-en="Fast on any connection" data-ar="سريعة على أي اتصال">سريعة على أي اتصال</span>
+                  <span data-en="Online stores (Shopify)" data-ar="متاجر إلكترونية (Shopify)">متاجر إلكترونية (Shopify)</span>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- PANEL 03: SEO -->
-          <article class="svc-panel s3 reveal">
-            <span class="svc-figure" aria-hidden="true">03</span>
-            <div class="svc-col">
-              <span class="svc-eyebrow" data-anim style="--ad:.05s">
-                <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 11h6M11 8v6"/></svg></span>
-                <span data-en="03 / 03" data-ar="٠٣ / ٠٣">٠٣ / ٠٣</span>
-              </span>
-              <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="SEO" data-ar="تحسين محركات البحث">تحسين محركات البحث</h3>
-              <p class="svc-statement" data-anim style="--ad:.20s" data-en="Get found when customers search for what you sell, from technical fixes to pages built around real searches." data-ar="أن يجدك العملاء حين يبحثون عمّا تبيعه، من الإصلاحات التقنية إلى صفحات مبنية على عمليات بحث حقيقية.">أن يجدك العملاء حين يبحثون عمّا تبيعه، من الإصلاحات التقنية إلى صفحات مبنية على عمليات بحث حقيقية.</p>
-              <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="svc-cta" data-anim style="--ad:.26s">
-                <span data-en="Book a call" data-ar="احجز مكالمة">احجز مكالمة</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-            </div>
-            <div class="svc-col">
-              <div class="svc-visual" data-anim style="--ad:.22s">
-                <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 11h6M11 8v6"/></svg></div>
-                <p class="svc-detail" data-en="Technical fixes and content for real searches, with results in months, not weeks." data-ar="إصلاحات تقنية ومحتوى لما يبحث عنه عملاؤك، والنتائج خلال أشهر لا أسابيع.">إصلاحات تقنية ومحتوى لما يبحث عنه عملاؤك، والنتائج خلال أشهر لا أسابيع.</p>
+            <!-- PANEL 03: SEO -->
+            <article class="svc-panel s3 reveal" id="svc-seo">
+              <span class="svc-figure" aria-hidden="true">03</span>
+              <div class="svc-col">
+                <span class="svc-eyebrow" data-anim style="--ad:.05s">
+                  <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 11h6M11 8v6"/></svg></span>
+                  <span data-en="03 / 03" data-ar="٠٣ / ٠٣">٠٣ / ٠٣</span>
+                </span>
+                <h3 class="svc-headline" data-anim style="--ad:.14s" data-en="SEO" data-ar="تحسين محركات البحث">تحسين محركات البحث</h3>
+                <p class="svc-statement" data-anim style="--ad:.20s" data-en="Get found when customers search for what you sell, from technical fixes to pages built around real searches." data-ar="أن يجدك العملاء حين يبحثون عمّا تبيعه، من الإصلاحات التقنية إلى صفحات مبنية على عمليات بحث حقيقية.">أن يجدك العملاء حين يبحثون عمّا تبيعه، من الإصلاحات التقنية إلى صفحات مبنية على عمليات بحث حقيقية.</p>
+                <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="svc-cta" data-anim style="--ad:.26s">
+                  <span data-en="Book a call" data-ar="احجز مكالمة">احجز مكالمة</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
               </div>
-              <div class="svc-chips" data-anim style="--ad:.30s">
-                <span data-en="Keyword strategy" data-ar="استراتيجية الكلمات">استراتيجية الكلمات</span>
-                <span data-en="Technical SEO" data-ar="سيو تقني">سيو تقني</span>
-                <span data-en="Structured data" data-ar="بيانات منظّمة">بيانات منظّمة</span>
-                <span data-en="Content" data-ar="المحتوى">المحتوى</span>
+              <div class="svc-col">
+                <div class="svc-visual" data-anim style="--ad:.22s">
+                  <div class="svc-bigicon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 11h6M11 8v6"/></svg></div>
+                  <p class="svc-detail" data-en="Technical fixes and content for real searches, with results in months, not weeks." data-ar="إصلاحات تقنية ومحتوى لما يبحث عنه عملاؤك، والنتائج خلال أشهر لا أسابيع.">إصلاحات تقنية ومحتوى لما يبحث عنه عملاؤك، والنتائج خلال أشهر لا أسابيع.</p>
+                </div>
+                <div class="svc-chips" data-anim style="--ad:.30s">
+                  <span data-en="Keyword strategy" data-ar="استراتيجية الكلمات">استراتيجية الكلمات</span>
+                  <span data-en="Technical SEO" data-ar="سيو تقني">سيو تقني</span>
+                  <span data-en="Structured data" data-ar="بيانات منظّمة">بيانات منظّمة</span>
+                  <span data-en="Content" data-ar="المحتوى">المحتوى</span>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
+          </div>
         </div>
       </div>
 
