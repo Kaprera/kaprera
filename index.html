@@ -1125,17 +1125,16 @@
       radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
       linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
   }
-  /* the work band: one kaprera navy behind every project, with a soft blue
-     glow, so the frame stays ours and the client colour lives in the renders.
-     White copy is 15:1 on the navy. The two feathered renders (oplinx,
-     al-shamaa) carry navy backdrops of their own, so their edges melt in. */
+  /* the work band: the page's own soft surface (light, or dark under the
+     dark theme) with a faint blue glow; copy uses the normal ink colours */
   .b-work {
-    background-image:
-      radial-gradient(70% 90% at 88% 6%, rgba(0,140,193,0.34), transparent 60%),
-      radial-gradient(60% 80% at 0% 100%, rgba(0,194,216,0.10), transparent 62%),
-      linear-gradient(160deg, #071a2e 0%, #0a2540 55%, #0b2c4d 100%);
+    background-color: var(--bg-soft);
+    background-image: radial-gradient(70% 90% at 88% 6%, rgba(0,140,193,0.10), transparent 60%);
     animation: none;
   }
+  .work-band .anno path { stroke: var(--blue); }
+  .work-band .anno circle { fill: var(--blue); }
+  .work-band .anno circle.ring { stroke: color-mix(in srgb, var(--blue) 45%, transparent); }
   /* landing-page standards: what every landing page ships with (spec sheet) */
   .lp-std { margin-top: 96px; }
   .lp-std-head { max-width: 640px; margin-bottom: 32px; }
@@ -2619,7 +2618,7 @@
   <!-- ───────────── OUR WORK ───────────── -->
   <!-- its own band under the hero, so stepping through the case studies never
        slides the headline and the main call to action off screen -->
-  <section class="hero work-band is-colored" id="work" aria-label="our work">
+  <section class="hero work-band" id="work" aria-label="our work">
     <div class="hero-bgs" aria-hidden="true">
       <span class="hero-bg b-work active"></span>
     </div>
