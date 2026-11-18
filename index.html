@@ -725,25 +725,26 @@
     margin-bottom: 26px;
     position: relative;
   }
-  /* typewriter layers: an invisible ghost of the final text reserves the full
-     height, and the live layer types over it, so no offsetHeight measurement
-     (which would force a reflow) is needed to lock the height */
-  /* reserves the final height; user-select keeps it out of a copied headline */
-  .hero h1 .type-ghost { visibility: hidden; user-select: none; -webkit-user-select: none; }
-  .hero h1 .type-live { position: absolute; inset: 0; white-space: pre-line; }
-  .hero h1.type-done .type-ghost { display: none; }
-  .hero h1.type-done .type-live { position: static; }
-  .hero h1 .caret {
-    display: inline-block;
-    width: 4px;
-    height: 0.82em;
-    background: var(--blue);
-    margin-inline-start: 8px;
-    border-radius: 2px;
-    vertical-align: baseline;
-    animation: caretBlink 1s steps(1) infinite;
+  /* headline entrance: each word rises out of its own mask, staggered, once
+     the preloader clears. The hero script wraps the words; without JS or
+     under reduced motion the h1 is plain text. The words keep their real
+     spaces and line boxes, so wrapping and height match the plain headline. */
+  .hero h1 .hw {
+    display: inline-block; overflow: hidden; vertical-align: top;
+    /* room inside the mask for descenders and Arabic marks */
+    padding: 0.04em 0.03em 0.16em; margin: -0.04em -0.03em -0.16em;
   }
-  @keyframes caretBlink { 50% { opacity: 0; } }
+  .hero h1 .hw > span { display: inline-block; transform: translate3d(0, 112%, 0); }
+  .hero h1.is-rising .hw > span {
+    animation: heroWordRise 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i) * 85ms);
+  }
+  @keyframes heroWordRise { from { transform: translate3d(0, 112%, 0); } to { transform: none; } }
+  /* the rest of the hero follows the headline instead of racing it */
+  html.js #heroTitle:not(.is-rising) ~ .reveal { opacity: 0; transform: translateY(28px); }
+  html.js #heroTitle.is-rising ~ .subline { transition-delay: .4s; }
+  html.js #heroTitle.is-rising ~ .hero-ctas { transition-delay: .55s; }
+  html.js #heroTitle.is-rising ~ .hero-note { transition-delay: .68s; }
   .hero .subline {
     font-size: clamp(17px, 2.4vw, 21px);
     color: var(--muted);
@@ -975,7 +976,7 @@
   /* ── designed renders ──
      Four projects show the device render from their own mockup artwork in
      place of the CSS laptop. Each render is cut out of its backdrop, so it
-     sits straight on the slide's flat colour with nothing to blend into. */
+     sits straight on the work band's navy with nothing to blend into. */
   .case-render {
     position: relative;
     width: 100%;
@@ -1125,25 +1126,16 @@
       radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.20), transparent 52%),
       linear-gradient(125deg, #0c5a86 0%, #008cc1 50%, #00c2d8 100%);
   }
-  /* Each project slide is one flat colour from its own palette. The renders
-     are cut out of their backdrops, so nothing has to blend into a gradient,
-     and white copy clears 4.5:1 on every one of them (7.8 is the lowest). */
-  .b-agripro   { background-image: none; background-color: #3c5a34; }
-  .b-spotlight { background-image: none; background-color: #5a109c; }
-  .b-takkoush  { background-image: none; background-color: #1c1813; }
-  .b-wafica    { background-image: none; background-color: #2a2217; }
-  /* oplinx solutions: the render keeps its own backdrop, so the slide carries
-     the same navy → royal blue, sampled down the render's edges */
-  .b-oplinx {
-    background-image:
-      linear-gradient(180deg, #011e3f 0%, #01254c 18%, #013063 36%, #013671 48%, #003a78 56%, #033f84 78%, #04448c 100%);
+  /* the work band: the page's own soft surface (light, or dark under the
+     dark theme) with a faint blue glow; copy uses the normal ink colours */
+  .b-work {
+    background-color: var(--bg-soft);
+    background-image: radial-gradient(70% 90% at 88% 6%, rgba(0,140,193,0.10), transparent 60%);
+    animation: none;
   }
-  /* al-shamaa engineering: likewise, the render's navy → slate down its edges */
-  .b-shamaa {
-    background-image:
-      linear-gradient(180deg, #012646 0%, #0c3351 18%, #234661 48%, #3a5a70 78%, #45647a 100%);
-  }
-  .b-agripro, .b-oplinx, .b-spotlight, .b-shamaa, .b-takkoush, .b-wafica { animation: none; }
+  .work-band .anno path { stroke: var(--blue); }
+  .work-band .anno circle { fill: var(--blue); }
+  .work-band .anno circle.ring { stroke: color-mix(in srgb, var(--blue) 45%, transparent); }
   /* landing-page standards: what every landing page ships with (spec sheet) */
   .lp-std { margin-top: 96px; }
   .lp-std-head { max-width: 640px; margin-bottom: 32px; }
@@ -1420,8 +1412,11 @@
       radial-gradient(95% 95% at -5% 112%, rgba(0,0,0,0.22), transparent 60%);
   }
   .svc-panel.s1 { background: linear-gradient(135deg, #073f63 0%, #008cc1 52%, #21bbdd 100%); }
-  .svc-panel.s2 { background: linear-gradient(135deg, #211a63 0%, #4a37c9 52%, #8064ff 100%); }
-  .svc-panel.s3 { background: linear-gradient(135deg, #064a44 0%, #0c9b86 52%, #2fd6ae 100%); }
+  /* one kaprera family down the stack: brand blue, the work band's navy, deep
+     ocean. The purple and green read as three brands; the shift in depth is
+     enough to tell the services apart. White copy is 4.5:1+ on s2 and s3. */
+  .svc-panel.s2 { background: linear-gradient(135deg, #071a2e 0%, #0a2540 52%, #0d3a63 100%); }
+  .svc-panel.s3 { background: linear-gradient(135deg, #04314f 0%, #005f8c 52%, #0a7fae 100%); }
   html[lang="ar"] .svc-panel { direction: rtl; text-align: right; }
 
   /* giant ghost numeral */
@@ -1519,8 +1514,11 @@
   .svc-index .num { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12.5px; color: var(--muted); }
   .svc-index .dot { width: 12px; height: 12px; border-radius: 4px; flex: none; }
   .svc-index .d1 { background: linear-gradient(135deg, #073f63, #21bbdd); }
-  .svc-index .d2 { background: linear-gradient(135deg, #211a63, #8064ff); }
-  .svc-index .d3 { background: linear-gradient(135deg, #064a44, #2fd6ae); }
+  .svc-index .d2 { background: linear-gradient(135deg, #071a2e, #0d3a63); }
+  .svc-index .d3 { background: linear-gradient(135deg, #04314f, #0a7fae); }
+  /* on the dark page the navy panel sits close to the background: a hairline keeps its edge */
+  html[data-theme="dark"] .svc-panel.s2 { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.09), 0 50px 100px -45px rgba(0,0,0,0.55); }
+  html[data-theme="dark"] .svc-index .d2 { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.28); }
   .svc-panel { scroll-margin-top: 110px; }
   @media (min-width: 1024px) {
     .svc-split { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(40px, 5vw, 72px); align-items: start; }
@@ -2585,7 +2583,7 @@
     <span class="hero-mark" aria-hidden="true" data-m-parallax="-0.15"></span>
     <div class="wrap">
       <div class="hero-intro">
-        <h1 class="reveal" id="heroTitle" data-en="Your business outgrew Excel." data-ar="شركتك كبرت على الإكسل.">Your business outgrew Excel.</h1>
+        <h1 id="heroTitle" data-en="Your business outgrew Excel." data-ar="شركتك كبرت على الإكسل.">Your business outgrew Excel.</h1>
         <p class="subline reveal" data-en="We build custom systems that replace spreadsheets and WhatsApp orders and automate the busywork, built around how your team works. First version in 1 week, full system in 3." data-ar="نبني أنظمة مخصّصة تحلّ محلّ الجداول وطلبات واتساب وتؤتمت العمل المتكرّر، مبنية حول طريقة عمل فريقك. نسخة أولى خلال أسبوع، ونظام كامل خلال 3 أسابيع.">We build custom systems that replace spreadsheets and WhatsApp orders and automate the busywork, built around how your team works. First version in 1 week, full system in 3.</p>
         <div class="hero-ctas reveal">
           <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -2627,14 +2625,9 @@
   <!-- ───────────── OUR WORK ───────────── -->
   <!-- its own band under the hero, so stepping through the case studies never
        slides the headline and the main call to action off screen -->
-  <section class="hero work-band is-colored" id="work" aria-label="our work">
+  <section class="hero work-band" id="work" aria-label="our work">
     <div class="hero-bgs" aria-hidden="true">
-      <span class="hero-bg b-agripro active"></span>
-      <span class="hero-bg b-takkoush"></span>
-      <span class="hero-bg b-wafica"></span>
-      <span class="hero-bg b-spotlight"></span>
-      <span class="hero-bg b-oplinx"></span>
-      <span class="hero-bg b-shamaa"></span>
+      <span class="hero-bg b-work active"></span>
     </div>
     <div class="wrap">
       <div class="work-slider" data-work-slider>
@@ -3886,70 +3879,35 @@
     syncToggle();
   });
 
-  // ── hero headline typewriter ──
+  // ── hero headline entrance: words rise out of line masks, staggered ──
   const heroTitle = document.getElementById('heroTitle');
-  let typeTimer = null;
-  // slide 1 shouldn't type while the preloader still covers it; unlocked on 'kaprera:loaded'
+  // the words wait while the preloader still covers them; unlocked on 'kaprera:loaded'
   let heroTypingUnlocked = !document.getElementById('preloader');
   const typeHeroTitle = (lang) => {
-    if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
     const text = heroTitle.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en') || '';
-    heroTitle.classList.remove('type-done');
+    heroTitle.classList.remove('is-rising');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      heroTitle.removeAttribute('aria-label');
       heroTitle.textContent = text;
-      heroTitle.insertAdjacentHTML('beforeend', '<span class="caret"></span>');
+      heroTitle.classList.add('is-rising');   // releases the subline and CTAs
       return;
     }
-    // an invisible ghost of the final text reserves the full height (avoids
-    // layout shift) without measuring offsetHeight, which would force a reflow
-    heroTitle.innerHTML = '<span class="type-ghost" aria-hidden="true"></span><span class="type-live"><span class="typed"></span><span class="caret"></span></span>';
-    heroTitle.querySelector('.type-ghost').textContent = text;
-    // hold the keystrokes until the preloader clears; this fn re-runs on unlock
-    if (!heroTypingUnlocked) return;
-    const typed = heroTitle.querySelector('.typed');
-    // type along the finished headline's own line breaks: otherwise a half-typed
-    // word still fits on the line above, runs out toward the hero art, then jumps
-    // down once it's too long. The ghost is already laid out, so this is one read
-    const ghostText = heroTitle.querySelector('.type-ghost').firstChild;
-    let shown = text;
-    if (ghostText) {
-      const r = document.createRange();
-      const starts = [];
-      let top = null;
-      for (let k = 0; k < text.length; k++) {
-        r.setStart(ghostText, k); r.setEnd(ghostText, k + 1);
-        const box = r.getBoundingClientRect();
-        if (!box.height || text[k] === ' ') continue;
-        if (top !== null && box.top > top + box.height / 2) starts.push(k);
-        top = box.top;
-      }
-      // a newline replaces the space each wrapped line started after
-      for (let k = starts.length - 1; k >= 0; k--) {
-        const at = starts[k];
-        shown = shown.slice(0, at).replace(/ $/, '') + '\n' + shown.slice(at);
-      }
-    }
-    // the headline is the page's value proposition, so it has to finish while the
-    // hero slide is still on screen — roughly 2s for a 50-character line
-    const delayFor = (ch) => {
-      if (ch === ',' || ch === '،') return 150;          // pause after comma
-      if (ch === '.' || ch === '&' || ch === '—') return 140; // pause after punctuation
-      if (ch === ' ') return 55;                         // small hesitation between words
-      return 32;                                         // base typing speed
-    };
-    let i = 0;
-    const step = () => {
-      i++;
-      typed.textContent = shown.slice(0, i);
-      if (i < shown.length) {
-        typeTimer = setTimeout(step, delayFor(shown[i - 1]));
-      } else {
-        // back to the plain string, so it rewraps normally if the window resizes
-        typed.textContent = text;
-        heroTitle.classList.add('type-done');
-      }
-    };
-    step();
+    // the masks are presentation only: the heading's name is the plain sentence
+    heroTitle.setAttribute('aria-label', text);
+    heroTitle.textContent = '';
+    text.split(/\s+/).filter(Boolean).forEach((w, i) => {
+      if (i) heroTitle.append(' ');
+      const mask = document.createElement('span');
+      mask.className = 'hw';
+      mask.setAttribute('aria-hidden', 'true');
+      const word = document.createElement('span');
+      word.textContent = w;
+      word.style.setProperty('--i', i);
+      mask.append(word);
+      heroTitle.append(mask);
+    });
+    // fresh nodes, so a language switch replays the entrance without a reflow
+    if (heroTypingUnlocked) heroTitle.classList.add('is-rising');
   };
 
   // ── language toggle (en / ar rtl) ──
@@ -4041,7 +3999,6 @@
     const slides = [...track.children];
     const nowEl = document.getElementById('workNow');
     const nextLabel = document.getElementById('workNextLabel');
-    const bgs = [...document.querySelectorAll('.work-band .hero-bg')];
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // no autoplay: the showcase only moves when the visitor moves it (arrows, swipe)
     let i = 0;
@@ -4051,7 +4008,6 @@
     const go = (n) => {
       i = (n + slides.length) % slides.length;
       track.style.transform = 'translateX(' + (-i * 100) + '%)'; // track forced LTR in CSS
-      bgs.forEach((b, idx) => b.classList.toggle('active', idx === i));
       // off-screen slides must not hold focus stops or be read out
       slides.forEach((s, idx) => {
         if (idx === i) { s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
@@ -4981,7 +4937,7 @@
   // apply saved language (swap text/placeholders) on load
   applyLang(currentLang);
 
-  // begin the hero typewriter only once the preloader has finished
+  // begin the hero entrance only once the preloader has finished
   if (!heroTypingUnlocked) {
     document.addEventListener('kaprera:loaded', () => {
       heroTypingUnlocked = true;
