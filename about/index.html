@@ -114,6 +114,7 @@
   .ab-sys{ width:100%; border-radius:18px; background:var(--k-ink); color:#fff; padding:24px; box-shadow:0 18px 40px -24px rgba(11,18,32,.6); }
   .ab-sys-h{ display:flex; align-items:center; gap:10px; font-weight:700; margin-bottom:16px; }
   .ab-sys-h i{ width:10px; height:10px; border-radius:50%; background:var(--k-sky); }
+  .ab-eg{ margin-inline-start:auto; padding:2px 10px; border:1px solid rgba(255,255,255,.25); border-radius:999px; font-size:12px; font-weight:500; color:rgba(255,255,255,.75); }
   .ab-sys ul{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
   .ab-sys li{ display:flex; justify-content:space-between; gap:16px; padding:10px 12px; border-radius:10px; background:rgba(255,255,255,.07); font-size:14px; }
   .ab-sys li span:last-child{ color:#8fd3f0; }
@@ -156,7 +157,7 @@
   .ab-facts b{ display:block; font-size:clamp(22px,2.4vw,30px); font-weight:800; letter-spacing:-.02em; line-height:1.15; margin-bottom:8px; }
   .ab-facts span{ color:var(--muted); font-size:15px; line-height:1.5; }
   html[lang="ar"] .ab-facts b{ letter-spacing:0; }
-  .ab-scope{ display:grid; grid-template-columns:1.4fr 1fr; gap:24px; }
+  .ab-scope{ display:grid; grid-template-columns:1.4fr 1fr; gap:24px; align-items:start; }
   .ab-scope > div{ border-radius:20px; padding:32px; }
   .ab-yes{ background:var(--k-mist); }
   .ab-no{ border:1px solid var(--hair); }
@@ -225,7 +226,7 @@
     <div class="wrap ab-hero-grid">
       <div>
         <h1 id="ab-title"><span data-en="About kaprera." data-ar="عن kaprera.">About kaprera.</span> <span class="soft" data-en="We build the systems growing businesses run on." data-ar="نبني الأنظمة التي تُدار بها الشركات النامية.">We build the systems growing businesses run on.</span></h1>
-        <p class="lede" data-en="kaprera is a software agency in Beirut, Lebanon. We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works, for clients across the Middle East." data-ar="kaprera شركة برمجيات في بيروت، لبنان. نستبدل ملفات الإكسل وطلبات واتساب والأوراق بأنظمة أعمال مخصّصة مبنية حول طريقة عمل فريقك، لعملاء في أنحاء الشرق الأوسط.">kaprera is a software agency in Beirut, Lebanon. We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works, for clients across the Middle East.</p>
+        <p class="lede" data-en="kaprera is a software agency in Beirut, Lebanon, building custom business systems for growing businesses across the Middle East." data-ar="kaprera شركة برمجيات في بيروت، لبنان، تبني أنظمة أعمال مخصّصة للشركات النامية في أنحاء الشرق الأوسط.">kaprera is a software agency in Beirut, Lebanon, building custom business systems for growing businesses across the Middle East.</p>
         <div class="actions">
           <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span></a>
           <a href="/work/" class="btn btn-ghost"><span data-en="See our work" data-ar="شاهد أعمالنا">See our work</span></a>
@@ -239,7 +240,7 @@
         </div>
         <svg class="ab-arrow" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6v26"/><path d="M10 22l10 10 10-10"/></svg>
         <div class="ab-sys">
-          <div class="ab-sys-h"><i></i><span data-en="One system" data-ar="نظام واحد">One system</span></div>
+          <div class="ab-sys-h"><i></i><span data-en="One system" data-ar="نظام واحد">One system</span><span class="ab-eg" data-en="Example" data-ar="مثال">Example</span></div>
           <ul>
               <li><span data-en="Orders" data-ar="الطلبات">Orders</span><span data-en="12 new" data-ar="12 جديدة">12 new</span></li>
               <li><span data-en="Stock" data-ar="المخزون">Stock</span><span data-en="2 running low" data-ar="صنفان قاربا النفاد">2 running low</span></li>
@@ -587,7 +588,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span data-en="© 2026 kaprera. All rights reserved." data-ar="© 2026 كابريرا. جميع الحقوق محفوظة.">© 2026 kaprera. All rights reserved.</span>
+      <span data-en="© 2026 kaprera. All rights reserved." data-ar="© 2026 kaprera. جميع الحقوق محفوظة.">© 2026 kaprera. All rights reserved.</span>
       <span><span data-en="Made in Lebanon ·" data-ar="صُنع في لبنان ·">Made in Lebanon ·</span> <span class="accent">&gt;_</span></span>
       <span class="foot-theme"><span data-en="Dark mode" data-ar="الوضع الداكن">Dark mode</span> <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="toggle dark mode">
         <span class="seg sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
