@@ -754,6 +754,10 @@
   .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; }
   .hero-note { margin: 14px 0 0; max-width: 560px; font-size: 14px; line-height: 1.6; color: var(--muted); }
   .hero.is-colored .hero-note { color: rgba(255,255,255,0.86); }
+  .hero-note p { margin: 0; }
+  .hero-gets { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+  .hero-gets li { display: flex; align-items: center; gap: 8px; }
+  .hero-gets .hg-ok { flex: none; }
   /* the hero stands alone; the case studies get their own band below it */
   .hero-intro { position: relative; padding-bottom: 72px; }
   .hero.work-band { padding: 96px 0 44px; }
@@ -2579,10 +2583,17 @@
         <h1 id="heroTitle" data-en="Your business outgrew Excel." data-ar="شركتك كبرت على الإكسل.">Your business outgrew Excel.</h1>
         <p class="subline reveal" data-en="We build custom systems that replace spreadsheets and WhatsApp orders and automate the busywork, built around how your team works. First version in 1 week, full system in 3." data-ar="نبني أنظمة مخصّصة تحلّ محلّ الجداول وطلبات واتساب وتؤتمت العمل المتكرّر، مبنية حول طريقة عمل فريقك. نسخة أولى خلال أسبوع، ونظام كامل خلال 3 أسابيع.">We build custom systems that replace spreadsheets and WhatsApp orders and automate the busywork, built around how your team works. First version in 1 week, full system in 3.</p>
         <div class="hero-ctas reveal">
-          <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-primary btn-shine"><span data-en="Free 20-minute operations review" data-ar="مراجعة مجانية لعملياتك في 20 دقيقة">Free 20-minute operations review</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           <a href="#work" class="btn btn-ghost" id="seeWork" data-en="See our work" data-ar="شاهد أعمالنا">See our work</a>
         </div>
-        <p class="hero-note reveal" data-en="A short call about how you work today. You get a fixed quote after." data-ar="مكالمة قصيرة عن طريقة عملك اليوم، ثم نرسل لك عرض سعر ثابتًا.">A short call about how you work today. You get a fixed quote after.</p>
+        <div class="hero-note reveal">
+          <p data-en="A free call about how you work today. You leave with:" data-ar="مكالمة مجانية عن طريقة عملك اليوم، تخرج منها بـ:">A free call about how you work today. You leave with:</p>
+          <ul class="hero-gets">
+            <li><svg class="hg-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17 19 8"/></svg><span data-en="Where time and orders leak today" data-ar="أين يضيع الوقت والطلبات اليوم">Where time and orders leak today</span></li>
+            <li><svg class="hg-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17 19 8"/></svg><span data-en="What to fix first" data-ar="ما الذي يجب إصلاحه أولًا">What to fix first</span></li>
+            <li><svg class="hg-ok" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17 19 8"/></svg><span data-en="A rough fixed-price range" data-ar="نطاق تقريبي لسعر ثابت">A rough fixed-price range</span></li>
+          </ul>
+        </div>
         <div class="hero-art" aria-hidden="true" data-m-parallax="-0.08">
           <div class="ha-stage">
             <div class="ha-sheet"></div>
