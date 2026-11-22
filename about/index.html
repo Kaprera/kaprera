@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+  /* apply saved/system theme + language before paint (no flash) */
+  (function () {
+    var saved; try { saved = localStorage.getItem('theme'); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    var lang; try { lang = localStorage.getItem('lang'); } catch (e) {} lang = lang || 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    window.loadArabicFont = function () {
+      if (document.getElementById('cairoFont')) return;
+      var l = document.createElement('link');
+      l.id = 'cairoFont'; l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap';
+      document.head.appendChild(l);
+    };
+    if (lang === 'ar') window.loadArabicFont();
+    /* gates the scroll-reveal styles: without JS the cards must stay visible */
+    document.documentElement.classList.add('js');
+  })();
+</script>
+<title>About kaprera — vision, mission and how we work | kaprera</title>
+<meta name="description" content="kaprera is a software agency in Beirut, Lebanon, founded by Ibrahim Hussein. Our vision, our mission, and the three pillars behind every custom business system and website we build." />
+<meta name="keywords" content="about kaprera, kaprera vision, kaprera mission, software agency Beirut, custom business systems Lebanon, Ibrahim Hussein, custom systems Middle East" />
+<link rel="canonical" href="https://kaprera.com/about/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#008cc1" />
+<link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/branding/logos/favicon-rounded-32.png" />
+<link rel="apple-touch-icon" href="/branding/logos/apple-touch-icon-rounded.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="kaprera" />
+<meta property="og:title" content="About kaprera — vision, mission and how we work" />
+<meta property="og:description" content="We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works." />
+<meta property="og:url" content="https://kaprera.com/about/" />
+<meta property="og:image" content="https://kaprera.com/branding/og-cover.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="About kaprera — vision, mission and how we work" />
+<meta name="twitter:description" content="We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works." />
+<meta name="twitter:image" content="https://kaprera.com/branding/og-cover.png" />
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="/cases/case.css?v=9" />
+<link rel="stylesheet" href="/contact.css?v=2" />
+<script src="/cases/case.js?v=3" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kaprera.com/" },
+    { "@type": "ListItem", "position": 2, "name": "About", "item": "https://kaprera.com/about/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "url": "https://kaprera.com/about/",
+  "name": "About kaprera",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "kaprera",
+    "url": "https://kaprera.com/",
+    "slogan": "Custom business systems built around how you work.",
+    "description": "We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works.",
+    "founder": { "@type": "Person", "name": "Ibrahim Hussein", "jobTitle": "Founder" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Beirut", "addressCountry": "LB" },
+    "areaServed": ["Lebanon", "Saudi Arabia", "United Arab Emirates", "Middle East"],
+    "knowsLanguage": ["ar", "en"],
+    "email": "info@kaprera.com",
+    "telephone": "+9613816405"
+  }
+}
+</script>
+
+<style>
+  /* ── about ─────────────────────────────────────────────────────────────
+     /cases/case.css carries the tokens, nav, footer, h1/h2, .blk sections and
+     buttons; /contact.css the enquiry band. Only the cards are page-local. */
+  .hero .lede{ max-width:64ch; }
+  .vm{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .vm-card{ border:1px solid var(--hair); border-radius:16px; background:var(--panel); padding:32px; }
+  .vm-card p{ margin:0; font-size:clamp(19px,2.1vw,24px); line-height:1.4; font-weight:650; letter-spacing:-.01em; }
+  .vm-card .label{ display:block; margin-bottom:16px; color:var(--blue-ink); }
+  .pillars{ list-style:none; padding:0; margin:8px 0 0; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .pillar{ border-top:2px solid var(--blue); padding-top:24px; }
+  .pillar-num{ font-family:var(--mono); font-size:12px; color:var(--blue-ink); }
+  .pillar h3{ margin:8px 0 8px; font-size:20px; font-weight:700; letter-spacing:-.01em; }
+  .pillar p{ margin:0; color:var(--muted); line-height:1.6; }
+  .facts{ display:grid; grid-template-columns:auto 1fr; gap:12px 32px; margin:8px 0 0; max-width:820px; }
+  .facts dt{ font-family:var(--mono); font-size:13px; color:var(--muted); padding-top:2px; }
+  .facts dd{ margin:0; }
+  .founder p{ max-width:64ch; margin:0 0 16px; }
+  html[lang="ar"] .vm-card p,
+  html[lang="ar"] .pillar h3{ letter-spacing:0; }
+  @media (max-width:820px){
+    .vm, .pillars{ grid-template-columns:1fr; }
+    .facts{ grid-template-columns:1fr; gap:4px 0; }
+    .facts dd{ margin-bottom:12px; }
+  }
+</style>
+
+<link rel="stylesheet" href="/motion.css?v=6" />
+<script src="/motion.js?v=6" defer></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
+
+    <nav class="nav-links" id="navLinks" aria-label="primary">
+      <div class="nav-panel" role="document">
+      <a href="/work/" class="link" data-en="Case Studies" data-ar="دراسات الحالة">Case Studies</a>
+      <a href="/#services" class="link" data-en="Services" data-ar="خدماتنا">Services</a>
+      <a href="/about/" class="link" aria-current="page" data-en="About" data-ar="من نحن">About</a>
+      <a href="/faq/" class="link" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
+      <a href="#contact" class="link" data-en="Contact" data-ar="تواصل">Contact</a>
+      <div class="nav-utils">
+      <button class="lang-toggle" id="langToggle" type="button" role="switch" aria-checked="false" aria-label="switch language EN / ع">
+        <span class="seg en" aria-hidden="true">EN</span>
+        <span class="seg ar" aria-hidden="true">ع</span>
+      </button>
+      <button class="theme-toggle nav-theme" type="button" role="switch" aria-checked="false" aria-label="dark mode">
+        <span class="seg sun" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="seg moon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+      </button>
+      </div>
+      <a class="btn btn-shine nav-cta" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" aria-label="book a call"><svg class="cta-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="cta-txt" data-en="Book a call" data-ar="احجز مكالمة">Book a call</span> <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="crumb" aria-label="breadcrumb">
+  <div class="wrap"><a href="/" data-en="Home" data-ar="الرئيسية">Home</a><span class="sep">/</span><span data-en="About" data-ar="من نحن">About</span></div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1 data-en="About kaprera." data-ar="من نحن.">About kaprera.</h1>
+      <p class="lede" data-en="kaprera is a software agency in Beirut, Lebanon. We build custom business systems that replace Excel sheets, WhatsApp orders and paperwork with one system built around how your team already works. We also build MVPs for startups, bilingual websites and landing pages." data-ar="kaprera شركة برمجيات في بيروت، لبنان. نبني أنظمة أعمال مخصّصة تحلّ محلّ ملفات الإكسل وطلبات واتساب والأوراق بنظام واحد مبني حول طريقة عمل فريقك الحالية. ونبني أيضًا نسخ MVP للشركات الناشئة، ومواقع وصفحات هبوط ثنائية اللغة.">kaprera is a software agency in Beirut, Lebanon. We build custom business systems that replace Excel sheets, WhatsApp orders and paperwork with one system built around how your team already works. We also build MVPs for startups, bilingual websites and landing pages.</p>
+    </div>
+  </section>
+
+  <section class="blk" id="vision" aria-label="vision and mission">
+    <div class="wrap">
+      <div class="vm">
+        <article class="vm-card">
+          <span class="label"><span data-en="/ Our vision" data-ar="/ رؤيتنا">/ Our vision</span></span>
+          <p data-en="Every growing business in the Middle East runs on one system built around how its team works, not on manual work." data-ar="أن تُدار كل شركة نامية في الشرق الأوسط بنظام واحد مبني حول طريقة عمل فريقها، لا بالعمل اليدوي.">Every growing business in the Middle East runs on one system built around how its team works, not on manual work.</p>
+        </article>
+        <article class="vm-card">
+          <span class="label"><span data-en="/ Our mission" data-ar="/ مهمّتنا">/ Our mission</span></span>
+          <p data-en="We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works." data-ar="نستبدل ملفات الإكسل وطلبات واتساب والأوراق بأنظمة أعمال مخصّصة مبنية حول طريقة عمل فريقك الحالية.">We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk" id="pillars" aria-label="our pillars">
+    <div class="wrap">
+      <span class="label"><span data-en="/ Our pillars" data-ar="/ ركائزنا">/ Our pillars</span></span>
+      <h2 data-en="How we work with every client." data-ar="كيف نعمل مع كل عميل.">How we work with every client.</h2>
+      <ol class="pillars" role="list">
+        <li class="pillar">
+          <span class="pillar-num" aria-hidden="true">01</span>
+          <h3 data-en="Built around you" data-ar="مبني حولك">Built around you</h3>
+          <p data-en="We start from how your team already works, then shape the system to fit it. Not a ready-made tool you have to adapt to." data-ar="نبدأ من طريقة عمل فريقك اليوم، ثم نصمّم النظام ليناسبها. لا أداة جاهزة عليك أن تتكيّف معها.">We start from how your team already works, then shape the system to fit it. Not a ready-made tool you have to adapt to.</p>
+        </li>
+        <li class="pillar">
+          <span class="pillar-num" aria-hidden="true">02</span>
+          <h3 data-en="Fast to value" data-ar="نتائج سريعة">Fast to value</h3>
+          <p data-en="A first working version with your real data by day 7, and the full system live in 3 weeks. An MVP for a startup takes 1 week." data-ar="نسخة أولى تعمل ببياناتك الحقيقية في اليوم السابع، والنظام الكامل خلال 3 أسابيع. ونسخة MVP للشركات الناشئة خلال أسبوع.">A first working version with your real data by day 7, and the full system live in 3 weeks. An MVP for a startup takes 1 week.</p>
+        </li>
+        <li class="pillar">
+          <span class="pillar-num" aria-hidden="true">03</span>
+          <h3 data-en="Plain and honest" data-ar="واضحون وصادقون">Plain and honest</h3>
+          <p data-en="A fixed quote before any work starts, plain words without jargon, and we tell you when a ready-made tool is the better fit." data-ar="سعر ثابت قبل بدء أي عمل، وكلام واضح بلا مصطلحات تقنية، ونقول لك بصراحة إذا كانت أداة جاهزة هي الأنسب لك.">A fixed quote before any work starts, plain words without jargon, and we tell you when a ready-made tool is the better fit.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="blk founder" id="founder" aria-label="founder">
+    <div class="wrap">
+      <span class="label"><span data-en="/ Founder" data-ar="/ المؤسس">/ Founder</span></span>
+      <h2 data-en="You talk to the person who builds your system." data-ar="تتحدّث مع الشخص الذي يبني نظامك.">You talk to the person who builds your system.</h2>
+      <p data-en="kaprera was founded by Ibrahim Hussein, who leads every project from the first call to launch. You explain how your team works once, to the person who designs and builds the system, in Arabic or English." data-ar="أسّس إبراهيم حسين kaprera، ويقود كل مشروع من المكالمة الأولى حتى الإطلاق. تشرح طريقة عمل فريقك مرة واحدة، للشخص الذي يصمّم النظام ويبنيه، بالعربية أو الإنجليزية.">kaprera was founded by Ibrahim Hussein, who leads every project from the first call to launch. You explain how your team works once, to the person who designs and builds the system, in Arabic or English.</p>
+    </div>
+  </section>
+
+  <section class="blk" id="facts" aria-label="kaprera at a glance">
+    <div class="wrap">
+      <span class="label"><span data-en="/ At a glance" data-ar="/ لمحة سريعة">/ At a glance</span></span>
+      <dl class="facts">
+        <dt data-en="Based in" data-ar="المقرّ">Based in</dt>
+        <dd data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</dd>
+        <dt data-en="Clients" data-ar="العملاء">Clients</dt>
+        <dd data-en="Across Lebanon, and remotely with teams in Saudi Arabia, the UAE and the wider Gulf." data-ar="في كل لبنان، وعن بُعد مع فرق في السعودية والإمارات ودول الخليج.">Across Lebanon, and remotely with teams in Saudi Arabia, the UAE and the wider Gulf.</dd>
+        <dt data-en="Languages" data-ar="اللغات">Languages</dt>
+        <dd data-en="Arabic and English, with full right-to-left support." data-ar="العربية والإنجليزية، مع دعم كامل للكتابة من اليمين إلى اليسار.">Arabic and English, with full right-to-left support.</dd>
+        <dt data-en="We build" data-ar="نبني">We build</dt>
+        <dd data-en="Custom business systems, MVPs for startups, bilingual websites and landing pages, and SEO for the sites we build." data-ar="أنظمة أعمال مخصّصة، ونسخ MVP للشركات الناشئة، ومواقع وصفحات هبوط ثنائية اللغة، وتحسين محركات البحث للمواقع التي نبنيها.">Custom business systems, MVPs for startups, bilingual websites and landing pages, and SEO for the sites we build.</dd>
+        <dt data-en="We don't build" data-ar="لا نبني">We don't build</dt>
+        <dd data-en="Native iOS or Android apps. Our systems are web-based and work in the browser on any phone or computer." data-ar="تطبيقات iOS أو Android الأصلية. أنظمتنا تعمل عبر المتصفح على أي هاتف أو كمبيوتر.">Native iOS or Android apps. Our systems are web-based and work in the browser on any phone or computer.</dd>
+      </dl>
+      <div class="actions" style="margin-top:32px">
+        <a href="/work/" class="btn btn-primary btn-shine"><span data-en="See our work" data-ar="شاهد أعمالنا">See our work</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" class="btn btn-ghost"><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ───────────── CONTACT ───────────── -->
+      <section id="contact" aria-label="contact">
+    <div class="wrap">
+      <h2 class="title" data-en="Tell us about your project." data-ar="أخبرنا عن مشروعك.">Tell us about your project.</h2>
+
+      <div class="contact-grid">
+        <form id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-card step-form" novalidate>
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden><label>don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <div class="step-progress">
+            <span class="step-count">
+              <span class="sr-only" data-en="Step " data-ar="الخطوة ">Step </span><span id="stepNum">1</span><span aria-hidden="true"> / 5</span><span class="sr-only" data-en=" of 5" data-ar=" من 5"> of 5</span>
+            </span>
+            <span class="step-bar" aria-hidden="true"><span id="stepBar"></span></span>
+          </div>
+          <fieldset class="form-step" data-step="1">
+            <legend class="step-q" tabindex="-1" data-en="What do you need?" data-ar="ما الذي تحتاج إليه؟">What do you need?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="service" value="custom-system" required /><span data-en="A custom system or web app (replace Excel or WhatsApp)" data-ar="نظام مخصّص أو تطبيق ويب (بديل الإكسل أو واتساب)">A custom system or web app (replace Excel or WhatsApp)</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="website" required /><span data-en="A website" data-ar="موقع إلكتروني">A website</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="ecommerce" required /><span data-en="An online store (Shopify)" data-ar="متجر إلكتروني (Shopify)">An online store (Shopify)</span></label>
+              <label class="step-opt"><input type="radio" name="service" value="seo" required /><span data-en="SEO &amp; growth" data-ar="تحسين محركات البحث والنمو">SEO & growth</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="2" hidden>
+            <legend class="step-q" tabindex="-1" data-en="Which languages should it speak?" data-ar="بأي لغة يجب أن يتحدث؟">Which languages should it speak?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="language" value="en" required /><span data-en="English" data-ar="الإنجليزية">English</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="ar" required /><span data-en="Arabic" data-ar="العربية">Arabic</span></label>
+              <label class="step-opt"><input type="radio" name="language" value="both" required /><span data-en="Both, English and Arabic" data-ar="كلتاهما، الإنجليزية والعربية">Both, English and Arabic</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="3" hidden>
+            <legend class="step-q" tabindex="-1" data-en="When do you want to launch?" data-ar="متى تريد الإطلاق؟">When do you want to launch?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="timeline" value="asap" required /><span data-en="As soon as possible" data-ar="في أقرب وقت ممكن">As soon as possible</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="1-3-months" required /><span data-en="In 1–3 months" data-ar="خلال شهر إلى ثلاثة أشهر">In 1–3 months</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="3-plus-months" required /><span data-en="In 3 months or more" data-ar="بعد ثلاثة أشهر أو أكثر">In 3 months or more</span></label>
+              <label class="step-opt"><input type="radio" name="timeline" value="exploring" required /><span data-en="Just exploring" data-ar="أستكشف الخيارات فقط">Just exploring</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="4" hidden>
+            <legend class="step-q" tabindex="-1" data-en="What's your budget?" data-ar="ما ميزانيتك؟">What's your budget?</legend>
+            <div class="step-options">
+              <label class="step-opt"><input type="radio" name="budget" value="under-2k" required /><span data-en="Under $2,000" data-ar="أقل من 2,000$">Under $2,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="2k-5k" required /><span data-en="$2,000–$5,000" data-ar="2,000$ – 5,000$">$2,000–$5,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="5k-15k" required /><span data-en="$5,000–$15,000" data-ar="5,000$ – 15,000$">$5,000–$15,000</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="15k-plus" required /><span data-en="$15,000+" data-ar="أكثر من 15,000$">$15,000+</span></label>
+              <label class="step-opt"><input type="radio" name="budget" value="unsure" required /><span data-en="Not sure yet" data-ar="لست متأكدًا بعد">Not sure yet</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" data-step="5" hidden>
+            <legend class="step-q" tabindex="-1" data-en="How can we reach you?" data-ar="كيف نتواصل معك؟">How can we reach you?</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="name" data-en="Your name" data-ar="اسمك">Your name</label>
+                <input type="text" id="name" name="name" autocomplete="name" placeholder="Your name" data-en-ph="Your name" data-ar-ph="اسمك" required />
+              </div>
+              <div class="field">
+                <label for="email" data-en="Email" data-ar="البريد الإلكتروني">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="you@company.com" data-en-ph="you@company.com" data-ar-ph="you@company.com" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="phone">
+                <span data-en="Phone number" data-ar="رقم الهاتف">Phone number</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <div class="phone-input">
+                <select id="phoneCode" name="phone-code" autocomplete="tel-country-code" aria-label="Country code">
+                    <option value="+971">AE +971</option>
+                    <option value="+43">AT +43</option>
+                    <option value="+61">AU +61</option>
+                    <option value="+32">BE +32</option>
+                    <option value="+973">BH +973</option>
+                    <option value="+55">BR +55</option>
+                    <option value="+1">CA +1</option>
+                    <option value="+41">CH +41</option>
+                    <option value="+86">CN +86</option>
+                    <option value="+357">CY +357</option>
+                    <option value="+420">CZ +420</option>
+                    <option value="+49">DE +49</option>
+                    <option value="+253">DJ +253</option>
+                    <option value="+45">DK +45</option>
+                    <option value="+213">DZ +213</option>
+                    <option value="+20">EG +20</option>
+                    <option value="+34">ES +34</option>
+                    <option value="+358">FI +358</option>
+                    <option value="+33">FR +33</option>
+                    <option value="+44">GB +44</option>
+                    <option value="+30">GR +30</option>
+                    <option value="+852">HK +852</option>
+                    <option value="+353">IE +353</option>
+                    <option value="+972">IL +972</option>
+                    <option value="+91">IN +91</option>
+                    <option value="+964">IQ +964</option>
+                    <option value="+39">IT +39</option>
+                    <option value="+962">JO +962</option>
+                    <option value="+81">JP +81</option>
+                    <option value="+254">KE +254</option>
+                    <option value="+269">KM +269</option>
+                    <option value="+82">KR +82</option>
+                    <option value="+965">KW +965</option>
+                    <option value="+961" selected>LB +961</option>
+                    <option value="+218">LY +218</option>
+                    <option value="+212">MA +212</option>
+                    <option value="+222">MR +222</option>
+                    <option value="+356">MT +356</option>
+                    <option value="+52">MX +52</option>
+                    <option value="+60">MY +60</option>
+                    <option value="+234">NG +234</option>
+                    <option value="+31">NL +31</option>
+                    <option value="+47">NO +47</option>
+                    <option value="+64">NZ +64</option>
+                    <option value="+968">OM +968</option>
+                    <option value="+63">PH +63</option>
+                    <option value="+48">PL +48</option>
+                    <option value="+970">PS +970</option>
+                    <option value="+351">PT +351</option>
+                    <option value="+974">QA +974</option>
+                    <option value="+40">RO +40</option>
+                    <option value="+7">RU +7</option>
+                    <option value="+966">SA +966</option>
+                    <option value="+249">SD +249</option>
+                    <option value="+46">SE +46</option>
+                    <option value="+65">SG +65</option>
+                    <option value="+252">SO +252</option>
+                    <option value="+963">SY +963</option>
+                    <option value="+66">TH +66</option>
+                    <option value="+216">TN +216</option>
+                    <option value="+90">TR +90</option>
+                    <option value="+380">UA +380</option>
+                    <option value="+1">US +1</option>
+                    <option value="+967">YE +967</option>
+                    <option value="+27">ZA +27</option>
+                </select>
+                <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" pattern="[\d\s\-\(\)]{6,20}" placeholder="03 123 456" />
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="business"><span data-en="Business name" data-ar="اسم الشركة">Business name</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
+                <input type="text" id="business" name="business" autocomplete="organization" placeholder="Business name" data-en-ph="Business name" data-ar-ph="اسم الشركة" />
+              </div>
+              <div class="field">
+                <label for="city"><span data-en="City and country" data-ar="المدينة والبلد">City and country</span> <span class="opt" data-en="optional" data-ar="اختياري">optional</span></label>
+                <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Beirut, Lebanon" data-en-ph="Beirut, Lebanon" data-ar-ph="بيروت، لبنان" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="website">
+                <span data-en="Your website now" data-ar="موقعك الحالي">Your website now</span>
+                <span class="opt" data-en="optional" data-ar="اختياري">optional</span>
+              </label>
+              <!-- text, not url: type="url" rejects "yoursite.com" for want of a scheme -->
+              <input type="text" id="website" name="website" inputmode="url" autocomplete="url" placeholder="yoursite.com — or leave blank" data-en-ph="yoursite.com — or leave blank" data-ar-ph="yoursite.com — أو اتركه فارغًا" />
+            </div>
+            <!-- the one thing that decides whether a Google Business Profile and
+                 local SEO are in scope. The address itself only matters later,
+                 at verification, so it is not asked for here -->
+            <label class="step-check">
+              <input type="checkbox" id="physical" name="physical" value="yes" />
+              <span data-en="I have a physical location" data-ar="لديّ موقع فعلي">I have a physical location</span>
+            </label>
+          </fieldset>
+          <div class="step-nav">
+            <button type="button" class="btn btn-ghost" id="stepBack" hidden><span data-en="Back" data-ar="رجوع">Back</span></button>
+            <button type="submit" class="btn btn-primary btn-shine"><span data-en="Next" data-ar="التالي">Next</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+          <!-- submit failed: say so, keep the answers, and offer an explicit way out -->
+          <div class="form-error" id="formError" hidden>
+            <p class="form-error-msg" data-en="We couldn't reach our server, so nothing has been sent yet." data-ar="تعذّر الوصول إلى الخادم، ولم يُرسل شيء بعد.">We couldn't reach our server, so nothing has been sent yet.</p>
+            <div class="form-error-acts">
+              <button type="button" class="btn btn-primary" id="formRetry"><span data-en="Try again" data-ar="حاول مرة أخرى">Try again</span></button>
+              <a class="form-error-mail" id="formErrorMail" href="mailto:info@kaprera.com" data-en="Send it as an email instead" data-ar="أرسلها عبر البريد الإلكتروني بدلًا من ذلك">Send it as an email instead</a>
+            </div>
+          </div>
+        </form>
+
+        <!-- outside the form on purpose: the form is hidden on success, and a live
+             region inside a hidden subtree is never announced -->
+        <p class="form-status sr-only" id="formStatus" role="status" aria-live="polite"></p>
+
+        <!-- the confirmation stays on screen instead of a button label that clears itself -->
+        <div class="contact-card form-sent" id="formSent" hidden>
+          <span class="form-sent-tick" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <h3 data-en="Thank you — your enquiry is on its way." data-ar="شكرًا لك — طلبك في طريقه إلينا.">Thank you — your enquiry is on its way.</h3>
+          <p data-en="We read every message and reply within one business day, Beirut time. If it's urgent, WhatsApp us and we'll pick it up faster." data-ar="نقرأ كل رسالة ونردّ خلال يوم عمل واحد بتوقيت بيروت. وإذا كان الأمر عاجلًا، راسلنا على واتساب وسنتابعه أسرع.">We read every message and reply within one business day, Beirut time. If it's urgent, WhatsApp us and we'll pick it up faster.</p>
+          <dl class="form-sent-recap" id="formSentRecap"></dl>
+          <button type="button" class="btn btn-ghost" id="formAgain"><span data-en="Send another enquiry" data-ar="إرسال طلب آخر">Send another enquiry</span></button>
+        </div>
+
+        <aside class="contact-card contact-aside">
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span data-en="Book a call" data-ar="احجز مكالمة">Book a call</span></div>
+            <a class="v" href="https://calendar.app.google/KAV6SZzvmhtAHHpr7" target="_blank" rel="noopener" data-en="Book a call →" data-ar="احجز مكالمة ←">Book a call →</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span data-en="Email" data-ar="البريد الإلكتروني">Email</span></div>
+            <a class="v" href="mailto:info@kaprera.com">info@kaprera.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span></div>
+            <a class="v" href="https://wa.me/9613816405" target="_blank" rel="noopener" data-en="Chat with us →" data-ar="تحدّث معنا ←">Chat with us →</a>
+          </div>
+          <div class="contact-item">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span data-en="Location" data-ar="الموقع">Location</span></div>
+            <div class="v" data-en="Beirut, Lebanon" data-ar="بيروت، لبنان">Beirut, Lebanon</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a href="/" class="brand" aria-label="kaprera home"><span class="brand-logo" role="img" aria-label="kaprera"></span></a>
+        <p class="foot-tag" data-en="Custom business systems built around how you work." data-ar="أنظمة أعمال مخصّصة مبنية حول طريقة عملك.">Custom business systems built around how you work.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <div class="fc-h" data-en="Explore" data-ar="استكشف">Explore</div>
+          <a href="/work/" data-en="Case Studies" data-ar="دراسات الحالة">Case Studies</a>
+          <a href="/#services" data-en="Services" data-ar="خدماتنا">Services</a>
+          <a href="/#testimonials" data-en="Testimonials" data-ar="آراء العملاء">Testimonials</a>
+          <a href="/faq/" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
+          <a href="/contact/" data-en="Contact" data-ar="تواصل">Contact</a>
+          <a href="/careers" data-en="Careers" data-ar="وظائف">Careers</a>
+        </div>
+        <div class="foot-col">
+          <div class="fc-h" data-en="Legal" data-ar="قانوني">Legal</div>
+          <a href="/privacy-policy" data-en="Privacy policy" data-ar="سياسة الخصوصية">Privacy policy</a>
+        </div>
+        <div class="foot-col">
+          <div class="fc-h" data-en="Social" data-ar="تواصل اجتماعي">Social</div>
+          <a class="social-link" href="https://www.linkedin.com/company/kaprera/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.25 8.25h4.5V24h-4.5V8.25Zm7.25 0h4.31v2.15h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.5v-6.9c0-1.64-.03-3.75-2.29-3.75-2.29 0-2.64 1.79-2.64 3.63V24h-4.5V8.25Z"/></svg><span data-en="LinkedIn" data-ar="لينكدإن">LinkedIn</span></a>
+          <a class="social-link" href="https://www.instagram.com/kaprera_agency/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span data-en="Instagram" data-ar="إنستغرام">Instagram</span></a>
+          <a class="social-link" href="https://www.facebook.com/share/1MnMbT8nhp/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.23 2.69.23v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07Z"/></svg><span data-en="Facebook" data-ar="فيسبوك">Facebook</span></a>
+          <a class="social-link" href="https://www.threads.com/@kaprera_agency" target="_blank" rel="noopener" aria-label="Threads"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.19 24h-.01c-3.58-.02-6.33-1.2-8.18-3.51C2.35 18.44 1.5 15.59 1.47 12.01v-.02c.03-3.58.88-6.43 2.53-8.48C5.85 1.2 8.6.02 12.18 0h.01c2.75.02 5.04.73 6.83 2.1 1.68 1.29 2.86 3.13 3.51 5.47l-2.04.57c-1.1-3.96-3.9-5.98-8.3-6.02-2.91.02-5.11.94-6.54 2.72C4.31 6.5 3.62 8.91 3.59 12c.03 3.09.72 5.5 2.06 7.16 1.43 1.78 3.63 2.7 6.54 2.72 2.62-.02 4.36-.63 5.8-2.05 1.65-1.61 1.62-3.59 1.09-4.8-.31-.71-.87-1.3-1.63-1.75-.19 1.35-.62 2.45-1.28 3.27-.89 1.1-2.14 1.7-3.73 1.79-1.2.07-2.36-.22-3.26-.8-1.06-.69-1.69-1.74-1.75-2.96-.07-1.19.41-2.29 1.33-3.08.88-.76 2.12-1.21 3.58-1.29a13.85 13.85 0 0 1 3.02.14c-.13-.74-.38-1.33-.75-1.76-.51-.59-1.31-.88-2.36-.89h-.03c-.84 0-1.99.23-2.72 1.32L7.73 7.85c.98-1.45 2.57-2.26 4.48-2.26h.04c3.2.02 5.1 1.98 5.29 5.39l.32.14c1.49.7 2.58 1.76 3.15 3.07.8 1.82.87 4.79-1.55 7.16-1.85 1.81-4.09 2.63-7.27 2.65Zm1-11.69c-.24 0-.49.01-.74.02-1.84.1-2.98.95-2.92 2.14.07 1.26 1.45 1.84 2.78 1.77 1.23-.07 2.82-.54 3.09-3.71a10.5 10.5 0 0 0-2.21-.22Z"/></svg><span data-en="Threads" data-ar="ثريدز">Threads</span></a>
+          <a class="social-link" href="https://x.com/kaprera_agency" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z"/></svg><span data-en="X" data-ar="إكس">X</span></a>
+          <a class="social-link" href="https://wa.me/9613816405" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24Zm-4.5 4.43c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.37-.42.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.54-1.33-.76-1.81-.18-.42-.37-.36-.51-.36l-.44-.01Z"/></svg><span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-en="© 2026 kaprera. All rights reserved." data-ar="© 2026 كابريرا. جميع الحقوق محفوظة.">© 2026 kaprera. All rights reserved.</span>
+      <span><span data-en="Made in Lebanon ·" data-ar="صُنع في لبنان ·">Made in Lebanon ·</span> <span class="accent">&gt;_</span></span>
+      <span class="foot-theme"><span data-en="Dark mode" data-ar="الوضع الداكن">Dark mode</span> <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="toggle dark mode">
+        <span class="seg sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+        <span class="seg moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+      </button></span>
+    </div>
+  </div>
+  <div class="foot-mark" aria-hidden="true"></div>
+</footer>
+
+<script>
+/* ── work index · filtering + scroll reveal ──────────────────────────────
+   Shared behaviour (theme, language, nav) lives in /cases/case.js; this only
+   drives the two things unique to this page. */
+(function () {
+  var grid = document.getElementById('workGrid');
+  var bar  = document.getElementById('workFilters');
+  if (!grid || !bar) return;
+
+  var items  = Array.prototype.slice.call(grid.querySelectorAll('.case-row'));
+  var btns   = Array.prototype.slice.call(bar.querySelectorAll('.fbtn'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --i staggers the reveal transition; it counts visible rows, so a filtered
+     view cascades from its own first row rather than leaving gaps in the delay.
+     The same count drives .flip: the shot has to keep alternating sides even
+     when a filter has taken the rows in between out of the page. */
+  var restagger = function () {
+    var n = 0;
+    items.forEach(function (el) {
+      if (el.hidden) return;
+      el.style.setProperty('--i', n);
+      el.classList.toggle('flip', n % 2 === 1);
+      n++;
+    });
+  };
+
+  /* alternation and stagger are set once up front, then again on every filter */
+  restagger();
+
+  /* ── reveal on scroll ── */
+  var io = null;
+  if (!reduce && 'IntersectionObserver' in window) {
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    /* no observer (or the visitor asked for less motion): show everything now */
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ── filter ── */
+  var setFilter = function (cat) {
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cat === cat)); });
+
+    items.forEach(function (el) {
+      /* Agri Pro is both a system and a landing page, so data-cat holds a
+         space-separated list rather than a single value */
+      var show = cat === 'all' || (' ' + el.dataset.cat + ' ').indexOf(' ' + cat + ' ') > -1;
+      el.hidden = !show;
+      if (show && io) el.classList.remove('in');
+    });
+    restagger();
+
+    if (io) {
+      /* two frames: let the removal paint so the re-added class animates */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          items.forEach(function (el) {
+            if (!el.hidden) { el.classList.add('in'); io.unobserve(el); }
+          });
+        });
+      });
+    }
+  };
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { setFilter(b.dataset.cat); });
+  });
+})();
+</script>
+
+<script src="/contact.js?v=3" defer></script>
+</body>
+</html>

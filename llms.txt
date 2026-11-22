@@ -6,6 +6,9 @@
 
 - Name: kaprera (always lowercase)
 - Tagline: Custom business systems built around how you work.
+- Vision: Every growing business in the Middle East runs on one system built around how its team works, not on manual work.
+- Mission: We replace Excel sheets, WhatsApp orders and paperwork with custom business systems built around how your team already works.
+- Pillars: Built around you (we start from how your team already works) · Fast to value (first working version by day 7, full system in 3 weeks) · Plain and honest (fixed quote, no jargon, honest advice when a ready-made tool fits better)
 - Arabic tagline: أنظمة أعمال مخصّصة مبنية حول طريقة عملك.
 - Type: software agency (software company), not a marketing or digital agency
 - Location: Beirut, Lebanon (works remotely with clients in Lebanon, Saudi Arabia, the UAE and the GCC)
@@ -24,6 +27,7 @@
 
 - [Home](https://kaprera.com/): custom business systems, websites and SEO
 - [Home in Arabic](https://kaprera.com/ar/)
+- [About](https://kaprera.com/about/): vision, mission, pillars, founder and key facts
 - [FAQ](https://kaprera.com/faq/): what kaprera is, custom systems vs ERP, cost, fixed quotes, timelines, replacing Excel, support
 - [Work](https://kaprera.com/work/): case studies with measured results
 - [Agri Pro Services](https://kaprera.com/cases/agripro/): operations platform for a pest control company

@@ -2444,6 +2444,17 @@
   .step p { color: var(--muted); font-size: 15px; line-height: 1.6; }
   html[lang="ar"] .step h3 { letter-spacing: 0; }
 
+  /* ── why kaprera: the vision and the three brand pillars (full text on /about/) ── */
+  .why-vision { margin: 18px 0 0; max-width: 34ch; font-size: clamp(22px, 2.8vw, 32px); font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; }
+  html[lang="ar"] .why-vision { letter-spacing: 0; line-height: 1.5; }
+  .why-pillars { list-style: none; padding: 0; margin: 40px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .why-pillar { border-top: 2px solid var(--blue); padding-top: 24px; }
+  .why-pillar h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 8px; }
+  .why-pillar p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+  html[lang="ar"] .why-pillar h3 { letter-spacing: 0; }
+  .why-next { margin-top: 32px; }
+  @media (max-width: 960px) { .why-pillars { grid-template-columns: 1fr; gap: 24px; } }
+
   @media (max-width: 960px) {
     .pain-split { grid-template-columns: 1fr; gap: 26px; }
     .pain-head { position: static; }
@@ -2551,6 +2562,7 @@
       <div class="nav-panel" role="document">
       <a href="/work/" class="link" data-en="Case Studies" data-ar="دراسات الحالة">Case Studies</a>
       <a href="#services" class="link" data-en="Services" data-ar="خدماتنا">Services</a>
+      <a href="/about/" class="link" data-en="About" data-ar="من نحن">About</a>
       <a href="/faq/" class="link" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
       <a href="#contact" class="link" data-en="Contact" data-ar="تواصل">Contact</a>
       <div class="nav-utils">
@@ -3008,6 +3020,32 @@
     </div>
   </section>
 
+  <!-- ───────────── WHY KAPRERA ───────────── -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <span class="label reveal"><span data-en="/ Why kaprera" data-ar="/ لماذا kaprera">/ Why kaprera</span></span>
+      <h2 class="title" data-m="mask" data-en="Our vision" data-ar="رؤيتنا">Our vision</h2>
+      <p class="why-vision reveal" data-en="Every growing business in the Middle East runs on one system built around how its team works, not on manual work." data-ar="أن تُدار كل شركة نامية في الشرق الأوسط بنظام واحد مبني حول طريقة عمل فريقها، لا بالعمل اليدوي.">Every growing business in the Middle East runs on one system built around how its team works, not on manual work.</p>
+      <ul class="why-pillars" data-m-stagger="up" role="list">
+        <li class="why-pillar">
+          <h3 data-en="Built around you" data-ar="مبني حولك">Built around you</h3>
+          <p data-en="We start from how your team already works, then shape the system to fit it." data-ar="نبدأ من طريقة عمل فريقك اليوم، ثم نصمّم النظام ليناسبها.">We start from how your team already works, then shape the system to fit it.</p>
+        </li>
+        <li class="why-pillar">
+          <h3 data-en="Fast to value" data-ar="نتائج سريعة">Fast to value</h3>
+          <p data-en="A first working version with your real data by day 7, the full system in 3 weeks." data-ar="نسخة أولى تعمل ببياناتك الحقيقية في اليوم السابع، والنظام الكامل خلال 3 أسابيع.">A first working version with your real data by day 7, the full system in 3 weeks.</p>
+        </li>
+        <li class="why-pillar">
+          <h3 data-en="Plain and honest" data-ar="واضحون وصادقون">Plain and honest</h3>
+          <p data-en="A fixed quote first, no jargon, and we say so when a ready-made tool fits better." data-ar="سعر ثابت أولًا، بلا مصطلحات تقنية، ونقول لك إذا كانت أداة جاهزة تناسبك أكثر.">A fixed quote first, no jargon, and we say so when a ready-made tool fits better.</p>
+        </li>
+      </ul>
+      <div class="why-next reveal">
+        <a href="/about/" class="btn btn-ghost"><span data-en="About us" data-ar="من نحن">About us</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </section>
+
   <!-- ───────────── TESTIMONIALS ───────────── -->
   <section class="section" id="testimonials">
     <div class="wrap">
@@ -3375,6 +3413,7 @@
           <a href="/work/" data-en="Case Studies" data-ar="دراسات الحالة">Case Studies</a>
           <a href="#services" data-en="Services" data-ar="خدماتنا">Services</a>
           <a href="#testimonials" data-en="Testimonials" data-ar="آراء العملاء">Testimonials</a>
+          <a href="/about/" data-en="About" data-ar="من نحن">About</a>
           <a href="/faq/" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
           <a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a>
           <a href="/careers" data-en="Careers" data-ar="وظائف">Careers</a>
