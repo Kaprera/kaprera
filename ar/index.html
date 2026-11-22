@@ -974,7 +974,7 @@
 
 
   /* ── designed renders ──
-     Four projects show the device render from their own mockup artwork in
+     Every project shows a device render from its own mockup artwork in
      place of the CSS laptop. Each render is cut out of its backdrop, so it
      sits straight on the work band's navy with nothing to blend into. */
   .case-render {
@@ -989,21 +989,6 @@
     -webkit-user-drag: none; user-select: none; /* don't let native image-drag cancel a swipe */
   }
   .case-render img.is-loaded { opacity: 1; }
-  /* oplinx and al-shamaa still carry their own backdrops, so those two are
-     feathered into the slide instead of cut out. Oplinx's fade starts at the
-     laptop's base, where the black tabletop begins */
-  .case-render[data-case="oplinx"] img,
-  .case-render[data-case="shamaa"] img {
-    -webkit-mask-image:
-      linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 12%, #000 var(--fade-from, 70%), transparent var(--fade-to, 100%));
-    -webkit-mask-composite: source-in;
-            mask-image:
-      linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 12%, #000 var(--fade-from, 70%), transparent var(--fade-to, 100%));
-            mask-composite: intersect;
-  }
-  .case-render[data-case="oplinx"] img { --fade-from: 60%; --fade-to: 86%; }
   .case-render:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 14px; }
 
   /* ── image loading state: shimmer skeleton + fade-in ── */
@@ -2241,10 +2226,6 @@
     /* the cut-outs have no backdrop to lose, so a crop would slice the device:
        they are shown whole inside the same box instead */
     .case-render img { object-fit: contain; object-position: center; }
-    /* the two feathered renders keep the landscape crop: their backdrops are
-       what the crop takes off, not the device */
-    .case-render[data-case="oplinx"] img,
-    .case-render[data-case="shamaa"] img { object-fit: cover; object-position: center 42%; }
     .case-info h2 { font-size: clamp(28px, 8vw, 40px); }
     .work-ctrls { margin-top: 20px; }
     /* services → one column of compact cards */
@@ -2731,8 +2712,8 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="5 of 6, Oplinx Solutions">
               <button class="case-shot case-render" data-case="oplinx" aria-haspopup="dialog" aria-label="quick look at Oplinx Solutions">
                 <picture>
-                  <source srcset="/cases/oplinx/mockup-560.webp 560w, /cases/oplinx/mockup-700.webp 700w, /cases/oplinx/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
-                  <img src="/cases/oplinx/mockup.jpg" alt="Oplinx Solutions bilingual consultancy website built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
+                  <source srcset="/cases/oplinx/device-mockup-560.webp 560w, /cases/oplinx/device-mockup-700.webp 700w, /cases/oplinx/device-mockup.webp 1200w" sizes="(max-width: 860px) 80vw, 520px" type="image/webp">
+                  <img src="/cases/oplinx/device-mockup.png" alt="Oplinx Solutions bilingual consultancy website on desktop and mobile, built by kaprera" width="1200" height="853" loading="lazy" decoding="async" />
                 </picture>
               </button>
               <div class="case-info">
@@ -2751,8 +2732,8 @@
             <div class="work-slide work-case" role="group" aria-roledescription="slide" aria-label="6 of 6, AL-Shamaa Engineering">
               <button class="case-shot case-render" data-case="shamaa" aria-haspopup="dialog" aria-label="quick look at AL-Shamaa Engineering">
                 <picture>
-                  <source srcset="/cases/al-shamaa/mockup-560.webp 560w, /cases/al-shamaa/mockup-700.webp 700w, /cases/al-shamaa/mockup.webp 1200w" sizes="(max-width: 860px) 92vw, 520px" type="image/webp">
-                  <img src="/cases/al-shamaa/mockup.jpg" alt="AL-Shamaa Engineering bilingual landing page built by kaprera" width="1200" height="1152" loading="lazy" decoding="async" />
+                  <source srcset="/cases/al-shamaa/device-mockup-560.webp 560w, /cases/al-shamaa/device-mockup-700.webp 700w, /cases/al-shamaa/device-mockup.webp 1200w" sizes="(max-width: 860px) 80vw, 520px" type="image/webp">
+                  <img src="/cases/al-shamaa/device-mockup.png" alt="AL-Shamaa Engineering bilingual landing page on desktop and mobile, built by kaprera" width="1200" height="853" loading="lazy" decoding="async" />
                 </picture>
               </button>
               <div class="case-info">
